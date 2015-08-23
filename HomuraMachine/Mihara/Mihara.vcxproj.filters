@@ -19,6 +19,9 @@
     <Filter Include="Common\XCBase">
       <UniqueIdentifier>{1ccfeafc-552d-476a-b477-f65091cf87d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\XC32">
+      <UniqueIdentifier>{c9caf8bd-e5a6-4249-a05b-30c5705fd967}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Battery.cpp">
@@ -65,6 +68,12 @@
     </ClCompile>
     <ClCompile Include="Thermo.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\XC32\clock.cpp">
+      <Filter>Common\XC32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\XC32\interrupt.cpp">
+      <Filter>Common\XC32</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +184,45 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Common\XCBase\type_traits.hpp">
       <Filter>Common\XCBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\adc.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\clock.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\device.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\exceptions.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\i2c.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\interrupt.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\interrupt_safe_allocator.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\longtimer.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\pin.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\spi.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\timer.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\uart.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\XC32\wdt.hpp">
+      <Filter>Common\XC32</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
