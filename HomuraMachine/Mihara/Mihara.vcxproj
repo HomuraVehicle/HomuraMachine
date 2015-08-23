@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F5545CB4-6BBC-4973-9F73-1B9F8C69D419}</ProjectGuid>
+    <RootNamespace>Mihara</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(USERPROFILE)\Documents\Git\Common;$(USERPROFILE)\Documents\Git\HomuraMachine;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Battery.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CO2.cpp" />
+    <ClCompile Include="Com.cpp" />
+    <ClCompile Include="Courier.cpp" />
+    <ClCompile Include="Data.cpp" />
+    <ClCompile Include="DeviceManage.cpp" />
+    <ClCompile Include="DeviceManageMessage.cpp" />
+    <ClCompile Include="Drive.cpp" />
+    <ClCompile Include="GPS.cpp" />
+    <ClCompile Include="Inertial.cpp" />
+    <ClCompile Include="Message.cpp" />
+    <ClCompile Include="Mihara.cpp" />
+    <ClCompile Include="Service.cpp" />
+    <ClCompile Include="Thermo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Common\XCBase\allocator.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\array_queue.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\bytes.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\constexpr_no.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\either.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\exceptions.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\function.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\future.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\lock.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\rvalue_reference.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\shared_bytes.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\type.hpp" />
+    <ClInclude Include="..\..\..\Common\XCBase\type_traits.hpp" />
+    <ClInclude Include="Battery.hpp" />
+    <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="CO2.hpp" />
+    <ClInclude Include="Com.hpp" />
+    <ClInclude Include="Courier.hpp" />
+    <ClInclude Include="Data.hpp" />
+    <ClInclude Include="Device.hpp" />
+    <ClInclude Include="DeviceManage.hpp" />
+    <ClInclude Include="DeviceManageFunc_Courier.hpp" />
+    <ClInclude Include="DeviceManageFunc_Sprite.hpp" />
+    <ClInclude Include="DeviceManageMessage.hpp" />
+    <ClInclude Include="DeviceManage_forCamera.hpp" />
+    <ClInclude Include="DeviceManage_forCO2.hpp" />
+    <ClInclude Include="DeviceManage_forCourier.hpp" />
+    <ClInclude Include="DeviceManage_forInertial.hpp" />
+    <ClInclude Include="DeviceManage_forSDcard.hpp" />
+    <ClInclude Include="Drive.hpp" />
+    <ClInclude Include="GPS.hpp" />
+    <ClInclude Include="Inertial.hpp" />
+    <ClInclude Include="Message.hpp" />
+    <ClInclude Include="Service.hpp" />
+    <ClInclude Include="System_base.hpp" />
+    <ClInclude Include="Thermo.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
