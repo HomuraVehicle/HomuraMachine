@@ -6,7 +6,6 @@
 #include<homuraLib_v2/machine/service/task.hpp>
 #include "Device.hpp"
 #include "Battery.hpp"
-
 namespace hmr {
 	namespace machine {
 		namespace mihara {

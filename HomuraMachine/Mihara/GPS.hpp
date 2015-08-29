@@ -16,7 +16,7 @@ v0_01/130105 iwahori
 v0_00/121208 hmIto
 	Šî–{ŠÖ”ì¬
 */
-#include<hmLib_v3_06/cstring.h>
+#include<hmLib/cstring.h>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>
 #include<homuraLib_v2/machine/module/GPS52D.hpp>

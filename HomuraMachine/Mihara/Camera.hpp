@@ -57,7 +57,7 @@ v0_01/121221 iwahori
 v0_00/121216 iwahori
 	Šî–{ŠÖ”ì¬
 */
-#include<hmLib_v3_06/cstring.h>
+#include<hmLib/cstring.h>
 #include<XCBase/array_queue.hpp>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/module/Sprite.hpp>

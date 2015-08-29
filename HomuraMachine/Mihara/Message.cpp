@@ -3,7 +3,7 @@
 #
 #define HMLIB_NOLIB
 #include<cstdlib>
-#include<hmLib_v3_06/cqueue.h>
+#include<hmLib/cqueue.h>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include"Message.hpp"
 namespace hmr {

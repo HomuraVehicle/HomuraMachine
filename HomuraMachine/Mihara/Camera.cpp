@@ -3,7 +3,7 @@
 #
 #define HMLIB_NOLIB
 #include<homuraLib_v2/type.hpp>
-#include<hmLib_v3_06/cqueue.h>
+#include<hmLib/cqueue.h>
 #include<homuraLib_v2/machine/module/Sprite.hpp>
 #include<homuraLib_v2/machine/service/delay.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>

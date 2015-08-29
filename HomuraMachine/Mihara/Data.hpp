@@ -18,7 +18,7 @@ v1_00/130105 hmIto
 	hmrComからデータ型関連の宣言の未分離
 */
 
-#include<hmLib_v3_06/cstring.h>
+#include<hmLib/cstring.h>
 #include<homuraLib/hmrVMC1.h>
 
 namespace hmr {

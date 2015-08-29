@@ -79,7 +79,7 @@ v1_00/120921 hmIto
 	バージョン管理開始
 
 */
-#include<hmLib_v3_06/cqueue.h>
+#include<hmLib/cqueue.h>
 #include<homuraLib/hmrVMC1.h>
 #include"Data.hpp"
 

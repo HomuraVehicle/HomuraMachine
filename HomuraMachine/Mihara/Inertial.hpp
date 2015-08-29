@@ -23,13 +23,13 @@ v0_01/130105 iwahori
 v0_00/121208 hmIto
 	Šî–{ŠÖ”ì¬
 */
-#include<hmLib_v3_06/cstring.h>
+#include<hmLib/cstring.h>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/module/GyroL3G4200D.hpp>
 #include<homuraLib_v2/machine/module/AcceleCompassLSM303DLH.hpp>
 #include<homuraLib_v2/task.hpp>
 #include<XC32Lib/i2c.hpp>
-#include<hmLib_v3_06/coordinates.hpp>
+#include<hmLib/coordinates.hpp>
 namespace hmr {
 	namespace machine {
 		namespace mihara {

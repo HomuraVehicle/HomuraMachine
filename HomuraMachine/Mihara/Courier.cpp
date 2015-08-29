@@ -1,7 +1,7 @@
 #ifndef HMR_MACHINE_MIHARA_COURIER_CPP_INC
 #define HMR_MACHINE_MIHARA_COURIER_CPP_INC 100
 #
-#include<hmLib_v3_06/type.h>
+#include<hmLib/type.h>
 #include"Courier.hpp"
 #include"Device.hpp"
 #include"Com.hpp"

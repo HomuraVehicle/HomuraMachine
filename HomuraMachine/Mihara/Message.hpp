@@ -46,7 +46,7 @@ v1_00/121005 hmIto
 	Ç–Ç∆Ç‹Ç∏ÅAäÆê¨
 */
 #include<homuraLib_v2/type.hpp>
-#include<hmLib_v3_06/cstring.h>
+#include<hmLib/cstring.h>
 #include"Com.hpp"
 
 namespace hmr {

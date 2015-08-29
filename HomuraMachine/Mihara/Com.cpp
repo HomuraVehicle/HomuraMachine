@@ -3,9 +3,9 @@
 #
 #include<cstdlib>
 #define HMLIB_NOLIB
-#include<hmLib_v3_06/cqueue.h>
-#include<hmLib_v3_06/cstring.h>
-#include<hmLib_v3_06/type.h>
+#include<hmLib/cqueue.h>
+#include<hmLib/cstring.h>
+#include<hmLib/type.h>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>

@@ -1,7 +1,7 @@
 #ifndef HMR_MACHINE_MIHARA_COURIER_INC
 #define HMR_MACHINE_MIHARA_COURIER_INC 100
 #
-#include<hmLib_v3_06/type.h>
+#include<hmLib/type.h>
 namespace hmr {
 	namespace machine{
 		namespace mihara {

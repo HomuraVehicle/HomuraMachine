@@ -13,7 +13,7 @@ v1_01/131013 hmIto
 */
 
 #include<homuraLib_v2/type.hpp>
-#include<hmLib_v3_06/cstring.h>
+#include<hmLib/cstring.h>
 #include"Device.hpp"
 
 namespace hmr{

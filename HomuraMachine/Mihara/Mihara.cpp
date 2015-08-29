@@ -68,7 +68,7 @@ v1_00/120921 hmIto
 	バージョン管理開始
 	ファイルを複数に分割
 */
-#include <homuraLib/hmrVMC1.h>
+#include <homuraLib_v2/old/hmrVMC1.h>
 #include <homuraLib_v2/machine/service/delay.hpp>
 #include <homuraLib_v2/machine/service/task.hpp>
 #include <homuraLib_v2/type.hpp>
