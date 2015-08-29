@@ -20,10 +20,13 @@
       <UniqueIdentifier>{1ccfeafc-552d-476a-b477-f65091cf87d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common\XC32">
-      <UniqueIdentifier>{c9caf8bd-e5a6-4249-a05b-30c5705fd967}</UniqueIdentifier>
+      <UniqueIdentifier>{99e7ef69-7a7c-430c-8532-2e36551561d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\XC32\sfr">
-      <UniqueIdentifier>{8da1e083-3503-4427-a9af-d317ae47f8fb}</UniqueIdentifier>
+    <Filter Include="Common\hmLib">
+      <UniqueIdentifier>{e10fc399-abef-4e2c-99a5-d59b6b851245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\homuraLib_v2">
+      <UniqueIdentifier>{143c4fbc-7d94-484a-a26d-6feb7f2e52f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -72,86 +75,38 @@
     <ClCompile Include="Thermo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\clock.cpp">
+    <ClCompile Include="..\..\XC32\clock.cpp">
       <Filter>Common\XC32</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\interrupt.cpp">
+    <ClCompile Include="..\..\XC32\interrupt.cpp">
       <Filter>Common\XC32</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\i2c1.cpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClCompile Include="..\..\hmLib\hmLib\cdeque.c">
+      <Filter>Common\hmLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\i2c2.cpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClCompile Include="..\..\hmLib\hmLib\comgate.cpp">
+      <Filter>Common\hmLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\i2c3.cpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClCompile Include="..\..\hmLib\hmLib\coordinates.cpp">
+      <Filter>Common\hmLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\i2c4.cpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClCompile Include="..\..\hmLib\hmLib\cqueue.c">
+      <Filter>Common\hmLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\i2c5.cpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClCompile Include="..\..\hmLib\hmLib\cstack.c">
+      <Filter>Common\hmLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\rtcc.cpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClCompile Include="..\..\hmLib\hmLib\cstring.c">
+      <Filter>Common\hmLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\spi1.cpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClCompile Include="..\..\hmLib\hmLib\debugstream.cpp">
+      <Filter>Common\hmLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\spi2.cpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClCompile Include="..\..\hmLib\hmLib\random.cpp">
+      <Filter>Common\hmLib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\spi3.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\spi4.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\timer1.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\timer2.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\timer3.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\timer4.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\timer5.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\timer6.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\timer7.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\timer8.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\timer9.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\uart1.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\uart2.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\uart3.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\uart4.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\uart5.cpp">
-      <Filter>Common\XC32\sfr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Common\XC32\sfr\uart6.cpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClCompile Include="..\..\homuraLib_v2\crc8.c">
+      <Filter>Common\homuraLib_v2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,191 +179,215 @@
     <ClInclude Include="Thermo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\allocator.hpp">
+    <ClInclude Include="..\..\XCBase\allocator.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\array_queue.hpp">
+    <ClInclude Include="..\..\XCBase\array_queue.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\bytes.hpp">
+    <ClInclude Include="..\..\XCBase\bytes.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\constexpr_no.hpp">
+    <ClInclude Include="..\..\XCBase\constexpr_no.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\either.hpp">
+    <ClInclude Include="..\..\XCBase\either.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\exceptions.hpp">
+    <ClInclude Include="..\..\XCBase\exceptions.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\function.hpp">
+    <ClInclude Include="..\..\XCBase\function.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\future.hpp">
+    <ClInclude Include="..\..\XCBase\future.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\lock.hpp">
+    <ClInclude Include="..\..\XCBase\lock.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\rvalue_reference.hpp">
+    <ClInclude Include="..\..\XCBase\rvalue_reference.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\shared_bytes.hpp">
+    <ClInclude Include="..\..\XCBase\shared_bytes.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\type.hpp">
+    <ClInclude Include="..\..\XCBase\type.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\type_traits.hpp">
+    <ClInclude Include="..\..\XCBase\type_traits.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\adc.hpp">
+    <ClInclude Include="..\..\XC32\adc.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\clock.hpp">
+    <ClInclude Include="..\..\XC32\clock.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\device.hpp">
+    <ClInclude Include="..\..\XC32\device.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\exceptions.hpp">
+    <ClInclude Include="..\..\XC32\exceptions.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\i2c.hpp">
+    <ClInclude Include="..\..\XC32\i2c.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\interrupt.hpp">
+    <ClInclude Include="..\..\XC32\interrupt.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\interrupt_safe_allocator.hpp">
+    <ClInclude Include="..\..\XC32\interrupt_safe_allocator.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\longtimer.hpp">
+    <ClInclude Include="..\..\XC32\longtimer.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\pin.hpp">
+    <ClInclude Include="..\..\XC32\pin.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\spi.hpp">
+    <ClInclude Include="..\..\XC32\spi.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\timer.hpp">
+    <ClInclude Include="..\..\XC32\timer.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\uart.hpp">
+    <ClInclude Include="..\..\XC32\uart.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\wdt.hpp">
+    <ClInclude Include="..\..\XC32\wdt.hpp">
       <Filter>Common\XC32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\adc_base.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\algorithm.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\adc1.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\any_iterator.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\analog.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\array_queue.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\exclusive_mixin.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\bufgate.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\i2c1.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\cdeque.h">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\i2c2.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\color.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\i2c3.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\comgate.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\i2c4.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\config_vc.h">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\i2c5.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\coordinates.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\interrupt.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\cqueue.h">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\port.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\cstack.h">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\reset.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\cstring.h">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\rtcc.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\date.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\sfr_register_mixin.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\debugstream.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\spi1.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\exceptions.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\spi2.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\filterbuf.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\spi3.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\gate.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\spi4.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\gps.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\timer_base.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\inquiries.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\timer1.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\mutex_proxy.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\timer2.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\position.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\timer3.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\random.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\timer4.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\rectangle.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\timer5.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\signals.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\timer6.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\stream_utility.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\timer7.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\streambuf_interface.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\timer8.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\type.h">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\timer9.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\typemanage.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\uart_base.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\utility.hpp">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\uart1.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\hmLib\hmLib\version.h">
+      <Filter>Common\hmLib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\uart2.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\homuraLib_v2\allocator.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\uart3.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\homuraLib_v2\chrono.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\uart4.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\homuraLib_v2\code.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\uart5.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\homuraLib_v2\crc8.h">
+      <Filter>Common\homuraLib_v2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\uart6.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\homuraLib_v2\exceptions.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XC32\sfr\wdt.hpp">
-      <Filter>Common\XC32\sfr</Filter>
+    <ClInclude Include="..\..\homuraLib_v2\gate.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\gate_adaptor.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\gps.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\io.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\message.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\raw_data.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\static_buffer_allocator.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\task.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\type.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
