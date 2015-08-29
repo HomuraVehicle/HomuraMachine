@@ -1,6 +1,7 @@
 #ifndef HMR_MACHINE_MIHARA_INC
 #define HMR_MACHINE_MIHARA_INC 0
 #
+#
 #define HMLIB_NOLIB
 /*
 === HomuraMachine_Mihara ===
