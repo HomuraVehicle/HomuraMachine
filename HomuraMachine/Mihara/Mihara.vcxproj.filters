@@ -19,6 +19,15 @@
     <Filter Include="Common\XCBase">
       <UniqueIdentifier>{1ccfeafc-552d-476a-b477-f65091cf87d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\XC32">
+      <UniqueIdentifier>{99e7ef69-7a7c-430c-8532-2e36551561d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\hmLib">
+      <UniqueIdentifier>{e10fc399-abef-4e2c-99a5-d59b6b851245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\homuraLib_v2">
+      <UniqueIdentifier>{143c4fbc-7d94-484a-a26d-6feb7f2e52f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Battery.cpp">
@@ -65,6 +74,39 @@
     </ClCompile>
     <ClCompile Include="Thermo.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XC32\clock.cpp">
+      <Filter>Common\XC32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XC32\interrupt.cpp">
+      <Filter>Common\XC32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\hmLib\hmLib\cdeque.c">
+      <Filter>Common\hmLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\hmLib\hmLib\comgate.cpp">
+      <Filter>Common\hmLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\hmLib\hmLib\coordinates.cpp">
+      <Filter>Common\hmLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\hmLib\hmLib\cqueue.c">
+      <Filter>Common\hmLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\hmLib\hmLib\cstack.c">
+      <Filter>Common\hmLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\hmLib\hmLib\cstring.c">
+      <Filter>Common\hmLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\hmLib\hmLib\debugstream.cpp">
+      <Filter>Common\hmLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\hmLib\hmLib\random.cpp">
+      <Filter>Common\hmLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\homuraLib_v2\crc8.c">
+      <Filter>Common\homuraLib_v2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,44 +179,215 @@
     <ClInclude Include="Thermo.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\allocator.hpp">
+    <ClInclude Include="..\..\XCBase\allocator.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\array_queue.hpp">
+    <ClInclude Include="..\..\XCBase\array_queue.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\bytes.hpp">
+    <ClInclude Include="..\..\XCBase\bytes.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\constexpr_no.hpp">
+    <ClInclude Include="..\..\XCBase\constexpr_no.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\either.hpp">
+    <ClInclude Include="..\..\XCBase\either.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\exceptions.hpp">
+    <ClInclude Include="..\..\XCBase\exceptions.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\function.hpp">
+    <ClInclude Include="..\..\XCBase\function.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\future.hpp">
+    <ClInclude Include="..\..\XCBase\future.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\lock.hpp">
+    <ClInclude Include="..\..\XCBase\lock.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\rvalue_reference.hpp">
+    <ClInclude Include="..\..\XCBase\rvalue_reference.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\shared_bytes.hpp">
+    <ClInclude Include="..\..\XCBase\shared_bytes.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\type.hpp">
+    <ClInclude Include="..\..\XCBase\type.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Common\XCBase\type_traits.hpp">
+    <ClInclude Include="..\..\XCBase\type_traits.hpp">
       <Filter>Common\XCBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\adc.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\clock.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\device.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\exceptions.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\i2c.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\interrupt.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\interrupt_safe_allocator.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\longtimer.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\pin.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\spi.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\timer.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\uart.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XC32\wdt.hpp">
+      <Filter>Common\XC32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\algorithm.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\any_iterator.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\array_queue.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\bufgate.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\cdeque.h">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\color.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\comgate.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\config_vc.h">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\coordinates.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\cqueue.h">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\cstack.h">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\cstring.h">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\date.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\debugstream.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\exceptions.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\filterbuf.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\gate.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\gps.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\inquiries.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\mutex_proxy.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\position.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\random.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\rectangle.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\signals.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\stream_utility.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\streambuf_interface.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\type.h">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\typemanage.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\utility.hpp">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\hmLib\hmLib\version.h">
+      <Filter>Common\hmLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\allocator.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\chrono.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\code.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\crc8.h">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\exceptions.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\gate.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\gate_adaptor.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\gps.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\io.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\message.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\raw_data.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\static_buffer_allocator.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\task.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\type.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
