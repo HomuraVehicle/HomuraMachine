@@ -80,7 +80,7 @@ v1_00/120921 hmIto
 
 */
 #include<hmLib/cqueue.h>
-#include<homuraLib/hmrVMC1.h>
+#include<homuraLib_v2/old/hmrVMC1.h>
 #include"Data.hpp"
 
 #define HMR_COM_PACTRMNID 0xF0

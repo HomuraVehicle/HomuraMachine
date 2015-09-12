@@ -19,7 +19,7 @@ v1_00/130105 hmIto
 */
 
 #include<hmLib/cstring.h>
-#include<homuraLib/hmrVMC1.h>
+#include<homuraLib_v2/old/hmrVMC1.h>
 
 namespace hmr {
 	namespace machine {

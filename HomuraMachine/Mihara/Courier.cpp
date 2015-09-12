@@ -5,7 +5,7 @@
 #include"Courier.hpp"
 #include"Device.hpp"
 #include"Com.hpp"
-#include<homuraLib/hmrVMC1.h>
+#include<homuraLib_v2/old/hmrVMC1.h>
 namespace hmr {
 	namespace machine{
 		namespace mihara {
