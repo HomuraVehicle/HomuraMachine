@@ -28,7 +28,7 @@ v0_00/121208 hmIto
 #include<homuraLib_v2/machine/module/GyroL3G4200D.hpp>
 #include<homuraLib_v2/machine/module/AcceleCompassLSM303DLH.hpp>
 #include<homuraLib_v2/task.hpp>
-#include<XC32Lib/i2c.hpp>
+#include<XC32/i2c.hpp>
 #include<hmLib/coordinates.hpp>
 namespace hmr {
 	namespace machine {

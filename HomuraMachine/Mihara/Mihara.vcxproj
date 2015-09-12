@@ -39,7 +39,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(USERPROFILE)\Documents\Git\Common;$(USERPROFILE)\Documents\Git\HomuraMachine;$(IncludePath)</IncludePath>
+    <IncludePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(IncludePath)</IncludePath>
+    <SourcePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(IncludePath)</IncludePath>
+    <SourcePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -75,8 +80,38 @@
     <ClCompile Include="..\..\hmLib\hmLib\debugstream.cpp" />
     <ClCompile Include="..\..\hmLib\hmLib\random.cpp" />
     <ClCompile Include="..\..\homuraLib_v2\crc8.c" />
+    <ClCompile Include="..\..\homuraLib_v2\machine\device\kk10.cpp" />
+    <ClCompile Include="..\..\homuraLib_v2\machine\device\p24EP512GU810_defines.c" />
+    <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mx795f512h_forVC.c" />
+    <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_forVC.c" />
+    <ClCompile Include="..\..\homuraLib_v2\machine\service\functional_task.cpp" />
     <ClCompile Include="..\..\XC32\clock.cpp" />
     <ClCompile Include="..\..\XC32\interrupt.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\i2c1.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\i2c2.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\i2c3.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\i2c4.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\i2c5.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\rtcc.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\spi1.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\spi2.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\spi3.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\spi4.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\timer1.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\timer2.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\timer3.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\timer4.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\timer5.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\timer6.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\timer7.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\timer8.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\timer9.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\uart1.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\uart2.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\uart3.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\uart4.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\uart5.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\uart6.cpp" />
     <ClCompile Include="Battery.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CO2.cpp" />
@@ -94,6 +129,7 @@
     <ClCompile Include="Thermo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\device_include.h" />
     <ClInclude Include="..\..\hmLib\hmLib\algorithm.hpp" />
     <ClInclude Include="..\..\hmLib\hmLib\any_iterator.hpp" />
     <ClInclude Include="..\..\hmLib\hmLib\array_queue.hpp" />
@@ -124,6 +160,8 @@
     <ClInclude Include="..\..\hmLib\hmLib\typemanage.hpp" />
     <ClInclude Include="..\..\hmLib\hmLib\utility.hpp" />
     <ClInclude Include="..\..\hmLib\hmLib\version.h" />
+    <ClInclude Include="..\..\hmLib_config.h" />
+    <ClInclude Include="..\..\homuraLib_config.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\allocator.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\chrono.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\code.hpp" />
@@ -133,11 +171,38 @@
     <ClInclude Include="..\..\homuraLib_v2\gate_adaptor.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\gps.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\io.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\kk10.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p24EP256GU810.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p24EP512GU810_defines.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512h_defines.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512h_forVC.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512l_defines.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512l_forVC.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_defines.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_forVC.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_defines.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\module\AcceleCompassLSM303DLH.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\module\GPS52D.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\module\GPSSwitcher.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\module\GyroL3G4200D.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\module\Motor.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\module\Sprite.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\module\Sprite\command.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\module\Sprite\command_uart.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\service\chrono.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\service\delay.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\service\exclusive_delay.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\service\functional_task.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\service\lock_code.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\service\safe_cstring.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\service\task.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\message.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\raw_data.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\static_buffer_allocator.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\task.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\type.hpp" />
+    <ClInclude Include="..\..\local_allocator.hpp" />
+    <ClInclude Include="..\..\XC32_config.hpp" />
     <ClInclude Include="..\..\XC32\adc.hpp" />
     <ClInclude Include="..\..\XC32\clock.hpp" />
     <ClInclude Include="..\..\XC32\device.hpp" />
@@ -147,6 +212,53 @@
     <ClInclude Include="..\..\XC32\interrupt_safe_allocator.hpp" />
     <ClInclude Include="..\..\XC32\longtimer.hpp" />
     <ClInclude Include="..\..\XC32\pin.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\adc1.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\adc_base.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\analog.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\exclusive_mixin.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\i2c1.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\i2c2.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\i2c3.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\i2c4.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\i2c5.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\interrupt.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port\portA.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port\portB.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port\portC.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port\portD.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port\portE.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port\portF.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port\portG.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port\portH.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port\portI.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port\portJ.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\port\portK.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\reset.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\rtcc.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\sfr_register_mixin.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\spi1.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\spi2.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\spi3.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\spi4.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\timer1.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\timer2.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\timer3.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\timer4.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\timer5.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\timer6.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\timer7.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\timer8.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\timer9.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\timer_base.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\uart1.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\uart2.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\uart3.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\uart4.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\uart5.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\uart6.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\uart_base.hpp" />
+    <ClInclude Include="..\..\XC32\sfr\wdt.hpp" />
     <ClInclude Include="..\..\XC32\spi.hpp" />
     <ClInclude Include="..\..\XC32\timer.hpp" />
     <ClInclude Include="..\..\XC32\uart.hpp" />
@@ -164,6 +276,7 @@
     <ClInclude Include="..\..\XCBase\shared_bytes.hpp" />
     <ClInclude Include="..\..\XCBase\type.hpp" />
     <ClInclude Include="..\..\XCBase\type_traits.hpp" />
+    <ClInclude Include="..\..\xc_config.hpp" />
     <ClInclude Include="Battery.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CO2.hpp" />

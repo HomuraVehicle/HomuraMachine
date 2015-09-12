@@ -1,9 +1,9 @@
 #ifndef HMR_DEVICEMANAGE_C_INC
 #define HMR_DEVICEMANAGE_C_INC 200
 #
-#include<XC32Lib/i2c.hpp>
-#include<XC32Lib/spi.hpp>
-#include<XC32Lib/uart.hpp>
+#include<XC32/i2c.hpp>
+#include<XC32/spi.hpp>
+#include<XC32/uart.hpp>
 #include<homuraLib_v2/machine/service/delay.hpp>
 #include<homuraLib_v2/machine/service/exclusive_delay.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>

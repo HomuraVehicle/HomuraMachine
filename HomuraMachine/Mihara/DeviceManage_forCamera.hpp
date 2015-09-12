@@ -2,7 +2,7 @@
 #define HMR_MACHINE_MIHARA_DEVICEMANAGEFORCAMERA_INC 100
 #
 #include<homuraLib_v2/type.hpp>
-#include<XC32Lib/sfr/interrupt.hpp>
+#include<XC32/sfr/interrupt.hpp>
 namespace hmr {
 	namespace machine {
 		namespace mihara {

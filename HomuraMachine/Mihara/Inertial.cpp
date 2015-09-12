@@ -4,7 +4,7 @@
 /*===航行情報用モジュール群===
 */
 #define HMLIB_NOLIB
-#include<XC32Lib/i2c.hpp>
+#include<XC32/i2c.hpp>
 #include<homuraLib_v2/machine/service/exclusive_delay.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>
