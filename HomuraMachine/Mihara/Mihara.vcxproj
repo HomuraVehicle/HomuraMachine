@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -13,18 +13,19 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F5545CB4-6BBC-4973-9F73-1B9F8C69D419}</ProjectGuid>
     <RootNamespace>Mihara</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -39,8 +40,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(IncludePath)</IncludePath>
-    <SourcePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(SourcePath)</SourcePath>
+    <IncludePath>$(USERPROFILE)\Documents\Projects\HomuraMachine;$(USERPROFILE)\Documents\Projects\HomuraMachine\hmLib;$(IncludePath)</IncludePath>
+    <SourcePath>$(USERPROFILE)\Documents\Git\HomuraMachine;C:\Users\hmIto\Documents\Projects\HomuraMachine\hmLib;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(IncludePath)</IncludePath>
@@ -72,19 +73,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\hmLib\hmLib\cdeque.c" />
-    <ClCompile Include="..\..\hmLib\hmLib\comgate.cpp" />
     <ClCompile Include="..\..\hmLib\hmLib\coordinates.cpp" />
     <ClCompile Include="..\..\hmLib\hmLib\cqueue.c" />
     <ClCompile Include="..\..\hmLib\hmLib\cstack.c" />
     <ClCompile Include="..\..\hmLib\hmLib\cstring.c" />
-    <ClCompile Include="..\..\hmLib\hmLib\debugstream.cpp" />
     <ClCompile Include="..\..\hmLib\hmLib\random.cpp" />
     <ClCompile Include="..\..\homuraLib_v2\crc8.c" />
     <ClCompile Include="..\..\homuraLib_v2\machine\device\kk10.cpp" />
     <ClCompile Include="..\..\homuraLib_v2\machine\device\p24EP512GU810_defines.c" />
     <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mx795f512h_forVC.c" />
     <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_forVC.c" />
+    <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.c" />
     <ClCompile Include="..\..\homuraLib_v2\machine\service\functional_task.cpp" />
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVCom1.c" />
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVComData.c" />
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVIC1.c" />
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVMC1.c" />
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVMC1x.c" />
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVMC2.c" />
     <ClCompile Include="..\..\XC32\clock.cpp" />
     <ClCompile Include="..\..\XC32\interrupt.cpp" />
     <ClCompile Include="..\..\XC32\sfr\i2c1.cpp" />
@@ -116,7 +122,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CO2.cpp" />
     <ClCompile Include="Com.cpp" />
-    <ClCompile Include="Courier.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="DeviceManage.cpp" />
     <ClCompile Include="DeviceManageMessage.cpp" />
@@ -181,6 +186,7 @@
     <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_defines.h" />
     <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_forVC.h" />
     <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_defines.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.h" />
     <ClInclude Include="..\..\homuraLib_v2\machine\module\AcceleCompassLSM303DLH.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\machine\module\GPS52D.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\machine\module\GPSSwitcher.hpp" />
@@ -197,6 +203,15 @@
     <ClInclude Include="..\..\homuraLib_v2\machine\service\safe_cstring.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\machine\service\task.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\message.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\old\crc7_sd.h" />
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVCom1.h" />
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVComData.h" />
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVIC1.h" />
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVIC1Gate.hpp" />
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVMC1.h" />
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVMC1x.h" />
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVMC2.h" />
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVMC2Gate.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\raw_data.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\static_buffer_allocator.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\task.hpp" />
@@ -281,7 +296,6 @@
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CO2.hpp" />
     <ClInclude Include="Com.hpp" />
-    <ClInclude Include="Courier.hpp" />
     <ClInclude Include="Data.hpp" />
     <ClInclude Include="Device.hpp" />
     <ClInclude Include="DeviceManage.hpp" />
