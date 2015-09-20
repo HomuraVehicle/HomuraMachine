@@ -47,6 +47,9 @@
     <Filter Include="HomuraMachine\Mihara">
       <UniqueIdentifier>{5752d59e-f3c9-428e-8f3e-58d659e4a2d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\homuraLib_v2\old">
+      <UniqueIdentifier>{a00a8173-9bac-414d-ac4b-ff95842dca9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\XC32\clock.cpp">
@@ -56,9 +59,6 @@
       <Filter>Common\XC32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\hmLib\hmLib\cdeque.c">
-      <Filter>Common\hmLib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\hmLib\hmLib\comgate.cpp">
       <Filter>Common\hmLib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\hmLib\hmLib\coordinates.cpp">
@@ -71,9 +71,6 @@
       <Filter>Common\hmLib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\hmLib\hmLib\cstring.c">
-      <Filter>Common\hmLib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\hmLib\hmLib\debugstream.cpp">
       <Filter>Common\hmLib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\hmLib\hmLib\random.cpp">
@@ -178,9 +175,6 @@
     <ClCompile Include="Com.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
-    <ClCompile Include="Courier.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
     <ClCompile Include="Data.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
@@ -216,6 +210,27 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVCom1.c">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVComData.c">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVIC1.c">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVMC1.c">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVMC1x.c">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\homuraLib_v2\old\hmrVMC2.c">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.c">
+      <Filter>Common\homuraLib_v2\machine\device</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -663,9 +678,6 @@
     <ClInclude Include="Com.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
-    <ClInclude Include="Courier.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
     <ClInclude Include="Data.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
@@ -731,6 +743,33 @@
     </ClInclude>
     <ClInclude Include="..\..\XC32_config.hpp">
       <Filter>HomuraMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\old\crc7_sd.h">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVCom1.h">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVComData.h">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVIC1.h">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVIC1Gate.hpp">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVMC1.h">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVMC1x.h">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVMC2.h">
+      <Filter>Common\homuraLib_v2\old</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\old\hmrVMC2Gate.hpp">
+      <Filter>Common\homuraLib_v2\old</Filter>
     </ClInclude>
     <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.h">
       <Filter>Common\homuraLib_v2\machine\device</Filter>
