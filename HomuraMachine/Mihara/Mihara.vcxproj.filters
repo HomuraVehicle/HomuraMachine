@@ -732,5 +732,8 @@
     <ClInclude Include="..\..\XC32_config.hpp">
       <Filter>HomuraMachine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.h">
+      <Filter>Common\homuraLib_v2\machine\device</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

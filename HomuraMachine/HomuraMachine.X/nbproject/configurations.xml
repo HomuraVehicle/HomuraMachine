@@ -157,6 +157,10 @@
     <Elem>../../../Common/hmLib_v3_06</Elem>
     <Elem>../../../Common/homuraLib_v2/old</Elem>
     <Elem>../../../Common/hmLib/hmLib</Elem>
+    <Elem>../../hmLib/hmLib</Elem>
+    <Elem>../../homuraLib_v2/old</Elem>
+    <Elem>../../homuraLib_v2/machine/device</Elem>
+    <Elem>../../XC32</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

@@ -181,6 +181,7 @@
     <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_defines.h" />
     <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_forVC.h" />
     <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_defines.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.h" />
     <ClInclude Include="..\..\homuraLib_v2\machine\module\AcceleCompassLSM303DLH.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\machine\module\GPS52D.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\machine\module\GPSSwitcher.hpp" />
