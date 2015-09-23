@@ -1,6 +1,3 @@
-[submodule "hmLib"]
-	path = hmLib
-	url = https://github.com/hmito/hmLib.git
 [submodule "XCBase"]
 	path = XCBase
 	url = https://github.com/HomuraVehicle/XCBase.git
