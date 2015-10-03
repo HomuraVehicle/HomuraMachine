@@ -50,6 +50,9 @@
     <Filter Include="Common\homuraLib_v2\old">
       <UniqueIdentifier>{a00a8173-9bac-414d-ac4b-ff95842dca9b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\homuraLib_v2\task">
+      <UniqueIdentifier>{a5203e34-e51e-4089-8803-2a3c9cc3e9fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\XC32\clock.cpp">
@@ -773,6 +776,21 @@
     </ClInclude>
     <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.h">
       <Filter>Common\homuraLib_v2\machine\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\task\utility.hpp">
+      <Filter>Common\homuraLib_v2\task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\task\watchdog.hpp">
+      <Filter>Common\homuraLib_v2\task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\task\client_interface.hpp">
+      <Filter>Common\homuraLib_v2\task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\task\functional_host.hpp">
+      <Filter>Common\homuraLib_v2\task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\task\host_interface.hpp">
+      <Filter>Common\homuraLib_v2\task</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

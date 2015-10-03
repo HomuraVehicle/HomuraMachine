@@ -14,89 +14,96 @@
                    projectFiles="true">
       <logicalFolder name="f2" displayName="Common" projectFiles="true">
         <logicalFolder name="f1" displayName="hmLib" projectFiles="true">
-          <itemPath>../../../Common/hmLib/hmLib/cdeque.c</itemPath>
-          <itemPath>../../../Common/hmLib/hmLib/coordinates.cpp</itemPath>
-          <itemPath>../../../Common/hmLib/hmLib/cqueue.c</itemPath>
-          <itemPath>../../../Common/hmLib/hmLib/cstack.c</itemPath>
-          <itemPath>../../../Common/hmLib/hmLib/cstring.c</itemPath>
-          <itemPath>../../../Common/hmLib/hmLib/random.cpp</itemPath>
+          <itemPath>../../hmLib/hmLib/cdeque.c</itemPath>
+          <itemPath>../../hmLib/hmLib/coordinates.cpp</itemPath>
+          <itemPath>../../hmLib/hmLib/cqueue.c</itemPath>
+          <itemPath>../../hmLib/hmLib/cstack.c</itemPath>
+          <itemPath>../../hmLib/hmLib/cstring.c</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="homuraLib_v2" projectFiles="true">
-          <itemPath>../../../Common/homuraLib_v2/old/hmrVCom1.c</itemPath>
-          <itemPath>../../../Common/homuraLib_v2/old/hmrVCom1.h</itemPath>
-          <itemPath>../../../Common/homuraLib_v2/old/hmrVComData.c</itemPath>
-          <itemPath>../../../Common/homuraLib_v2/old/hmrVComData.h</itemPath>
-          <itemPath>../../../Common/homuraLib_v2/old/hmrVIC1.c</itemPath>
-          <itemPath>../../../Common/homuraLib_v2/old/hmrVIC1.h</itemPath>
-          <itemPath>../../../Common/homuraLib_v2/old/hmrVIC1Gate.hpp</itemPath>
-          <itemPath>../../../Common/homuraLib_v2/old/hmrVMC1.c</itemPath>
-          <itemPath>../../../Common/homuraLib_v2/old/hmrVMC1.h</itemPath>
-          <itemPath>../../../Common/homuraLib_v2/machine/device/kk10.cpp</itemPath>
+          <itemPath>../../homuraLib_v2/old/crc8.c</itemPath>
+          <itemPath>../../homuraLib_v2/old/hmrVCom1.c</itemPath>
+          <itemPath>../../homuraLib_v2/old/hmrVComData.c</itemPath>
+          <itemPath>../../homuraLib_v2/old/hmrVMC1.c</itemPath>
+          <itemPath>../../homuraLib_v2/old/hmrVMC1x.c</itemPath>
         </logicalFolder>
         <logicalFolder name="f3" displayName="XC32Lib" projectFiles="true">
-          <itemPath>../../../Common/XC32Lib/clock.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/interrupt.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/adc1.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/adc_base.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/analog.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/exclusive_mixin.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/i2c1.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/i2c1.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/i2c2.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/i2c2.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/i2c3.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/i2c3.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/i2c4.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/i2c4.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/i2c5.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/i2c5.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/interrupt.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/port.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/reset.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/rtcc.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/rtcc.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/sfr_register_mixin.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/spi1.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/spi1.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/spi2.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/spi2.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/spi3.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/spi3.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/spi4.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/spi4.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer1.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer1.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer2.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer2.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer3.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer3.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer4.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer4.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer5.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer5.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer6.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer6.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer7.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer7.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer8.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer8.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer9.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer9.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/timer_base.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart1.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart1.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart2.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart2.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart3.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart3.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart4.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart4.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart5.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart5.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart6.cpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart6.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/uart_base.hpp</itemPath>
-          <itemPath>../../../Common/XC32Lib/sfr/wdt.hpp</itemPath>
+          <itemPath>../../XC32/adc.hpp</itemPath>
+          <itemPath>../../XC32/clock.cpp</itemPath>
+          <itemPath>../../XC32/clock.hpp</itemPath>
+          <itemPath>../../XC32/device.hpp</itemPath>
+          <itemPath>../../XC32/exceptions.hpp</itemPath>
+          <itemPath>../../XC32/i2c.hpp</itemPath>
+          <itemPath>../../XC32/interrupt.cpp</itemPath>
+          <itemPath>../../XC32/interrupt.hpp</itemPath>
+          <itemPath>../../XC32/interrupt_safe_allocator.hpp</itemPath>
+          <itemPath>../../XC32/longtimer.hpp</itemPath>
+          <itemPath>../../XC32/pin.hpp</itemPath>
+          <itemPath>../../XC32/spi.hpp</itemPath>
+          <itemPath>../../XC32/timer.hpp</itemPath>
+          <itemPath>../../XC32/uart.hpp</itemPath>
+          <itemPath>../../XC32/wdt.hpp</itemPath>
+          <itemPath>../../XC32/sfr/adc1.hpp</itemPath>
+          <itemPath>../../XC32/sfr/adc_base.hpp</itemPath>
+          <itemPath>../../XC32/sfr/analog.hpp</itemPath>
+          <itemPath>../../XC32/sfr/exclusive_mixin.hpp</itemPath>
+          <itemPath>../../XC32/sfr/i2c1.cpp</itemPath>
+          <itemPath>../../XC32/sfr/i2c1.hpp</itemPath>
+          <itemPath>../../XC32/sfr/i2c2.cpp</itemPath>
+          <itemPath>../../XC32/sfr/i2c2.hpp</itemPath>
+          <itemPath>../../XC32/sfr/i2c3.cpp</itemPath>
+          <itemPath>../../XC32/sfr/i2c3.hpp</itemPath>
+          <itemPath>../../XC32/sfr/i2c4.cpp</itemPath>
+          <itemPath>../../XC32/sfr/i2c4.hpp</itemPath>
+          <itemPath>../../XC32/sfr/i2c5.cpp</itemPath>
+          <itemPath>../../XC32/sfr/i2c5.hpp</itemPath>
+          <itemPath>../../XC32/sfr/interrupt.hpp</itemPath>
+          <itemPath>../../XC32/sfr/port.hpp</itemPath>
+          <itemPath>../../XC32/sfr/reset.hpp</itemPath>
+          <itemPath>../../XC32/sfr/rtcc.cpp</itemPath>
+          <itemPath>../../XC32/sfr/rtcc.hpp</itemPath>
+          <itemPath>../../XC32/sfr/sfr_register_mixin.hpp</itemPath>
+          <itemPath>../../XC32/sfr/spi1.cpp</itemPath>
+          <itemPath>../../XC32/sfr/spi1.hpp</itemPath>
+          <itemPath>../../XC32/sfr/spi2.cpp</itemPath>
+          <itemPath>../../XC32/sfr/spi2.hpp</itemPath>
+          <itemPath>../../XC32/sfr/spi3.cpp</itemPath>
+          <itemPath>../../XC32/sfr/spi3.hpp</itemPath>
+          <itemPath>../../XC32/sfr/spi4.cpp</itemPath>
+          <itemPath>../../XC32/sfr/spi4.hpp</itemPath>
+          <itemPath>../../XC32/sfr/timer1.cpp</itemPath>
+          <itemPath>../../XC32/sfr/timer1.hpp</itemPath>
+          <itemPath>../../XC32/sfr/timer2.cpp</itemPath>
+          <itemPath>../../XC32/sfr/timer2.hpp</itemPath>
+          <itemPath>../../XC32/sfr/timer3.cpp</itemPath>
+          <itemPath>../../XC32/sfr/timer3.hpp</itemPath>
+          <itemPath>../../XC32/sfr/timer4.cpp</itemPath>
+          <itemPath>../../XC32/sfr/timer4.hpp</itemPath>
+          <itemPath>../../XC32/sfr/timer5.cpp</itemPath>
+          <itemPath>../../XC32/sfr/timer5.hpp</itemPath>
+          <itemPath>../../XC32/sfr/timer6.cpp</itemPath>
+          <itemPath>../../XC32/sfr/timer6.hpp</itemPath>
+          <itemPath>../../XC32/sfr/timer7.cpp</itemPath>
+          <itemPath>../../XC32/sfr/timer7.hpp</itemPath>
+          <itemPath>../../XC32/sfr/timer8.cpp</itemPath>
+          <itemPath>../../XC32/sfr/timer8.hpp</itemPath>
+          <itemPath>../../XC32/sfr/timer9.cpp</itemPath>
+          <itemPath>../../XC32/sfr/timer9.hpp</itemPath>
+          <itemPath>../../XC32/sfr/timer_base.hpp</itemPath>
+          <itemPath>../../XC32/sfr/uart1.cpp</itemPath>
+          <itemPath>../../XC32/sfr/uart1.hpp</itemPath>
+          <itemPath>../../XC32/sfr/uart2.cpp</itemPath>
+          <itemPath>../../XC32/sfr/uart2.hpp</itemPath>
+          <itemPath>../../XC32/sfr/uart3.cpp</itemPath>
+          <itemPath>../../XC32/sfr/uart3.hpp</itemPath>
+          <itemPath>../../XC32/sfr/uart4.cpp</itemPath>
+          <itemPath>../../XC32/sfr/uart4.hpp</itemPath>
+          <itemPath>../../XC32/sfr/uart5.cpp</itemPath>
+          <itemPath>../../XC32/sfr/uart5.hpp</itemPath>
+          <itemPath>../../XC32/sfr/uart6.cpp</itemPath>
+          <itemPath>../../XC32/sfr/uart6.hpp</itemPath>
+          <itemPath>../../XC32/sfr/uart_base.hpp</itemPath>
+          <itemPath>../../XC32/sfr/wdt.hpp</itemPath>
         </logicalFolder>
         <logicalFolder name="f4" displayName="XCBase" projectFiles="true">
         </logicalFolder>
@@ -111,8 +118,6 @@
           <itemPath>../Mihara/Camera.hpp</itemPath>
           <itemPath>../Mihara/Com.cpp</itemPath>
           <itemPath>../Mihara/Com.hpp</itemPath>
-          <itemPath>../Mihara/Courier.cpp</itemPath>
-          <itemPath>../Mihara/Courier.hpp</itemPath>
           <itemPath>../Mihara/Data.cpp</itemPath>
           <itemPath>../Mihara/Data.hpp</itemPath>
           <itemPath>../Mihara/Device.hpp</itemPath>
@@ -152,15 +157,15 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>../Mihara</Elem>
+    <Elem>../../hmLib/hmLib</Elem>
+    <Elem>../../XC32</Elem>
     <Elem>../../../Common/XC32Lib</Elem>
     <Elem>../../../Common/homuraLib_v2/machine/device</Elem>
     <Elem>../../../Common/hmLib_v3_06</Elem>
     <Elem>../../../Common/homuraLib_v2/old</Elem>
     <Elem>../../../Common/hmLib/hmLib</Elem>
-    <Elem>../../hmLib/hmLib</Elem>
     <Elem>../../homuraLib_v2/old</Elem>
     <Elem>../../homuraLib_v2/machine/device</Elem>
-    <Elem>../../XC32</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -204,8 +209,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories"
-                  value="..\..\..\Common;..\..\;..\..\..\Common\hmLib"/>
+        <property key="extra-include-directories" value="..\..\;..\..\hmLib"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
@@ -258,7 +262,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="1024"/>
+        <property key="heap-size" value="2048"/>
         <property key="input-libraries" value=""/>
         <property key="linker-symbols" value=""/>
         <property key="map-file" value="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"/>
@@ -283,8 +287,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories"
-                  value="..\..\..\Common;..\..\;..\..\..\Common\hmLib"/>
+        <property key="extra-include-directories" value="..\..\;..\..\hmLib"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
@@ -307,6 +310,7 @@
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
+        <appendMe value="-fpermissive"/>
       </C32Global>
       <ICD3PlatformTool>
         <property key="ADC" value="true"/>
@@ -321,6 +325,7 @@
         <property key="COMPARATOR" value="true"/>
         <property key="DMA" value="true"/>
         <property key="ETHERNET CONTROLLER" value="true"/>
+        <property key="Freeze All Other Peripherals" value="true"/>
         <property key="INPUT CAPTURE 1" value="true"/>
         <property key="INPUT CAPTURE 2" value="true"/>
         <property key="INPUT CAPTURE 3" value="true"/>
