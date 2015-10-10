@@ -14,10 +14,9 @@
                    projectFiles="true">
       <logicalFolder name="f2" displayName="Common" projectFiles="true">
         <logicalFolder name="f1" displayName="hmLib" projectFiles="true">
-          <itemPath>../../hmLib/hmLib/cdeque.c</itemPath>
           <itemPath>../../hmLib/hmLib/coordinates.cpp</itemPath>
+          <itemPath>../../hmLib/hmLib/cdeque.c</itemPath>
           <itemPath>../../hmLib/hmLib/cqueue.c</itemPath>
-          <itemPath>../../hmLib/hmLib/cstack.c</itemPath>
           <itemPath>../../hmLib/hmLib/cstring.c</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="homuraLib_v2" projectFiles="true">
@@ -26,6 +25,7 @@
           <itemPath>../../homuraLib_v2/old/hmrVComData.c</itemPath>
           <itemPath>../../homuraLib_v2/old/hmrVMC1.c</itemPath>
           <itemPath>../../homuraLib_v2/old/hmrVMC1x.c</itemPath>
+          <itemPath>../../homuraLib_v2/machine/device/kk10.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="f3" displayName="XC32Lib" projectFiles="true">
           <itemPath>../../XC32/adc.hpp</itemPath>
@@ -114,8 +114,6 @@
           <itemPath>../Mihara/Battery.hpp</itemPath>
           <itemPath>../Mihara/CO2.cpp</itemPath>
           <itemPath>../Mihara/CO2.hpp</itemPath>
-          <itemPath>../Mihara/Camera.cpp</itemPath>
-          <itemPath>../Mihara/Camera.hpp</itemPath>
           <itemPath>../Mihara/Com.cpp</itemPath>
           <itemPath>../Mihara/Com.hpp</itemPath>
           <itemPath>../Mihara/Data.cpp</itemPath>
@@ -146,6 +144,8 @@
           <itemPath>../Mihara/System_base.hpp</itemPath>
           <itemPath>../Mihara/Thermo.cpp</itemPath>
           <itemPath>../Mihara/Thermo.hpp</itemPath>
+          <itemPath>../Mihara/Camera.hpp</itemPath>
+          <itemPath>../Mihara/Camera.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
@@ -262,7 +262,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="2048"/>
+        <property key="heap-size" value="512"/>
         <property key="input-libraries" value=""/>
         <property key="linker-symbols" value=""/>
         <property key="map-file" value="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"/>
@@ -302,6 +302,7 @@
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
         <property key="use-indirect-calls" value="false"/>
+        <appendMe value="-fpermissive"/>
       </C32CPP>
       <C32Global>
         <property key="common-include-directories" value=""/>
@@ -310,7 +311,6 @@
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
-        <appendMe value="-fpermissive"/>
       </C32Global>
       <ICD3PlatformTool>
         <property key="ADC" value="true"/>

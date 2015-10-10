@@ -4,11 +4,11 @@
 #define HMLIB_NOLIB
 #include<homuraLib_v2/type.hpp>
 //#include<hmLib/cqueue.h>
-#include<homuraLib_v2/machine/module/Sprite.hpp>
+#include<homuraLib_v2/machine/module/TestSprite.hpp>
 #include<homuraLib_v2/machine/service/delay.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>
-#include"Camera.hpp"
+#include"TestCamera.hpp"
 #include"Device.hpp"
 namespace hmr {
 	namespace machine {
