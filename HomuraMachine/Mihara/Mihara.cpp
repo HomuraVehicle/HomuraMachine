@@ -182,7 +182,7 @@ int main(void){
 	bool IPacketMode = 0;
 	odata OData;
 	bool OPacketMode = 0;
-	hmr::sint8 debug_cnt = 0;
+//	hmr::sint8 debug_cnt = 0;
 
 	while(1){
 		Device();

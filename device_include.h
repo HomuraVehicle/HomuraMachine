@@ -1,6 +1,6 @@
 #ifndef DEVICE_INCLUDE_INC
 #define DEVICE_INCLUDE_INC 100
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__clang__ )
 #	define HMR_TEST
 #endif
 #ifndef HMR_TEST

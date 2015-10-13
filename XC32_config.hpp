@@ -2,7 +2,7 @@
 #define XC32_PIC32MZ
 
 //デバッグモード時は以下のマクロを有効
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__clang__ )
 #	define XC32_DEBUGMODE
 #endif
 

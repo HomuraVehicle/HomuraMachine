@@ -2,7 +2,7 @@
 #define HMR_HOMURALIBCONFIG_INC
 #
 //XC32関係を使いたくない場合は、以下のマクロを有効にする
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__clang__ )
 #	define HMR_NOXC32
 #endif
 

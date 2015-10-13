@@ -144,6 +144,10 @@ namespace hmr {
 					//の順で撮影シーケンスが実行される
 					
 				private:
+					my_type& Ref;
+					sprite_bytes_builder SpriteBytesBuilder;
+					sprite_canceler Canceler;
+				private:
 					struct sprite_bytes_builder{
 					private:
 						typedef hmr::static_buffer_allocator<unsigned char, 4096, 3, my_type> sprite_allocator;
@@ -166,15 +170,11 @@ namespace hmr {
 							return !Ref.PictureDataArray.full();
 						}
 					}CanCreateBytes;
-				private:
-					my_type& Ref;
-					sprite_bytes_builder SpriteBytesBuilder;
-					sprite_canceler Canceler;
 				public:
 					take_and_read_sequence(my_type& Ref_)
 						: Ref(Ref_)
-						, CanCreateBytes(Ref_)
-						, SpriteBytesBuilder(xc::ref(CanCreateBytes)){
+						, SpriteBytesBuilder(xc::ref(CanCreateBytes))
+						, CanCreateBytes(Ref_){
 					}
 				public:
 					bool start(camera::imagesize::type ImageSize_){

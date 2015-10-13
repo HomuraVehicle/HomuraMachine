@@ -14,11 +14,11 @@ namespace hmr {
 	namespace machine {
 		namespace mihara {
 			namespace camera{
+				struct sprite1_identifier{};
+				typedef cSpriteCamera<cDevice::sprite_device, sprite1_identifier> my_camera;
+				typedef typename my_camera::sprite_ans_type sprite_ans_type;
+				typedef typename my_camera::sprite_error_type sprite_error_type;
 				namespace{
-					struct sprite1_identifier{};
-					typedef cSpriteCamera<cDevice::sprite_device, sprite1_identifier> my_camera;
-					typedef my_camera::sprite_ans_type sprite_ans_type;
-					typedef my_camera::sprite_error_type sprite_error_type;
 
 					my_camera Camera;
 
