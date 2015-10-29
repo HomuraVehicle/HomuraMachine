@@ -66,7 +66,7 @@ namespace hmr {
 					hmLib::cqueue_destruct(&iBuf_Que);
 				}
 				//受信可能かを確認
-				bool iBuf_empty(void) { return hmLib::cqueue_empty(&iBuf_Que); }
+				bool iBuf_empty(void) { return hmLib::cqueue_empty(&iBuf_Que) != 0; }
 				//受信済みデータを削除する
 				void iBuf_move_pop(idata* pData_) {
 					if(iBuf_empty()) {
@@ -77,7 +77,7 @@ namespace hmr {
 					hmLib::cqueue_pop(&iBuf_Que);
 				}
 				//iBufにデータを挿入可能か確認
-				bool iBuf_full(void) { return hmLib::cqueue_full(&iBuf_Que); }
+				bool iBuf_full(void) { return hmLib::cqueue_full(&iBuf_Que) != 0; }
 				//iBufのサイズを取得する
 				hmLib::cqueue_size_t iBuf_size(void) { return hmLib::cqueue_size(&iBuf_Que); }
 				//iBufにデータを挿入する
@@ -119,7 +119,7 @@ namespace hmr {
 					hmLib::cqueue_destruct(&oBuf_Que);
 				}
 				//送信可能かを確認
-				bool oBuf_empty(void) { return hmLib::cqueue_empty(&oBuf_Que); }
+				bool oBuf_empty(void) { return hmLib::cqueue_empty(&oBuf_Que) != 0; }
 				//送信済みデータを削除する
 				void oBuf_move_pop(odata* pData_) {
 					if(oBuf_empty()) {
@@ -132,7 +132,7 @@ namespace hmr {
 				//oBufのサイズを取得する
 				hmLib::cqueue_size_t oBuf_size(void) { return hmLib::cqueue_size(&oBuf_Que); }
 				//送信可能かの確認
-				bool oBuf_full(void) { return hmLib::cqueue_full(&oBuf_Que); }
+				bool oBuf_full(void) { return hmLib::cqueue_full(&oBuf_Que)!=0; }
 				//送信バッファの末尾がパケット終了タグ
 				bool oBuf_isPacEnd(void) { return ((odata*)hmLib::cqueue_getptr(&oBuf_Que))->ID==HMR_COM_PACTRMNID; }
 				//送信用関数(受信済データ用)　送信データの先頭アドレス(Ptr)、送信データ長(Size)を引数に入れれば、その送信データを送信待ちバッファに送れる。

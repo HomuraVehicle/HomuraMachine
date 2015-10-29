@@ -142,11 +142,6 @@ namespace hmr {
 					//	...
 					//	operator()
 					//の順で撮影シーケンスが実行される
-					
-				private:
-					my_type& Ref;
-					sprite_bytes_builder SpriteBytesBuilder;
-					sprite_canceler Canceler;
 				private:
 					struct sprite_bytes_builder{
 					private:
@@ -170,11 +165,16 @@ namespace hmr {
 							return !Ref.PictureDataArray.full();
 						}
 					}CanCreateBytes;
+					
+				private:
+					my_type& Ref;
+					sprite_bytes_builder SpriteBytesBuilder;
+					sprite_canceler Canceler;
 				public:
 					take_and_read_sequence(my_type& Ref_)
-						: Ref(Ref_)
-						, SpriteBytesBuilder(xc::ref(CanCreateBytes))
-						, CanCreateBytes(Ref_){
+						: CanCreateBytes(Ref_)
+						, Ref(Ref_)
+						, SpriteBytesBuilder(xc::ref(CanCreateBytes)){
 					}
 				public:
 					bool start(camera::imagesize::type ImageSize_){
@@ -353,18 +353,18 @@ namespace hmr {
 				cSpriteCamera()
 					: SpriteLock(Sprite, true)
 					, PowerLightLock(PowerLight)
+					, IsAutoLight(false)
 					, Seq_take_and_read(*this)
 					, Seq_command_reset(*this)
 					, Seq_power_reset(*this)
-					, IsAutoLight(false)
-					, ReservedCommandReset(false)
+					, IsMiniPacketMode(false)
+					, IsAutoReset(false)
 					, ReservedImageSize(camera::imagesize::null)
 					, AutoTakeImageSize(camera::imagesize::null)
+					, ReservedCommandReset(false)
 					, CanGetResultTakeAndRead(false)
 					, CanGetResultCommandReset(false)
-					, CanGetResultPowerReset(false)
-					, IsMiniPacketMode(false)
-					, IsAutoReset(false){
+					, CanGetResultPowerReset(false){
 					PowerLight(false);
 				}
 				bool lock(){

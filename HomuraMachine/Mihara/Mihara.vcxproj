@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>LLVM-vs2014</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>LLVM-vs2014</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -44,7 +44,7 @@
     <SourcePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(IncludePath);C:\Users\homura\Documents\Git\HomuraMachine;C:\Users\homura\Documents\Git\HomuraMachine\hmLib</IncludePath>
+    <IncludePath>$(USERPROFILE)\Documents\Projects\HomuraMachine;$(USERPROFILE)\Documents\Projects\HomuraMachine\hmLib;$(IncludePath);C:\Users\homura\Documents\Projects\HomuraMachine;C:\Users\homura\Documents\Git\HomuraMachine\hmLib</IncludePath>
     <SourcePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -52,6 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -80,9 +81,15 @@
     <ClCompile Include="..\..\hmLib\hmLib\random.cpp" />
     <ClCompile Include="..\..\homuraLib_v2\crc8.c" />
     <ClCompile Include="..\..\homuraLib_v2\machine\device\kk10.cpp" />
-    <ClCompile Include="..\..\homuraLib_v2\machine\device\p24EP512GU810_defines.c" />
-    <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mx795f512h_forVC.c" />
-    <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_forVC.c" />
+    <ClCompile Include="..\..\homuraLib_v2\machine\device\p24EP512GU810_defines.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mx795f512h_forVC.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_forVC.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.c" />
     <ClCompile Include="..\..\homuraLib_v2\machine\service\functional_task.cpp" />
     <ClCompile Include="..\..\homuraLib_v2\old\hmrVCom1.c" />
@@ -177,14 +184,30 @@
     <ClInclude Include="..\..\homuraLib_v2\gps.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\io.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\machine\device\kk10.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\device\p24EP256GU810.h" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\device\p24EP512GU810_defines.h" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512h_defines.h" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512h_forVC.h" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512l_defines.h" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512l_forVC.h" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_defines.h" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_forVC.h" />
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p24EP256GU810.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p24EP512GU810_defines.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512h_defines.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512h_forVC.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512l_defines.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mx795f512l_forVC.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_defines.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048ecm100_forVC.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_defines.h" />
     <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.h" />
     <ClInclude Include="..\..\homuraLib_v2\machine\module\AcceleCompassLSM303DLH.hpp" />

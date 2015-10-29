@@ -85,7 +85,7 @@ namespace hmr {
 							uint8 LowData, HighData;
 
 							//homura-y軸書き込み
-							Data = RawData.x;
+							Data = static_cast<xc::uint16>(RawData.x);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
 							HighData = Data & 0x00FF;
@@ -94,7 +94,7 @@ namespace hmr {
 							hmLib::cstring_putc(pStr,4,HighData);
 
 							//homura-x軸書き込み（正負反転）
-							Data = -RawData.y;
+							Data = static_cast<xc::uint16>(-RawData.y);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
 							HighData = Data & 0x00FF;
@@ -103,7 +103,7 @@ namespace hmr {
 							hmLib::cstring_putc(pStr,2,HighData);
 
 							//homura-z軸書き込み（正負反転）
-							Data = -RawData.z;
+							Data = static_cast<xc::uint16>(-RawData.z);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
 							HighData = Data & 0x00FF;
@@ -176,7 +176,7 @@ namespace hmr {
 							uint16 Data;
 
 							//homura-x軸書き込み（正負反転）
-							Data = -RawData.y;
+							Data = static_cast<xc::uint16>(-RawData.y);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
 							HighData = Data & 0x00FF;
@@ -185,7 +185,7 @@ namespace hmr {
 							hmLib::cstring_putc(pStr, 2, HighData);
 
 							//homura-y軸書き込み
-							Data = RawData.x;
+							Data = static_cast<xc::uint16>(RawData.x);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
 							HighData = Data & 0x00FF;
@@ -194,7 +194,7 @@ namespace hmr {
 							hmLib::cstring_putc(pStr, 4, HighData);
 
 							//homura-z軸書き込み（正負反転）
-							Data = -RawData.z;
+							Data = static_cast<xc::uint16>(-RawData.z);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
 							HighData = Data & 0x00FF;
