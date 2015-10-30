@@ -82,7 +82,7 @@ v1_00/120921 hmIto
 #include "GPS.hpp"
 #include "Drive.hpp"
 #include "Inertial.hpp"
-//#include "Camera.hpp" 
+#include "Camera.hpp" 
 #include "Thermo.hpp"
 #include "Battery.hpp"
 #include "DeviceManage.hpp"
@@ -147,7 +147,7 @@ int main(void){
 	devmngmsg::initialize();
 	thermo::initialize();
 	battery::initialize();
-//	camera::initialize();
+	camera::initialize();
 	inertial::initialize();
 	co2::initialize();
 	motor::initialize();
@@ -160,7 +160,7 @@ int main(void){
 	message::regist('c',inertial::compass::setup_listen,inertial::compass::listen,inertial::compass::setup_talk,inertial::compass::talk);
 	message::regist('a',inertial::axel::setup_listen,inertial::axel::listen,inertial::axel::setup_talk,inertial::axel::talk);
 	message::regist('G',inertial::gyro::setup_listen,inertial::gyro::listen,inertial::gyro::setup_talk,inertial::gyro::talk);
-//	message::regist('j', camera::setup_listen, camera::listen, camera::setup_talk, camera::talk);
+	message::regist('j', camera::setup_listen, camera::listen, camera::setup_talk, camera::talk);
 	message::regist('g',gps::setup_listen,gps::listen,gps::task_setup_talk,gps::talk);
 	message::regist('b',battery::setup_listen,battery::listen,battery::task_setup_talk,battery::talk);
 	message::regist('C',co2::setup_listen,co2::listen,co2::task_setup_talk,co2::talk);
@@ -187,7 +187,7 @@ int main(void){
 	while(1){
 		Device();
 		Service();
-//		camera::work();
+		camera::work();
 		inertial::work();
 		//Watch Dog Timer リセット
 		devmng::clear_wdt();
@@ -279,7 +279,7 @@ int main(void){
 
 	//デバイス終端化
 	devmng::finalize();
-//	camera::finalize();
+	camera::finalize();
 	inertial::finalize();
 	thermo::finalize();
 	co2::finalize();
