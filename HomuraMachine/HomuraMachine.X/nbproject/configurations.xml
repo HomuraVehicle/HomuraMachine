@@ -26,6 +26,7 @@
           <itemPath>../../homuraLib_v2/old/hmrVMC1.c</itemPath>
           <itemPath>../../homuraLib_v2/old/hmrVMC1x.c</itemPath>
           <itemPath>../../homuraLib_v2/machine/device/kk10.cpp</itemPath>
+          <itemPath>../../homuraLib_v2/machine/module/Sprite/command.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="f3" displayName="XC32Lib" projectFiles="true">
           <itemPath>../../XC32/adc.hpp</itemPath>
@@ -144,6 +145,7 @@
           <itemPath>../Mihara/System_base.hpp</itemPath>
           <itemPath>../Mihara/Thermo.cpp</itemPath>
           <itemPath>../Mihara/Thermo.hpp</itemPath>
+          <itemPath>../Mihara/Camera.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
@@ -164,6 +166,7 @@
     <Elem>../../../Common/hmLib/hmLib</Elem>
     <Elem>../../homuraLib_v2/old</Elem>
     <Elem>../../homuraLib_v2/machine/device</Elem>
+    <Elem>../../homuraLib_v2/machine/module/Sprite</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
