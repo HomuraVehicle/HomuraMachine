@@ -146,35 +146,23 @@ namespace hmr {
 					struct sprite_bytes_builder{
 					private:
 						typedef hmr::static_buffer_allocator<unsigned char, 4096, /*3*/4, my_type> sprite_allocator;
-						xc::function<bool(void)> CanCreateBytes;
 					public:
-						explicit sprite_bytes_builder(const xc::function<bool(void)>& CanCreateBytes_) :CanCreateBytes(CanCreateBytes_){}
-						void operator()(xc::bytes& Bytes_, unsigned int Size_){
-							if(!CanCreateBytes())return;
+						void operator()(xc::bytes& Bytes_, unsigned int Size_){					
+							if(sprite_allocator::allocated_full())return;
 							Bytes_.assign(Size_, sprite_allocator());
 						}
 						static vFp_p get_delete_fp(const xc::bytes& Bytes_){
 							if(!Bytes_)return 0;
 							return sprite_allocator::deallocate_buffer;
 						}
-					};
-					struct can_create_bytes{
-						my_type& Ref;
-						can_create_bytes(my_type& Ref_) :Ref(Ref_){}
-						bool operator()(void){
-							return !Ref.PictureDataArray.full();
-						}
-					}CanCreateBytes;
-					
+					};				
 				private:
 					my_type& Ref;
 					sprite_bytes_builder SpriteBytesBuilder;
 					sprite_canceler Canceler;
 				public:
 					take_and_read_sequence(my_type& Ref_)
-						: CanCreateBytes(Ref_)
-						, Ref(Ref_)
-						, SpriteBytesBuilder(xc::ref(CanCreateBytes)){
+						: Ref(Ref_){
 					}
 				public:
 					bool start(camera::imagesize::type ImageSize_){
