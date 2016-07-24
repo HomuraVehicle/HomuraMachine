@@ -792,5 +792,8 @@
     <ClInclude Include="..\..\homuraLib_v2\task\host_interface.hpp">
       <Filter>Common\homuraLib_v2\task</Filter>
     </ClInclude>
+    <ClInclude Include="bitset.hpp">
+      <Filter>Common\XCBase</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

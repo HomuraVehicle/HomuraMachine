@@ -334,6 +334,7 @@
     <ClInclude Include="..\..\XCBase\type_traits.hpp" />
     <ClInclude Include="..\..\xc_config.hpp" />
     <ClInclude Include="Battery.hpp" />
+    <ClInclude Include="bitset.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CO2.hpp" />
     <ClInclude Include="Com.hpp" />
