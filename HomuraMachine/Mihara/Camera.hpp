@@ -145,7 +145,7 @@ namespace hmr {
 				private:
 					struct sprite_bytes_builder{
 					private:
-						typedef hmr::static_buffer_allocator<unsigned char, 4096, /*3*/4, my_type> sprite_allocator;
+						typedef hmr::static_buffer_allocator<unsigned char, 4096, 3, my_type> sprite_allocator;
 					public:
 						void operator()(xc::bytes& Bytes_, unsigned int Size_){					
 							if(sprite_allocator::allocated_full())return;
