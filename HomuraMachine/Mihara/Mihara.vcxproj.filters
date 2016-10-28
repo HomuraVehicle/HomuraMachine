@@ -795,5 +795,8 @@
     <ClInclude Include="bitset.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
+    <ClInclude Include="IO.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
