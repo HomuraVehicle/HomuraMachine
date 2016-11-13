@@ -12,9 +12,9 @@ namespace hmr {
 			namespace battery {
 				namespace {
 					struct {
-						unsigned Data:1;				//ƒf[ƒ^‚ğ‘—M‚É—‚¿‚é
-						unsigned SendData:1;			//ƒf[ƒ^‘—Mƒ‚[ƒh
-						unsigned SendData_i:1;			//ƒf[ƒ^‘—Mƒ‚[ƒhó—
+						unsigned Data:1;				//ï¿½fï¿½[ï¿½^ï¿½ğ‘—Mï¿½ï¿½ï¿½É—ï¿½ï¿½ï¿½ï¿½ï¿½
+						unsigned SendData:1;			//ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½[ï¿½h
+						unsigned SendData_i:1;			//ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½
 					}Mode={0, 0, 1};
 					class device : public hmr::machine::mihara::cDevice::battery_device {
 					public:
@@ -28,10 +28,10 @@ namespace hmr {
 					static const uint8 ADCAverageNum=1;
 				}
 				bool listen(hmLib::cstring Str) {
-					//ƒf[ƒ^ƒTƒCƒYŠm”F
+					//ï¿½fï¿½[ï¿½^ï¿½Tï¿½Cï¿½Yï¿½mï¿½F
 					if(hmLib::cstring_size(&Str)==0)return true;
 
-					//1byte–Ú‚Åƒ‚[ƒh‚ğ•ª‚¯‚é
+					//1byteï¿½Ú‚Åƒï¿½ï¿½[ï¿½hï¿½ğ•ª‚ï¿½ï¿½ï¿½
 					switch(hmLib::cstring_getc(&Str, 0)) {
 					case 0x10:
 						Mode.SendData=true;
@@ -52,14 +52,14 @@ namespace hmr {
 						if(Mode.SendData)hmLib::cstring_putc(pStr, 0, 0x10);
 						else hmLib::cstring_putc(pStr, 0, 0x11);
 
-						//‘—MŒã©“®“I‚Éƒtƒ‰ƒO‚ğ—‚Æ‚·
+						//ï¿½ï¿½ï¿½Mï¿½ã©ï¿½ï¿½ï¿½Iï¿½Éƒtï¿½ï¿½ï¿½Oï¿½ğ—‚Æ‚ï¿½
 						Mode.SendData_i=false;
 						return false;
 					} else if(Mode.Data) {
 						service::cstring_construct_safe(pStr, 1+2*3);
 						hmLib::cstring_putc(pStr, 0, 0x00);
 
-						//ƒf[ƒ^æ“¾
+						//ï¿½fï¿½[ï¿½^ï¿½æ“¾
 						uint16 data=0xFFFF;
 						if(FutureData1.valid()){
 						if(FutureData1.can_get())data=FutureData1.get();
@@ -81,7 +81,7 @@ namespace hmr {
 						hmLib::cstring_putc(pStr, 5, (hmLib_uint8)(data&0x00FF));		//Low
 						hmLib::cstring_putc(pStr, 6, (hmLib_uint8)((data>>8)&0x00FF));	//High
 
-						//‘—MŒã©“®“I‚Éƒtƒ‰ƒO‚ğ—‚Æ‚·
+						//ï¿½ï¿½ï¿½Mï¿½ã©ï¿½ï¿½ï¿½Iï¿½Éƒtï¿½ï¿½ï¿½Oï¿½ğ—‚Æ‚ï¿½
 						Mode.Data=false;
 						return false;
 					}
@@ -118,7 +118,7 @@ namespace hmr {
 					Device.ApinData2.lock();
 					Device.ApinData3.lock();
 
-					//ƒ^ƒXƒN“o˜^
+					//ï¿½^ï¿½Xï¿½Nï¿½oï¿½^
 					service::task::quick_start(InformTask, 5);
 					service::task::quick_start(DataTask, 5);
 				}

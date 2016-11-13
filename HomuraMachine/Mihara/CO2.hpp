@@ -2,17 +2,17 @@
 #define HMR_MACHINE_MIHARA_CO2_INC 100
 #
 /*
-CO2ƒ‚ƒWƒ…[ƒ‹§Œä—p
+CO2ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½p
 === hmr::machine::mihara::CO2 ===
 v1_00/141111 hmIto
-	C++‰»
+	C++ï¿½ï¿½
 === hmrCO2 ===
 v0_02/131019 iwahori
-	ƒ^ƒXƒNƒVƒXƒeƒ€—p‚Étask_setup_talk‚Ætask_interrupt‚ğì¬
+	ï¿½^ï¿½Xï¿½Nï¿½Vï¿½Xï¿½eï¿½ï¿½ï¿½pï¿½ï¿½task_setup_talkï¿½ï¿½task_interruptï¿½ï¿½ï¿½ì¬
 v0_01/130105 iwahori
-	workŠÖ”‚ğsetup_lisen‚Æsetup_talk‚É•ª—£
+	workï¿½Öï¿½ï¿½ï¿½setup_lisenï¿½ï¿½setup_talkï¿½É•ï¿½ï¿½ï¿½
 v0_00/121208 hmIto
-	Šî–{ŠÖ”ì¬
+	ï¿½ï¿½ï¿½{ï¿½Öï¿½ï¿½ì¬
 */
 #include<hmLib/cstring.h>
 #include<homuraLib_v2/type.hpp>

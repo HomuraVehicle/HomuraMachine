@@ -2,20 +2,20 @@
 #define HMR_MACHINE_MIHARA_DATA_INC 200
 #
 /*
-hmr‚ÌCom/Message‚È‚Ç‚Åg‚í‚ê‚é’ÊM—pƒf[ƒ^Œ^‚ÌéŒ¾
+hmrï¿½ï¿½Com/Messageï¿½È‚Ç‚Ågï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÊMï¿½pï¿½fï¿½[ï¿½^ï¿½^ï¿½ÌéŒ¾
 
 === hmr::machine::mihara::data ===
 v2_00/141111 hmIto
-	c++‰»
+	c++ï¿½ï¿½
 ===hmrData===
 v1_02/130928 hmIto
-	inform_destruct‹@”\‚ğodata_destruct“à‚ÅÀs‚·‚é‚æ‚¤‚É•ÏX
+	inform_destructï¿½@ï¿½\ï¿½ï¿½odata_destructï¿½ï¿½ï¿½Åï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½É•ÏX
 v1_01/130216 hmIto
-	EDS—Ìˆæ‚Ö‚ÌƒAƒNƒZƒX‚É‘Î‰
-		DSRPAG‚ğodata‚É’Ç‰Á
-		constructŠÖ”‚ğ•ÏX
+	EDSï¿½Ìˆï¿½ï¿½Ö‚ÌƒAï¿½Nï¿½Zï¿½Xï¿½É‘Î‰ï¿½
+		DSRPAGï¿½ï¿½odataï¿½É’Ç‰ï¿½
+		constructï¿½Öï¿½ï¿½ï¿½ï¿½ÏX
 v1_00/130105 hmIto
-	hmrCom‚©‚çƒf[ƒ^Œ^ŠÖ˜A‚ÌéŒ¾‚Ì–¢•ª—£
+	hmrComï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½^ï¿½Ö˜Aï¿½ÌéŒ¾ï¿½Ì–ï¿½ï¿½ï¿½ï¿½ï¿½
 */
 
 #include<hmLib/cstring.h>
@@ -24,25 +24,25 @@ v1_00/130105 hmIto
 namespace hmr {
 	namespace machine {
 		namespace mihara {
-			//ƒf[ƒ^Œ^‚Ì’è‹`
+			//ï¿½fï¿½[ï¿½^ï¿½^ï¿½Ì’ï¿½ï¿½`
 			typedef vmc1_dsize_t data_dsize_t;
 			typedef vmc1_did_t data_did_t;
 			typedef data_dsize_t(*data_dsizeFp_v)(void);
 			typedef void(*data_vFp_v)(void);
-			//óM‚Ìƒf[ƒ^Œ^
+			//ï¿½ï¿½ï¿½Mï¿½Ìƒfï¿½[ï¿½^ï¿½^
 			typedef struct{
 				data_did_t ID;
 				hmLib::cstring Str;
 			}idata;
-			//‘—M‚Ìƒf[ƒ^Œ^
+			//ï¿½ï¿½ï¿½Mï¿½Ìƒfï¿½[ï¿½^ï¿½^
 			typedef struct{
 				data_did_t ID;
 				hmLib::cstring Str;
-				int DSRPAG;			//EDS—Ìˆæ‚ÅŠm•Û‚µ‚½ê‡AŠm•Û—Ìˆæ‚ÌPageFile‚ğ‹L˜^‚µ‚Ä‚¨‚­
+				int DSRPAG;			//EDSï¿½Ìˆï¿½ï¿½ÅŠmï¿½Û‚ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Aï¿½mï¿½Û—Ìˆï¿½ï¿½ï¿½PageFileï¿½ï¿½ï¿½Lï¿½^ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
 				data_dsizeFp_v FpSendable;
 				data_vFp_v FpInformDestruct;
 			}odata;
-			//ŠÖ”ŒQ
+			//ï¿½Öï¿½ï¿½Q
 			void idata_format(idata* Dat);
 			bool idata_is_construct(idata*Dat);
 			void idata_construct(idata* Dat, data_did_t ID, hmLib::cstring* mStr);

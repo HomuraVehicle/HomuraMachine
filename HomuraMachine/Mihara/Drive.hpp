@@ -3,14 +3,14 @@
 #
 /*
 ===hmrDrive===
-ƒ‚[ƒ^[Aƒ}ƒjƒ…ƒsƒ…ƒŒ[ƒ^Œn‚ğƒRƒ“ƒgƒ[ƒ‹
+ï¿½ï¿½ï¿½[ï¿½^ï¿½[ï¿½Aï¿½}ï¿½jï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^ï¿½nï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½
 
 === hmr::machine::mihara::drive ===
 v1_00/141121 hmIto
-	cpp‰»
+	cppï¿½ï¿½
 === hmrDrive ===
 v0_00/130112 iwahori
-	ƒtƒ@ƒCƒ‹‚ğì¬Eƒ‚[ƒ^[‚ÌƒƒbƒZ[ƒWŠÖ”‚ğtalk‚Ælisten‚É•ª‰ğ
+	ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ì¬ï¿½Eï¿½ï¿½ï¿½[ï¿½^ï¿½[ï¿½Ìƒï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½Öï¿½ï¿½ï¿½talkï¿½ï¿½listenï¿½É•ï¿½ï¿½ï¿½
 */
 #include<hmLib/cstring.h>
 #include<homuraLib_v2/type.hpp>
@@ -18,7 +18,7 @@ namespace hmr {
 	namespace machine {
 		namespace mihara {
 			namespace motor {
-				//*********************** ‹ì“®
+				//*********************** ï¿½ì“®
 				void initialize();
 				bool listen(hmLib::cstring Str);
 				bool talk(hmLib::cstring* pStr);

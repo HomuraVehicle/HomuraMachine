@@ -11,15 +11,15 @@ namespace hmr {
 				//mp : MP:38400
 				//rf_debuf : RF:38400
 
-				//‰Šú‰»
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				void initialize();
-				//I’[‰»
+				//ï¿½Iï¿½[ï¿½ï¿½
 				void finalize();
-				//ƒ^ƒXƒNˆ—
+				//ï¿½^ï¿½Xï¿½Nï¿½ï¿½ï¿½ï¿½
 				void work();
-				//ModuleID‚É“dŒ¹‚ð•ÏX‚·‚é
+				//ModuleIDï¿½É“dï¿½ï¿½ï¿½ï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½
 				void power_switch(boolian onoff, mode ModuleID_);
-				//Œ»Ý‚ÌModuleID‚ðŽæ“¾‚·‚é
+				//ï¿½ï¿½ï¿½Ý‚ï¿½ModuleIDï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 				mode getModuleID(void);
 			}
 		}

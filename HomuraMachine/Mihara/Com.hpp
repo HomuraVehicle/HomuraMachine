@@ -4,79 +4,79 @@
 /*
 === hmr::machine::Com ===
 v3_00/141111 hmIto
-	cpp‰»
+	cppï¿½ï¿½
 ===hmrCom===
-‘—ŽóMƒoƒbƒtƒ@‚É‚Â‚¢‚ÄŽæ‚èŽdØ‚é
-	@ƒRƒ}ƒ“ƒh‚ªƒpƒPƒbƒg‚Ì‹æØ‚è
-		ƒpƒPƒbƒg‚ðŽóM‚µI‚í‚é‚ÆAŽ©“®“I‚ÉŽóMƒoƒbƒtƒ@‚É@ƒRƒ}ƒ“ƒhƒf[ƒ^‚ªpush‚³‚ê‚é
-		‘—MŽž‚ÉƒpƒPƒbƒg‹æØ‚è‚É‚Í@ƒRƒ}ƒ“ƒhƒf[ƒ^‚ð‘—Mƒoƒbƒtƒ@‚Épush‚µ‚Ä‚¨‚­‚ÆƒpƒPƒbƒg‚ª•Â‚¶‚ç‚ê‚é
+ï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½oï¿½bï¿½tï¿½@ï¿½É‚Â‚ï¿½ï¿½ÄŽï¿½ï¿½ï¿½ï¿½dï¿½Ø‚ï¿½
+	@ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½pï¿½Pï¿½bï¿½gï¿½Ì‹ï¿½ï¿½Ø‚ï¿½
+		ï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ÆAï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ÉŽï¿½ï¿½Mï¿½oï¿½bï¿½tï¿½@ï¿½ï¿½@ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½fï¿½[ï¿½^ï¿½ï¿½pushï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½Éƒpï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½Ø‚ï¿½ï¿½É‚ï¿½@ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½fï¿½[ï¿½^ï¿½ð‘—Mï¿½oï¿½bï¿½tï¿½@ï¿½ï¿½pushï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Æƒpï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 v2_05/131102 hmIto
-	‘S“ñd/”¼“ñd‚É‰ž‚¶‚ÄAí‚Éƒf[ƒ^‚ð‘—‚é/ŽóMÏ‚Ý‚Ì”‚¾‚¯ƒf[ƒ^‚ð‘—‚éA‚ð•ÏX
+	ï¿½Sï¿½ï¿½ï¿½d/ï¿½ï¿½ï¿½ï¿½ï¿½dï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄAï¿½ï¿½ï¿½Éƒfï¿½[ï¿½^ï¿½ð‘—‚ï¿½/ï¿½ï¿½ï¿½Mï¿½Ï‚Ý‚Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ð‘—‚ï¿½ï¿½Aï¿½ï¿½ï¿½ÏX
 v2_04/131026 hmIto
-	com—pWatchDogTimer‹@”\‚ð’ñ‹Ÿ
-		ini_recvPac/sendPac‚Årestart‚³‚ê‚éB
-		wdt_secˆÈã‚ÌŽžŠÔ‘—ŽóM‚ª‚È‚­A‚©‚Ârestart‚àŒÄ‚Î‚ê‚È‚¢‚ÆAkill‚·‚éB
-		‹@”\‚ð—LŒø‚É‚·‚é‚É‚ÍAwdt_interrupt_function‚ðtask‚É“o˜^‚·‚é•K—v‚ª‚ ‚éB
+	comï¿½pWatchDogTimerï¿½@ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		ini_recvPac/sendPacï¿½ï¿½restartï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
+		wdt_secï¿½Èï¿½ï¿½ÌŽï¿½ï¿½Ô‘ï¿½ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½È‚ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½restartï¿½ï¿½ï¿½Ä‚Î‚ï¿½ï¿½È‚ï¿½ï¿½ÆAkillï¿½ï¿½ï¿½ï¿½ï¿½B
+		ï¿½@ï¿½\ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½É‚ÍAwdt_interrupt_functionï¿½ï¿½taskï¿½É“oï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 v2_03/130928 hmIto
-	iBuf/oBuf_move_pop/push‚É‚¨‚¢‚ÄAempty/full‚Å‚ ‚Á‚Ä‚à‚Â‚©‚¦‚Ä‚µ‚Ü‚¤–â‘è‚ðC³
-	odata::informDestruct‹@”\‚Ìˆ—‚ðodata::destruct‚ÉˆÏ÷
+	iBuf/oBuf_move_pop/pushï¿½É‚ï¿½ï¿½ï¿½ï¿½ÄAempty/fullï¿½Å‚ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½
+	odata::informDestructï¿½@ï¿½\ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½odata::destructï¿½ÉˆÏï¿½
 v2_02/130803 hmIto
-	inform_destruct‹@”\‚ð—˜—p‚µ‚Ä‚¢‚éÛ‚ÉC‚Ü‚ê‚Éinform‚³‚ê‚È‚¢–â‘è‚ðC³
-		ƒGƒ‰[”­¶Žž‚ÉfinSendPac‚ªŒÄ‚Î‚ê‚é‚ªC‚»‚ÌÛ‚Édestruct‚Í‚³‚ê‚é‚ªinform‚ÍŽÀs‚³‚ê‚Ä‚¢‚È‚©‚Á‚½D
-		“¯—l‚Ì–â‘è‚ªCFailPac‚ª‘¶Ý‚·‚éðŒ‰º‚É‚¨‚¯‚émove_push‚É‚¨‚¢‚Ä‚à‘¶Ý‚µ‚Ä‚¢‚½D
+	inform_destructï¿½@ï¿½\ï¿½ð—˜—pï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Û‚ÉCï¿½Ü‚ï¿½ï¿½ï¿½informï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½
+		ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½finSendPacï¿½ï¿½ï¿½Ä‚Î‚ï¿½ï¿½é‚ªï¿½Cï¿½ï¿½ï¿½ÌÛ‚ï¿½destructï¿½Í‚ï¿½ï¿½ï¿½ï¿½é‚ªinformï¿½ÍŽï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½D
+		ï¿½ï¿½ï¿½lï¿½Ì–ï¿½ï¿½è‚ªï¿½CFailPacï¿½ï¿½ï¿½ï¿½ï¿½Ý‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½move_pushï¿½É‚ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Ý‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½D
 v2_00/121201 hmIto
-	odata/iQue_data‚ªcstring‚ðŽg‚¤‚æ‚¤•ÏX
-	odataŒ^‚ð•ÏX
-		NonDeleteFlag‚ð”pŽ~
-			cstring‚Ìdynamic_destruct‚Æstatic_destruct‚ª“‡‚³‚ê‚½‚½‚ß
-		FpSendable‚ð’Ç‰Á
-			‘—M‰Â”\•¶Žš”‚ðŽæ“¾‚·‚éŠÖ”
-		FpInformDestruct‚ð’Ç‰Á
-			cstring‚ÌdestructŽž‚ÉŒ³‚Ìmodule‚É‘Î‚µ’Ê’m‚·‚éŠÖ”
-			“Á‚Éstaticƒoƒbƒtƒ@‚ÌÄ—˜—p‚Ì‰Â”Û‚ÌŠm”F‚É—˜—p
+	odata/iQue_dataï¿½ï¿½cstringï¿½ï¿½ï¿½gï¿½ï¿½ï¿½æ‚¤ï¿½ÏX
+	odataï¿½^ï¿½ï¿½ï¿½ÏX
+		NonDeleteFlagï¿½ï¿½ï¿½pï¿½~
+			cstringï¿½ï¿½dynamic_destructï¿½ï¿½static_destructï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½ï¿½
+		FpSendableï¿½ï¿½ï¿½Ç‰ï¿½
+			ï¿½ï¿½ï¿½Mï¿½Â”\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
+		FpInformDestructï¿½ï¿½ï¿½Ç‰ï¿½
+			cstringï¿½ï¿½destructï¿½ï¿½ï¿½ÉŒï¿½ï¿½ï¿½moduleï¿½É‘Î‚ï¿½ï¿½Ê’mï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
+			ï¿½ï¿½ï¿½ï¿½staticï¿½oï¿½bï¿½tï¿½@ï¿½ÌÄ—ï¿½ï¿½pï¿½Ì‰Â”Û‚ÌŠmï¿½Fï¿½É—ï¿½ï¿½p
 v1_09/121128 hmIto
-	hmCLib‚ÆhmLib‚Ì“‡‚É”º‚¢AhmLib_v3_03‚É‘Î‰ž‚·‚é‚æ‚¤•ÏX	
+	hmCLibï¿½ï¿½hmLibï¿½Ì“ï¿½ï¿½ï¿½ï¿½É”ï¿½ï¿½ï¿½ï¿½AhmLib_v3_03ï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½ÏX	
 v1_08/121101 hmIto
-	HMR_COM_PACTRMNID‚ð@ƒRƒ}ƒ“ƒh‚Ì‘ã‚í‚è‚ÉŽg—p
-	odata‚©‚çFnSendable‚ð”pŽ~
-	odata‚ÉNonDeleteFlag‚ð’Ç‰Á
+	HMR_COM_PACTRMNIDï¿½ï¿½@ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½Ì‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉŽgï¿½p
+	odataï¿½ï¿½ï¿½ï¿½FnSendableï¿½ï¿½ï¿½pï¿½~
+	odataï¿½ï¿½NonDeleteFlagï¿½ï¿½ï¿½Ç‰ï¿½
 v1_07/121028 hmIto
-	bool out_empty(void)’Ç‰Á
+	bool out_empty(void)ï¿½Ç‰ï¿½
 v1_06/121021 hmIto
-	‘—ŽóMƒoƒbƒtƒ@‘€ì—pŠÖ”–¼‚ð•ÏX(In‚ðin‚ÉAOut‚ðout‚Éj
-	0byteƒRƒ}ƒ“ƒh‚ð‘—MŽž‚ÉˆÙíI—¹ˆµ‚¢‚³‚ê‚é’v–½“IƒoƒO‚ðC³
-		ID‚ªsize‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚½–¼Žc‚ÅASize=0‚ðƒGƒ‰[ƒf[ƒ^‚Æ‚µ‚Ä‚¢‚½–â‘è
-	hmrVMC1_v2_00‚É‘Î‰ž
-		vmc1_create,vmc1_initializeŠÖ”‚Ìˆø”’Ç‰Á‚É‘Î‰ž
-		‡‚í‚¹‚ÄAcreateVMC1‚É‚àŽ©g‚ÌVMCIDŽw’è—pˆø”‘‰Á
+	ï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½oï¿½bï¿½tï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Öï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏX(Inï¿½ï¿½inï¿½ÉAOutï¿½ï¿½outï¿½Éj
+	0byteï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ð‘—Mï¿½ï¿½ï¿½ÉˆÙï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Iï¿½oï¿½Oï¿½ï¿½ï¿½Cï¿½ï¿½
+		IDï¿½ï¿½sizeï¿½ÉŠÜ‚Ü‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½cï¿½ÅASize=0ï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½[ï¿½fï¿½[ï¿½^ï¿½Æ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	hmrVMC1_v2_00ï¿½É‘Î‰ï¿½
+		vmc1_create,vmc1_initializeï¿½Öï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½É‘Î‰ï¿½
+		ï¿½ï¿½ï¿½í‚¹ï¿½ÄAcreateVMC1ï¿½É‚ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½VMCIDï¿½wï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 v1_05/121020 iwahori
-	cƒtƒ@ƒCƒ‹‚ÌIOŠÖ”ŒQ‚Ì–¼Ì‚Ìhƒtƒ@ƒCƒ‹‚Æ‚Ì‘Šˆá‚ð•ÏXD(in‚ðIn‚ÉCout‚ðOut‚É)
+	cï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½IOï¿½Öï¿½ï¿½Qï¿½Ì–ï¿½ï¿½Ì‚ï¿½hï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Æ‚Ì‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏXï¿½D(inï¿½ï¿½Inï¿½ÉCoutï¿½ï¿½Outï¿½ï¿½)
 v1_04/121012 hmIto
-	iQue/oQue‚ðhmrCom.c“à‚Å‰B•Á(__‚ð•t‰Á)
-	ƒCƒ“ƒ^[ƒtƒFƒCƒX‚ðBegin/End‚©‚çPtr/Size‚É–ß‚·
-	–¼‘O‹óŠÔ‚ðCom‚©‚çcom‚É•ÏX
+	iQue/oQueï¿½ï¿½hmrCom.cï¿½ï¿½ï¿½Å‰Bï¿½ï¿½(__ï¿½ï¿½ï¿½tï¿½ï¿½)
+	ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½Cï¿½Xï¿½ï¿½Begin/Endï¿½ï¿½ï¿½ï¿½Ptr/Sizeï¿½É–ß‚ï¿½
+	ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½Ô‚ï¿½Comï¿½ï¿½ï¿½ï¿½comï¿½É•ÏX
 v1_03/121008 hmIto
-	ŠÖ”Œ`‚ð”²–{“I‚É‰ü’è
-		VMC1ŠÖ”ŒQ‚ðƒ‰ƒbƒsƒ“ƒO‚µ‚Ä‚¢‚½RFŠÖ”ŒQ‚ÍA”pŽ~
-		VMC1‚Æ‚Ì’ÊM‚É“Á‰»‚·‚éVMCŠÖ”ŒQ‚ÍAƒwƒbƒ_ƒtƒ@ƒCƒ‹‚Å‚Í‰B‚Ø‚¢
-		—˜—pŽÒ‚Ívmc1_create/releaseŠÖ”‚ðŽg‚Á‚ÄAVMC‚ð—˜—p
-		Buf‚Ì‘—ŽóM§Œä‚ÍAIn/OutŠÖ”ŒQ‚ÉW–ñ
-			In/Out‚Å‚ÍAƒCƒ“ƒ^[ƒtƒFƒCƒX‚ðID/Begin/End‚É“ˆê
-			ŽóM’†‚Ìƒf[ƒ^‚Ì‘—M‰Â”\ƒTƒCƒY‚ð•Ô‚·sendProgress‚ð”pŽ~
-			‘—M’iŠK‚Å‘—Mƒf[ƒ^‚ð–K‚Ë‚épush_laterŠÖ”‚ð’Ç‰Á
-	lock/unlockŠÖ””pŽ~
-		Mutex‚ªŽg‚¦‚È‚¢‚½‚ßAƒoƒbƒtƒ@‚ÌƒƒbƒN‚ÍŠeƒXƒŒƒbƒh‚Ì—Dæ‡ˆÊ‚Å§ŒäB
-		‚»‚Ì‚½‚ßAƒƒbƒN‚·‚éƒXƒŒƒbƒh‚É‚æ‚Á‚Äˆ—‚ªˆÙ‚È‚éB
-		ˆÈŒã‚ÍAŠeƒXƒŒƒbƒh‚ª“ÆŽ©‚ÉŽ©g‚Ì—Dæ“x‚ðã‚°‚é‚æ‚¤‚Èlock/unlockˆ—‚ðs‚¤B
-	121009Test_hmrhmrVMC1.c‚É‚ÄA“®ìŠm”FÏ‚Ý
+	ï¿½Öï¿½ï¿½`ï¿½ð”²–{ï¿½Iï¿½É‰ï¿½ï¿½ï¿½
+		VMC1ï¿½Öï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½bï¿½sï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½RFï¿½Öï¿½ï¿½Qï¿½ÍAï¿½pï¿½~
+		VMC1ï¿½Æ‚Ì’ÊMï¿½É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½VMCï¿½Öï¿½ï¿½Qï¿½ÍAï¿½wï¿½bï¿½_ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Å‚Í‰Bï¿½Ø‚ï¿½
+		ï¿½ï¿½ï¿½pï¿½Ò‚ï¿½vmc1_create/releaseï¿½Öï¿½ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ÄAVMCï¿½ð—˜—p
+		Bufï¿½Ì‘ï¿½ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½ÍAIn/Outï¿½Öï¿½ï¿½Qï¿½ÉWï¿½ï¿½
+			In/Outï¿½Å‚ÍAï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½Cï¿½Xï¿½ï¿½ID/Begin/Endï¿½É“ï¿½ï¿½ï¿½
+			ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½Ìƒfï¿½[ï¿½^ï¿½Ì‘ï¿½ï¿½Mï¿½Â”\ï¿½Tï¿½Cï¿½Yï¿½ï¿½ï¿½Ô‚ï¿½sendProgressï¿½ï¿½ï¿½pï¿½~
+			ï¿½ï¿½ï¿½Mï¿½iï¿½Kï¿½Å‘ï¿½ï¿½Mï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Kï¿½Ë‚ï¿½push_laterï¿½Öï¿½ï¿½ï¿½ï¿½Ç‰ï¿½
+	lock/unlockï¿½Öï¿½ï¿½pï¿½~
+		Mutexï¿½ï¿½ï¿½gï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ßAï¿½oï¿½bï¿½tï¿½@ï¿½Ìƒï¿½ï¿½bï¿½Nï¿½ÍŠeï¿½Xï¿½ï¿½ï¿½bï¿½hï¿½Ì—Dï¿½æ‡ï¿½Ê‚Åï¿½ï¿½ï¿½ï¿½B
+		ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ßAï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½hï¿½É‚ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù‚È‚ï¿½ï¿½B
+		ï¿½ÈŒï¿½ï¿½ÍAï¿½eï¿½Xï¿½ï¿½ï¿½bï¿½hï¿½ï¿½ï¿½ÆŽï¿½ï¿½ÉŽï¿½ï¿½gï¿½Ì—Dï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ã‚°ï¿½ï¿½ï¿½æ‚¤ï¿½ï¿½lock/unlockï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½B
+	121009Test_hmrhmrVMC1.cï¿½É‚ÄAï¿½ï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½Ï‚ï¿½
 v1_02/121005 hmIto
-	VMC1‚ÌŠÖ”ŒQ‚ðƒ‰ƒbƒsƒ“ƒO‚·‚é‚Ì‚Å‚Í‚È‚­AVMC1‚ð¶¬‚·‚éŠÖ”‚ð’ñ‹Ÿ‚·‚éŒ`‚É•ÏX
-		’ÊM‚ðŽÀÛ‚És‚¤ŠÖ”‚ÍAVMC1‚ð—˜—p‚·‚é
+	VMC1ï¿½ÌŠÖï¿½ï¿½Qï¿½ï¿½ï¿½ï¿½ï¿½bï¿½sï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Å‚Í‚È‚ï¿½ï¿½AVMC1ï¿½ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½ï¿½ï¿½ï¿½ñ‹Ÿ‚ï¿½ï¿½ï¿½ï¿½`ï¿½É•ÏX
+		ï¿½ÊMï¿½ï¿½ï¿½ï¿½ï¿½Û‚Ésï¿½ï¿½ï¿½Öï¿½ï¿½ÍAVMC1ï¿½ð—˜—pï¿½ï¿½ï¿½ï¿½
 v1_01/120922 hmIto
-	‚Ð‚Æ‚Ü‚¸“®ì‚ªˆÀ’è‚µ‚Ä‚¢‚é‚±‚Æ‚ðŠm”Fi120922Test_hmrhmrVMC1.c‚É‚Ä“®ìŠm”FÏ‚Ýj
+	ï¿½Ð‚Æ‚Ü‚ï¿½ï¿½ï¿½ï¿½ì‚ªï¿½ï¿½ï¿½è‚µï¿½Ä‚ï¿½ï¿½é‚±ï¿½Æ‚ï¿½ï¿½mï¿½Fï¿½i120922Test_hmrhmrVMC1.cï¿½É‚Ä“ï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½Ï‚Ýj
 v1_00/120921 hmIto
-	ƒo[ƒWƒ‡ƒ“ŠÇ—ŠJŽn
+	ï¿½oï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½Ç—ï¿½ï¿½Jï¿½n
 
 */
 #include<hmLib/cqueue.h>
@@ -88,51 +88,51 @@ namespace hmr {
 	namespace machine {
 		namespace mihara {
 			namespace com{
-				//ƒf[ƒ^Œ^‚Ì’è‹`
+				//ï¿½fï¿½[ï¿½^ï¿½^ï¿½Ì’ï¿½ï¿½`
 				typedef vmc1_dsize_t dsize_t;
 				typedef vmc1_did_t did_t;
 				typedef dsize_t(*dsizeFp_v)(void);
 				typedef void(*vFp_v)(void);
 
-				//**************ComŠÖ”ŒQ*************//
-				//‰Šú‰»ŠÖ”
+				//**************Comï¿½Öï¿½ï¿½Q*************//
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
 				void initialize(void);
-				//I’[‰»ŠÖ”
+				//ï¿½Iï¿½[ï¿½ï¿½ï¿½Öï¿½
 				void finalize(void);
-				//ŽóMƒ‚[ƒh‚©Šm”F
+				//ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½mï¿½F
 				bool isRecvMode(void);
-				//‘—Mƒ‚[ƒh‚©Šm”F
+				//ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½mï¿½F
 				bool isSendMode(void);
-				//VMC1‚ðì¬‚·‚é
+				//VMC1ï¿½ï¿½ï¿½ì¬ï¿½ï¿½ï¿½ï¿½
 				VMC1* createVMC1(void);
-				//VMC1‚ð”jŠü‚·‚é
+				//VMC1ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				void releaseVMC1(VMC1* pVMC1);
 
-				//****************IOŠÖ”ŒQ******************//
-				//ŽóM‰Â”\‚Å‚ ‚é‚©Šm”F
+				//****************IOï¿½Öï¿½ï¿½Q******************//
+				//ï¿½ï¿½ï¿½Mï¿½Â”\ï¿½Å‚ï¿½ï¿½é‚©ï¿½mï¿½F
 				bool in_empty(void);
-				//ŽóMƒoƒbƒtƒ@‚É‹ó‚«‚ª‚ ‚é‚©Šm”F
+				//ï¿½ï¿½ï¿½Mï¿½oï¿½bï¿½tï¿½@ï¿½É‹ó‚«‚ï¿½ï¿½ï¿½ï¿½é‚©ï¿½mï¿½F
 				bool in_full(void);
-				//ƒf[ƒ^‚ðŽóM
+				//ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½M
 				idata in_front(void);
-				//ƒf[ƒ^‚ðŽóM‚ðI—¹
+				//ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½Iï¿½ï¿½
 				void in_move_pop(idata* pData_);
-				//‘—M‰Â”\‚Å‚ ‚é‚©‚ðŠm”F
+				//ï¿½ï¿½ï¿½Mï¿½Â”\ï¿½Å‚ï¿½ï¿½é‚©ï¿½ï¿½ï¿½mï¿½F
 				bool out_full(void);
-				//‘—Mƒoƒbƒtƒ@‚ª‹ó‚©‚Ç‚¤‚©‚ÌŠm”F
+				//ï¿½ï¿½ï¿½Mï¿½oï¿½bï¿½tï¿½@ï¿½ï¿½ï¿½ó‚©‚Ç‚ï¿½ï¿½ï¿½ï¿½ÌŠmï¿½F
 				bool out_empty(void);
-				//ƒf[ƒ^‚ð‘—M(ŽóMÏƒf[ƒ^—p)
+				//ï¿½fï¿½[ï¿½^ï¿½ð‘—M(ï¿½ï¿½ï¿½Mï¿½Ïƒfï¿½[ï¿½^ï¿½p)
 				void out_move_push(odata* mData_);
 
-				//**************ComWDTŠÖ˜A************//
+				//**************ComWDTï¿½Ö˜A************//
 				#define wdt_sec 180
-				//comŠÄŽ‹—pWatchDogTimer‚ÌƒŠƒZƒbƒg
+				//comï¿½ÄŽï¿½ï¿½pWatchDogTimerï¿½Ìƒï¿½ï¿½Zï¿½bï¿½g
 				void wdt_restart();
-				//comŠÄŽ‹—pWatchDogTimer‚ð’âŽ~
+				//comï¿½ÄŽï¿½ï¿½pWatchDogTimerï¿½ï¿½ï¿½ï¿½ï¿½~
 				void wdt_enable();
-				//comŠÄŽ‹—pWatchDogTimer‚ð’âŽ~
+				//comï¿½ÄŽï¿½ï¿½pWatchDogTimerï¿½ï¿½ï¿½ï¿½ï¿½~
 				void wdt_disable();
-				//******************ioBuf“à•”ŠÖ”ŒQ*****************//
+				//******************ioBufï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½ï¿½Q*****************//
 				bool isWaitSendPacket(void);
 
 				//*****************debug****************//

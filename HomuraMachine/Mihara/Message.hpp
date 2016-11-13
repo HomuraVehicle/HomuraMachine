@@ -2,48 +2,48 @@
 #define HMR_MACHINE_MIHARA_MESSAGE_INC 300
 #
 /*
-ID‚ğ“Ç‚İo‚µAID‚ğœ‚¢‚½•”•ª‚ğlistenŠÖ”‚É“n‚·
-talkŠÖ”‚Å‘—M‚·‚×‚«ƒf[ƒ^‚ğó‚¯æ‚èCID‚ğ•t‰Á‚µ‚Ä•Ô‚·
+IDï¿½ï¿½ï¿½Ç‚İoï¿½ï¿½ï¿½AIDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½listenï¿½Öï¿½ï¿½É“nï¿½ï¿½
+talkï¿½Öï¿½ï¿½Å‘ï¿½ï¿½Mï¿½ï¿½ï¿½×‚ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ó‚¯ï¿½ï¿½ï¿½ï¿½CIDï¿½ï¿½ï¿½tï¿½ï¿½ï¿½ï¿½ï¿½Ä•Ô‚ï¿½
 
 === hmr::machine::mihara::Message ===
 v3_00/141111 hmIto
-	c++‰»
+	c++ï¿½ï¿½
 ===hmrMessage===
 v2_04/130212 hmIto
 	msg_listen()
-		idata‚Ìdestruct‚ğ‚µ–Y‚ê‚Ä‚¢‚½–â‘è‚ğC³B
-		idata‚Ìˆø”‚ğÀ‘ÔƒRƒs[‚©‚çmoveƒ|ƒCƒ“ƒ^‚É•ÏXB
+		idataï¿½ï¿½destructï¿½ï¿½ï¿½ï¿½ï¿½Yï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½B
+		idataï¿½Ìˆï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÔƒRï¿½sï¿½[ï¿½ï¿½ï¿½ï¿½moveï¿½|ï¿½Cï¿½ï¿½ï¿½^ï¿½É•ÏXï¿½B
 	msg_talk()
-		true‚ªFpTalk‚©‚ç–ß‚Á‚Ä‚«‚½Û‚ÉA–œ‚ªˆêStr‚ªŠm•Û‚³‚ê‚Ä‚¢‚éê‡destruct‚·‚é‚æ‚¤C³
+		trueï¿½ï¿½FpTalkï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Û‚ÉAï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Strï¿½ï¿½ï¿½mï¿½Û‚ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ê‡destructï¿½ï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½Cï¿½ï¿½
 v2_03/130202 iwahori
-	msg_setup_talk()Fforƒ‹[ƒv‚ÌãŒÀ’l‚ğHMR_MESSAGE_BUFSIZE‚©‚ç_msg_BufSize‚ÉC³
-	msg_setup_listen()Fforƒ‹[ƒv‚ÌãŒÀ’l‚ğHMR_MESSAGE_BUFSIZE‚©‚ç_msg_BufSize‚ÉC³
+	msg_setup_talk()ï¿½Fforï¿½ï¿½ï¿½[ï¿½vï¿½Ìï¿½ï¿½ï¿½ï¿½lï¿½ï¿½HMR_MESSAGE_BUFSIZEï¿½ï¿½ï¿½ï¿½_msg_BufSizeï¿½ÉCï¿½ï¿½
+	msg_setup_listen()ï¿½Fforï¿½ï¿½ï¿½[ï¿½vï¿½Ìï¿½ï¿½ï¿½ï¿½lï¿½ï¿½HMR_MESSAGE_BUFSIZEï¿½ï¿½ï¿½ï¿½_msg_BufSizeï¿½ÉCï¿½ï¿½
 v2_02/130127 iwahori
-	msg_setup_talk()“à‚Å_msg_Buf[i].FpSetupListen()‚Æ‚È‚Á‚Ä‚¢‚½•”•ª‚ğ
-	_msg_Buf[i].FpSetupTalk()‚ÉC³
+	msg_setup_talk()ï¿½ï¿½ï¿½ï¿½_msg_Buf[i].FpSetupListen()ï¿½Æ‚È‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	_msg_Buf[i].FpSetupTalk()ï¿½ÉCï¿½ï¿½
 v2_01/130105 hmIto
-	hmLib_v3_03‚É‘Î‰
-	SetupListen/SetupTalkŠÖ”‚ğ’Ç‰Á
-		Listen‚ÆTalkÀs‘O‚Éˆê“x‚¾‚¯ŒÄ‚Î‚ê‚é
-		‘—óMƒtƒ‰ƒO‚Ìİ’è—pŠÖ”
+	hmLib_v3_03ï¿½É‘Î‰ï¿½
+	SetupListen/SetupTalkï¿½Öï¿½ï¿½ï¿½ï¿½Ç‰ï¿½
+		Listenï¿½ï¿½Talkï¿½ï¿½ï¿½sï¿½Oï¿½Éˆï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½Ä‚Î‚ï¿½ï¿½ï¿½
+		ï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½tï¿½ï¿½ï¿½Oï¿½Ìİ’ï¿½ï¿½pï¿½Öï¿½
 v2_00/121201 hmIto
-	hmrCom_v2_00‚É‘Î‰
-	ƒƒbƒZ[ƒWˆ—ŠÖ”‚ğATalkŠÖ”‚ÆListenŠÖ”‚É•ªŠ„
+	hmrCom_v2_00ï¿½É‘Î‰ï¿½
+	ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½ï¿½ï¿½ï¿½ATalkï¿½Öï¿½ï¿½ï¿½Listenï¿½Öï¿½ï¿½É•ï¿½ï¿½ï¿½
 v1_05/121128 hmIto
-	hmCLib‚ÆhmLib‚Ì“‡‚É”º‚¢AhmLib_v3_03‚É‘Î‰‚·‚é‚æ‚¤•ÏX		
+	hmCLibï¿½ï¿½hmLibï¿½Ì“ï¿½ï¿½ï¿½ï¿½É”ï¿½ï¿½ï¿½ï¿½AhmLib_v3_03ï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½ÏX		
 v1_04/121103 hmIto
-	NonDeleteFlag‹@”\‚É‘Î‰
+	NonDeleteFlagï¿½@ï¿½\ï¿½É‘Î‰ï¿½
 		msg_set_nondelete_mode();
 v1_03/121013 hmIto
-	–¼‘O‹óŠÔMessage‚ğmsg‚É•ÏX
+	ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½Messageï¿½ï¿½msgï¿½É•ÏX
 v1_02/121012 hmIto
-	MessageType\‘¢‘Ì‚ªSendableŠÖ”‚àŠÇ—‚·‚éŒ`‚É•ÏX
+	MessageTypeï¿½\ï¿½ï¿½ï¿½Ì‚ï¿½Sendableï¿½Öï¿½ï¿½ï¿½ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½É•ÏX
 v1_01/121009 hmIto
-	ƒCƒ“ƒ^[ƒtƒFƒCƒX‚ğ‘å‚«‚­•ÏX
-		msg_range‚Í”p~
-		workŠÖ”‚Ìˆø”‚ğƒ|ƒCƒ“ƒ^‚É•ÏX
+	ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½Cï¿½Xï¿½ï¿½ï¿½å‚«ï¿½ï¿½ï¿½ÏX
+		msg_rangeï¿½Í”pï¿½~
+		workï¿½Öï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½^ï¿½É•ÏX
 v1_00/121005 hmIto
-	‚Ğ‚Æ‚Ü‚¸AŠ®¬
+	ï¿½Ğ‚Æ‚Ü‚ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½
 */
 #include<homuraLib_v2/type.hpp>
 #include<hmLib/cstring.h>
@@ -57,25 +57,25 @@ namespace hmr {
 				typedef com::dsize_t dsize_t;
 				typedef com::dsizeFp_v dsizeFp_v;
 				typedef com::vFp_v vFp_v;
-				//==============İ’è—p=================//
+				//==============ï¿½İ’ï¿½ï¿½p=================//
 				#define HMR_MESSAGE_BUFSIZE 32
 				//=====================================//
 
-				typedef bool(*bFp_s)(hmLib::cstring);				//Listen—pŠÖ”
-				typedef bool(*bFp_ps)(hmLib::cstring*);	//Talk—pŠÖ”
-				//message_t\‘¢‘Ì
+				typedef bool(*bFp_s)(hmLib::cstring);				//Listenï¿½pï¿½Öï¿½
+				typedef bool(*bFp_ps)(hmLib::cstring*);	//Talkï¿½pï¿½Öï¿½
+				//message_tï¿½\ï¿½ï¿½ï¿½ï¿½
 				typedef struct{
-					did_t	ID;				//ƒƒbƒZ[ƒW¯•Ê—pID
-					vFp_v	FpSetupListen;	//ƒƒbƒZ[ƒWóM€”õ—pŠÖ”
-					bFp_s	FpListen;		//ƒƒbƒZ[ƒWóM—pŠÖ” –ß‚è’l‚ÍƒƒbƒZ[ƒWˆ—‚Ì‰Â”Û
-					vFp_v	FpSetupTalk;	//ƒƒbƒZ[ƒW‘—M€”õ—pŠÖ”
-					bFp_ps	FpTalk;			//ƒƒbƒZ[ƒW‘—M—pŠÖ” –ß‚è’l‚ÍƒƒbƒZ[ƒW‚Ì—L–³
+					did_t	ID;				//ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½ï¿½ï¿½Ê—pID
+					vFp_v	FpSetupListen;	//ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Öï¿½
+					bFp_s	FpListen;		//ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½ï¿½ï¿½Mï¿½pï¿½Öï¿½ ï¿½ß‚ï¿½ï¿½lï¿½Íƒï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½Ì‰Â”ï¿½
+					vFp_v	FpSetupTalk;	//ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Öï¿½
+					bFp_ps	FpTalk;			//ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½ï¿½ï¿½Mï¿½pï¿½Öï¿½ ï¿½ß‚ï¿½ï¿½lï¿½Íƒï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½Ì—Lï¿½ï¿½
 				}message_t;
-				//‰Šú‰»ˆ—
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				void initialize(void);
-				//I’[‰»ˆ—
+				//ï¿½Iï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				void finalize(void);
-				//DatType‚ğ“o˜^
+				//DatTypeï¿½ï¿½ï¿½oï¿½^
 				bool regist(
 					did_t ID_
 					,vFp_v FpSetupListen_
@@ -83,19 +83,19 @@ namespace hmr {
 					,vFp_v FpSetupTalk_
 					,bFp_ps FpTalk_
 				);
-				//óM€”õŠÖ”
+				//ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
 				void setup_listen(void);
-				//óMŠÖ” •Ô‚è’l‚Í³í‚Éƒf[ƒ^‚ªˆ—‚³‚ê‚È‚©‚Á‚½ê‡‚Étrue
+				//ï¿½ï¿½ï¿½Mï¿½Öï¿½ ï¿½Ô‚ï¿½ï¿½lï¿½Íï¿½ï¿½ï¿½ï¿½Éƒfï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ï¿½true
 				bool listen(idata* mdata_);
-				//‘—M€”õŠÖ”
+				//ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
 				void setup_talk(void);
-				//‘—MŠÖ” •Ô‚è’l‚Íƒf[ƒ^‚ª‘¶İ‚µ‚È‚¢ê‡‚Étrue
+				//ï¿½ï¿½ï¿½Mï¿½Öï¿½ ï¿½Ô‚ï¿½ï¿½lï¿½Íƒfï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½İ‚ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½ï¿½true
 				bool talk(odata* pdata_);
-				//‘—M‰Â”\ƒTƒCƒYŠÖ”‚Ìg—p‚ğéŒ¾‚·‚é
+				//ï¿½ï¿½ï¿½Mï¿½Â”\ï¿½Tï¿½Cï¿½Yï¿½Öï¿½ï¿½Ìgï¿½pï¿½ï¿½ï¿½éŒ¾ï¿½ï¿½ï¿½ï¿½
 				void talkconfig_useSendable(dsizeFp_v Fp_);
-				//‘—MŠ®—¹’Ê’mŠÖ”‚ğg—p‚·‚é
+				//ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½Ê’mï¿½Öï¿½ï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½
 				void talkconfig_useInformDestruct(vFp_v Fp_);
-				//EDSƒƒ‚ƒŠ—Ìˆæ‚ÉŠm•Û‚µ‚½ê‡‚ÌƒAƒNƒZƒX—p‚ÉADSRPageFile‚ğ“o˜^‚·‚é
+				//EDSï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìˆï¿½ï¿½ÉŠmï¿½Û‚ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ÌƒAï¿½Nï¿½Zï¿½Xï¿½pï¿½ÉADSRPageFileï¿½ï¿½ï¿½oï¿½^ï¿½ï¿½ï¿½ï¿½
 				void talkconfig_useDSRPageFile(int DSRPAG_);
 			}
 		}

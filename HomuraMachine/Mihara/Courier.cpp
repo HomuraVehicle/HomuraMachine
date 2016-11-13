@@ -25,36 +25,36 @@ namespace hmr {
 						RF1_power RF1Power;
 					}Device;
 
-					//====== Š„‚è‚İŠÖ” ======
+					//====== ï¿½ï¿½ï¿½èï¿½İŠÖï¿½ ======
 					struct RF0_recv_interrupt :public xc32::interrupt::function{
 						virtual void operator()(void) {
-							//Š„‚İƒtƒ‰ƒO‚ğƒNƒŠƒA
+							//ï¿½ï¿½ï¿½ï¿½ï¿½İƒtï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½A
 							Device.RF0InterruptUart.recv_clear_flag();
 							Device.RF0InterruptUart.recv_clear_overflow();
 
-							//ƒf[ƒ^‚ğóM‚µACom‚Éˆ—‚³‚¹‚é
+							//ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½AComï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 							vmc1_recv(pVMC, Device.RF0InterruptUart.recv_data());
 						}
 					}RF0RecvInterrupt;
 					struct RF1_recv_interrupt :public xc32::interrupt::function{
 						virtual void operator()(void) {
-							//Š„‚İƒtƒ‰ƒO‚ğƒNƒŠƒA
+							//ï¿½ï¿½ï¿½ï¿½ï¿½İƒtï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½A
 							Device.RF1InterruptUart.recv_clear_flag();
 							Device.RF1InterruptUart.recv_clear_overflow();
 
-							//ƒf[ƒ^‚ğóM‚µACom‚Éˆ—‚³‚¹‚é
+							//ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½AComï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 							vmc1_recv(pVMC, Device.RF1InterruptUart.recv_data());
 						}
 					}RF1RecvInterrupt;
 					struct RF0_send_interrupt :public xc32::interrupt::function{
 						virtual void operator()(void) {
-							//Š„‚İƒtƒ‰ƒO‚ğƒNƒŠƒA
+							//ï¿½ï¿½ï¿½ï¿½ï¿½İƒtï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½A
 							Device.RF0InterruptUart.send_clear_flag();
 
-							//‘—M‰Â”\‚È‚çA‘—M
+							//ï¿½ï¿½ï¿½Mï¿½Â”\ï¿½È‚ï¿½ï¿½Aï¿½ï¿½ï¿½M
 							Device.RF0InterruptUart.send_data(vmc1_send(pVMC));
 
-							//‘—M‰Â”\‚Å‚È‚­‚È‚Á‚½ê‡‚ÍAŠ„‚è‚İ‚ğØ‚é
+							//ï¿½ï¿½ï¿½Mï¿½Â”\ï¿½Å‚È‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ÍAï¿½ï¿½ï¿½èï¿½İ‚ï¿½ï¿½Ø‚ï¿½
 							if (!vmc1_can_send(pVMC)){
 								Device.RF0InterruptUart.send_disable();
 							}
@@ -62,13 +62,13 @@ namespace hmr {
 					}RF0SendInterrupt;
 					struct RF1_send_interrupt :public xc32::interrupt::function{
 						virtual void operator()(void) {
-							//Š„‚İƒtƒ‰ƒO‚ğƒNƒŠƒA
+							//ï¿½ï¿½ï¿½ï¿½ï¿½İƒtï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½A
 							Device.RF1InterruptUart.send_clear_flag();
 
-							//‘—M‰Â”\‚È‚çA‘—M
+							//ï¿½ï¿½ï¿½Mï¿½Â”\ï¿½È‚ï¿½ï¿½Aï¿½ï¿½ï¿½M
 							Device.RF1InterruptUart.send_data(vmc1_send(pVMC));
 
-							//‘—M‰Â”\‚Å‚È‚­‚È‚Á‚½ê‡‚ÍAŠ„‚è‚İ‚ğØ‚é
+							//ï¿½ï¿½ï¿½Mï¿½Â”\ï¿½Å‚È‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ÍAï¿½ï¿½ï¿½èï¿½İ‚ï¿½ï¿½Ø‚ï¿½
 							if (!vmc1_can_send(pVMC)){
 								Device.RF1InterruptUart.send_disable();
 							}
@@ -76,7 +76,7 @@ namespace hmr {
 					}RF1SendInterrupt;
 				}
 
-				//‰Šú‰»
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				void initialize(){
 					ModuleID = mode::null;
 
@@ -88,11 +88,11 @@ namespace hmr {
 					pVMC = com::createVMC1();
 					vmc1_initialize(pVMC, (const unsigned char*)("hmr"), (const unsigned char*)("ctr"));
 
-					streamVMC_set_fput_interrupt_flag();//set_interrupt_fputflag(Stream_VMC);//Š„‚è‚İ—\–ñ
+					streamVMC_set_fput_interrupt_flag();//set_interrupt_fputflag(Stream_VMC);//ï¿½ï¿½ï¿½èï¿½İ—\ï¿½ï¿½
 					devmng_interrupt_enable_streamVMC_fget_interrupt();// enable_interrupt_fget(Stream_VMC);
 					devmng_interrupt_enable_streamVMC_fput_interrupt();// enable_interrupt_fput(Stream_VMC);
 				}
-				//I’[‰»
+				//ï¿½Iï¿½[ï¿½ï¿½
 				void finalize(){
 					vmc1_finalize(pVMC);
 					com::releaseVMC1(pVMC);
@@ -102,7 +102,7 @@ namespace hmr {
 					Device.RF0Power.unlock();
 					Device.RF1Power.unlock();
 				}
-				//ƒ^ƒXƒNˆ—
+				//ï¿½^ï¿½Xï¿½Nï¿½ï¿½ï¿½ï¿½
 				void work(){
 					if (Device.RF0InterruptUart.is_lock() && Device.RF0InterruptUart.send_is_enable() && vmc1_can_send(pVMC)){
 						Device.RF0InterruptUart.send_enable();
@@ -111,7 +111,7 @@ namespace hmr {
 						Device.RF1InterruptUart.send_enable();
 					}
 				}
-				//ModuleID‚É“dŒ¹‚ğ•ÏX‚·‚é
+				//ModuleIDï¿½É“dï¿½ï¿½ï¿½ï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½
 				void power_switch(boolian onoff, mode ModuleID_){
 					if (ModuleID_ != ModuleID)return;
 
@@ -143,7 +143,7 @@ namespace hmr {
 						return;
 					}
 				}
-				//Œ»İ‚ÌModuleID‚ğæ“¾‚·‚é
+				//ï¿½ï¿½ï¿½İ‚ï¿½ModuleIDï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 				mode getModuleID(void){ return ModuleID; }
 			}
 		}

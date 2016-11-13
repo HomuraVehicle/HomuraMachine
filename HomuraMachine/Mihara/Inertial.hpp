@@ -2,26 +2,26 @@
 #define HMR_MACHINE_MIHARA_INERTIAL_INC 200
 #
 /*
-Šµ«q–@ƒ‚ƒWƒ…[ƒ‹§Œä—p
+ï¿½ï¿½ï¿½ï¿½ï¿½qï¿½@ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½p
 === hmr::machine::mihara::inertial ===
 v2_00/141122 hmito
-	cpp‰»
+	cppï¿½ï¿½
 === hmrInertial ===
 v0_03/131026 amby
-	‚±‚Ìê‡‚Í“dŒ¹ON,OFF‚·‚é‚½‚Ñ‚ÉI‚QC‚ÅƒfƒoƒCƒX‚ğ‰Šú‰»‚·‚é•K—v‚ª‚ ‚é‚Ì‚ÅA
-	‚»‚Ì‚½‚ß‚ÌŠÖ”device_initialize ‚ğ’Ç‰Á‚µ‚½B
+	ï¿½ï¿½ï¿½Ìê‡ï¿½Í“dï¿½ï¿½ON,OFFï¿½ï¿½ï¿½é‚½ï¿½Ñ‚ï¿½Iï¿½QCï¿½Åƒfï¿½oï¿½Cï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ÅA
+	ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ß‚ÌŠÖï¿½device_initialize ï¿½ï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 v0_02/131019 iwahori
-	ƒ^ƒXƒNƒVƒXƒeƒ€—p‚Étask_setup_talk‚Ætask_interrupt‚ğì¬
+	ï¿½^ï¿½Xï¿½Nï¿½Vï¿½Xï¿½eï¿½ï¿½ï¿½pï¿½ï¿½task_setup_talkï¿½ï¿½task_interruptï¿½ï¿½ï¿½ì¬
 v1_00/130907 iwahori
-	kk08ˆÚs‚É”º‚¢Cg—p‚·‚éI2C‚ª•Ï‚í‚Á‚½‚½‚ßi2c1,i2c2‚ğ•ÏXDinitialize‚ÍŠ®—¹Ctalk‚Í‚Ü‚¾
+	kk08ï¿½Úsï¿½É”ï¿½ï¿½ï¿½ï¿½Cï¿½gï¿½pï¿½ï¿½ï¿½ï¿½I2Cï¿½ï¿½ï¿½Ï‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½i2c1,i2c2ï¿½ï¿½ï¿½ÏXï¿½Dinitializeï¿½ÍŠï¿½ï¿½ï¿½ï¿½Ctalkï¿½Í‚Ü‚ï¿½
 v1_00/130622 hmIto
-	‚Ù‚Ş‚ç‚Ìİ’uˆÊ’u‚É‘Î‰‚·‚é‚æ‚¤‚É²‚ğ•ÏX
+	ï¿½Ù‚Ş‚ï¿½ï¿½Ìİ’uï¿½Ê’uï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½Éï¿½ï¿½ï¿½ï¿½ÏX
 v0_01/130105 iwahori
-	workŠÖ”‚ğsetup_lisen‚Æsetup_talk‚É•ª—£
-	Gyro‚ÌtalkŠÖ”‚ğÀ‘•
-	KK07‚Å‚ÌƒZƒ“ƒT[•ÏX‚É”º‚¢initialzeŠÖ”‚ÆƒAƒhƒŒƒX‚ğ•ÏX
+	workï¿½Öï¿½ï¿½ï¿½setup_lisenï¿½ï¿½setup_talkï¿½É•ï¿½ï¿½ï¿½
+	Gyroï¿½ï¿½talkï¿½Öï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	KK07ï¿½Å‚ÌƒZï¿½ï¿½ï¿½Tï¿½[ï¿½ÏXï¿½É”ï¿½ï¿½ï¿½initialzeï¿½Öï¿½ï¿½ÆƒAï¿½hï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ÏX
 v0_00/121208 hmIto
-	Šî–{ŠÖ”ì¬
+	ï¿½ï¿½ï¿½{ï¿½Öï¿½ï¿½ì¬
 */
 #include<hmLib/cstring.h>
 #include<homuraLib_v2/type.hpp>
@@ -74,7 +74,7 @@ namespace hmr {
 						//power ON!
 						I2C.module_config(true, module::gyroL3G4200D::sampling_rate::_100Hz, module::gyroL3G4200D::fullscale::_250dps);
 
-						//buffer İ’è
+						//buffer ï¿½İ’ï¿½
 						I2C.buffer_config(module::gyroL3G4200D::buffer_mode::stream, 31);
 
 						IsLock = true;
@@ -120,7 +120,7 @@ namespace hmr {
 					hmLib::coordinates3D::position get(){
 						IsData = false;
 
-						//Š„‚è‚İ‹Ö~
+						//ï¿½ï¿½ï¿½èï¿½İ‹Ö~
 						xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
 						return Data;
 					}
@@ -137,7 +137,7 @@ namespace hmr {
 					}
 					bool can_get()const{ return Cnt>0; }
 					hmLib::coordinates3D::angle get(){
-						//Š„‚è‚İ‹Ö~
+						//ï¿½ï¿½ï¿½èï¿½İ‹Ö~
 						xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
 						hmLib::coordinates3D::angle AnsData(0, 0, 0);
 						std::swap(Data, AnsData);
@@ -210,8 +210,8 @@ namespace hmr {
 				void finalize();
 				void work();
 				namespace axel {
-					void device_initialize(void);// PWR ON ‚É‚µ‚½‚Æ‚«‚É•K—v‚È‰Šú‰»ŠÖ”
-					void device_finalize(void);// PWR OFF ‚É‚·‚é‘O‚É•K—v‚È‰Šú‰»ŠÖ”
+					void device_initialize(void);// PWR ON ï¿½É‚ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½É•Kï¿½vï¿½Èï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
+					void device_finalize(void);// PWR OFF ï¿½É‚ï¿½ï¿½ï¿½ï¿½Oï¿½É•Kï¿½vï¿½Èï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
 					bool listen(hmLib::cstring Str);
 					bool talk(hmLib::cstring* pStr);
 					void setup_listen(void);
@@ -241,7 +241,7 @@ namespace hmr {
 					};
 				}
 				namespace gyro {
-					void device_initialize(void); // gyro ‚ÍƒfƒtƒHƒ‹ƒg‚Åƒpƒ[ƒ_ƒEƒ“ƒ‚[ƒh‚È‚Ì‚ÅA‹N“®‚·‚éŠÖ”
+					void device_initialize(void); // gyro ï¿½Íƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Åƒpï¿½ï¿½ï¿½[ï¿½_ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½hï¿½È‚Ì‚ÅAï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
 					void device_finalize(void);
 					bool listen(hmLib::cstring Str);
 					bool talk(hmLib::cstring* pStr);
