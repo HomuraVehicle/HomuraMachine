@@ -20,8 +20,8 @@ v0_00/121208 hmIto
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>
 #include"System_base.hpp"
-#include"Device.hpp"
 #include"Message_base.hpp"
+#include"Device.hpp"
 namespace hmr {
 	namespace machine {
 		namespace mihara {
@@ -29,32 +29,42 @@ namespace hmr {
 			struct cCO2 : public co2_device_{
 				typedef cCO2<co2_device_> this_type;
 			private:
-				struct{
-					unsigned Data : 1;
-					unsigned SendData : 1;
-					unsigned SendData_i : 1;
-					unsigned PowerPump : 1;
-					unsigned PowerPump_i : 1;
-					unsigned PowerSensor : 1;
-					unsigned PowerSensor_i : 1;
-				}Mode = {0, 0, 1, 0, 1, 0, 1};
+				//ロックフラグ
+				bool Lock;
+			private:
+				//ピンフラグ
+				apinData ApinData;
+				powerPump PinPowerPump;
+				powerSensor PinPowerSensor;
+			private:
+				//モード
+				bool SendDataMode;
+				bool SendDataMode_i;
+				bool PowerPumpMode;
+				bool PowerPumpMode_i;
+				bool PowerSensorMode;
+				bool PowerSensorMode_i;
 				xc32::future<uint16> FutureData;
-				static const uint8 ADCAverageNum = 100;
-
+			public:
+				//タスク
 				struct data_task :public hmr::task::client_interface{
+				private:
+					this_type& Ref;
+				public:
+					data_task(this_type& Ref_) :Ref(Ref_){}
 					duration operator()(duration dt){
-						if(Mode.SendData && (!FutureData.valid()))FutureData = Device.ApinData(ADCAverageNum);
-						if(FutureData.valid()){
-							if(FutureData.can_get())Mode.Data = 1;
-						}
+						Ref.requestData()
 						return dt;
 					}
 				}DataTask;
 				struct inform_task :public hmr::task::client_interface{
+				private:
+					this_type& Ref;
+				public:
 					duration operator()(duration dt){
-						Mode.SendData_i = true;
-						Mode.PowerPump_i = true;
-						Mode.PowerSensor_i = true;
+						SendDataMode_i = true;
+						PowerPumpMode_i = true;
+						PowerSensorMode_i = true;
 						return dt;
 					}
 				}InformTask;
@@ -67,7 +77,8 @@ namespace hmr {
 					void operator()(system::mode::type NewMode_, system::mode::type PreMode_){
 
 					}
-				};
+				}SystemClient;
+				systems::element SystemElement;
 			private:
 				//通信受領クラス
 				struct message_client : public message_client_interface{
@@ -78,12 +89,11 @@ namespace hmr {
 						Ref.Mode.Data = Ref.Mode.SendData;
 					}
 					bool talk(hmLib::cstring* pStr){
-						uint16 sumadc = 0;
-						if(MRef.ode.SendData_i){
+						if(Ref.SendDataMode_i){
 							service::cstring_construct_safe(pStr, 1);
-							if(Ref.Mode.SendData)hmLib::cstring_putc(pStr, 0, 0x10);
+							if(Ref.SendDataMode)hmLib::cstring_putc(pStr, 0, 0x10);
 							else hmLib::cstring_putc(pStr, 0, 0x11);
-							Ref.Mode.SendData_i = false;
+							Ref.SendDataMode_i = false;
 							return false;
 						} else if(Ref.Mode.PowerSensor_i){
 							service::cstring_construct_safe(pStr, 1);
@@ -97,17 +107,13 @@ namespace hmr {
 							else hmLib::cstring_putc(pStr, 0, 0x31);
 							Ref.Mode.PowerPump_i = false;
 							return false;
-						} else if(Ref.Mode.Data){
+						} else if(Ref.FutureData.can_get()){
 							service::cstring_construct_safe(pStr, 3);
 							hmLib::cstring_putc(pStr, 0, 0x00);
 							// CO2データ取得
-							sumadc = 0xFFFF;
-							if(FutureData.valid()){
-								if(FutureData.can_get())sumadc = FutureData.get();
-							}
-							hmLib::cstring_putc(pStr, 1, (unsigned char)(sumadc & 0x00FF));
-							hmLib::cstring_putc(pStr, 2, (unsigned char)((sumadc >> 8) & 0x00FF));
-							Ref.Mode.Data = false;
+							uint16 Data = Ref.FutureData.get();
+							hmLib::cstring_putc(pStr, 1, (unsigned char)(Data & 0x00FF));
+							hmLib::cstring_putc(pStr, 2, (unsigned char)((Data >> 8) & 0x00FF));
 							return false;
 						}
 						return true;
@@ -115,13 +121,13 @@ namespace hmr {
 					void setup_listen(void){ return; }
 					bool listen(hmLib::cstring Str){
 						switch(hmLib::cstring_getc(&Str, 0)){
-						case 0x10://sensor on
-							Ref.Mode.SendData = true;
-							Ref.Mode.SendData_i = true;
+						case 0x10://SendDataMode ON
+							Ref.SendDataMode = true;
+							Ref.SendDataMode_i = true;
 							return false;
-						case 0x11://sensor on
-							Ref.Mode.SendData = false;
-							Ref.Mode.SendData_i = true;
+						case 0x11://SendDataMode OFF
+							Ref.SendDataMode = false;
+							Ref.SendDataMode_i = true;
 							return false;
 						case 0x20://sensor on
 							Ref.Mode.PowerSensor = true;
@@ -147,18 +153,10 @@ namespace hmr {
 							return true;
 						}
 					}
-				};
-				message_client MessageClient;
+				}MessageClient;
 				message::element MessageElement;
-			private:
-				//ロックフラグ
-				bool Lock;
-			private:
-				apinData ApinData;
-				powerPump PinPowerPump;
-				powerSensor PinPowerSensor;
 			public:
-				cCO2(unsigned char ID_):MessageElement(message_client_holder(ID_,MessageClient)){}
+				cCO2(unsigned char ID_):Lock(false),MessageElement(message_client_holder(ID_,MessageClient)){}
 				bool lock(){
 					if(is_lock())return false;
 					Lock = true;
@@ -190,6 +188,15 @@ namespace hmr {
 			public:
 				void regist_message(message_host_interface& Host_){
 					Host_.regist(MessageElement);
+				}
+				void regist_systems(system_host_interface& Host_){
+					Host_.regist(SystemElement);
+				}
+			public:
+				bool requestData(){
+					if(!FutureData.valid())return true;
+					FutureData = ApinData(100);
+					return false;
 				}
 			};
 		}
