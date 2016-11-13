@@ -59,7 +59,7 @@ namespace hmr {
 				typedef com::dsizeFp_v dsizeFp_v;
 				typedef com::vFp_v vFp_v;			
 			}
-			struct message_host :public message_host_interface{
+			struct cMessage :public message_host_interface{
 				typedef typename message::chain::iterator iterator;
 			private:
 				//client chain

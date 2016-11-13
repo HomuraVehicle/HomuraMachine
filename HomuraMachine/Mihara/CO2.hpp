@@ -53,7 +53,9 @@ namespace hmr {
 				public:
 					data_task(this_type& Ref_) :Ref(Ref_){}
 					duration operator()(duration dt){
-						Ref.requestData()
+						if(SendDataMode){
+							Ref.requestData();
+						}
 						return dt;
 					}
 				}DataTask;
@@ -61,10 +63,11 @@ namespace hmr {
 				private:
 					this_type& Ref;
 				public:
+					inform_task(this_type& Ref_) :Ref(Ref_){}
 					duration operator()(duration dt){
-						SendDataMode_i = true;
-						PowerPumpMode_i = true;
-						PowerSensorMode_i = true;
+						Ref.SendDataMode_i = true;
+						Ref.PowerPumpMode_i = true;
+						Ref.PowerSensorMode_i = true;
 						return dt;
 					}
 				}InformTask;
@@ -73,10 +76,22 @@ namespace hmr {
 				struct system_client : public system_client_interface{
 				private:
 					this_type& Ref;
+					systems::mode::type CurrentMode;
 				public:
-					void operator()(system::mode::type NewMode_, system::mode::type PreMode_){
-
+					system_client(this_type& Ref_) :Ref(Ref_){}
+					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
+						switch(NewMode_){
+						case systems::mode::drive:
+							Ref.PinPowerPump(PowerPumpMode);
+							Ref.PinPowerSensor(PowerSensorMode);
+						default:
+							Ref.PinPowerPump(false);
+							Ref.PinPowerSensor(false);
+						}
+						CurrentMode = NewMode_;
 					}
+				public:
+					systems::mode::type mode()const{ return CurrrentMode; }
 				}SystemClient;
 				systems::element SystemElement;
 			private:
@@ -85,9 +100,9 @@ namespace hmr {
 				private:
 					this_type& Ref;
 				public:
-					void setup_talk(void){
-						Ref.Mode.Data = Ref.Mode.SendData;
-					}
+					message_client(this_type& Ref_) :Ref(Ref_){}
+				public:
+					void setup_talk(void){ return; }
 					bool talk(hmLib::cstring* pStr){
 						if(Ref.SendDataMode_i){
 							service::cstring_construct_safe(pStr, 1);
@@ -132,22 +147,22 @@ namespace hmr {
 						case 0x20://sensor on
 							Ref.Mode.PowerSensor = true;
 							Ref.Mode.PowerSensor_i = true;
-							Ref.PinPowerSensor(true);
+							Ref.powerSensor(true);
 							return false;
 						case 0x21://sensor on
 							Ref.Mode.PowerSensor = false;
 							Ref.Mode.PowerSensor_i = true;
-							Ref.PinPowerSensor(false);
+							Ref.powerSensor(false);
 							return false;
 						case 0x30://pump on
 							Ref.Mode.PowerPump = true;
 							Ref.Mode.PowerPump_i = true;
-							Ref.PinPowerPump(true);
+							Ref.powerPump(true);
 							return false;
 						case 0x31://pump off
 							Ref.Mode.PowerPump = false;
 							Ref.Mode.PowerPump_i = true;
-							Ref.PinPowerPump(false);
+							Ref.powerPump(false);
 							return false;
 						default:
 							return true;
@@ -156,8 +171,22 @@ namespace hmr {
 				}MessageClient;
 				message::element MessageElement;
 			public:
-				cCO2(unsigned char ID_):Lock(false),MessageElement(message_client_holder(ID_,MessageClient)){}
-				bool lock(){
+				cCO2(unsigned char ID_)
+					: Lock(false)
+					, SendDataMode(false)
+					, SendDataMode_i(false)
+					, PowerPumpMode(false)
+					, PowerPumpMode_i(false)
+					, PowerSensorMode(false)
+					, PowerSensorMode_i(false)
+					, DataTask(*this)
+					, InformTask(*this)
+					, SystemClient(*this)
+					, SystemElement(system_client_holder(SystemClient))
+					, MessageClient(*this)
+					, MessageElement(message_client_holder(ID_,MessageClient)){
+				}
+				bool lock(system_host_interface& SystemHost_, message_host_interface& MessageHost_){
 					if(is_lock())return false;
 					Lock = true;
 
@@ -169,6 +198,10 @@ namespace hmr {
 					//タスク登録
 					service::task::quick_start(InformTask, 5);
 					service::task::quick_start(DataTask, 5);
+
+					//Client登録
+					SystemHost_.regist(SystemElement);
+					MessageHost_.regist(MessageElement);
 
 					return false;
 				}
@@ -186,17 +219,16 @@ namespace hmr {
 					service::task::stop(DataTask);
 				}
 			public:
-				void regist_message(message_host_interface& Host_){
-					Host_.regist(MessageElement);
-				}
-				void regist_systems(system_host_interface& Host_){
-					Host_.regist(SystemElement);
-				}
-			public:
 				bool requestData(){
 					if(!FutureData.valid())return true;
 					FutureData = ApinData(100);
 					return false;
+				}
+				void powerSensor(bool OnOff){
+					if(SystemClient.mode()==systems::mode::drive)PinPowerSensor(OnOff);
+				}
+				void powerPump(bool OnOff){
+					if(SystemClient.mode() == systems::mode::drive)PinPowerPump(OnOff);
 				}
 			};
 		}

@@ -76,6 +76,7 @@ v1_00/120921 hmIto
 #include "Device.hpp"
 #include "Service.hpp"
 #include "Com.hpp"
+#include "System.hpp"
 #include "Message.hpp"
 #include "CO2.hpp"
 #include "Battery.hpp"
@@ -122,6 +123,9 @@ using namespace hmr::machine::service;
 int main(void){
 	cDevice Device;
 	cService Service;
+	cSystem System;
+	cMessage Message;
+
 
 	//デバイスの初期化
 	devmng::initialize();
@@ -135,8 +139,6 @@ int main(void){
 	vmc1_initialize(pVMC, (const unsigned char*)("hmr"), (const unsigned char*)("ctr"));
 	com::initialize();
 	
-	message_host Message;
-
 	//割り込み整理
 	devmng::interrupt_enable_timerDevmng_interrupt();
 
@@ -155,8 +157,9 @@ int main(void){
 	cGPS<cDevice::gps_device> GPS;
 	gps::initialize(GPS);
 
-	//メッセージ登録
-	CO2.regist_message(Message);
+	//Lock
+	CO2.lock(System, Message);
+
 
 	//メッセージ登録
 //	message::regist('!',debug_setup_listen,debug_listen,debug_setup_talk,debug_talk);
@@ -276,7 +279,6 @@ int main(void){
 	devmng::courier::uart::fput_disable_interrupt();
 
 	//通信関連の終端化処理
-	message::finalize();
 	vmc1_finalize(pVMC);
 	com::finalize();
 	com::releaseVMC1(pVMC);
