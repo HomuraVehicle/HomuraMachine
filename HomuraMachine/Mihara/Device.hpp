@@ -39,8 +39,8 @@ namespace hmr {
 				typedef device::kk10 my_device;
 			private:
 				//‹¤—Ladc
-				typedef xc32::async_functional_adc<xc32::sfr::adc1> default_adc;
-				typedef xc32::sfr::adc1 default_adc_register;
+				struct shared_adc_identifer{};
+				typedef xc32::async_interrupt_adc<xc32::sfr::adc_block, shared_adc_identifer> default_adc;
 				//‹¤—Li2c
 				struct shared_i2c5_default_identifer{};
 				typedef xc32::shared_i2c<xc32::sfr::i2c5,shared_i2c5_default_identifer> shared_i2c5;
@@ -49,7 +49,6 @@ namespace hmr {
 				typedef xc32::shared_spi<xc32::sfr::spi2,shared_spi2_default_identifer> shared_spi2;
 			private:
 				my_device KK10;
-				default_adc_register ADC_register;
 				default_adc ADC;
 				shared_i2c5 I2C5;
 				shared_spi2 SPI2;
@@ -189,18 +188,15 @@ namespace hmr {
 //================================================================================================
 				};
 			public:
-				cDevice():KK10(),ADC_register()/*:WDTLock(WDT)*/ {
-					ADC.lock();
+				cDevice():KK10()/*:WDTLock(WDT)*/ {
 					I2C5.lock(xc32::i2c::clockmode::type::_400kHz,0);
 					SPI2.lock(true,true,1);
 					}
 				~cDevice() {
-					ADC.unlock();
 					I2C5.unlock();
 					SPI2.unlock();
 				}
 				void operator()(void) {
-					ADC();
 //					WDT.clear();
 				}
 			};
