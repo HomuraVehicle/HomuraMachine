@@ -2,25 +2,25 @@
 #define HMR_MACHINE_MIHARA_THERMO_INC 100
 #
 /*
-ƒoƒbƒeƒŠ[ŠÇ——pƒRƒ}ƒ“ƒh
+ï¿½oï¿½bï¿½eï¿½ï¿½ï¿½[ï¿½Ç—ï¿½ï¿½pï¿½Rï¿½}ï¿½ï¿½ï¿½h
 === hmr::machine::mihara::thermo ===
 v1_00/141121 hmIto
-	cpp‰»
+	cppï¿½ï¿½
 === hmrThermo ===
 v0_02/131019 iwahori
-	ƒ^ƒXƒNƒVƒXƒeƒ€—p‚Étask_setup_talk‚Ætask_interrupt‚ğì¬
+	ï¿½^ï¿½Xï¿½Nï¿½Vï¿½Xï¿½eï¿½ï¿½ï¿½pï¿½ï¿½task_setup_talkï¿½ï¿½task_interruptï¿½ï¿½ï¿½ì¬
 v0_01/130112 iwahori
-	workŠÖ”‚ğsetup_listen‚Æsetup_talk‚É•ª—£
+	workï¿½Öï¿½ï¿½ï¿½setup_listenï¿½ï¿½setup_talkï¿½É•ï¿½ï¿½ï¿½
 v0_00/121208 hmIto
-	Šî–{ŠÖ”ì¬
+	ï¿½ï¿½ï¿½{ï¿½Öï¿½ï¿½ì¬
 */
-#include<hmLib_v3_06/cstring.h>
+#include<hmLib/cstring.h>
 #include<homuraLib_v2/type.hpp>
 namespace hmr {
 	namespace machine {
 		namespace mihara {
 			namespace thermo {
-				//battteryŠÄ‹—pŠÖ”ŒQ
+				//battteryï¿½Äï¿½ï¿½pï¿½Öï¿½ï¿½Q
 				void initialize();
 				void finalize();
 				bool listen(hmLib::cstring Str);

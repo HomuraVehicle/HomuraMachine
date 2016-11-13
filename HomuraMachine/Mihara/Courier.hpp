@@ -1,7 +1,7 @@
 #ifndef HMR_MACHINE_MIHARA_COURIER_INC
 #define HMR_MACHINE_MIHARA_COURIER_INC 100
 #
-#include<hmLib_v3_06/type.h>
+#include<hmLib/type.h>
 namespace hmr {
 	namespace machine{
 		namespace mihara {
@@ -11,15 +11,15 @@ namespace hmr {
 				//mp : MP:38400
 				//rf_debuf : RF:38400
 
-				//‰Šú‰»
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				void initialize();
-				//I’[‰»
+				//ï¿½Iï¿½[ï¿½ï¿½
 				void finalize();
-				//ƒ^ƒXƒNˆ—
+				//ï¿½^ï¿½Xï¿½Nï¿½ï¿½ï¿½ï¿½
 				void work();
-				//ModuleID‚É“dŒ¹‚ğ•ÏX‚·‚é
+				//ModuleIDï¿½É“dï¿½ï¿½ï¿½ï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½
 				void power_switch(boolian onoff, mode ModuleID_);
-				//Œ»İ‚ÌModuleID‚ğæ“¾‚·‚é
+				//ï¿½ï¿½ï¿½İ‚ï¿½ModuleIDï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 				mode getModuleID(void);
 			}
 		}

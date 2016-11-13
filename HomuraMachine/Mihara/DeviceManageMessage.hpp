@@ -5,15 +5,15 @@
 ===hmrDeviceManage===
 
 v1_02/131019 amby
-	ƒƒbƒZ[ƒWŠÖ”‚Ì’Ç‰Á ‚»‚Ì‘¼‚Ì‹@”\‚ÍƒCƒ“ƒ^[ƒtƒF[ƒX‚Öc
+	ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½Wï¿½Öï¿½ï¿½Ì’Ç‰ï¿½ ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Ì‹@ï¿½\ï¿½ÍƒCï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½Öc
 
 v1_01/131013 hmIto
-	ƒCƒ“ƒ^[ƒtƒF[ƒX‚ð‘å•‚É•ÏX•®—
-		ƒ‚[ƒh‚©‚çƒNƒƒbƒN‘¬“xŽw’è‚ðœŠO
+	ï¿½Cï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½Xï¿½ï¿½ï¿½å•ï¿½É•ÏXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		ï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½xï¿½wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½O
 */
 
 #include<homuraLib_v2/type.hpp>
-#include<hmLib_v3_06/cstring.h>
+#include<hmLib/cstring.h>
 #include"Device.hpp"
 
 namespace hmr{

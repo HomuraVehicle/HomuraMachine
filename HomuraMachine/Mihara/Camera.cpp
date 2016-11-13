@@ -3,7 +3,7 @@
 #
 #define HMLIB_NOLIB
 #include<homuraLib_v2/type.hpp>
-#include<hmLib_v3_06/cqueue.h>
+#include<hmLib/cqueue.h>
 #include<homuraLib_v2/machine/module/Sprite.hpp>
 #include<homuraLib_v2/machine/service/delay.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
@@ -22,40 +22,40 @@ namespace hmr {
 
 					my_camera Camera;
 
-					//ƒJƒƒ‰î•ñ’Ê’mƒ‚[ƒh
+					//ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê’mï¿½ï¿½ï¿½[ï¿½h
 					bool StatusMode;
 					bool LightPower;
 					sprite_error_type Error;
 					struct {
-						unsigned SendStatusMode : 1;		//ƒXƒe[ƒ^ƒX‘—Mƒtƒ‰ƒO
-						unsigned SetStatusMode : 1;			//ƒXƒe[ƒ^ƒX‘—Mƒtƒ‰ƒO•ÏX’Ê’m
+						unsigned SendStatusMode : 1;		//ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½ï¿½Mï¿½tï¿½ï¿½ï¿½O
+						unsigned SetStatusMode : 1;			//ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½ï¿½Mï¿½tï¿½ï¿½ï¿½Oï¿½ÏXï¿½Ê’m
 
-						unsigned SetMiniPacMode : 1;		//ƒ~ƒjƒpƒPƒbƒgƒ‚[ƒh•ÏX’Ê’m
-						unsigned SetAutoTakePic : 1;		//˜A‘±B‰eƒ‚[ƒh•ÏX’Ê’m
-						unsigned SetAutoReset : 1;			//ƒI[ƒgƒŠƒZƒbƒgİ’è•ÏX’Ê’m
-						unsigned SetLightPower : 1;			//ƒ‰ƒCƒg‚ÌON/OFFİ’è•ÏX’Ê’m
-						unsigned SetAutoLight : 1;			//ƒ‰ƒCƒg©“®ON/OFFİ’è•ÏX’Ê’m
+						unsigned SetMiniPacMode : 1;		//ï¿½~ï¿½jï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½[ï¿½hï¿½ÏXï¿½Ê’m
+						unsigned SetAutoTakePic : 1;		//ï¿½Aï¿½ï¿½ï¿½Bï¿½eï¿½ï¿½ï¿½[ï¿½hï¿½ÏXï¿½Ê’m
+						unsigned SetAutoReset : 1;			//ï¿½Iï¿½[ï¿½gï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½İ’ï¿½ï¿½ÏXï¿½Ê’m
+						unsigned SetLightPower : 1;			//ï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ON/OFFï¿½İ’ï¿½ï¿½ÏXï¿½Ê’m
+						unsigned SetAutoLight : 1;			//ï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½ON/OFFï¿½İ’ï¿½ï¿½ÏXï¿½Ê’m
 
-						unsigned SendPictureInfo : 1;		//Ê^î•ñ‘—Mƒtƒ‰ƒO
-						unsigned SendPictureData : 1;		//Ê^ƒf[ƒ^‘—Mƒtƒ‰ƒO
+						unsigned SendPictureInfo : 1;		//ï¿½Ê^ï¿½ï¿½ï¿½ñ‘—Mï¿½tï¿½ï¿½ï¿½O
+						unsigned SendPictureData : 1;		//ï¿½Ê^ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Mï¿½tï¿½ï¿½ï¿½O
 
-						unsigned AckCommandReset : 1;		//ƒRƒ}ƒ“ƒhƒŠƒZƒbƒgó—’Ê’m
-						unsigned AckPowerReset:1;			//ƒpƒ[ƒŠƒZƒbƒgó—’Ê’m
+						unsigned AckCommandReset : 1;		//ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ó—’Ê’m
+						unsigned AckPowerReset:1;			//ï¿½pï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ó—’Ê’m
 
-						unsigned SendErrorResult:1;			//ƒGƒ‰[‘—Mƒtƒ‰ƒO
+						unsigned SendErrorResult:1;			//ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Mï¿½tï¿½ï¿½ï¿½O
 					}Mode;
 				}
-				//=============== Message‘¤‚Ì“z—ê ==================
+				//=============== Messageï¿½ï¿½ï¿½Ì“zï¿½ï¿½ ==================
 				void setup_listen(void) { return; }
 				void setup_talk(void) {
-					//“à•”î•ñ‘—Mƒ‚[ƒh
+					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñ‘—Mï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½
 					if(StatusMode)Mode.SendStatusMode = true;
 
-					//PicInfo‚ğ‘Ò‚Á‚Ä‚¢‚éê‡
+					//PicInfoï¿½ï¿½ï¿½Ò‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ê‡
 					if(Camera.can_getPictureInfo())Mode.SendPictureInfo = true;
 					if(Camera.can_readPictureData())Mode.SendPictureData = true;
 
-					//ƒGƒ‰[‚Ì—L–³‚ğŠm”F
+					//ï¿½Gï¿½ï¿½ï¿½[ï¿½Ì—Lï¿½ï¿½ï¿½ï¿½ï¿½mï¿½F
 					if(Camera.can_getResultTakeAndRead()){
 						sprite_ans_type AnsType = Camera.getResultTakeAndRead();
 						if(!AnsType){
@@ -81,17 +81,17 @@ namespace hmr {
 				bool listen(hmLib::cstring Str) {
 					static uint8 c=0;
 
-					//ƒf[ƒ^ƒTƒCƒYŠm”F
+					//ï¿½fï¿½[ï¿½^ï¿½Tï¿½Cï¿½Yï¿½mï¿½F
 					if(hmLib::cstring_size(&Str)==0)return true;
 
 					c = hmLib::cstring_getc(&Str, 0);
 
-					//1byte–Ú‚Åƒ‚[ƒh‚ğ•ª‚¯‚é
+					//1byteï¿½Ú‚Åƒï¿½ï¿½[ï¿½hï¿½ğ•ª‚ï¿½ï¿½ï¿½
 					switch(c) {
-					case 0x00://Ê^æ“¾ƒ‚[ƒh
+					case 0x00://ï¿½Ê^ï¿½æ“¾ï¿½ï¿½ï¿½[ï¿½h
 						if(hmLib::cstring_size(&Str) != 2)return true;
 						{
-							//PictureSizeİ’è							
+							//PictureSizeï¿½İ’ï¿½							
 							imagesize::type ImageSize = imagesize::size_160_120;
 							if(hmLib::cstring_getc(&Str, 1) >= 2) {
 								ImageSize = imagesize::size_640_480;
@@ -102,12 +102,12 @@ namespace hmr {
 							Camera.takePicture(ImageSize);
 						}
 						return false;
-					case 0x10://˜A‘±B‰eƒ‚[ƒhON
+					case 0x10://ï¿½Aï¿½ï¿½ï¿½Bï¿½eï¿½ï¿½ï¿½[ï¿½hON
 						if(hmLib::cstring_size(&Str) < 2)return true;
 
 						Mode.SetAutoTakePic = true;
 						{
-							//PictureSizeİ’è							
+							//PictureSizeï¿½İ’ï¿½							
 							imagesize::type ImageSize = imagesize::size_160_120;
 							if(hmLib::cstring_getc(&Str, 1) >= 2) {
 								ImageSize = imagesize::size_640_480;
@@ -118,81 +118,81 @@ namespace hmr {
 							Camera.auto_takePicture(ImageSize);
 						}
 						return false;
-					case 0x11://˜A‘±B‰eƒ‚[ƒhOFF
+					case 0x11://ï¿½Aï¿½ï¿½ï¿½Bï¿½eï¿½ï¿½ï¿½[ï¿½hOFF
 						Mode.SetAutoTakePic = true;
 						
 						Camera.auto_takePicture(camera::imagesize::null);
 
 						return false;
-					case 0x30:	//ƒ‰ƒCƒg‚ÌON—v‹
+					case 0x30:	//ï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ONï¿½vï¿½ï¿½
 						Mode.SetLightPower = true;
 
-						//ƒ‰ƒCƒgON
+						//ï¿½ï¿½ï¿½Cï¿½gON
 						Camera.setLight(true);
 						LightPower = true;
 						return false;
-					case 0x31://ƒ‰ƒCƒg‚ÌOFF—v‹
+					case 0x31://ï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½OFFï¿½vï¿½ï¿½
 						Mode.SetLightPower = true;
 
-						//ƒ‰ƒCƒgOFF
+						//ï¿½ï¿½ï¿½Cï¿½gOFF
 						Camera.setLight(false);
 						LightPower = false;
 						return false;
-					case 0x40:	//©“®ƒtƒ‰ƒbƒVƒ…ONİ’è
+					case 0x40:	//ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ONï¿½İ’ï¿½
 						Mode.SetAutoLight = true;
 
-						//©“®ƒtƒ‰ƒbƒVƒ…ƒ‚[ƒhON
+						//ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½hON
 						Camera.setAutoLightMode(true);
 
 						return false;
-					case 0x41:	//©“®ƒtƒ‰ƒbƒVƒ…OFFİ’è
+					case 0x41:	//ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½OFFï¿½İ’ï¿½
 						Mode.SetAutoLight = true;
 
-						//©“®ƒtƒ‰ƒbƒVƒ…ƒ‚[ƒhOFF
+						//ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½hOFF
 						Camera.setAutoLightMode(false);
 
 						return false;
-					case 0x50:	//ƒ~ƒjƒpƒPƒbƒgƒ‚[ƒhONİ’è
+					case 0x50:	//ï¿½~ï¿½jï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½[ï¿½hONï¿½İ’ï¿½
 						Mode.SetMiniPacMode=true;
 
-						//ƒ~ƒjƒpƒPƒbƒgƒ‚[ƒhON—\–ñ
+						//ï¿½~ï¿½jï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½[ï¿½hONï¿½\ï¿½ï¿½
 						Camera.setMiniPacketMode(true);
 
 						return false;
-					case 0x51:	//ƒ~ƒjƒpƒPƒbƒgƒ‚[ƒhOFFİ’è
+					case 0x51:	//ï¿½~ï¿½jï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½[ï¿½hOFFï¿½İ’ï¿½
 						Mode.SetMiniPacMode=true;
 
-						//ƒ~ƒjƒpƒPƒbƒgƒ‚[ƒhOFF—\–ñ
+						//ï¿½~ï¿½jï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½[ï¿½hOFFï¿½\ï¿½ï¿½
 						Camera.setMiniPacketMode(false);
 
 						return false;
-					case 0x60:	//“à•”ƒŠƒZƒbƒg—v‹
+					case 0x60:	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½vï¿½ï¿½
 						Mode.AckCommandReset = true;
-						//ƒŠƒZƒbƒg‚ğs‚¤
+						//ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½sï¿½ï¿½
 						Camera.command_reset();
 						return false;
-					case 0x70:	//‹­§ƒŠƒZƒbƒg—v‹
-						//‹­§ƒŠƒZƒbƒg‚ğ‚©‚¯‚é
+					case 0x70:	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½vï¿½ï¿½
+						//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 						Camera.power_reset();
 						Error=sprite_error_type();
 						Mode.SendErrorResult=false;
 
 						return false;
-					case 0x80:	//ƒGƒ‰[©“®‹­§ƒŠƒZƒbƒgONİ’è
+					case 0x80:	//ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gONï¿½İ’ï¿½
 						Mode.SetAutoReset=true;
-						//AutoReset‹@”\ON
+						//AutoResetï¿½@ï¿½\ON
 						Camera.setAutoResetMode(true);
 						return false;
-					case 0x81:	//ƒGƒ‰[©“®‹­§ƒŠƒZƒbƒgOFFİ’è
+					case 0x81:	//ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gOFFï¿½İ’ï¿½
 						Mode.SetAutoReset=true;
-						//AutoReset‹@”\OFF
+						//AutoResetï¿½@ï¿½\OFF
 						Camera.setAutoResetMode(false);
 						return false;
-					case 0xB0:	//“à•”ƒf[ƒ^‘—Mƒ‚[ƒhON
+					case 0xB0:	//ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½[ï¿½hON
 						Mode.SetStatusMode=true;
 						StatusMode=true;
 						return false;
-					case 0xB1:	//“à•”ƒf[ƒ^‘—Mƒ‚[ƒhOFF
+					case 0xB1:	//ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½[ï¿½hOFF
 						Mode.SetStatusMode = true;
 						StatusMode = false;
 						return false;
@@ -201,9 +201,9 @@ namespace hmr {
 					}
 				}
 				bool talk(hmLib::cstring* pStr) {
-					//˜A‘±B‰eƒ‚[ƒh‚ÌON/OFFİ’è
+					//ï¿½Aï¿½ï¿½ï¿½Bï¿½eï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ON/OFFï¿½İ’ï¿½
 					if(Mode.SetAutoTakePic) {
-						//ƒtƒ‰ƒO‚ğ‚¨‚ë‚·
+						//ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ë‚·
 						Mode.SetAutoTakePic = false;
 						service::cstring_construct_safe(pStr, 1);
 						if(Camera.is_auto_takePicture())hmLib::cstring_putc(pStr, 0, 0x10);
@@ -211,9 +211,9 @@ namespace hmr {
 
 						return false;
 					}
-					//ƒ‰ƒCƒg‚ÌON/OFF
+					//ï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ON/OFF
 					else if(Mode.SetLightPower) {
-						//ƒtƒ‰ƒO‚ğ‚¨‚ë‚·
+						//ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ë‚·
 						Mode.SetLightPower=false;
 
 						service::cstring_construct_safe(pStr, 1);
@@ -221,9 +221,9 @@ namespace hmr {
 						else hmLib::cstring_putc(pStr, 0, 0x31);
 						return false;
 					}
-					//ƒtƒ‰ƒbƒVƒ…‹@”\ON/OFF‚Ìİ’è
+					//ï¿½tï¿½ï¿½ï¿½bï¿½Vï¿½ï¿½ï¿½@ï¿½\ON/OFFï¿½Ìİ’ï¿½
 					else if(Mode.SetAutoLight) {
-						//ƒtƒ‰ƒO‚ğ‚¨‚ë‚·
+						//ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ë‚·
 						Mode.SetAutoLight = false;
 
 						service::cstring_construct_safe(pStr, 1);
@@ -232,9 +232,9 @@ namespace hmr {
 
 						return false;
 					}
-					//ƒ~ƒjƒpƒPƒbƒgƒ‚[ƒh‚©‚Ç‚¤‚©‚Ìİ’è
+					//ï¿½~ï¿½jï¿½pï¿½Pï¿½bï¿½gï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½Ìİ’ï¿½
 					else if(Mode.SetMiniPacMode) {
-						//ƒtƒ‰ƒO‚ğ‚¨‚ë‚·
+						//ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ë‚·
 						Mode.SetMiniPacMode = false;
 
 						service::cstring_construct_safe(pStr, 1);
@@ -243,9 +243,9 @@ namespace hmr {
 
 						return false;
 					}
-					//“à•”ƒŠƒZƒbƒg—v‹
+					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½vï¿½ï¿½
 					else if(Mode.AckCommandReset) {
-						//ƒtƒ‰ƒO‚ğ‚¨‚ë‚·D
+						//ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ë‚·ï¿½D
 						Mode.AckCommandReset = false;
 
 						service::cstring_construct_safe(pStr, 2);
@@ -254,9 +254,9 @@ namespace hmr {
 
 						return false;
 					}
-					//ƒGƒ‰[©“®‹­§ƒŠƒZƒbƒgONEOFFİ’è
+					//ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gONï¿½EOFFï¿½İ’ï¿½
 					else if(Mode.SetAutoReset) {
-						//ƒtƒ‰ƒO‚ğ‚¨‚ë‚·
+						//ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ë‚·
 						Mode.SetAutoReset=false;
 
 						service::cstring_construct_safe(pStr, 1);
@@ -274,31 +274,31 @@ namespace hmr {
 
 						return false;
 
-						//“à•”î•ñæ“¾
+						//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
 					} else if(Mode.SendStatusMode) {
-						//ƒtƒ‰ƒO‚ğ‚¨‚ë‚·D
+						//ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ë‚·ï¿½D
 						Mode.SendStatusMode = false;
 
 						service::cstring_construct_safe(pStr, 4);
 						hmLib::cstring_putc(pStr, 0, 0xA0);
-						hmLib::cstring_putc(pStr, 1, Camera.status().byte());			//Œ»İ‚ÌƒXƒe[ƒ^ƒX
+						hmLib::cstring_putc(pStr, 1, Camera.status().byte());			//ï¿½ï¿½ï¿½İ‚ÌƒXï¿½eï¿½[ï¿½^ï¿½X
 						if(Mode.SendErrorResult){
-							hmLib::cstring_putc(pStr, 2, Error.byte_category());				//Œ»İƒGƒ‰[ó‘Ô‚©‚Ç‚¤‚©
-							hmLib::cstring_putc(pStr, 3, Error.byte_pos());		//ƒGƒ‰[‚ÌƒXƒe[ƒ^ƒX
+							hmLib::cstring_putc(pStr, 2, Error.byte_category());				//ï¿½ï¿½ï¿½İƒGï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½
+							hmLib::cstring_putc(pStr, 3, Error.byte_pos());		//ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ÌƒXï¿½eï¿½[ï¿½^ï¿½X
 						} else{
-							hmLib::cstring_putc(pStr, 2, 0);				//Œ»İƒGƒ‰[ó‘Ô‚©‚Ç‚¤‚©
-							hmLib::cstring_putc(pStr, 3, 0);		//ƒGƒ‰[‚ÌƒXƒe[ƒ^ƒX
+							hmLib::cstring_putc(pStr, 2, 0);				//ï¿½ï¿½ï¿½İƒGï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½
+							hmLib::cstring_putc(pStr, 3, 0);		//ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ÌƒXï¿½eï¿½[ï¿½^ï¿½X
 						}
 						return false;
 					}
-					//Ê^æ“¾ƒ‚[ƒhACK•ÔM
+					//ï¿½Ê^ï¿½æ“¾ï¿½ï¿½ï¿½[ï¿½hACKï¿½ÔM
 					else if(Mode.SendPictureInfo) {
-						//ƒtƒ‰ƒO‚ğ‚¨‚ë‚·
+						//ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ë‚·
 						Mode.SendPictureInfo = false;
 
 						module::sprite::picture_info PictureInfo = Camera.getPictureInfo();
 
-						//ACK‘—M
+						//ACKï¿½ï¿½ï¿½M
 						service::cstring_construct_safe(pStr, 4);
 						hmLib::cstring_putc(pStr, 0, (unsigned char)(0x00));
 						hmLib::cstring_putc(pStr, 1, (unsigned char)(PictureInfo.ImageSize));
@@ -307,19 +307,19 @@ namespace hmr {
 
 						return false;
 					}
-					//Ê^B‰eorƒf[ƒ^—v‹ƒ‚[ƒh
+					//ï¿½Ê^ï¿½Bï¿½eorï¿½fï¿½[ï¿½^ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½h
 					else if(Mode.SendPictureData) {
-						//ƒtƒ‰ƒO‚ğ‚¨‚ë‚·
+						//ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ë‚·
 						Mode.SendPictureData=false;
 
-						//talk‘Ò‚¿ƒLƒ…[‚©‚ç‹z‚¢o‚µ
+						//talkï¿½Ò‚ï¿½ï¿½Lï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½zï¿½ï¿½ï¿½oï¿½ï¿½
 						camera::picture_bytes PictureData;
 						Camera.readPictureData(PictureData);
 
-						//cstring‚ğì¬ 3byte‚Ìƒwƒbƒ_•ª‚¾‚¯—]Œv‚ÉŠm•Û‚µ‚Ä‚­‚ê‚Ä‚¢‚é‚Ì‚ÅA‚»‚Ì•ª‚ğl—¶‚µ‚Äì¬
+						//cstringï¿½ï¿½ï¿½ì¬ 3byteï¿½Ìƒwï¿½bï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]ï¿½vï¿½ÉŠmï¿½Û‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Ì‚ÅAï¿½ï¿½ï¿½Ì•ï¿½ï¿½ï¿½ï¿½lï¿½ï¿½ï¿½ï¿½ï¿½Äì¬
 						hmLib::cstring_placement_construct(pStr,3+PictureData.PictureData.DataSize,PictureData.Bytes.release(),PictureData.DeleteFp);
 
-						//message‚É“n‚·
+						//messageï¿½É“nï¿½ï¿½
 						hmLib::cstring_putc(pStr, 0, 0x01);
 						hmLib::cstring_putc(pStr, 1, static_cast<unsigned char>(PictureData.PictureData.PicturePos));
 						hmLib::cstring_putc(pStr, 2, static_cast<unsigned char>((PictureData.PictureData.PicturePos)>>8));
@@ -329,22 +329,22 @@ namespace hmr {
 					return true;
 				}
 
-				//ƒ^ƒXƒN
+				//ï¿½^ï¿½Xï¿½N
 				struct inform_task :public hmr::task::client_interface{
 					duration operator()(duration dt){
 						Mode.SendStatusMode = true;
 						return dt;
 					}
 				}InformTask;
-				//=============== SpriteŒöŠJŠÖ” ===================
+				//=============== Spriteï¿½ï¿½ï¿½Jï¿½Öï¿½ ===================
 				void initialize(void) {
 					Camera.lock();
-					//ƒ^ƒXƒN“o˜^
+					//ï¿½^ï¿½Xï¿½Nï¿½oï¿½^
 					service::task::quick_start(InformTask, 5);
 				}
 				void finalize(void) {
 					Camera.unlock();
-					//ƒ^ƒXƒNœ‹
+					//ï¿½^ï¿½Xï¿½Nï¿½ï¿½ï¿½ï¿½
 					service::task::stop(InformTask);
 				}
 				void work(void){Camera();}

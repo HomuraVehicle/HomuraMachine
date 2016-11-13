@@ -2,21 +2,21 @@
 #define HMR_MACHINE_MIHARA_GPS_INC 100
 #
 /*
-GPSŠÖ˜Aƒ‚ƒWƒ…[ƒ‹
+GPSï¿½Ö˜Aï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½[ï¿½ï¿½
 === GPS ===
 v1_00/141115 hmIto
-	CPP‰»
+	CPPï¿½ï¿½
 ===hmrGPS===
 v0_03/131108 hmIto
-	ƒ^ƒXƒN‚É‚Ì‚Á‚ÄGPS‚ªÀÛ‚ÉØ‚è‘Ö‚¦‚ç‚ê‚Ü‚­‚é–â‘è‚ğC³
+	ï¿½^ï¿½Xï¿½Nï¿½É‚Ì‚ï¿½ï¿½ï¿½GPSï¿½ï¿½ï¿½ï¿½ï¿½Û‚ÉØ‚ï¿½ï¿½Ö‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½
 v0_02/131019 iwahori
-	ƒ^ƒXƒNƒVƒXƒeƒ€—p‚Étask_setup_talk‚Ætask_interrupt‚ğì¬
+	ï¿½^ï¿½Xï¿½Nï¿½Vï¿½Xï¿½eï¿½ï¿½ï¿½pï¿½ï¿½task_setup_talkï¿½ï¿½task_interruptï¿½ï¿½ï¿½ì¬
 v0_01/130105 iwahori
-	workŠÖ”‚ğsetup_lisen‚Æsetup_talk‚É•ª—£
+	workï¿½Öï¿½ï¿½ï¿½setup_lisenï¿½ï¿½setup_talkï¿½É•ï¿½ï¿½ï¿½
 v0_00/121208 hmIto
-	Šî–{ŠÖ”ì¬
+	ï¿½ï¿½ï¿½{ï¿½Öï¿½ï¿½ì¬
 */
-#include<hmLib_v3_06/cstring.h>
+#include<hmLib/cstring.h>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>
 #include<homuraLib_v2/machine/module/GPS52D.hpp>

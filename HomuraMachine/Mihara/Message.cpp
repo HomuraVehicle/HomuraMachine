@@ -3,7 +3,7 @@
 #
 #define HMLIB_NOLIB
 #include<cstdlib>
-#include<hmLib_v3_06/cqueue.h>
+#include<hmLib/cqueue.h>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include"Message.hpp"
 namespace hmr {
@@ -11,45 +11,45 @@ namespace hmr {
 		namespace mihara {
 			namespace message {
 				namespace {
-					//message_t‚Ìƒoƒbƒtƒ@
+					//message_tï¿½Ìƒoï¿½bï¿½tï¿½@
 					message_t Buf[HMR_MESSAGE_BUFSIZE];
-					//“o˜^‚³‚ê‚Ä‚¢‚émessage_t”
+					//ï¿½oï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½message_tï¿½ï¿½
 					unsigned char BufSize=0;
-					//‘—MŠÖ”‚ÌŒ»İ‚Ì”Ô†
+					//ï¿½ï¿½ï¿½Mï¿½Öï¿½ï¿½ÌŒï¿½ï¿½İ‚Ì”Ôï¿½
 					unsigned char BufTalkPos=0;
-					//FpSendableŠÖ”“o˜^—pˆê•Ï”
+					//FpSendableï¿½Öï¿½ï¿½oï¿½^ï¿½pï¿½êï¿½Ïï¿½
 					dsizeFp_v talkconfig_FpSendable=0;
-					//FpInformDestructŠÖ”“o˜^—pˆê•Ï”
+					//FpInformDestructï¿½Öï¿½ï¿½oï¿½^ï¿½pï¿½êï¿½Ïï¿½
 					vFp_v talkconfig_FpInformDestruct=0;
-					//DSRPageFile“o˜^—pˆê•Ï”
+					//DSRPageFileï¿½oï¿½^ï¿½pï¿½êï¿½Ïï¿½
 					int talkconfig_DSRPAG=0;
 				}
-				//‘—Mİ’è—p
+				//ï¿½ï¿½ï¿½Mï¿½İ’ï¿½ï¿½p
 				void talkconfig_clear(void){
-					//talkconfigŠÖ”ŒQ‚Ìg—p‚É”õ‚¦‚é
+					//talkconfigï¿½Öï¿½ï¿½Qï¿½Ìgï¿½pï¿½É”ï¿½ï¿½ï¿½ï¿½ï¿½
 					talkconfig_FpSendable=0;
 					talkconfig_FpInformDestruct=0;
 					talkconfig_DSRPAG=0;
 				}
-				//‘—M‰Â”\ƒTƒCƒYŠÖ”‚Ìg—p‚ğéŒ¾‚·‚é
+				//ï¿½ï¿½ï¿½Mï¿½Â”\ï¿½Tï¿½Cï¿½Yï¿½Öï¿½ï¿½Ìgï¿½pï¿½ï¿½ï¿½éŒ¾ï¿½ï¿½ï¿½ï¿½
 				void talkconfig_useSendable(dsizeFp_v Fp_){
 					talkconfig_FpSendable=Fp_;
 				}
-				//‘—MŠ®—¹’Ê’mŠÖ”‚ğg—p‚·‚é
+				//ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½Ê’mï¿½Öï¿½ï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½
 				void talkconfig_useInformDestruct(vFp_v Fp_){
 					talkconfig_FpInformDestruct=Fp_;
 				}
-				//EDSƒƒ‚ƒŠ—Ìˆæ‚ÉŠm•Û‚µ‚½ê‡‚ÌƒAƒNƒZƒX—p‚ÉADSRPageFile‚ğ“o˜^‚·‚é
+				//EDSï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìˆï¿½ï¿½ÉŠmï¿½Û‚ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ÌƒAï¿½Nï¿½Zï¿½Xï¿½pï¿½ÉADSRPageFileï¿½ï¿½ï¿½oï¿½^ï¿½ï¿½ï¿½ï¿½
 				void talkconfig_useDSRPageFile(int DSRPAG_){
 					talkconfig_DSRPAG=DSRPAG_;
 				}
-				//‰Šú‰»ˆ—
+				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				void initialize(void){
 					BufSize=0;
 				}
-				//I’[‰»ˆ—
+				//ï¿½Iï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				void finalize(void){}
-				//DatType‚ğ“o˜^
+				//DatTypeï¿½ï¿½ï¿½oï¿½^
 				bool regist(
 					did_t ID_
 					,vFp_v FpSetupListen_
@@ -68,14 +68,14 @@ namespace hmr {
 					++BufSize;
 					return 0;
 				}
-				//óM€”õŠÖ”
+				//ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
 				void setup_listen(void){
 					unsigned char i;
 					for(i=0;i<BufSize;++i){
 						if(Buf[i].FpSetupListen)Buf[i].FpSetupListen();
 					}
 				}
-				//óMŠÖ”
+				//ï¿½ï¿½ï¿½Mï¿½Öï¿½
 				bool listen(idata* mData_){
 					unsigned char i;
 				//	cstring str;
@@ -94,7 +94,7 @@ namespace hmr {
 	
 					return false;
 				}
-				//‘—M€”õŠÖ”
+				//ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
 				void setup_talk(void){
 					unsigned char i;
 
@@ -103,17 +103,17 @@ namespace hmr {
 					}
 					BufTalkPos=0;
 				}
-				//‘—MŠÖ” •Ô‚è’l‚Í
+				//ï¿½ï¿½ï¿½Mï¿½Öï¿½ ï¿½Ô‚ï¿½ï¿½lï¿½ï¿½
 				bool talk(odata* pData_){
 					hmLib::cstring Str;
 					talkconfig_clear();
 
-					//format‚ğ‚©‚¯‚Ä‚¨‚­
+					//formatï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
 					hmLib::cstring_format(&Str);
 						while(Buf[BufTalkPos].FpTalk==0 || Buf[BufTalkPos].FpTalk(&Str)==true){
-						//–œ‚ªˆêŠm•Û‚³‚ê‚Ä‚¢‚½‚Ì‚½‚ß‚ÉA‰ğ•ú
+						//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½Û‚ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ß‚ÉAï¿½ï¿½ï¿½ï¿½
 						if(hmLib::cstring_is_construct(&Str))service::cstring_destruct_safe(&Str);
-						//‚·‚Å‚ÉÅŒã‚Ìƒoƒbƒtƒ@‚Ü‚Åˆ—Ï‚İ‚È‚çI—¹
+						//ï¿½ï¿½ï¿½Å‚ÉÅŒï¿½ï¿½Ìƒoï¿½bï¿½tï¿½@ï¿½Ü‚Åï¿½ï¿½ï¿½ï¿½Ï‚İ‚È‚ï¿½ï¿½Iï¿½ï¿½
 						if(++BufTalkPos>=BufSize)return true;
 					}
 
