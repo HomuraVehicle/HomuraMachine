@@ -8,13 +8,13 @@ namespace hmr {
 				namespace mode {
 					enum type { drive, sleep };
 				}
-				struct inform_client_interface {
-					virtual void inform_system_mode(system::mode::type Mode_,system::mode::type PreMode_)=0;
-				};
-				struct inform_host_interface {
-					virtual void regist(system::inform_client_interface& Client_)=0;
-				};
 			}
+			struct system_client_interface{
+				virtual void operator()(system::mode::type NewMode_, system::mode::type PreMode_) = 0;
+			};
+			struct inform_host_interface{
+				virtual void regist(system_client_interface& Client_) = 0;
+			};
 		}
 	}
 }

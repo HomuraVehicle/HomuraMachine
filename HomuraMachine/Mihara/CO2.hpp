@@ -2,52 +2,175 @@
 #define HMR_MACHINE_MIHARA_CO2_INC 100
 #
 /*
-CO2ƒ‚ƒWƒ…[ƒ‹§Œä—p
+CO2ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åˆ¶å¾¡ç”¨
 === hmr::machine::mihara::CO2 ===
 v1_00/141111 hmIto
-	C++‰»
+	C++åŒ–
 === hmrCO2 ===
 v0_02/131019 iwahori
-	ƒ^ƒXƒNƒVƒXƒeƒ€—p‚Étask_setup_talk‚Ætask_interrupt‚ğì¬
+	ã‚¿ã‚¹ã‚¯ã‚·ã‚¹ãƒ†ãƒ ç”¨ã«task_setup_talkã¨task_interruptã‚’ä½œæˆ
 v0_01/130105 iwahori
-	workŠÖ”‚ğsetup_lisen‚Æsetup_talk‚É•ª—£
+	worké–¢æ•°ã‚’setup_lisenã¨setup_talkã«åˆ†é›¢
 v0_00/121208 hmIto
-	Šî–{ŠÖ”ì¬
+	åŸºæœ¬é–¢æ•°ä½œæˆ
 */
 #include<hmLib/cstring.h>
+#include<XCBase/future.hpp>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>
+#include"System_base.hpp"
 #include"Device.hpp"
-#include"Message.hpp"
+#include"Message_base.hpp"
 namespace hmr {
 	namespace machine {
 		namespace mihara {
-			namespace co2 {
-				void initialize();
-				void finalize();
-				bool listen(hmLib::cstring Str);
-				bool talk(hmLib::cstring* pStr);
-				void setup_listen(void);
-				void setup_talk(void);
-				void task_setup_talk(void);
-			}
 			template<typename co2_device_>
 			struct cCO2 : public co2_device_{
-				typedef cCO2<co2_device_> my_type;
+				typedef cCO2<co2_device_> this_type;
 			private:
+				struct{
+					unsigned Data : 1;
+					unsigned SendData : 1;
+					unsigned SendData_i : 1;
+					unsigned PowerPump : 1;
+					unsigned PowerPump_i : 1;
+					unsigned PowerSensor : 1;
+					unsigned PowerSensor_i : 1;
+				}Mode = {0, 0, 1, 0, 1, 0, 1};
+				xc32::future<uint16> FutureData;
+				static const uint8 ADCAverageNum = 100;
+
+				struct data_task :public hmr::task::client_interface{
+					duration operator()(duration dt){
+						if(Mode.SendData && (!FutureData.valid()))FutureData = Device.ApinData(ADCAverageNum);
+						if(FutureData.valid()){
+							if(FutureData.can_get())Mode.Data = 1;
+						}
+						return dt;
+					}
+				}DataTask;
+				struct inform_task :public hmr::task::client_interface{
+					duration operator()(duration dt){
+						Mode.SendData_i = true;
+						Mode.PowerPump_i = true;
+						Mode.PowerSensor_i = true;
+						return dt;
+					}
+				}InformTask;
+			private:
+				//ãƒ¢ãƒ¼ãƒ‰é€šçŸ¥å—é ˜ã‚¯ãƒ©ã‚¹
+				struct system_client : public system_client_interface{
+				private:
+					this_type& Ref;
+				public:
+					void operator()(system::mode::type NewMode_, system::mode::type PreMode_){
+
+					}
+				};
+			private:
+				//é€šä¿¡å—é ˜ã‚¯ãƒ©ã‚¹
+				struct message_client : public message_client_interface{
+				private:
+					this_type& Ref;
+				public:
+					void setup_talk(void){
+						Ref.Mode.Data = Ref.Mode.SendData;
+					}
+					bool talk(hmLib::cstring* pStr){
+						uint16 sumadc = 0;
+						if(MRef.ode.SendData_i){
+							service::cstring_construct_safe(pStr, 1);
+							if(Ref.Mode.SendData)hmLib::cstring_putc(pStr, 0, 0x10);
+							else hmLib::cstring_putc(pStr, 0, 0x11);
+							Ref.Mode.SendData_i = false;
+							return false;
+						} else if(Ref.Mode.PowerSensor_i){
+							service::cstring_construct_safe(pStr, 1);
+							if(Ref.Mode.PowerSensor)hmLib::cstring_putc(pStr, 0, 0x20);
+							else hmLib::cstring_putc(pStr, 0, 0x21);
+							Ref.Mode.PowerSensor_i = false;
+							return false;
+						} else if(Ref.Mode.PowerPump_i){
+							service::cstring_construct_safe(pStr, 1);
+							if(Ref.Mode.PowerPump)hmLib::cstring_putc(pStr, 0, 0x30);
+							else hmLib::cstring_putc(pStr, 0, 0x31);
+							Ref.Mode.PowerPump_i = false;
+							return false;
+						} else if(Ref.Mode.Data){
+							service::cstring_construct_safe(pStr, 3);
+							hmLib::cstring_putc(pStr, 0, 0x00);
+							// CO2ãƒ‡ãƒ¼ã‚¿å–å¾—
+							sumadc = 0xFFFF;
+							if(FutureData.valid()){
+								if(FutureData.can_get())sumadc = FutureData.get();
+							}
+							hmLib::cstring_putc(pStr, 1, (unsigned char)(sumadc & 0x00FF));
+							hmLib::cstring_putc(pStr, 2, (unsigned char)((sumadc >> 8) & 0x00FF));
+							Ref.Mode.Data = false;
+							return false;
+						}
+						return true;
+					}
+					void setup_listen(void){ return; }
+					bool listen(hmLib::cstring Str){
+						switch(hmLib::cstring_getc(&Str, 0)){
+						case 0x10://sensor on
+							Ref.Mode.SendData = true;
+							Ref.Mode.SendData_i = true;
+							return false;
+						case 0x11://sensor on
+							Ref.Mode.SendData = false;
+							Ref.Mode.SendData_i = true;
+							return false;
+						case 0x20://sensor on
+							Ref.Mode.PowerSensor = true;
+							Ref.Mode.PowerSensor_i = true;
+							Ref.PinPowerSensor(true);
+							return false;
+						case 0x21://sensor on
+							Ref.Mode.PowerSensor = false;
+							Ref.Mode.PowerSensor_i = true;
+							Ref.PinPowerSensor(false);
+							return false;
+						case 0x30://pump on
+							Ref.Mode.PowerPump = true;
+							Ref.Mode.PowerPump_i = true;
+							Ref.PinPowerPump(true);
+							return false;
+						case 0x31://pump off
+							Ref.Mode.PowerPump = false;
+							Ref.Mode.PowerPump_i = true;
+							Ref.PinPowerPump(false);
+							return false;
+						default:
+							return true;
+						}
+					}
+				};
+				message_client MessageClient;
+				message::element MessageElement;
+			private:
+				//ãƒ­ãƒƒã‚¯ãƒ•ãƒ©ã‚°
 				bool Lock;
 			private:
 				apinData ApinData;
-				powerPump PowerPump;
-				powerSensor PowerSensor;
+				powerPump PinPowerPump;
+				powerSensor PinPowerSensor;
 			public:
+				cCO2(unsigned char ID_):MessageElement(message_client_holder(ID_,MessageClient)){}
 				bool lock(){
 					if(is_lock())return false;
 					Lock = true;
 
-					//Analog pinİ’è
-					Device.ApinData.lock(xc32::sfr::adc::vref_mode::vref_Vref_Gnd, 1);
+					//pinè¨­å®š
+					ApinData.lock(xc32::sfr::adc::vref_mode::vref_Vref_Gnd, 1);
+					PinPowerPump.lock();
+					PinPowerSensor.lock();
+
+					//ã‚¿ã‚¹ã‚¯ç™»éŒ²
+					service::task::quick_start(InformTask, 5);
+					service::task::quick_start(DataTask, 5);
 
 					return false;
 				}
@@ -55,13 +178,19 @@ namespace hmr {
 				void unlock(){
 					Lock = false;
 
+					//pinè¨­å®š
+					ApinData.unlock();
+					PinPowerPump.unlock();
+					PinPowerSensor.unlock();
+
+					//ã‚¿ã‚¹ã‚¯åœæ­¢
 					service::task::stop(InformTask);
 					service::task::stop(DataTask);
-					Device.ApinData.unlock();
 				}
 			public:
-				void powerPump(bool OnOff){PowerPump(OnOff);}
-				void powerSensor(bool OnOff){ PowerSensor(OnOff); }
+				void regist_message(message_host_interface& Host_){
+					Host_.regist(MessageElement);
+				}
 			};
 		}
 	}

@@ -25,52 +25,40 @@ namespace hmr {
 				//sint8 RBuffer=0;    //-100:100
 				unsigned char wdt_count=0;
 				bool listen(cstring Str){
-					//�f�[�^�T�C�Y�m�F
+					//データサイズ確認
 					if(cstring_size(&Str)!=4)return true;
 
-						//????????????
-						if(cstring_getc(&Str,1)!=0x00){
+					//左車輪制御
+					if(cstring_getc(&Str,1)!=0x00){
 						Device.PowerLA(1);
 						Device.PowerLB(1);
-						}else if(cstring_getc(&Str,0)==0x64){
+					}else if(cstring_getc(&Str,0)==0x64){
 						Device.PowerLA(1);
 						Device.PowerLB(0);
-				//		_LATB3=1;
-				//		_LATB2=0;
 					}else if(cstring_getc(&Str,0)==0x9C){
 						Device.PowerLA(0);
 						Device.PowerLB(1);
-				//		_LATB3=0;
-				//		_LATB2=1;
 					}else{
 						Device.PowerLA(0);
 						Device.PowerLB(0);
-				//		_LATB3=0;
-				//		_LATB2=0;
 					}
 
-					//????????????
-						if(cstring_getc(&Str,3)!=0x00){
+					//右車輪制御
+					if(cstring_getc(&Str,3)!=0x00){
 						Device.PowerRA(1);
 						Device.PowerRB(1);
-						}else if(cstring_getc(&Str,2)==0x64){
+					}else if(cstring_getc(&Str,2)==0x64){
 						Device.PowerRA(1);
 						Device.PowerRB(0);
-				//		_LATB4=1;
-				//		_LATB5=0;
 					}else if(cstring_getc(&Str,2)==0x9C){
 						Device.PowerRA(0);
 						Device.PowerRB(1);	
-				//		_LATB4=0;
-				//		_LATB5=1;
 					}else{
 						Device.PowerRA(0);
 						Device.PowerRB(0);		
-				//		_LATB4=0;
-				//		_LATB5=0;
 					}
 
-						wdt_count=0;
+					wdt_count=0;
 		
 					return false;
 				}

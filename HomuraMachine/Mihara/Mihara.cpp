@@ -6,68 +6,68 @@
 /*
 === HomuraMachine_Mihara ===
 v0_00/141111 hmito
-	cpp‰»€”õƒo[ƒWƒ‡ƒ“
+	cppåŒ–æº–å‚™ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 ===hmrM2500===
 v2_01/131019 hmIto
-	DeviceManageƒVƒXƒeƒ€‚ğ“±“ü
+	DeviceManageã‚·ã‚¹ãƒ†ãƒ ã‚’å°å…¥
 v2_00/130720 hmIto
-	ƒfƒoƒbƒO—p‚ÌŠÖ”ŒQ‚âƒRƒƒ“ƒg‚ğÁ‚µ‚Ä®—
+	ãƒ‡ãƒãƒƒã‚°ç”¨ã®é–¢æ•°ç¾¤ã‚„ã‚³ãƒ¡ãƒ³ãƒˆã‚’æ¶ˆã—ã¦æ•´ç†
 v1_01/130202 iwahori
-	mainŠÖ”“à‚Émessage::setup_talk‚Æmessage::setup_listen‚ğ’Ç‰Á
-	listenŠÖ”‚É“ü‚ê‚Ä‚¢‚é‚Ì‚ÅóM‚Íãè‚­‚¢‚Á‚Ä‚¢‚é‚ª•ÔM‚ª‚È‚¢C
-	ƒpƒPƒbƒg‚Ì‹æØ‚è‚ğì‚épacket_talk‚Æ‚©‚ğì‚Á‚Ä‚¢‚È‚¢‚Ì‚ªŒ´ˆöH
-	fp_finRecvPac,com::vmc_finRecvPac‚ÉˆÏ÷H
+	mainé–¢æ•°å†…ã«message::setup_talkã¨message::setup_listenã‚’è¿½åŠ 
+	listené–¢æ•°ã«å…¥ã‚Œã¦ã„ã‚‹ã®ã§å—ä¿¡ã¯ä¸Šæ‰‹ãã„ã£ã¦ã„ã‚‹ãŒè¿”ä¿¡ãŒãªã„ï¼Œ
+	ãƒ‘ã‚±ãƒƒãƒˆã®åŒºåˆ‡ã‚Šã‚’ä½œã‚‹packet_talkã¨ã‹ã‚’ä½œã£ã¦ã„ãªã„ã®ãŒåŸå› ï¼Ÿ
+	fp_finRecvPac,com::vmc_finRecvPacã«å§”è­²ï¼Ÿ
 v1_00/130112 hmIto
-	hmLib_v3_03‚É‘Î‰
-	‘S“ñd’ÊM‚É‘Î‰
-	ƒZƒ“ƒT[•”•ª‚ğ•ª—£‚µ‚Äinclude
+	hmLib_v3_03ã«å¯¾å¿œ
+	å…¨äºŒé‡é€šä¿¡ã«å¯¾å¿œ
+	ã‚»ãƒ³ã‚µãƒ¼éƒ¨åˆ†ã‚’åˆ†é›¢ã—ã¦include
 ===hmrMain2400===
 v1_09/121101 hmIto
-	restart_wdt‚ğmain-loop‚Ìˆê‚©Š‚ÉW–ñ
-	ƒpƒPƒbƒg‹æØ‚è‚ÉHMR_COM_PACTRMNID‚ğg—p
-	óMƒpƒPƒbƒg‚ªƒtƒ‹‚É‚È‚Á‚½ê‡‚ÍA‹­§ƒŠƒZƒbƒg
-	‹­§ƒŠƒZƒbƒgƒRƒ}ƒ“ƒh‚Æ‚µ‚ÄMessage‚ÉˆË‘¶‚µ‚È‚¢(Com‚É‚ÍˆË‘¶)A0xFF–½—ß‚ğ’Ç‰Á
-	->ƒoƒO‚ª‚ ‚Á‚½‚½‚ßˆê“I‚É”p~
-	sprite::message2‚ğg—p‚·‚é‚æ‚¤‚É•ÏX
+	restart_wdtã‚’main-loopã®ä¸€ã‹æ‰€ã«é›†ç´„
+	ãƒ‘ã‚±ãƒƒãƒˆåŒºåˆ‡ã‚Šã«HMR_COM_PACTRMNIDã‚’ä½¿ç”¨
+	å—ä¿¡ãƒ‘ã‚±ãƒƒãƒˆãŒãƒ•ãƒ«ã«ãªã£ãŸå ´åˆã¯ã€å¼·åˆ¶ãƒªã‚»ãƒƒãƒˆ
+	å¼·åˆ¶ãƒªã‚»ãƒƒãƒˆã‚³ãƒãƒ³ãƒ‰ã¨ã—ã¦Messageã«ä¾å­˜ã—ãªã„(Comã«ã¯ä¾å­˜)ã€0xFFå‘½ä»¤ã‚’è¿½åŠ 
+	->ãƒã‚°ãŒã‚ã£ãŸãŸã‚ä¸€æ™‚çš„ã«å»ƒæ­¢
+	sprite::message2ã‚’ä½¿ç”¨ã™ã‚‹ã‚ˆã†ã«å¤‰æ›´
 v1_08/121031 hmIto
-	devctr‚É”¼ƒXƒŠ[ƒv‚Ì“dŒ¹§Œä—p•Ï”‚Æ‚»‚ÌƒRƒ}ƒ“ƒh‚ğ’Ç‰Á
+	devctrã«åŠã‚¹ãƒªãƒ¼ãƒ—æ™‚ã®é›»æºåˆ¶å¾¡ç”¨å¤‰æ•°ã¨ãã®ã‚³ãƒãƒ³ãƒ‰ã‚’è¿½åŠ 
 v1_07/121030 iwahori
-	‰Á‘¬“x‚Ìmessage::resist‚ğ’Ç‰Á
+	åŠ é€Ÿåº¦ã®message::resistã‚’è¿½åŠ 
 v1_06/121028 hmIto
-	ƒXƒŠ[ƒv‹@”\‚Æƒ[ƒ~ƒ“ƒO‹@”\i’ÊMƒfƒoƒCƒXØ‚è‘Ö‚¦j‚ğÀ‘•
-		devctrŠÖ”ŒQ‚ğ—p‚¢‚Ä‘€ì
-		‚¢‚¸‚ê‚àAdevice_messageƒRƒ}ƒ“ƒh‚ğ—p‚¢‚Ä§Œä‚·‚é
-		timer4_5‚ğ—p‚¢‚Ä‚¢‚é
-			ƒXƒŠ[ƒv‚É10•b‚Éˆê“xŠ„‚è‚Ü‚¹‚ÄAŠÔŒv‘ª
-			ƒ[ƒ~ƒ“ƒO‚ÌƒfƒoƒCƒXØ‚è‘Ö‚¦‚Ég—p
-	‘—Mƒoƒbƒtƒ@‚ÉŠî‚Ã‚­‘—MŠ„‚è‚İŠ„‚è‚İ§Œä‚ğÌ—p
-		‘—Mƒoƒbƒtƒ@‚ª‚©‚ç‚É‚È‚Á‚½‚çdisable
-		‘—Mƒoƒbƒtƒ@‚Éƒf[ƒ^‚ğ’Ç‰Á‚µ‚½‚çenable
-		com::out_emptyŠÖ”‚ğg‚Á‚ÄA‘—Mƒoƒbƒtƒ@‚ª‹ó‚©‚Ç‚¤‚©Šm”F
+	ã‚¹ãƒªãƒ¼ãƒ—æ©Ÿèƒ½ã¨ãƒ­ãƒ¼ãƒŸãƒ³ã‚°æ©Ÿèƒ½ï¼ˆé€šä¿¡ãƒ‡ãƒã‚¤ã‚¹åˆ‡ã‚Šæ›¿ãˆï¼‰ã‚’å®Ÿè£…
+		devctré–¢æ•°ç¾¤ã‚’ç”¨ã„ã¦æ“ä½œ
+		ã„ãšã‚Œã‚‚ã€device_messageã‚³ãƒãƒ³ãƒ‰ã‚’ç”¨ã„ã¦åˆ¶å¾¡ã™ã‚‹
+		timer4_5ã‚’ç”¨ã„ã¦ã„ã‚‹
+			ã‚¹ãƒªãƒ¼ãƒ—æ™‚ã«10ç§’ã«ä¸€åº¦å‰²ã‚Šè¾¼ã¾ã›ã¦ã€æ™‚é–“è¨ˆæ¸¬
+			ãƒ­ãƒ¼ãƒŸãƒ³ã‚°æ™‚ã®ãƒ‡ãƒã‚¤ã‚¹åˆ‡ã‚Šæ›¿ãˆã«ä½¿ç”¨
+	é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã«åŸºã¥ãé€ä¿¡å‰²ã‚Šè¾¼ã¿å‰²ã‚Šè¾¼ã¿åˆ¶å¾¡ã‚’æ¡ç”¨
+		é€ä¿¡ãƒãƒƒãƒ•ã‚¡ãŒã‹ã‚‰ã«ãªã£ãŸã‚‰disable
+		é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ ã—ãŸã‚‰enable
+		com::out_emptyé–¢æ•°ã‚’ä½¿ã£ã¦ã€é€ä¿¡ãƒãƒƒãƒ•ã‚¡ãŒç©ºã‹ã©ã†ã‹ç¢ºèª
 v1_05/121027 hmIto
-	uart‚Ì‘—óM‚ª³í‚És‚í‚ê‚é‚±‚Æ‚Ü‚ÅŠm”F
-		hmrTask‚ª‚í‚é‚³‚ğ‚µ‚Ä‚¢‚½‚Ì‚Å”p~D
-		ƒoƒbƒtƒ@‚Ì§Œä‚É‘—MŠ„‚è‚İ‚ğ§Œä‚·‚é‚æ‚¤‚É•ÏX
+	uartã®é€å—ä¿¡ãŒæ­£å¸¸ã«è¡Œã‚ã‚Œã‚‹ã“ã¨ã¾ã§ç¢ºèª
+		hmrTaskãŒã‚ã‚‹ã•ã‚’ã—ã¦ã„ãŸã®ã§å»ƒæ­¢ï¼
+		ãƒãƒƒãƒ•ã‚¡ã®åˆ¶å¾¡æ™‚ã«é€ä¿¡å‰²ã‚Šè¾¼ã¿ã‚’åˆ¶å¾¡ã™ã‚‹ã‚ˆã†ã«å¤‰æ›´
 v1_04/121020 iwahori
-	initialize()“à‚ÉSPI slave slectƒsƒ“‚Ì‰Šú‰»‚ğ’Ç‰Á
-		RF module“dŒ¹ƒIƒ“
+	initialize()å†…ã«SPI slave slectãƒ”ãƒ³ã®åˆæœŸåŒ–ã‚’è¿½åŠ 
+		RF moduleé›»æºã‚ªãƒ³
 v1_03/121020 hmIto
-	ƒfƒoƒbƒOC³‚ğŠm”F‚µ‚ÄAƒRƒƒ“ƒgƒA
-	ƒEƒg‚ğíœ
-	packet_messageŠÖ”‚ª–¢Š®¬‚¾‚Á‚½‚Ì‚ğ’Ç‰Á
+	ãƒ‡ãƒãƒƒã‚°ä¿®æ­£ã‚’ç¢ºèªã—ã¦ã€ã‚³ãƒ¡ãƒ³ãƒˆã‚¢
+	ã‚¦ãƒˆã‚’å‰Šé™¤
+	packet_messageé–¢æ•°ãŒæœªå®Œæˆã ã£ãŸã®ã‚’è¿½åŠ 
 v1_02/121014 iwahori
-	#include "hmrSpriteFunctions.h"‚ğ’Ç‰Á
-	p_DIP1‚ğUserConfigBit1‚É•ÏX
-	uart1_fget_interrupt_retry_task()‚Æuart1_fput_interrupt()‚Ì‡”Ô‚ğ“ü‚ê‘Ö‚¦
-	‘—M‚à“¯—l
-	packet_message()“àcstring Ans{1,1}¨cstring Ans={1,1}
-	sprite::ON‚ğsprite::power‚É•ÏX
+	#include "hmrSpriteFunctions.h"ã‚’è¿½åŠ 
+	p_DIP1ã‚’UserConfigBit1ã«å¤‰æ›´
+	uart1_fget_interrupt_retry_task()ã¨uart1_fput_interrupt()ã®é †ç•ªã‚’å…¥ã‚Œæ›¿ãˆ
+	é€ä¿¡ã‚‚åŒæ§˜
+	packet_message()å†…cstring Ans{1,1}â†’cstring Ans={1,1}
+	sprite::ONã‚’sprite::powerã«å¤‰æ›´
 v1_01/121013 hmIto
-	‹°‚ç‚­‘—óM•”•ª‚ª‚Ù‚ÚŠ®¬
-	‰Šú‰»I’[‰»‚ª•K—v‚ÈŠÖ”‚Ìì¬‚ªc‚é
+	æã‚‰ãé€å—ä¿¡éƒ¨åˆ†ãŒã»ã¼å®Œæˆ
+	åˆæœŸåŒ–çµ‚ç«¯åŒ–ãŒå¿…è¦ãªé–¢æ•°ã®ä½œæˆãŒæ®‹ã‚‹
 v1_00/120921 hmIto
-	ƒo[ƒWƒ‡ƒ“ŠÇ—ŠJn
-	ƒtƒ@ƒCƒ‹‚ğ•¡”‚É•ªŠ„
+	ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç®¡ç†é–‹å§‹
+	ãƒ•ã‚¡ã‚¤ãƒ«ã‚’è¤‡æ•°ã«åˆ†å‰²
 */
 #include <homuraLib_v2/old/hmrVMC1.h>
 #include <homuraLib_v2/machine/service/delay.hpp>
@@ -95,13 +95,13 @@ VMC1* pVMC;
 //courier interrpt function
 devmng::courier::uart::tx_interrupt_function devmng::courier::uart::CourierTxInterruptFunc;
 void devmng::courier::uart::tx_interrupt_function::operator()(void){
-	//Š„‚è‚İƒtƒ‰ƒO‚ğƒNƒŠƒA
+	//å‰²ã‚Šè¾¼ã¿ãƒ•ãƒ©ã‚°ã‚’ã‚¯ãƒªã‚¢
 //	clear_interrupt_fputflag(Stream_VMC);
 
-	//‘—M‰Â”\‚È‚çA‘—M
+	//é€ä¿¡å¯èƒ½ãªã‚‰ã€é€ä¿¡
 	devmng::courier::uart::fput(vmc1_send(pVMC));
 
-	//‘—M‰Â”\‚Å‚È‚­‚È‚Á‚½ê‡‚ÍAŠ„‚è‚İ‚ğØ‚é
+	//é€ä¿¡å¯èƒ½ã§ãªããªã£ãŸå ´åˆã¯ã€å‰²ã‚Šè¾¼ã¿ã‚’åˆ‡ã‚‹
 	if(!vmc1_can_send(pVMC)){
 		//uart1_disable_fput_interrupt();
 		devmng::interrupt_disable_streamVMC_fput_interrupt();
@@ -109,75 +109,79 @@ void devmng::courier::uart::tx_interrupt_function::operator()(void){
 }
 devmng::courier::uart::rx_interrupt_function devmng::courier::uart::CourierRxInterruptFunc;
 void devmng::courier::uart::rx_interrupt_function::operator()(void){
-	//Š„‚İƒtƒ‰ƒO‚ğƒNƒŠƒA
+	//å‰²è¾¼ã¿ãƒ•ãƒ©ã‚°ã‚’ã‚¯ãƒªã‚¢
 //	clear_interrupt_fgetflag(Stream_VMC);
 
-	//ƒf[ƒ^‚ğóM‚µACom‚Éˆ—‚³‚¹‚é
+	//ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã—ã€Comã«å‡¦ç†ã•ã›ã‚‹
 	vmc1_recv(pVMC,devmng::courier::uart::fget());
 }
 
-//====== main ŠÖ” ======
+//====== main é–¢æ•° ======
 using namespace hmr::machine::mihara;
 using namespace hmr::machine::service;
 int main(void){
 	cDevice Device;
 	cService Service;
 
-	//ƒfƒoƒCƒX‚Ì‰Šú‰»
+	//ãƒ‡ãƒã‚¤ã‚¹ã®åˆæœŸåŒ–
 	devmng::initialize();
 
 	if(devmng::sleep_can_registRemInformFunction())devmng::sleep_registRemInformFunction(inertial::axel::device_initialize, 0);
 	if(devmng::sleep_can_registRemInformFunction())devmng::sleep_registRemInformFunction(inertial::compass::device_initialize, 0);
 	if(devmng::sleep_can_registRemInformFunction())devmng::sleep_registRemInformFunction(inertial::gyro::device_initialize, 0);
 
-	//’ÊMŠÖ˜A‹@”\‚Ì‰Šú‰»
+	//é€šä¿¡é–¢é€£æ©Ÿèƒ½ã®åˆæœŸåŒ–
 	pVMC = com::createVMC1();
 	vmc1_initialize(pVMC, (const unsigned char*)("hmr"), (const unsigned char*)("ctr"));
 	com::initialize();
-	message::initialize();
+	
+	message_host Message;
 
-	//Š„‚è‚İ®—
+	//å‰²ã‚Šè¾¼ã¿æ•´ç†
 	devmng::interrupt_enable_timerDevmng_interrupt();
 
-	devmng::courier::uart::fput_set_interrupt();//streamVMC_set_fput_interrupt_flag();//set_interrupt_fputflag(Stream_VMC);//Š„‚è‚İ—\–ñ
+	devmng::courier::uart::fput_set_interrupt();//streamVMC_set_fput_interrupt_flag();//set_interrupt_fputflag(Stream_VMC);//å‰²ã‚Šè¾¼ã¿äºˆç´„
 	devmng::interrupt_enable_streamVMC_fget_interrupt();// enable_interrupt_fget(Stream_VMC);
 	devmng::interrupt_enable_streamVMC_fput_interrupt();// enable_interrupt_fput(Stream_VMC);
 
-	//ƒ‚ƒWƒ…[ƒ‹‰Šú‰»
+	//ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åˆæœŸåŒ–
 	devmngmsg::initialize();
 	thermo::initialize();
 	battery::initialize();
 	camera::initialize();
 	inertial::initialize();
-	co2::initialize();
+	cCO2<cDevice::co2_device> CO2('C');
 	motor::initialize();
 	cGPS<cDevice::gps_device> GPS;
 	gps::initialize(GPS);
 
-	//ƒƒbƒZ[ƒW“o˜^
+	//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ç™»éŒ²
+	CO2.regist_message(Message);
+
+	//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ç™»éŒ²
 //	message::regist('!',debug_setup_listen,debug_listen,debug_setup_talk,debug_talk);
-	message::regist('m',motor::setup_listen,motor::listen,motor::setup_talk,motor::talk);
-	message::regist('c',inertial::compass::setup_listen,inertial::compass::listen,inertial::compass::setup_talk,inertial::compass::talk);
-	message::regist('a',inertial::axel::setup_listen,inertial::axel::listen,inertial::axel::setup_talk,inertial::axel::talk);
-	message::regist('G',inertial::gyro::setup_listen,inertial::gyro::listen,inertial::gyro::setup_talk,inertial::gyro::talk);
-	message::regist('j', camera::setup_listen, camera::listen, camera::setup_talk, camera::talk);
-	message::regist('g',gps::setup_listen,gps::listen,gps::task_setup_talk,gps::talk);
-	message::regist('b',battery::setup_listen,battery::listen,battery::task_setup_talk,battery::talk);
-	message::regist('C',co2::setup_listen,co2::listen,co2::task_setup_talk,co2::talk);
-	message::regist('t',thermo::setup_listen,thermo::listen,thermo::task_setup_talk,thermo::talk);
-	message::regist('D', devmngmsg::setup_listen, devmngmsg::listen, devmngmsg::setup_talk, devmngmsg::talk);
+	Message.regist('m',motor::setup_listen,motor::listen,motor::setup_talk,motor::talk);
+	Message.regist('c',inertial::compass::setup_listen,inertial::compass::listen,inertial::compass::setup_talk,inertial::compass::talk);
+	Message.regist('a',inertial::axel::setup_listen,inertial::axel::listen,inertial::axel::setup_talk,inertial::axel::talk);
+	Message.regist('G',inertial::gyro::setup_listen,inertial::gyro::listen,inertial::gyro::setup_talk,inertial::gyro::talk);
+	Message.regist('j', camera::setup_listen, camera::listen, camera::setup_talk, camera::talk);
+	Message.regist('g',gps::setup_listen,gps::listen,gps::task_setup_talk,gps::talk);
+	Message.regist('b',battery::setup_listen,battery::listen,battery::task_setup_talk,battery::talk);
+//	Message.regist('C',co2::setup_listen,co2::listen,co2::task_setup_talk,co2::talk);
+	Message.regist('t',thermo::setup_listen,thermo::listen,thermo::task_setup_talk,thermo::talk);
+	Message.regist('D', devmngmsg::setup_listen, devmngmsg::listen, devmngmsg::setup_talk, devmngmsg::talk);
 //	message::regist('T',infrared_setup_listen,infrared_listen,infrared_task_setup_talk,infrared_talk);
 //	message::regist('S',h2s_message);
 //	message::regist('7',sht75_setup_listen,sht75_listen,sht75_task_setup_talk,sht75_talk);
 
-	//ƒ^ƒXƒN“o˜^iˆÚs‚µ‚Ä‚¢‚È‚¢functional_taskƒo[ƒWƒ‡ƒ“‚ÌŠÖ”j
+	//ã‚¿ã‚¹ã‚¯ç™»éŒ²ï¼ˆç§»è¡Œã—ã¦ã„ãªã„functional_taskãƒãƒ¼ã‚¸ãƒ§ãƒ³ã®é–¢æ•°ï¼‰
 //	devmng_task_quick_start(5,infrared_task_data,0);
 //	devmng_task_quick_start(5,infrared_task_inform,0);
 //	devmng_task_quick_start(5,sht75_task_data,0);
 //	devmng_task_quick_start(5,sht75_task_inform,0);
 //	devmng_task_quick_start(10,h2s_task_interrupt,0);
 
-	//ó‚¯æ‚è—pƒf[ƒ^
+	//å—ã‘å–ã‚Šç”¨ãƒ‡ãƒ¼ã‚¿
 	idata IData;
 	bool IPacketMode = 0;
 	odata OData;
@@ -189,100 +193,99 @@ int main(void){
 		Service();
 		camera::work();
 		inertial::work();
-		//Watch Dog Timer ƒŠƒZƒbƒg
+		//Watch Dog Timer ãƒªã‚»ãƒƒãƒˆ
 		devmng::clear_wdt();
 //		restart_wdt();
 
-		//DeviceManage‚ÌŠ„‚è‚İˆÏ÷ˆ—ŠÖ”
+		//DeviceManageã®å‰²ã‚Šè¾¼ã¿å§”è­²å‡¦ç†é–¢æ•°
 		if(devmng::interrupt_yield())continue;
 
-		//‘‚·‚¬‚é‚Ì‚Å‘Ò‹@
+		//æ—©ã™ãã‚‹ã®ã§å¾…æ©Ÿ
 		delay_ms(5);
 
-		//óM‰Â”\‚Èƒf[ƒ^‚ª‚ ‚éê‡
+		//å—ä¿¡å¯èƒ½ãªãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹å ´åˆ
 		if(!com::in_empty()){
-			//óMƒf[ƒ^‚ğæ“¾
+			//å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 			com::in_move_pop(&IData);
 
-			//’†g‚ª“ü‚Á‚Ä‚¢‚éê‡
+			//ä¸­èº«ãŒå…¥ã£ã¦ã„ã‚‹å ´åˆ
 			if(idata_is_construct(&IData)){
-				//Packet‚ğ‚Ü‚¾ŠJ‚¢‚Ä‚¢‚È‚¢ê‡
+				//Packetã‚’ã¾ã é–‹ã„ã¦ã„ãªã„å ´åˆ
 				if(!IPacketMode){
-					//Packet‚ğ‚±‚±‚ÅŠJ‚­
+					//Packetã‚’ã“ã“ã§é–‹ã
 					IPacketMode=true;
 
-					//óM—pƒƒbƒZ[ƒWƒ‚ƒWƒ…[ƒ‹€”õ
-					message::setup_listen();
+					//å—ä¿¡ç”¨ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æº–å‚™
+					Message.setup_listen();
 				}
 
-				//PacketI—¹ID‚¾‚Á‚½ê‡
+				//Packetçµ‚äº†IDã ã£ãŸå ´åˆ
 				if(IData.ID==HMR_COM_PACTRMNID){
-					//Packet‚ğ‚±‚±‚Å•Â‚¶‚é
+					//Packetã‚’ã“ã“ã§é–‰ã˜ã‚‹
 					IPacketMode=false;
 
-					//ƒƒbƒZ[ƒW”jŠü
+					//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ç ´æ£„
 					idata_destruct(&IData);
 				}else{
-					//ƒƒbƒZ[ƒWˆ—;
-					message::listen(&IData);
+					//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†;
+					Message.listen(&IData);
 				}
 			}
 		}
 
-		//‘‚·‚¬‚é‚Ì‚Å‘Ò‹@
+		//æ—©ã™ãã‚‹ã®ã§å¾…æ©Ÿ
 		delay_ms(5);
 
-		//‘—M‘Ò‚¿‚ÌPacket‚ª‚È‚­Acom‚Ì‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚Å‚à‚È‚¢‚Æ‚«
+		//é€ä¿¡å¾…ã¡ã®PacketãŒãªãã€comã®é€ä¿¡ãƒãƒƒãƒ•ã‚¡ãŒã„ã£ã±ã„ã§ã‚‚ãªã„ã¨ã
 		if(!com::isWaitSendPacket() && !com::out_full()){
-			//Packet‚ğ‚Ü‚¾ŠJ‚¢‚Ä‚¢‚È‚¢ê‡
+			//Packetã‚’ã¾ã é–‹ã„ã¦ã„ãªã„å ´åˆ
 			if(!OPacketMode){
-				//Packet‚ğ‚±‚±‚ÅŠJ‚­
+				//Packetã‚’ã“ã“ã§é–‹ã
 				OPacketMode=true;
-				//‘—M—pƒƒbƒZ[ƒWƒ‚ƒWƒ…[ƒ‹€”õ
-				message::setup_talk();
+				//é€ä¿¡ç”¨ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æº–å‚™
+				Message.setup_talk();
 			}
 
-			//‘—M—pƒf[ƒ^‚ğ€”õ‚·‚é
+			//é€ä¿¡ç”¨ãƒ‡ãƒ¼ã‚¿ã‚’æº–å‚™ã™ã‚‹
 			odata_format(&OData);
 
-			//‘—Mƒf[ƒ^‚Ìæ“¾‚É¸”s‚µ‚½ê‡
-			if(message::talk(&OData)){
-				//’†g‚ªì¬‚³‚ê‚Ä‚¢‚ê‚Î”jŠü
+			//é€ä¿¡ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã«å¤±æ•—ã—ãŸå ´åˆ
+			if(Message.talk(&OData)){
+				//ä¸­èº«ãŒä½œæˆã•ã‚Œã¦ã„ã‚Œã°ç ´æ£„
 				if(odata_is_construct(&OData))odata_destruct(&OData);
-				//Packet‚ğ‚±‚±‚Å•Â‚¶‚é
+				//Packetã‚’ã“ã“ã§é–‰ã˜ã‚‹
 				OPacketMode=false;
 				OData.ID=HMR_COM_PACTRMNID;
 			}
 
-			//‘—Mƒf[ƒ^‚ğ‘—‚èo‚·
+			//é€ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’é€ã‚Šå‡ºã™
 			com::out_move_push(&OData);		
 		}
 
-		//‘—MŠ„‚è‚İ‚ªØ‚ç‚ê‚Ä‚¢‚ÄA‚©‚Â‘—M‰Â”\ó‘Ô‚Ì‚Æ‚«‚É‚ÍA‘—MŠ„‚è‚İ‚ğƒIƒ“‚É‚·‚é
+		//é€ä¿¡å‰²ã‚Šè¾¼ã¿ãŒåˆ‡ã‚‰ã‚Œã¦ã„ã¦ã€ã‹ã¤é€ä¿¡å¯èƒ½çŠ¶æ…‹ã®ã¨ãã«ã¯ã€é€ä¿¡å‰²ã‚Šè¾¼ã¿ã‚’ã‚ªãƒ³ã«ã™ã‚‹
 		if(!devmng::courier::uart::fput_is_interrupt_enable()){
 			if(vmc1_can_send(pVMC))devmng::interrupt_enable_streamVMC_fput_interrupt();//uart1_enable_fput_interrupt();
 		}
 
 	}
 
-	//I’[‰»ˆ—
+	//çµ‚ç«¯åŒ–å‡¦ç†
 
-	//Š„‚è‚İ‹Ö~
+	//å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 	devmng::courier::uart::fget_disable_interrupt();
 	devmng::courier::uart::fput_disable_interrupt();
 
-	//’ÊMŠÖ˜A‚ÌI’[‰»ˆ—
+	//é€šä¿¡é–¢é€£ã®çµ‚ç«¯åŒ–å‡¦ç†
 	message::finalize();
 	vmc1_finalize(pVMC);
 	com::finalize();
 	com::releaseVMC1(pVMC);
 
-	//ƒfƒoƒCƒXI’[‰»
+	//ãƒ‡ãƒã‚¤ã‚¹çµ‚ç«¯åŒ–
 	devmng::finalize();
 	camera::finalize();
 	inertial::finalize();
 	thermo::finalize();
-	co2::finalize();
 	battery::finalize();
 	
 
