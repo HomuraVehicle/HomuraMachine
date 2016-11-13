@@ -130,7 +130,6 @@
     <ClCompile Include="..\..\XC32\sfr\uart6.cpp" />
     <ClCompile Include="Battery.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CO2.cpp" />
     <ClCompile Include="Com.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="DeviceManage.cpp" />
@@ -138,7 +137,6 @@
     <ClCompile Include="Drive.cpp" />
     <ClCompile Include="GPS.cpp" />
     <ClCompile Include="Inertial.cpp" />
-    <ClCompile Include="Message.cpp" />
     <ClCompile Include="Mihara.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Thermo.cpp" />
@@ -341,19 +339,13 @@
     <ClInclude Include="Data.hpp" />
     <ClInclude Include="Device.hpp" />
     <ClInclude Include="DeviceManage.hpp" />
-    <ClInclude Include="DeviceManageFunc_Courier.hpp" />
-    <ClInclude Include="DeviceManageFunc_Sprite.hpp" />
     <ClInclude Include="DeviceManageMessage.hpp" />
-    <ClInclude Include="DeviceManage_forCamera.hpp" />
-    <ClInclude Include="DeviceManage_forCO2.hpp" />
-    <ClInclude Include="DeviceManage_forCourier.hpp" />
-    <ClInclude Include="DeviceManage_forInertial.hpp" />
-    <ClInclude Include="DeviceManage_forSDcard.hpp" />
     <ClInclude Include="Drive.hpp" />
     <ClInclude Include="GPS.hpp" />
     <ClInclude Include="Inertial.hpp" />
     <ClInclude Include="IO.hpp" />
     <ClInclude Include="Message.hpp" />
+    <ClInclude Include="Message_base.hpp" />
     <ClInclude Include="Service.hpp" />
     <ClInclude Include="System_base.hpp" />
     <ClInclude Include="Thermo.hpp" />

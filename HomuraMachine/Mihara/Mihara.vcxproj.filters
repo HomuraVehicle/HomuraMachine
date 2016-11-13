@@ -172,9 +172,6 @@
     <ClCompile Include="..\..\homuraLib_v2\machine\service\functional_task.cpp">
       <Filter>Common\homuraLib_v2\machine\service</Filter>
     </ClCompile>
-    <ClCompile Include="CO2.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
     <ClCompile Include="Com.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
@@ -194,9 +191,6 @@
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
     <ClCompile Include="Inertial.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Message.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
     <ClCompile Include="Mihara.cpp">
@@ -690,27 +684,6 @@
     <ClInclude Include="DeviceManage.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
-    <ClInclude Include="DeviceManage_forCamera.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManage_forCO2.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManage_forCourier.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManage_forInertial.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManage_forSDcard.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManageFunc_Courier.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManageFunc_Sprite.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
     <ClInclude Include="DeviceManageMessage.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
@@ -796,6 +769,9 @@
       <Filter>Common\XCBase</Filter>
     </ClInclude>
     <ClInclude Include="IO.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="Message_base.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
   </ItemGroup>
