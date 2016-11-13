@@ -821,40 +821,6 @@ namespace hmr {
 				}
 				//clear wdt
 				void clear_wdt(void) { Device.WDT.clear(); }
-				//=== rf module uart select ===
-				//現在アクティブなID
-				rf_module_mode rf_module_uart_ModuleID = rf_module_mode::null;
-				//ModuleIDのモジュールで初期化する
-				void rf_module_uart_initialize(rf_module_mode ModuleID_, uint16 BaudRate_) {
-					if(ModuleID_==rf_module_mode::mobile_phone) {
-						rf_module_uart_ModuleID = rf_module_mode::mobile_phone;
-						Device.MobilePhone_uart.initialize(Device.MobilePhone_uart_register);
-						Device.MobilePhone_uart.config(Device.MobilePhone_uart_Baudrate, Device.MobilePhone_uart_flowctrl, courier::uart::CourierTxInterruptFunc, courier::uart::CourierRxInterruptFunc);
-						Device.MobilePhone_uart.lock();
-						//Device.RF_uart.release();
-					} else if(ModuleID_==rf_module_mode::rf_module) {
-						rf_module_uart_ModuleID = rf_module_mode::rf_module;
-						Device.RF_uart.initialize(Device.RF_uart_register);
-						Device.RF_uart.config(Device.RF_uart_Baudrate, Device.RF_uart_flowctrl, courier::uart::CourierTxInterruptFunc, courier::uart::CourierRxInterruptFunc);
-						Device.RF_uart.lock();
-						//Device.MobilePhone_uart.release();
-					}
-				}
-				//ModuleIDに電源を変更する
-				void rf_module_uart_power_switch(bool onoff, rf_module_mode ModuleID_) {
-					if(onoff && ModuleID_==rf_module_mode::mobile_phone) {
-						Device.PinMobilePhonePower(1);
-						Device.PinRFPower(0);
-					} else if(onoff && ModuleID_==rf_module_mode::rf_module) {
-						Device.PinMobilePhonePower(0);
-						Device.PinRFPower(1);
-					} else {
-						Device.PinMobilePhonePower(0);
-						Device.PinRFPower(0);
-					}
-				}
-				//現在のModuleIDを取得する
-				rf_module_mode rf_module_uart_getModuleID(void) { return rf_module_uart_ModuleID; }
 
 				//=== 割り込み関数 ===
 				//DevMng用タイマー割り込み関数
@@ -911,20 +877,6 @@ namespace hmr {
 					Device.Task_timer.release();
 				}
 
-				// main stream 割り込みの許可禁止をいじくってよいかを返す関数
-				bool interrupt_can_enable_streamVMC_fget_interrupt() {
-					return !(sleep_isSleep() && !sleep_isRem());
-				}
-				bool interrupt_can_disable_streamVMC_fget_interrupt() {
-					return true;//!( sleep_isSleep() && !sleep_isRem() );
-				}
-				bool interrupt_can_enable_streamVMC_fput_interrupt() {
-					return !(sleep_isSleep() && !sleep_isRem());
-				}
-				bool interrupt_can_disable_streamVMC_fput_interrupt() {
-					return true;//!( sleep_isSleep() && !sleep_isRem() );
-				}
-
 				// camera stream 割り込みの許可禁止をいじくってよいかを返す関数
 				bool interrupt_can_enable_streamCMR_fget_interrupt() {
 					return !(sleep_isSleep() && !sleep_isRem());
@@ -952,44 +904,6 @@ namespace hmr {
 				}
 				bool interrupt_can_disable_timerDevmng_interrupt() {
 					return true;
-				}
-
-				// main stream の割り込み許可禁止関数
-				bool interrupt_enable_streamVMC_fget_interrupt() {
-					if(interrupt_can_enable_streamVMC_fget_interrupt()) {
-						if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_enable();
-						else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_enable();
-						return true;
-					} else {
-						return false;
-					}
-				}
-				bool interrupt_disable_streamVMC_fget_interrupt() {
-					if(interrupt_can_disable_streamVMC_fget_interrupt()) {
-						if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_disable();
-						else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_disable();
-						return true;
-					} else {
-						return false;
-					}
-				}
-				bool interrupt_enable_streamVMC_fput_interrupt() {
-					if(interrupt_can_enable_streamVMC_fput_interrupt()) {
-						if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_enable();
-						else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_enable();
-						return true;
-					} else {
-						return false;
-					}
-				}
-				bool interrupt_disable_streamVMC_fput_interrupt() {
-					if(interrupt_can_disable_streamVMC_fput_interrupt()) {
-						if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_disable();
-						else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_disable();
-						return true;
-					} else {
-						return false;
-					}
 				}
 
 				// camera stream の割り込み許可禁止関数
@@ -1081,65 +995,7 @@ namespace hmr {
 						bool in_data(){return Device.SDcard_spi.in_data();}
 						void select(bool val_){Device.PinSD_SPISelect(val_);}
 					}
-				}
-
-//=================================Courier===============================
-				namespace courier{
-					namespace uart{
-						uint8 fget() {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)return Device.MobilePhone_uart.recv_data();
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)return Device.RF_uart.recv_data();
-							else return 0;
-						}
-						void fget_set_interrupt() {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_set_flag();
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_set_flag();
-						}
-						void fget_clear_interrupt() {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_clear_flag();
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_clear_flag();
-						}
-						void fget_enable_interrupt() {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_enable();
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_enable();
-						}
-						void fget_disable_interrupt() {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_disable();
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_disable();
-						}
-						bool fget_is_interrupt_enable() {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)return Device.MobilePhone_uart.recv_is_enable();
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)return Device.RF_uart.recv_is_enable();
-							else return false;
-						}
-
-						void fput(uint8 data_) {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_data(data_);
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_data(data_);
-						}
-						void fput_set_interrupt() {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_set_flag();
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_set_flag();
-						}
-						void fput_clear_interrupt() {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_clear_flag();
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_clear_flag();
-						}
-						void fput_enable_interrupt() {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_enable();
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_enable();
-						}
-						void fput_disable_interrupt() {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_disable();
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_disable();
-						}
-						bool fput_is_interrupt_enable() {
-							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)return Device.MobilePhone_uart.send_is_enable();
-							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)return Device.RF_uart.send_is_enable();
-							else return false;
-						}
-					}
-				}			
+				}	
 			}
 		}
 	}

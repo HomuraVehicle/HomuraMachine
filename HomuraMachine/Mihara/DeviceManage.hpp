@@ -32,11 +32,6 @@ namespace hmr {
 			namespace devmng {
 				typedef void(*vFp_v)(void);
 
-				//=== 基本定義 ===
-				#define RF_BaudRate 9600
-				#define RFDebug_BaudRate 38400
-				#define MP_BaudRate 38400
-
 				//=== 基本操作関数 ===
 				//デバイス初期化関数
 				void initialize(void);
@@ -44,26 +39,9 @@ namespace hmr {
 				void finalize(void);
 				//デバイス強制終了
 				void kill(void);
-				//現在の通信先が全二重通信対応かを返す
-				bool isFullDuplex(void);
+
 				//clear_wdt
 				void clear_wdt(void);
-				//ModuleID
-				typedef enum  {
-					null=0x00,
-					mobile_phone=0x01,
-					rf_module=0x02
-				}rf_module_mode;
-				//現在のModuleIDを取得する
-				rf_module_mode rf_module_uart_getModuleID(void);
-
-
-				//=== モード制御機能 ===
-				typedef enum{ NormalMode, SleepMode, RoamingMode }mode;
-				//デバイスモードを変更する
-				void mode_set(mode Mode_);
-				//デバイスモードを取得する
-				volatile mode mode_get(void);
 
 				//=== クロック制御機能 ===
 				typedef enum{ LowClock, NormalClock, HighClock }clock;
@@ -106,18 +84,8 @@ namespace hmr {
 
 				//=== 割り込み制御用関数
 				// 割り込み許可変えてよいかどうかのチェック関数　冗長過ぎたかも・・
-				bool interrupt_can_enable_streamVMC_fget_interrupt(void);
-				bool interrupt_can_disable_streamVMC_fget_interrupt(void);
-				bool interrupt_can_enable_streamVMC_fput_interrupt(void);
-				bool interrupt_can_disable_streamVMC_fput_interrupt(void);
 				bool interrupt_can_enable_timerDevmng_interrupt(void);
 				bool interrupt_can_disable_timerDevmng_interrupt(void);
-
-				// main stream 送受信割り込み許可関数
-				bool interrupt_enable_streamVMC_fget_interrupt(void);
-				bool interrupt_disable_streamVMC_fget_interrupt(void);
-				bool interrupt_enable_streamVMC_fput_interrupt(void);
-				bool interrupt_disable_streamVMC_fput_interrupt(void);
 
 				// timer Device Manager 送受信割り込み許可関数
 				bool interrupt_enable_timerDevmng_interrupt(void);

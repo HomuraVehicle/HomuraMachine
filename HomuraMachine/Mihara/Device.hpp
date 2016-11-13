@@ -56,7 +56,7 @@ namespace hmr {
 //				xc32::wdt WDT;
 //				xc::lock_guard<xc32::wdt> WDTLock;
 			public:
-				class courier_device {
+				class io_device {
 				protected:
 					//courier stream tx interrupt priority level 3
 					//courier stream rx interrupt priority level 4
