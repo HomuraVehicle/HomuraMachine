@@ -20,10 +20,10 @@ namespace hmr {
 	namespace machine {
 		namespace service{
 			namespace{
-				//ŠÖ”‹ì“®Œ^‚Ìƒ^ƒXƒNƒzƒXƒg
+				//é–¢æ•°é§†å‹•å‹ã®ã‚¿ã‚¹ã‚¯ãƒ›ã‚¹ãƒˆ
 				hmr::task::functional_host<> TaskHost;
 			}
-			//service‚Ìƒ^ƒXƒN‚Æ‚µ‚Ä“o˜^
+			//serviceã®ã‚¿ã‚¹ã‚¯ã¨ã—ã¦ç™»éŒ²
 			hmr::task::host_interface& Task(TaskHost);
 		}
 		namespace mihara {
@@ -34,9 +34,9 @@ namespace hmr {
 					pinDevicePower PinDevicePower;
 					timer_register Task_timer_register;
 					xc32::interrupt_timer<timer_register> Task_timer;
-					static const uint16 TaskTimerMS=1000;//DevMngê—pƒ^ƒCƒ}[‚Ì‰Šú‰»’l(milisecond)
+					static const uint16 TaskTimerMS=1000;//DevMngå°‚ç”¨ã‚¿ã‚¤ãƒãƒ¼ã®åˆæœŸåŒ–å€¤(milisecond)
 
-					static const uint8 TaskTimerIPL=2;//DevMngê—pƒ^ƒCƒ}[‚ÌŠ„‚è‚İ—Dæ“x
+					static const uint8 TaskTimerIPL=2;//DevMngå°‚ç”¨ã‚¿ã‚¤ãƒãƒ¼ã®å‰²ã‚Šè¾¼ã¿å„ªå…ˆåº¦
 					static const uint8 Camera1_uart_tx_IPL=6;
 					static const uint8 Camera1_uart_rx_IPL=7;
 					static const uint8 Camera2_uart_tx_IPL=6;
@@ -59,29 +59,6 @@ namespace hmr {
 					pinDip2 Config_DefaultMP;
 					pinDip3 Config_DefaultHighClock;
 					pinDip4 Config_RFDebugMode;
-
-					//=====inertial=====
-					/*
-					//=====Camera=====
-					pinYellowLED PinCameraLED;
-					pinHeadLightPower PinHeadLightPower;
-					pinCamera0Power PinCamera0Power;
-					pinCamera1Power PinCamera1Power;
-					camera1_uart_register Camera1_uart_register;
-					xc32::interrupt_uart<camera1_uart_register> Camera1_uart;
-					static const uint16 Camera1_uart_Baudrate=38400;
-					static const xc32::uart::flowcontrol::mode Camera1_uart_flowctrl=xc32::uart::flowcontrol::mode::no_control;
-					camera2_uart_register Camera2_uart_register;
-					xc32::interrupt_uart<camera2_uart_register> Camera2_uart;
-					static const uint16 Camera2_uart_Baudrate=38400;
-					static const xc32::uart::flowcontrol::mode Camera2_uart_flowctrl=xc32::uart::flowcontrol::mode::no_control;
-					camera_timer_register Camera_timer_register;
-					xc32::interrupt_timer<camera_timer_register> Camera_timer;
-					*/
-
-					//=====CO2 sensor=====
-					pinCO2PumpsPower PinCO2PumpPower;
-					pinCO2SensorPower PinCO2SensorPower;
 
 					//====rf module====
 					pinRF_Power PinRFPower;
@@ -117,85 +94,85 @@ namespace hmr {
 //=================================================================
 				}Device;
 
-				//++++++++++++++++++ protectedéŒ¾ +++++++++++++++++
-				//=== Šî–{ŠÖ” ===
-				//ƒfƒoƒCƒX‚Ì“dŒ¹ŠÇ—
+				//++++++++++++++++++ protectedå®£è¨€ +++++++++++++++++
+				//=== åŸºæœ¬é–¢æ•° ===
+				//ãƒ‡ãƒã‚¤ã‚¹ã®é›»æºç®¡ç†
 				void power(bool onoff);
 
-				//=== ƒ‚[ƒh§Œä‹@”\ ===
-				//ƒ‚[ƒh§Œä‹@”\‰Šú‰»
+				//=== ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½ ===
+				//ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½åˆæœŸåŒ–
 				void mode_initialize(mode Mode_);
-				//ƒ‚[ƒh§Œä‹@”\I’[‰»
+				//ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½çµ‚ç«¯åŒ–
 				void mode_finalize();
-				//ƒNƒƒbƒN•ÏX‚Ì’Ê’mŠÖ”
+				//ã‚¯ãƒ­ãƒƒã‚¯å¤‰æ›´ã®é€šçŸ¥é–¢æ•°
 				void mode_informClockChange(void);
 
-				//=== ƒNƒƒbƒN§Œä‹@”\ ===
-				//ƒNƒƒbƒN§Œä‹@”\‰Šú‰»
+				//=== ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½ ===
+				//ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½åˆæœŸåŒ–
 				void clock_initialize(clock Clock_);
-				//ƒNƒƒbƒN§Œä‹@”\I’[‰»
+				//ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½çµ‚ç«¯åŒ–
 				void clock_finalize();
-				//ƒNƒƒbƒN‘¬“x‚Ì•ÏXŠÖ”
+				//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã®å¤‰æ›´é–¢æ•°
 				void clock_restartClock(clock Clock_);
-				//ƒNƒƒbƒN‘¬“x‚ğƒfƒtƒHƒ‹ƒg‚É•ÏX
+				//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´
 				void clock_restartClockDefault();
 
-				//=== ƒXƒŠ[ƒvƒ‚[ƒh§Œä ===
-				//ƒXƒŠ[ƒvƒ‚[ƒh§Œä‰Šú‰»
+				//=== ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ ===
+				//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡åˆæœŸåŒ–
 				void sleep_initialize(void);
-				//ƒXƒŠ[ƒvƒ‚[ƒh§ŒäI’[‰»
+				//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡çµ‚ç«¯åŒ–
 				void sleep_finalize(void);
-				//ƒXƒŠ[ƒv‚É“ü‚éˆ—
+				//ã‚¹ãƒªãƒ¼ãƒ—ã«å…¥ã‚‹å‡¦ç†
 				void sleep_start();
-				//ƒXƒŠ[ƒv‚©‚ço‚éˆ—
+				//ã‚¹ãƒªãƒ¼ãƒ—ã‹ã‚‰å‡ºã‚‹å‡¦ç†
 				void sleep_stop(void);
-				//ƒXƒŠ[ƒv§Œäˆ—ŠÖ”
+				//ã‚¹ãƒªãƒ¼ãƒ—åˆ¶å¾¡å‡¦ç†é–¢æ•°
 				void sleep_interrupt_function(sint16 Interval_);
-				//ƒXƒŠ[ƒv‚ÌŠ„‚è‚İ‹Ö~ŠÖ”
+				//ã‚¹ãƒªãƒ¼ãƒ—æ™‚ã®å‰²ã‚Šè¾¼ã¿ç¦æ­¢é–¢æ•°
 				void sleep_disable_interrupt(void);
-				//ƒXƒŠ[ƒv‚ÌŠ„‚è‚İ•œ‹AŠÖ”
+				//ã‚¹ãƒªãƒ¼ãƒ—æ™‚ã®å‰²ã‚Šè¾¼ã¿å¾©å¸°é–¢æ•°
 				void sleep_enable_interrupt(void);
 
 
-				//=== ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§Œä ===
-				//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§Œä‰Šú‰»
+				//=== ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ ===
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡åˆæœŸåŒ–
 				void roaming_initialize(void);
-				//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§ŒäI’[‰»
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡çµ‚ç«¯åŒ–
 				void roaming_finalize(void);
-				//ƒ[ƒ~ƒ“ƒO‚É“ü‚éˆ—
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ã«å…¥ã‚‹å‡¦ç†
 				void roaming_start(void);
-				//ƒ[ƒ~ƒ“ƒO‚©‚ço‚éˆ—
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ã‹ã‚‰å‡ºã‚‹å‡¦ç†
 				void roaming_stop(void);
-				//ƒ[ƒ~ƒ“ƒO§Œäˆ—ŠÖ”
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°åˆ¶å¾¡å‡¦ç†é–¢æ•°
 				void roaming_interrupt_function(sint16 Interval_);
 
 				//=== RF module uart select ===
-				//ModuleID‚Ìƒ‚ƒWƒ…[ƒ‹‚Å‰Šú‰»‚·‚é
+				//ModuleIDã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã§åˆæœŸåŒ–ã™ã‚‹
 				void rf_module_uart_initialize(rf_module_mode ModuleID_, uint16 BaudRate_);
-				//ModuleID‚É“dŒ¹‚ğ•ÏX‚·‚é
+				//ModuleIDã«é›»æºã‚’å¤‰æ›´ã™ã‚‹
 				void rf_module_uart_power_switch(bool onoff, rf_module_mode ModuleID_);
-				//Œ»İ‚ÌModuleID‚ğæ“¾‚·‚é
+				//ç¾åœ¨ã®ModuleIDã‚’å–å¾—ã™ã‚‹
 				rf_module_mode rf_module_uart_getModuleID(void);
 
-				//=== Š„‚è‚İŠÖ”§Œä ===
+				//=== å‰²ã‚Šè¾¼ã¿é–¢æ•°åˆ¶å¾¡ ===
 				void interrupt_initialize(void);
 				void interrupt_finalize(void);
 
-				//++++++++++++++++++ À‘• +++++++++++++++++
-				//=== ƒ‚[ƒh§Œä‹@”\ ===
-				//ƒfƒoƒCƒX‚ÌŒ»ƒ‚[ƒh
+				//++++++++++++++++++ å®Ÿè£… +++++++++++++++++
+				//=== ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½ ===
+				//ãƒ‡ãƒã‚¤ã‚¹ã®ç¾ãƒ¢ãƒ¼ãƒ‰
 				volatile mode mode_Mode=NormalMode;
 
-				//ƒ‚[ƒh§Œä‹@”\‰Šú‰»
+				//ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½åˆæœŸåŒ–
 				void mode_initialize(mode Mode_) {
-					//w’è‚ÌƒfƒtƒHƒ‹ƒgƒ‚[ƒh‚ÅŠJn
+					//æŒ‡å®šã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ¢ãƒ¼ãƒ‰ã§é–‹å§‹
 					mode_Mode=Mode_;
 				}
-				//ƒ‚[ƒh§Œä‹@”\I’[‰»
+				//ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½çµ‚ç«¯åŒ–
 				void mode_finalize() {
 					mode_Mode=NormalMode;
 				}
-				//ƒfƒoƒCƒXƒ‚[ƒh‚ğ•ÏX‚·‚é
+				//ãƒ‡ãƒã‚¤ã‚¹ãƒ¢ãƒ¼ãƒ‰ã‚’å¤‰æ›´ã™ã‚‹
 				void mode_set(mode Mode_) {
 					switch(Mode_) {
 					case SleepMode:
@@ -245,35 +222,35 @@ namespace hmr {
 					}
 
 				}
-				//ƒfƒoƒCƒXƒ‚[ƒh‚ğæ“¾‚·‚é
+				//ãƒ‡ãƒã‚¤ã‚¹ãƒ¢ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 				volatile mode mode_get(void) { return mode_Mode; }
-				//ƒNƒƒbƒN•ÏX‚Ì’Ê’mŠÖ”
+				//ã‚¯ãƒ­ãƒƒã‚¯å¤‰æ›´ã®é€šçŸ¥é–¢æ•°
 				void mode_informClockChange(void) {
-					//ƒXƒŠ[ƒv‚©‚Âƒmƒ“ƒŒƒ€‡–°’†‚ÍƒpƒX‚·‚é
+					//ã‚¹ãƒªãƒ¼ãƒ—ã‹ã¤ãƒãƒ³ãƒ¬ãƒ ç¡çœ ä¸­ã¯ãƒ‘ã‚¹ã™ã‚‹
 					if(sleep_isSleep() && !sleep_isRem())return;
 
-					//ƒNƒƒbƒNƒ‚[ƒh‚ğ‚½‚¾‚¿‚É”½‰f
+					//ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã‚’ãŸã ã¡ã«åæ˜ 
 					clock_restartClockDefault();
 				}
-				//=== ƒNƒƒbƒN§Œä‹@”\ ===
-				//ƒfƒoƒCƒX‚ÌŒ»ƒNƒƒbƒN
+				//=== ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½ ===
+				//ãƒ‡ãƒã‚¤ã‚¹ã®ç¾ã‚¯ãƒ­ãƒƒã‚¯
 				volatile clock clock_Clock;
-				//ƒNƒƒbƒN§Œä‹@”\‰Šú‰»
+				//ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½åˆæœŸåŒ–
 				void clock_initialize(clock Clock_) {
-					//w’èƒNƒƒbƒN‚É•ÏX
+					//æŒ‡å®šã‚¯ãƒ­ãƒƒã‚¯ã«å¤‰æ›´
 					clock_Clock=Clock_;
 
-					//‚½‚¾‚¿‚ÉƒNƒƒbƒN‘¬“x”½‰f
+					//ãŸã ã¡ã«ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦åæ˜ 
 					clock_restartClockDefault();
 				}
-				//ƒNƒƒbƒN§Œä‹@”\I’[‰»
+				//ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½çµ‚ç«¯åŒ–
 				void clock_finalize() {
 //					hmr_clock_finalize();
 				}
-				//ƒNƒƒbƒN‘¬“x‚Ì•ÏXŠÖ”
+				//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã®å¤‰æ›´é–¢æ•°
 				void clock_restartClock(clock Clock_) {
 					
-					//ˆê“xƒNƒƒbƒN‚ğI—¹
+					//ä¸€åº¦ã‚¯ãƒ­ãƒƒã‚¯ã‚’çµ‚äº†
 //					hmr_clock_finalize();
 
 					switch(Clock_) {
@@ -288,30 +265,30 @@ namespace hmr {
 						break;
 					}
 
-					//ƒNƒƒbƒN•ÏX‚ğ‚Ù‚©‚Ìƒ‚ƒWƒ…[ƒ‹‚É‚à’Ê’m
+					//ã‚¯ãƒ­ãƒƒã‚¯å¤‰æ›´ã‚’ã»ã‹ã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã«ã‚‚é€šçŸ¥
 					//	hmr_uart1_initialize(hmr_uart1_getModuleID(),);
 					//	hmr_uart2_initialize(38400);
 					//	hmr_adc_initialize();
 					
 				}
-				//ƒNƒƒbƒN‘¬“x‚ğƒfƒtƒHƒ‹ƒg‚É•ÏX
+				//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´
 				void clock_restartClockDefault() {
 					clock_restartClock(clock_Clock);
 				}
-				//ƒNƒƒbƒN‚ğ•ÏX‚·‚é
+				//ã‚¯ãƒ­ãƒƒã‚¯ã‚’å¤‰æ›´ã™ã‚‹
 				void clock_set(clock Clock_) {
-					//‚·‚Å‚Éİ’èÏ‚İ‚È‚ç–³‹
+					//ã™ã§ã«è¨­å®šæ¸ˆã¿ãªã‚‰ç„¡è¦–
 					if(clock_Clock==Clock_)return;
 
-					//•ÏX‚ğ”½‰f‚µ‚ÄAƒ‚[ƒh§Œä‚É’Ê’m
+					//å¤‰æ›´ã‚’åæ˜ ã—ã¦ã€ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ã«é€šçŸ¥
 					clock_Clock=Clock_;
 					mode_informClockChange();
 				}
-				//ƒNƒƒbƒN‚ğæ“¾‚·‚é
+				//ã‚¯ãƒ­ãƒƒã‚¯ã‚’å–å¾—ã™ã‚‹
 				volatile clock clock_get(void) { return clock_Clock; }
 
-				//=== ƒXƒŠ[ƒvƒ‚[ƒh§Œä ===
-				//ƒXƒŠ[ƒv/ŠoÁ’Ê’m—pŠÖ”
+				//=== ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ ===
+				//ã‚¹ãƒªãƒ¼ãƒ—/è¦šé†’é€šçŸ¥ç”¨é–¢æ•°
 				typedef struct {
 					vFp_v InformSleep;
 					vFp_v InformWakeUp;
@@ -319,7 +296,7 @@ namespace hmr {
 				const unsigned int sleep_InformSleepFnBufSize=16;
 				sleep_InformSleepFn sleep_InformSleepFnBuf[sleep_InformSleepFnBufSize];
 				unsigned char sleep_InformSleepFnBufPos=0;
-				//ƒŒƒ€/ƒmƒ“ƒŒƒ€’Ê’m—pŠÖ”
+				//ãƒ¬ãƒ /ãƒãƒ³ãƒ¬ãƒ é€šçŸ¥ç”¨é–¢æ•°
 				typedef struct {
 					vFp_v InformRem;
 					vFp_v InformNonRem;
@@ -327,15 +304,15 @@ namespace hmr {
 				const unsigned int sleep_InformRemFnBufSize=16;
 				sleep_InformRemFn sleep_InformRemFnBuf[sleep_InformRemFnBufSize];
 				unsigned char sleep_InformRemFnBufPos=0;
-				//ƒXƒŠ[ƒv’†‚ÌŠÔƒJƒEƒ“ƒgŒn
+				//ã‚¹ãƒªãƒ¼ãƒ—ä¸­ã®æ™‚é–“ã‚«ã‚¦ãƒ³ãƒˆç³»
 				sint16 sleep_secNonRem=540;
 				sint16 sleep_secRem=60;
 				sint16 sleep_secCnt=0;
-				//ƒXƒŠ[ƒvó‘ÔŠÇ——pƒtƒ‰ƒO
+				//ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ç®¡ç†ç”¨ãƒ•ãƒ©ã‚°
 				volatile bool sleep_IsSleep=0;
 				volatile bool sleep_IsRem=0;
 				bool sleep_RequestEndRem=0;
-				//ƒXƒŠ[ƒvƒ‚[ƒh§Œä‰Šú‰»
+				//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡åˆæœŸåŒ–
 				void sleep_initialize(void) {
 					sleep_InformSleepFnBufPos=0;
 					sleep_InformRemFnBufPos=0;
@@ -347,9 +324,9 @@ namespace hmr {
 					sleep_IsRem=0;
 					sleep_RequestEndRem=0;
 				}
-				//ƒXƒŠ[ƒvƒ‚[ƒh§ŒäI’[‰»
+				//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡çµ‚ç«¯åŒ–
 				void sleep_finalize(void) {
-					//ƒXƒŠ[ƒv’†‚È‚ç’â~
+					//ã‚¹ãƒªãƒ¼ãƒ—ä¸­ãªã‚‰åœæ­¢
 					if(sleep_IsSleep)sleep_stop();
 
 					sleep_InformSleepFnBufPos=0;
@@ -361,16 +338,16 @@ namespace hmr {
 					sleep_IsSleep=0;
 					sleep_IsRem=0;
 				}
-				//ƒŒƒ€ƒXƒŠ[ƒvó‘Ô‚©‚Ç‚¤‚©‚ğæ“¾‚·‚é
+				//ãƒ¬ãƒ ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹
 				volatile bool sleep_isRem(void) { return sleep_IsRem && sleep_IsSleep; }
-				//ƒXƒŠ[ƒvó‘Ô‚©‚Ç‚¤‚©‚ğæ“¾‚·‚é
+				//ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹
 				volatile bool sleep_isSleep(void) { return sleep_IsSleep; }
-				//ƒXƒŠ[ƒvƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğæ“¾‚·‚é
+				//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 				void sleep_getInterval(sint16* secNonRem, sint16* secRem) {
 					*secNonRem=sleep_secNonRem;
 					*secRem=sleep_secRem;
 				}
-				//ƒXƒŠ[ƒvƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğİ’è‚·‚é
+				//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹
 				void sleep_setInterval(sint16 secNonRem, sint16 secRem) {
 					if(secNonRem<0)secNonRem=0;
 					if(secRem<1)secRem=1;
@@ -378,9 +355,9 @@ namespace hmr {
 					sleep_secNonRem=secNonRem;
 					sleep_secRem=secRem;
 				}
-				//“ü–°•‹N°‚ÉŒÄ‚Ño‚³‚ê‚é’Ê’mŠÖ”‚ğ“o˜^‚Å‚«‚é‚©
+				//å…¥çœ æ™‚ï¼†èµ·åºŠæ™‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã§ãã‚‹ã‹
 				bool sleep_can_registSleepInformFunction() { return sleep_InformSleepFnBufPos!=sleep_InformSleepFnBufSize; }
-				//“ü–°•‹N°‚ÉŒÄ‚Ño‚³‚ê‚é’Ê’mŠÖ”‚ğ“o˜^‚·‚é
+				//å…¥çœ æ™‚ï¼†èµ·åºŠæ™‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã™ã‚‹
 				bool sleep_registSleepInformFunction(vFp_v InformSleep, vFp_v InformWakeUp) {
 					if(!sleep_can_registSleepInformFunction())return true;
 					sleep_InformSleepFnBuf[sleep_InformSleepFnBufPos].InformSleep=InformSleep;
@@ -389,9 +366,9 @@ namespace hmr {
 
 					return false;
 				}
-				//ƒŒƒ€ƒXƒŠ[ƒv‚É“ü‚é/o‚éÛ‚Ì’Ê’mŠÖ”‚ğ“o˜^‚Å‚«‚é‚©
+				//ãƒ¬ãƒ ã‚¹ãƒªãƒ¼ãƒ—ã«å…¥ã‚‹/å‡ºã‚‹éš›ã®é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã§ãã‚‹ã‹
 				bool sleep_can_registRemInformFunction() { return sleep_InformRemFnBufPos!=sleep_InformRemFnBufSize; }
-				//ƒŒƒ€ƒXƒŠ[ƒv‚É“ü‚é/o‚éÛ‚Ì’Ê’mŠÖ”‚ğ“o˜^‚·‚é
+				//ãƒ¬ãƒ ã‚¹ãƒªãƒ¼ãƒ—ã«å…¥ã‚‹/å‡ºã‚‹éš›ã®é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã™ã‚‹
 				bool sleep_registRemInformFunction(vFp_v InformRem, vFp_v InformNonRem) {
 					if(!sleep_can_registRemInformFunction())return true;
 					sleep_InformRemFnBuf[sleep_InformRemFnBufPos].InformRem=InformRem;
@@ -400,110 +377,110 @@ namespace hmr {
 
 					return false;
 				}
-				//ƒXƒŠ[ƒv‚Ö“ü‚éˆ—
+				//ã‚¹ãƒªãƒ¼ãƒ—ã¸å…¥ã‚‹å‡¦ç†
 				void sleep_start() {
 					sleep_InformSleepFn* Itr;
 
-					//‚·‚Å‚ÉƒXƒŠ[ƒv’†‚È‚çI—¹
+					//ã™ã§ã«ã‚¹ãƒªãƒ¼ãƒ—ä¸­ãªã‚‰çµ‚äº†
 					if(sleep_IsSleep)return;
 
-					//ƒJƒEƒ“ƒ^[‚ğƒŠƒZƒbƒg
+					//ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆ
 					sleep_secCnt=0;
 					sleep_IsRem=0;
 
-					//ƒXƒŠ[ƒvó‘Ô‚É•ÏX
+					//ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ã«å¤‰æ›´
 					sleep_IsSleep=1;
 
-					// Š„‚è‚İ‹Ö~
+					// å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 					sleep_disable_interrupt();
 
-					//InformŠÖ”
+					//Informé–¢æ•°
 					for(Itr=sleep_InformSleepFnBuf; Itr!=sleep_InformSleepFnBuf+sleep_InformSleepFnBufSize; ++Itr) {
 						//if(sleep_InformSleepFnBuf->InformSleep)sleep_InformSleepFnBuf->InformSleep();
 						if(Itr->InformSleep)Itr->InformSleep();
 					}
 
-					//“dŒ¹‚ğ—‚Æ‚·
+					//é›»æºã‚’è½ã¨ã™
 					power(0);
 
-					//ƒNƒƒbƒN‘¬“x‚ğ—‚Æ‚·
+					//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’è½ã¨ã™
 					clock_restartClock(LowClock);
 				}
-				//ƒXƒŠ[ƒv‚©‚ço‚éˆ—
+				//ã‚¹ãƒªãƒ¼ãƒ—ã‹ã‚‰å‡ºã‚‹å‡¦ç†
 				void sleep_stop(void) {
 					sleep_InformSleepFn* Itr;
 
-					//‚·‚Å‚É”ñƒXƒŠ[ƒv’†‚È‚çI—¹
+					//ã™ã§ã«éã‚¹ãƒªãƒ¼ãƒ—ä¸­ãªã‚‰çµ‚äº†
 					if(!sleep_IsSleep)return;
 
-					//ƒNƒƒbƒN‘¬“x‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚·
+					//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™
 					clock_restartClockDefault();
 
-					//“dŒ¹‚ğ–ß‚· ‚·‚Å‚ÉƒŒƒ€‡–°‚È‚Ì‚ÅƒJƒbƒg
+					//é›»æºã‚’æˆ»ã™ ã™ã§ã«ãƒ¬ãƒ ç¡çœ ãªã®ã§ã‚«ãƒƒãƒˆ
 					//power(1);
 
-					//ƒXƒŠ[ƒvó‘Ô‚ğ‰ğœ
+					//ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ã‚’è§£é™¤
 					sleep_IsSleep=0;
 
-					//InformŠÖ”
+					//Informé–¢æ•°
 					for(Itr=sleep_InformSleepFnBuf; Itr!=sleep_InformSleepFnBuf+sleep_InformSleepFnBufSize; ++Itr) {
 						//if(sleep_InformSleepFnBuf->InformWakeUp)sleep_InformSleepFnBuf->InformWakeUp();
 						if(Itr->InformWakeUp)Itr->InformWakeUp();
 					}
 
-					// Š„‚è‚İ‹–‰Â
+					// å‰²ã‚Šè¾¼ã¿è¨±å¯
 					sleep_enable_interrupt();
 
 				}
-				// ƒXƒŠ[ƒv‚ÌŠ„‚è‚İ‹Ö~
+				// ã‚¹ãƒªãƒ¼ãƒ—æ™‚ã®å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 				void sleep_disable_interrupt() {
-					// Main stream ‚ÌŠ„‚è‚İ‹Ö~
+					// Main stream ã®å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 					if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_disable();
 					else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_disable();
 					//streamVMC_disable_fput_interrupt();
-					// Camera stream ‚ÌŠ„‚è‚İ‹Ö~
+					// Camera stream ã®å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 //					Device.Camera1_uart.recv_disable();
 //					Device.Camera2_uart.recv_disable();
 					//streamCMR_disable_fput_interrupt();
-					// ƒJƒƒ‰ ‚ÌTimer Š„‚è‚İ‹Ö~
+					// ã‚«ãƒ¡ãƒ© ã®Timer å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 //					Device.Camera_timer.clear_count();
 //					Device.Camera_timer.stop();
 				}
-				// ƒXƒŠ[ƒv‚ÌŠ„‚è‚İ•œ‹A
+				// ã‚¹ãƒªãƒ¼ãƒ—æ™‚ã®å‰²ã‚Šè¾¼ã¿å¾©å¸°
 				void sleep_enable_interrupt() {
-					// Main stream ‚ÌóMŠ„‚è‚İŠJn
+					// Main stream ã®å—ä¿¡å‰²ã‚Šè¾¼ã¿é–‹å§‹
 					if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_enable();
 					else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_enable();
-					// Camera stream ‚ÌóMŠ„‚è‚İŠJn
+					// Camera stream ã®å—ä¿¡å‰²ã‚Šè¾¼ã¿é–‹å§‹
 //					Device.Camera1_uart.recv_enable();
 //					Device.Camera2_uart.recv_enable();
-					// ƒJƒƒ‰ ‚ÌTimer Š„‚è‚İŠJn
+					// ã‚«ãƒ¡ãƒ© ã®Timer å‰²ã‚Šè¾¼ã¿é–‹å§‹
 //					Device.Camera_timer.clear_count();
 //					Device.Camera_timer.start();
 				}
-				//ƒXƒŠ[ƒv§Œäˆ—Š„ŠÖ”
+				//ã‚¹ãƒªãƒ¼ãƒ—åˆ¶å¾¡å‡¦ç†å‰²è¾¼é–¢æ•°
 				void sleep_interrupt_function(sint16 Interval_) {
 					sleep_InformRemFn* Itr;
 
-					//SleepCnt‚ğ‰ÁZ
+					//SleepCntã‚’åŠ ç®—
 					sleep_secCnt+=Interval_;
 
-					//ƒŒƒ€ó‘Ô‚Ì‚Æ‚« 
+					//ãƒ¬ãƒ çŠ¶æ…‹ã®ã¨ã 
 					if(sleep_IsRem) {
-						//Š„‚è‚İ‚Å‹}‚É“dŒ¹‚ğ—‚Æ‚·‚Ì‚ÍŠëŒ¯‚È‚Ì‚ÅAƒŠƒNƒGƒXƒg‚¾‚¯‘—‚Á‚Ä‚¨‚­(ÀÛ‚ÌI—¹‚ÍAworkŠÖ”‚ÉˆÏ÷)
+						//å‰²ã‚Šè¾¼ã¿ã§æ€¥ã«é›»æºã‚’è½ã¨ã™ã®ã¯å±é™ºãªã®ã§ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆã ã‘é€ã£ã¦ãŠã(å®Ÿéš›ã®çµ‚äº†ã¯ã€worké–¢æ•°ã«å§”è­²)
 						if(sleep_secCnt>=sleep_secRem)sleep_RequestEndRem=1;
-					}//ƒmƒ“ƒŒƒ€ó‘Ô‚Ì‚Æ‚«
+					}//ãƒãƒ³ãƒ¬ãƒ çŠ¶æ…‹ã®ã¨ã
 					else {
 						if(sleep_secCnt>=sleep_secNonRem) {
-							//ƒJƒEƒ“ƒ^[‚ğ‰Šú‰»
+							//ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’åˆæœŸåŒ–
 							sleep_secCnt=0;
 
-							//ƒNƒƒbƒN‘¬“x‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚·
+							//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™
 							clock_restartClockDefault();
 
-							//“dŒ¹‚ğ“ü‚ê‚é
+							//é›»æºã‚’å…¥ã‚Œã‚‹
 							power(1);
-							// ˆÀ’è‘Ò‚¿
+							// å®‰å®šå¾…ã¡
 							service::exclusive_delay_ms(300);
 							Device.PinRedLED(1);
 							service::exclusive_delay_ms(300);
@@ -515,96 +492,96 @@ namespace hmr {
 							service::exclusive_delay_ms(300);
 							Device.PinRedLED(1);
 
-							//ƒŒƒ€ó‘Ô‚ÉˆÚs
+							//ãƒ¬ãƒ çŠ¶æ…‹ã«ç§»è¡Œ
 							sleep_IsRem=1;
 
-							//InformŠÖ”
+							//Informé–¢æ•°
 							for(Itr=sleep_InformRemFnBuf; Itr!=(sleep_InformRemFnBuf+sleep_InformRemFnBufSize); ++Itr) {
 								//if(sleep_InformRemFnBuf->InformRem)sleep_InformRemFnBuf->InformRem();
 								if(Itr->InformRem)Itr->InformRem();
 							}
 
-							// Š„‚è‚İ‹–‰Â
+							// å‰²ã‚Šè¾¼ã¿è¨±å¯
 							sleep_enable_interrupt();
 
 						}
 					}
 				}
-				//ƒXƒŠ[ƒv§Œäˆ—’ÊíŠÖ”
+				//ã‚¹ãƒªãƒ¼ãƒ—åˆ¶å¾¡å‡¦ç†é€šå¸¸é–¢æ•°
 				void sleep_interrupt_yield(void) {
 					sleep_InformRemFn* Itr;
 
-					//ƒŒƒ€‡–°I—¹—v‹ŠÖ”
+					//ãƒ¬ãƒ ç¡çœ çµ‚äº†è¦æ±‚é–¢æ•°
 					if(sleep_RequestEndRem) {
-						//ƒtƒ‰ƒO‚ğ‰º‚°‚é
+						//ãƒ•ãƒ©ã‚°ã‚’ä¸‹ã’ã‚‹
 						sleep_RequestEndRem=0;
-						//ƒJƒEƒ“ƒ^[‚ğ‰Šú‰»
+						//ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’åˆæœŸåŒ–
 						sleep_secCnt=0;
 
-						// Š„‚è‚İ‚ğ‹Ö~
+						// å‰²ã‚Šè¾¼ã¿ã‚’ç¦æ­¢
 						sleep_disable_interrupt();
 
-						//ƒmƒ“ƒŒƒ€ó‘Ô‚ÉˆÚs
+						//ãƒãƒ³ãƒ¬ãƒ çŠ¶æ…‹ã«ç§»è¡Œ
 						sleep_IsRem=0;
 
-						//InformŠÖ”
+						//Informé–¢æ•°
 						for(Itr=sleep_InformRemFnBuf; Itr!=sleep_InformRemFnBuf+sleep_InformRemFnBufSize; ++Itr) {
 							//if(sleep_InformRemFnBuf->InformNonRem)sleep_InformRemFnBuf->InformNonRem();
 							if(Itr->InformNonRem)Itr->InformNonRem();
 						}
 
-						//ƒNƒƒbƒN‘¬“x‚ğ—‚Æ‚·
+						//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’è½ã¨ã™
 						clock_restartClock(LowClock);
 
-						//“dŒ¹‚ğ—‚Æ‚·
+						//é›»æºã‚’è½ã¨ã™
 						power(0);
 					}
 				}
-				//=== ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§Œä ===
-				//ƒ[ƒ~ƒ“ƒO‚ÌŠÔŠu§Œä•Ï”
+				//=== ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ ===
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ã®é–“éš”åˆ¶å¾¡å¤‰æ•°
 				sint16 roaming_secInterval=0;
 				sint16 roaming_secCnt=0;
-				//ƒ[ƒ~ƒ“ƒO‚Ìó‘Ô•Ï”
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ã®çŠ¶æ…‹å¤‰æ•°
 				volatile bool roaming_IsRoaming=0;
-				//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§Œä‰Šú‰»
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡åˆæœŸåŒ–
 				void roaming_initialize(void) {
 					roaming_secInterval=0;
 					roaming_secCnt=0;
 					roaming_IsRoaming=0;
 				}
-				//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§ŒäI’[‰»
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡çµ‚ç«¯åŒ–
 				void roaming_finalize(void) {
-					//ƒ[ƒ~ƒ“ƒO’†‚È‚çA’â~
+					//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ä¸­ãªã‚‰ã€åœæ­¢
 					if(roaming_IsRoaming)roaming_stop();
 
 					roaming_secInterval=0;
 					roaming_secCnt=0;
 					roaming_IsRoaming=0;
 				}
-				//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğæ“¾‚·‚é
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 				void roaming_getInterval(sint16* secInterval) {
 					*secInterval=roaming_secInterval;
 				}
-				//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğİ’è‚·‚é
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹
 				void roaming_setInterval(sint16 secInterval) {
-					//ƒ[ƒ~ƒ“ƒOŠÔŠu‚Í10•bˆÈã‚Å‚ ‚é•K—v
+					//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°é–“éš”ã¯10ç§’ä»¥ä¸Šã§ã‚ã‚‹å¿…è¦
 					if(secInterval<=10)secInterval=10;
 					roaming_secInterval=secInterval;
 				}
-				//ƒ[ƒ~ƒ“ƒOó‘Ô‚©‚Ç‚¤‚©‚ğæ“¾‚·‚é
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çŠ¶æ…‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹
 				volatile bool roaming_isRoaming(void) { return roaming_IsRoaming; }
-				//ƒ[ƒ~ƒ“ƒOó‘Ô‚É“ü‚é
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çŠ¶æ…‹ã«å…¥ã‚‹
 				void roaming_start(void) {
-					//‚·‚Å‚Éƒ[ƒ~ƒ“ƒO’†‚È‚ç–³‹
+					//ã™ã§ã«ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ä¸­ãªã‚‰ç„¡è¦–
 					if(roaming_IsRoaming)return;
 
-					//ƒJƒEƒ“ƒ^ƒŠƒZƒbƒg
+					//ã‚«ã‚¦ãƒ³ã‚¿ãƒªã‚»ãƒƒãƒˆ
 					roaming_secCnt=0;
 
-					//ƒ[ƒ~ƒ“ƒOó‘Ô‚ÖˆÚs
+					//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çŠ¶æ…‹ã¸ç§»è¡Œ
 					roaming_IsRoaming=1;
 
-					//’ÊMƒfƒoƒCƒXØ‚è‘Ö‚¦
+					//é€šä¿¡ãƒ‡ãƒã‚¤ã‚¹åˆ‡ã‚Šæ›¿ãˆ
 					if(rf_module_uart_getModuleID()==rf_module_mode::rf_module) {
 						Device.PinRedLED(1);
 						rf_module_uart_initialize(rf_module_mode::mobile_phone, MP_BaudRate);
@@ -614,20 +591,20 @@ namespace hmr {
 						else rf_module_uart_initialize(rf_module_mode::rf_module, RF_BaudRate);
 					}
 				}
-				//ƒ[ƒ~ƒ“ƒOó‘Ô‚ğ‰ğœ
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çŠ¶æ…‹ã‚’è§£é™¤
 				void roaming_stop(void) {
-					//‚·‚Å‚Éƒ[ƒ~ƒ“ƒO’†‚Å‚È‚¢‚È‚ç–³‹
+					//ã™ã§ã«ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ä¸­ã§ãªã„ãªã‚‰ç„¡è¦–
 					if(!roaming_IsRoaming)return;
 
-					//ƒ[ƒ~ƒ“ƒOó‘Ô‚ğ‰ğœ
+					//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çŠ¶æ…‹ã‚’è§£é™¤
 					roaming_IsRoaming=0;
 				}
-				//ƒ[ƒ~ƒ“ƒO§Œäˆ—ŠÖ”
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°åˆ¶å¾¡å‡¦ç†é–¢æ•°
 				void roaming_interrupt_function(sint16 Interval_) {
-					//ƒJƒEƒ“ƒ^[‚ği‚ß‚é
+					//ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’é€²ã‚ã‚‹
 					roaming_secCnt+=Interval_;
 
-					//ƒJƒEƒ“ƒ^[‚ªØ‚è‘Ö‚¦’l‚ğ’´‚¦‚½ê‡‚ÍA’ÊMƒfƒoƒCƒXØ‚è‘Ö‚¦
+					//ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ãŒåˆ‡ã‚Šæ›¿ãˆå€¤ã‚’è¶…ãˆãŸå ´åˆã¯ã€é€šä¿¡ãƒ‡ãƒã‚¤ã‚¹åˆ‡ã‚Šæ›¿ãˆ
 					if(roaming_secCnt>roaming_secInterval) {
 						if(rf_module_uart_getModuleID()==rf_module_mode::rf_module) {
 							Device.PinRedLED(1);
@@ -641,8 +618,8 @@ namespace hmr {
 					}
 				}
 
-				//=== Šî–{‘€ìŠÖ” ===
-				//ƒfƒoƒCƒX‰Šú‰»ŠÖ”
+				//=== åŸºæœ¬æ“ä½œé–¢æ•° ===
+				//ãƒ‡ãƒã‚¤ã‚¹åˆæœŸåŒ–é–¢æ•°
 				void initialize(void) {
 					Device.PinRedLED.lock();
 					Device.Pin5VDCDC.lock();
@@ -670,29 +647,29 @@ namespace hmr {
 					Device.Config_DisableWDT.lock();
 					Device.Config_RFDebugMode.lock();
 
-					//wdt‰Šú‰»
+					//wdtåˆæœŸåŒ–
 					Device.WDT.lock();
 
 
-					//Pic©‘Ì‚Ìƒpƒ[‚ğ“ü‚ê‚Ä‚¨‚­
+					//Picè‡ªä½“ã®ãƒ‘ãƒ¯ãƒ¼ã‚’å…¥ã‚Œã¦ãŠã
 					Device.PinDevicePower(1);
 					Device.Pin5VDCDC(1);
 
-					//ƒfƒoƒCƒX‚Ì“dŒ¹‚ğ—‚Æ‚·
+					//ãƒ‡ãƒã‚¤ã‚¹ã®é›»æºã‚’è½ã¨ã™
 					power(0);
-					//ƒ‚[ƒhƒVƒXƒeƒ€‰Šú‰»
+					//ãƒ¢ãƒ¼ãƒ‰ã‚·ã‚¹ãƒ†ãƒ åˆæœŸåŒ–
 					mode_initialize(NormalMode);
 
-					//ƒNƒƒbƒN‰Šú‰»
+					//ã‚¯ãƒ­ãƒƒã‚¯åˆæœŸåŒ–
 					if(Device.Config_DefaultHighClock())clock_initialize(HighClock);
 					else clock_initialize(NormalClock);
 
-					//Š„‚è‚İ‰Šú‰»->Šeƒ‚ƒWƒ…[ƒ‹‰Šú‰»‚Éİ’è
+					//å‰²ã‚Šè¾¼ã¿åˆæœŸåŒ–->å„ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åˆæœŸåŒ–æ™‚ã«è¨­å®š
 //					xc32::interrupt::initialize();
 					xc32::sfr::interrupt::cpu_priority(Device.Main_IPL);
 //					hmr_interrupt_initalize();
 
-					//’ÊMŒnƒ‚ƒWƒ…[ƒ‹‰Šú‰»
+					//é€šä¿¡ç³»ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åˆæœŸåŒ–
 					if(Device.Config_DefaultMP()) {
 						rf_module_uart_initialize(rf_module_mode::mobile_phone,Device.MobilePhone_uart_Baudrate);
 						com::wdt_restart();
@@ -731,18 +708,18 @@ namespace hmr {
 						Device.Gyro_i2c.lock();
 					}
 */					
-//					hmr_adc_initialize(); -> analog_pin‚©‚çİ’è‚Å‚«‚é‚Ì‚ÅŠeƒ‚ƒWƒ…[ƒ‹‚ªs‚¤
+//					hmr_adc_initialize(); -> analog_pinã‹ã‚‰è¨­å®šã§ãã‚‹ã®ã§å„ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãŒè¡Œã†
 
-					//ƒfƒoƒCƒX‚Ì“dŒ¹‚ğ“ü‚ê‚é
+					//ãƒ‡ãƒã‚¤ã‚¹ã®é›»æºã‚’å…¥ã‚Œã‚‹
 					service::delay_ms(500);
 					power(1);
 
-					//devmngƒ‚ƒWƒ…[ƒ‹‰Šú‰»
+					//devmngãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åˆæœŸåŒ–
 					sleep_initialize();
 					roaming_initialize();
 					interrupt_initialize();
 
-					//WatchDogTimerŠJn
+					//WatchDogTimeré–‹å§‹
 					if(Device.Config_DisableWDT())Device.WDT.disable();
 					else Device.WDT.enable();
 
@@ -762,18 +739,18 @@ namespace hmr {
 //					Device.PinCameraLED(0);
 
 				}
-				//ƒfƒoƒCƒXI’[‰»ŠÖ”
+				//ãƒ‡ãƒã‚¤ã‚¹çµ‚ç«¯åŒ–é–¢æ•°
 				void finalize(void) {
-					//WatchDogTimerI—¹
+					//WatchDogTimerçµ‚äº†
 					Device.WDT.disable();
 					Device.WDT.unlock();
 
-					//devmngƒ‚ƒWƒ…[ƒ‹I’[‰»
+					//devmngãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«çµ‚ç«¯åŒ–
 					sleep_finalize();
 					roaming_finalize();
 					interrupt_finalize();
 
-					//’ÊMŒnƒ‚ƒWƒ…[ƒ‹I’[‰»
+					//é€šä¿¡ç³»ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«çµ‚ç«¯åŒ–
 					Device.RF_uart.recv_disable();
 					Device.RF_uart.send_disable();
 					Device.RF_uart.release();
@@ -796,34 +773,34 @@ namespace hmr {
 //					hmr_spi2_finalize();
 //					hmr_adc_finalize();
 
-					//ƒfƒoƒCƒX‚Ì“dŒ¹‚ğ—‚Æ‚·
+					//ãƒ‡ãƒã‚¤ã‚¹ã®é›»æºã‚’è½ã¨ã™
 					power(0);
 
-					//Š„‚è‚İI—¹
+					//å‰²ã‚Šè¾¼ã¿çµ‚äº†
 //					hmr_interrupt_finalize();
 
-					//ƒNƒƒbƒNI—¹
+					//ã‚¯ãƒ­ãƒƒã‚¯çµ‚äº†
 					clock_finalize();
 
-					//ƒ‚[ƒhŠÇ—I—¹
+					//ãƒ¢ãƒ¼ãƒ‰ç®¡ç†çµ‚äº†
 					mode_finalize();
 
 					power(0);
 					Device.PinDevicePower(0);
 					Device.WDT.disable();
 					Device.WDT.unlock();
-					//ƒfƒoƒCƒX©‘Ì‚ğI—¹
+					//ãƒ‡ãƒã‚¤ã‚¹è‡ªä½“ã‚’çµ‚äº†
 //					hmr_device_finalize();
 				}
-				//ƒfƒoƒCƒX‹­§I—¹
+				//ãƒ‡ãƒã‚¤ã‚¹å¼·åˆ¶çµ‚äº†
 				void kill(void) {
-					//©g‚Ì“dŒ¹‚ğØ‚é
+					//è‡ªèº«ã®é›»æºã‚’åˆ‡ã‚‹
 					Device.PinDevicePower(0);
 				}
-				//ƒfƒoƒCƒX‚Ì“dŒ¹ŠÇ—ŠÖ”
+				//ãƒ‡ãƒã‚¤ã‚¹ã®é›»æºç®¡ç†é–¢æ•°
 				void power(bool onoff_) {
 					bool onoff= (onoff_!=0);
-					//“dŒ¹ƒIƒt‚Ìê‡‚ÍAƒ‚ƒWƒ…[ƒ‹‘¤‚àØ‚é
+					//é›»æºã‚ªãƒ•ã®å ´åˆã¯ã€ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«å´ã‚‚åˆ‡ã‚‹
 					if(!onoff) {
 //						Device.PinCamera0Power(0);
 //						Device.PinCamera1Power(0);
@@ -838,16 +815,16 @@ namespace hmr {
 					Device.PinADC1to4Power(onoff);
 					Device.PinMotorPower(onoff);
 				}
-				//Œ»İ‚Ì’ÊMæ‚ª‘S“ñd’ÊM‘Î‰‚©‚ğ•Ô‚·
+				//ç¾åœ¨ã®é€šä¿¡å…ˆãŒå…¨äºŒé‡é€šä¿¡å¯¾å¿œã‹ã‚’è¿”ã™
 				bool isFullDuplex(void) {
 					return rf_module_uart_getModuleID()==rf_module_mode::mobile_phone || Device.Config_RFDebugMode();
 				}
 				//clear wdt
 				void clear_wdt(void) { Device.WDT.clear(); }
 				//=== rf module uart select ===
-				//Œ»İƒAƒNƒeƒBƒu‚ÈID
+				//ç¾åœ¨ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªID
 				rf_module_mode rf_module_uart_ModuleID = rf_module_mode::null;
-				//ModuleID‚Ìƒ‚ƒWƒ…[ƒ‹‚Å‰Šú‰»‚·‚é
+				//ModuleIDã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã§åˆæœŸåŒ–ã™ã‚‹
 				void rf_module_uart_initialize(rf_module_mode ModuleID_, uint16 BaudRate_) {
 					if(ModuleID_==rf_module_mode::mobile_phone) {
 						rf_module_uart_ModuleID = rf_module_mode::mobile_phone;
@@ -863,7 +840,7 @@ namespace hmr {
 						//Device.MobilePhone_uart.release();
 					}
 				}
-				//ModuleID‚É“dŒ¹‚ğ•ÏX‚·‚é
+				//ModuleIDã«é›»æºã‚’å¤‰æ›´ã™ã‚‹
 				void rf_module_uart_power_switch(bool onoff, rf_module_mode ModuleID_) {
 					if(onoff && ModuleID_==rf_module_mode::mobile_phone) {
 						Device.PinMobilePhonePower(1);
@@ -876,11 +853,11 @@ namespace hmr {
 						Device.PinRFPower(0);
 					}
 				}
-				//Œ»İ‚ÌModuleID‚ğæ“¾‚·‚é
+				//ç¾åœ¨ã®ModuleIDã‚’å–å¾—ã™ã‚‹
 				rf_module_mode rf_module_uart_getModuleID(void) { return rf_module_uart_ModuleID; }
 
-				//=== Š„‚è‚İŠÖ” ===
-				//DevMng—pƒ^ƒCƒ}[Š„‚è‚İŠÖ”
+				//=== å‰²ã‚Šè¾¼ã¿é–¢æ•° ===
+				//DevMngç”¨ã‚¿ã‚¤ãƒãƒ¼å‰²ã‚Šè¾¼ã¿é–¢æ•°
 				class:public xc32::interrupt::function {
 				private:
 					virtual void operator()(void) {
@@ -890,13 +867,13 @@ namespace hmr {
 						Device.PinRedLED(flag);
 						flag = (!flag);
 
-						//ƒfƒoƒCƒXƒ}ƒl[ƒW‚Ì’èŠúÀsˆ—iˆø”‚ğ•bŠÔŠu‚Åg—pj
+						//ãƒ‡ãƒã‚¤ã‚¹ãƒãƒãƒ¼ã‚¸ã®å®šæœŸå®Ÿè¡Œå‡¦ç†ï¼ˆå¼•æ•°ã‚’ç§’é–“éš”ã§ä½¿ç”¨ï¼‰
 						interrupt_function(1);
 					}
 				}DevMngInterruptFunction;
-				//ƒ^ƒXƒNAƒXƒŠ[ƒvA‚¨‚æ‚Ñƒ[ƒ~ƒ“ƒOÀs—pŠÖ”
+				//ã‚¿ã‚¹ã‚¯ã€ã‚¹ãƒªãƒ¼ãƒ—ã€ãŠã‚ˆã³ãƒ­ãƒ¼ãƒŸãƒ³ã‚°å®Ÿè¡Œç”¨é–¢æ•°
 				void interrupt_function(sint16 Interval_) {
-					//ƒ‚[ƒh‚É‚æ‚Á‚ÄŠ„‚è‚İˆ—‚ğ•ªŠò
+					//ãƒ¢ãƒ¼ãƒ‰ã«ã‚ˆã£ã¦å‰²ã‚Šè¾¼ã¿å‡¦ç†ã‚’åˆ†å²
 					switch(mode_get()) {
 					case SleepMode:
 						sleep_interrupt_function(Interval_);
@@ -909,11 +886,11 @@ namespace hmr {
 						break;
 					}
 				}
-				//Š„‚è‚İ‚Ìmainƒ‹[ƒv‚Ö‚ÌˆÏ÷ˆ—ŠÖ”
+				//å‰²ã‚Šè¾¼ã¿ã®mainãƒ«ãƒ¼ãƒ—ã¸ã®å§”è­²å‡¦ç†é–¢æ•°
 				bool interrupt_yield(void) {
 					sleep_interrupt_yield();
 
-					//ƒXƒŠ[ƒv‚ğœŠO
+					//ã‚¹ãƒªãƒ¼ãƒ—ã‚’é™¤å¤–
 					if(sleep_isSleep() && !sleep_isRem()) {
 						//__asm__("PWRSAV #IDLE_MODE");
 						//Idle();
@@ -934,7 +911,7 @@ namespace hmr {
 					Device.Task_timer.release();
 				}
 
-				// main stream Š„‚è‚İ‚Ì‹–‰Â‹Ö~‚ğ‚¢‚¶‚­‚Á‚Ä‚æ‚¢‚©‚ğ•Ô‚·ŠÖ”
+				// main stream å‰²ã‚Šè¾¼ã¿ã®è¨±å¯ç¦æ­¢ã‚’ã„ã˜ãã£ã¦ã‚ˆã„ã‹ã‚’è¿”ã™é–¢æ•°
 				bool interrupt_can_enable_streamVMC_fget_interrupt() {
 					return !(sleep_isSleep() && !sleep_isRem());
 				}
@@ -948,7 +925,7 @@ namespace hmr {
 					return true;//!( sleep_isSleep() && !sleep_isRem() );
 				}
 
-				// camera stream Š„‚è‚İ‚Ì‹–‰Â‹Ö~‚ğ‚¢‚¶‚­‚Á‚Ä‚æ‚¢‚©‚ğ•Ô‚·ŠÖ”
+				// camera stream å‰²ã‚Šè¾¼ã¿ã®è¨±å¯ç¦æ­¢ã‚’ã„ã˜ãã£ã¦ã‚ˆã„ã‹ã‚’è¿”ã™é–¢æ•°
 				bool interrupt_can_enable_streamCMR_fget_interrupt() {
 					return !(sleep_isSleep() && !sleep_isRem());
 				}
@@ -962,14 +939,14 @@ namespace hmr {
 					return true;//!( sleep_isSleep() && !sleep_isRem() );
 				}
 
-				// camera timer  Š„‚è‚İ‚Ì‹–‰Â‹Ö~‚ğ‚¢‚¶‚­‚Á‚Ä‚æ‚¢‚©‚ğ•Ô‚·ŠÖ”
+				// camera timer  å‰²ã‚Šè¾¼ã¿ã®è¨±å¯ç¦æ­¢ã‚’ã„ã˜ãã£ã¦ã‚ˆã„ã‹ã‚’è¿”ã™é–¢æ•°
 				bool interrupt_can_enable_timerCMR_interrupt() {
 					return !(sleep_isSleep() && !sleep_isRem());
 				}
 				bool interrupt_can_disable_timerCMR_interrupt() {
 					return true;//!( sleep_isSleep() && !sleep_isRem() );
 				}
-				// DevMng timer ‚ÌŠ„‚è‚İ‚Ì‹–‰Â‹Ö~‚ğ‚¢‚¶‚­‚Á‚Ä‚æ‚¢‚©‚ğ•Ô‚·ŠÖ”
+				// DevMng timer ã®å‰²ã‚Šè¾¼ã¿ã®è¨±å¯ç¦æ­¢ã‚’ã„ã˜ãã£ã¦ã‚ˆã„ã‹ã‚’è¿”ã™é–¢æ•°
 				bool interrupt_can_enable_timerDevmng_interrupt() {
 					return true;
 				}
@@ -977,7 +954,7 @@ namespace hmr {
 					return true;
 				}
 
-				// main stream ‚ÌŠ„‚è‚İ‹–‰Â‹Ö~ŠÖ”
+				// main stream ã®å‰²ã‚Šè¾¼ã¿è¨±å¯ç¦æ­¢é–¢æ•°
 				bool interrupt_enable_streamVMC_fget_interrupt() {
 					if(interrupt_can_enable_streamVMC_fget_interrupt()) {
 						if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_enable();
@@ -1015,7 +992,7 @@ namespace hmr {
 					}
 				}
 
-				// camera stream ‚ÌŠ„‚è‚İ‹–‰Â‹Ö~ŠÖ”
+				// camera stream ã®å‰²ã‚Šè¾¼ã¿è¨±å¯ç¦æ­¢é–¢æ•°
 				bool interrupt_enable_streamCMR_fget_interrupt() {
 					if(interrupt_can_enable_streamCMR_fget_interrupt()) {
 //						Device.Camera1_uart.recv_enable();
@@ -1053,7 +1030,7 @@ namespace hmr {
 					}
 				}
 
-				// timer camera ‚ÌŠ„‚è‚İ‹–‰Â‹Ö~ŠÖ”
+				// timer camera ã®å‰²ã‚Šè¾¼ã¿è¨±å¯ç¦æ­¢é–¢æ•°
 				bool interrupt_enable_timerCMR_interrupt() {
 					if(interrupt_can_enable_timerCMR_interrupt()) {
 //						Device.Camera_timer.clear_count();
@@ -1073,7 +1050,7 @@ namespace hmr {
 					}
 				}
 
-				// timer Device manager ‚ÌŠ„‚è‚İ‹–‰Â‹Ö~ŠÖ”
+				// timer Device manager ã®å‰²ã‚Šè¾¼ã¿è¨±å¯ç¦æ­¢é–¢æ•°
 				bool interrupt_enable_timerDevmng_interrupt() {
 					if(interrupt_can_enable_timerDevmng_interrupt()) {
 						Device.Task_timer.clear_count();
@@ -1095,8 +1072,6 @@ namespace hmr {
 					}
 				}
 
-//=================================Intertial===============================
-
 //=================================SD card===============================
 				namespace sdcard{
 					void Power(bool val_){Device.PinSDPower(val_);}
@@ -1107,73 +1082,7 @@ namespace hmr {
 						void select(bool val_){Device.PinSD_SPISelect(val_);}
 					}
 				}
-//================================= CO2 ===============================
-				namespace co2{
-					void PumpPower(bool val_){Device.PinCO2PumpPower(val_);}
-					void SensorPower(bool val_){Device.PinCO2SensorPower(val_);}
-				}
-//=================================Camera===============================
-/*				namespace camera{
-					void setLED(bool val_){Device.PinCameraLED(val_);}
-					namespace timer{
-						void clear_count(){Device.Camera_timer.clear_count();}
-						void clear_interrupt_flag(){Device.Camera_timer.clear_flag();}
-						void initialize(uint32 MSec_){
-							if(!Device.Camera_timer.is_initialize())Device.Camera_timer.initialize(Device.Camera_timer_register);
-							Device.Camera_timer.stop();
-							if(Device.Camera_timer.is_lock())Device.Camera_timer.unlock();
-							Device.Camera_timer.lock(MSec_, CameraInterruptFunc);
-						}
-						void enable_interrupt(){
-							Device.Camera_timer.clear_count();
-							Device.Camera_timer.start();
-						}
-						void disable_interrupt(){
-							Device.Camera_timer.stop();
-							Device.Camera_timer.clear_count();
-						}
-					}
-					namespace uart_camera1 {
-						void initialize(uint32 BoudRate_) {
-							if(!Device.Camera1_uart.is_initialize())Device.Camera1_uart.initialize(Device.Camera1_uart_register);
-							if(Device.Camera1_uart.is_lock())Device.Camera1_uart.unlock();
-							Device.Camera1_uart.lock(Device.Camera1_uart_Baudrate, Device.Camera1_uart_flowctrl, uart_camera1::Camera1TxInterruptFunc, uart_camera1::Camera1RxInterruptFunc);
-						}
-						void disable() { Device.Camera1_uart_register.enable(0); }
 
-						void fputc(uint8 data_){Device.Camera1_uart.send_data(data_);}
-						void fput_set_interrupt(){Device.Camera1_uart.send_set_flag();}
-						void fput_clear_interrupt(){Device.Camera1_uart.send_clear_flag();}
-						void fput_enable_interrupt() { Device.Camera1_uart.send_enable(); }
-						void fput_disable_interrupt() { Device.Camera1_uart.send_disable(); }
-
-						uint8 fgetc(){return Device.Camera1_uart.recv_data();}
-						void fget_set_interrupt(){Device.Camera1_uart.recv_set_flag();}
-						void fget_clear_interrupt(){Device.Camera1_uart.recv_clear_flag();}
-						void fget_enable_interrupt() { Device.Camera1_uart.recv_enable(); }
-						void fget_disable_interrupt() { Device.Camera1_uart.recv_disable(); }
-					}
-					namespace uart_camera2 {
-						void initialize(uint32 BoudRate_) {
-							if(!Device.Camera2_uart.is_initialize())Device.Camera2_uart.initialize(Device.Camera2_uart_register);
-							if(Device.Camera2_uart.is_lock())Device.Camera2_uart.unlock();
-							Device.Camera2_uart.lock(Device.Camera2_uart_Baudrate, Device.Camera2_uart_flowctrl, uart_camera2::Camera2TxInterruptFunc, uart_camera2::Camera2RxInterruptFunc);
-						}
-						void disable() { Device.Camera2_uart_register.enable(0); }
-
-						void fputc(uint8 data_) { Device.Camera2_uart.send_data(data_); }
-						void fput_set_interrupt() { Device.Camera2_uart.send_set_flag(); }
-						void fput_clear_interrupt() { Device.Camera2_uart.send_clear_flag(); }
-						void fput_enable_interrupt() { Device.Camera2_uart.send_enable(); }
-						void fput_disable_interrupt() { Device.Camera2_uart.send_disable(); }
-
-						uint8 fgetc() { return Device.Camera2_uart.recv_data(); }
-						void fget_set_interrupt() { Device.Camera2_uart.recv_set_flag(); }
-						void fget_clear_interrupt() { Device.Camera2_uart.recv_clear_flag(); }
-						void fget_enable_interrupt() { Device.Camera2_uart.recv_enable(); }
-						void fget_disable_interrupt() { Device.Camera2_uart.recv_disable(); }
-					}
-				}*/
 //=================================Courier===============================
 				namespace courier{
 					namespace uart{
@@ -1230,17 +1139,7 @@ namespace hmr {
 							else return false;
 						}
 					}
-				}
-//=================================GPS module===============================
-				namespace gps{
-					namespace gps1{
-						
-					}
-					namespace gps2{
-						
-					}
-				}
-				
+				}			
 			}
 		}
 	}
