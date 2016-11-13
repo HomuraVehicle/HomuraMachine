@@ -11,25 +11,40 @@ namespace hmr {
 	namespace machine {
 		namespace mihara {
 			namespace co2 {
-				namespace {
-					struct {
-						unsigned Data:1;
-						unsigned SendData:1;
-						unsigned SendData_i:1;
-						unsigned PowerPump:1;
-						unsigned PowerPump_i:1;
-						unsigned PowerSensor:1;
-						unsigned PowerSensor_i:1;
-					}Mode={0, 0, 1, 0, 1, 0, 1};
-					class device : public hmr::machine::mihara::cDevice::co2_device {
-					public:
-						apinData ApinData;
-						powerPump PowerPump;
-						powerSensor PowerSensor;
-					}Device;
+				cCO2<cDevice::co2_device> CO2;
+
+				namespace{
+					struct{
+						unsigned Data : 1;
+						unsigned SendData : 1;
+						unsigned SendData_i : 1;
+						unsigned PowerPump : 1;
+						unsigned PowerPump_i : 1;
+						unsigned PowerSensor : 1;
+						unsigned PowerSensor_i : 1;
+					}Mode = {0, 0, 1, 0, 1, 0, 1};
 					xc32::future<uint16> FutureData;
-					static const uint8 ADCAverageNum=100;
+					static const uint8 ADCAverageNum = 100;
+
+					struct data_task :public hmr::task::client_interface{
+						duration operator()(duration dt){
+							if(Mode.SendData && (!FutureData.valid()))FutureData = Device.ApinData(ADCAverageNum);
+							if(FutureData.valid()){
+								if(FutureData.can_get())Mode.Data = 1;
+							}
+							return dt;
+						}
+					}DataTask;
+					struct inform_task :public hmr::task::client_interface{
+						duration operator()(duration dt){
+							Mode.SendData_i = true;
+							Mode.PowerPump_i = true;
+							Mode.PowerSensor_i = true;
+							return dt;
+						}
+					}InformTask;
 				}
+
 				bool listen(hmLib::cstring Str){
 					switch(hmLib::cstring_getc(&Str,0)){
 					case 0x10://sensor on
@@ -104,34 +119,15 @@ namespace hmr {
 					Mode.Data=Mode.SendData;
 				}
 				void task_setup_talk(void){return;}
-				struct data_task :public hmr::task::client_interface{
-					duration operator()(duration dt){
-						if(Mode.SendData && (!FutureData.valid()))FutureData=Device.ApinData(ADCAverageNum);
-						if(FutureData.valid()){
-							if(FutureData.can_get())Mode.Data=1;
-						}
-						return dt;
-					}
-				}DataTask;
-				struct inform_task :public hmr::task::client_interface{
-					duration operator()(duration dt){
-						Mode.SendData_i = true;
-						Mode.PowerPump_i = true;
-						Mode.PowerSensor_i = true;
-						return dt;
-				}
-				}InformTask;
 				void initialize(){
-					//Analog pinê›íË
-					Device.ApinData.lock(xc32::sfr::adc::vref_mode::vref_Vref_Gnd,1);
 					//É^ÉXÉNìoò^
 					service::task::quick_start(InformTask, 5);
 					service::task::quick_start(DataTask, 5);
 				}
 				void finalize(){
+					//É^ÉXÉNìoò^
 					service::task::stop(InformTask);
 					service::task::stop(DataTask);
-					Device.ApinData.unlock();
 				}
 			}
 		}
