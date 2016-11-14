@@ -90,32 +90,6 @@ v1_00/120921 hmIto
 #include "DeviceManage_forCourier.hpp"
 #include "DeviceManageMessage.hpp"
 
-using namespace hmr::machine::mihara;
-
-//courier interrpt function
-devmng::courier::uart::tx_interrupt_function devmng::courier::uart::CourierTxInterruptFunc;
-void devmng::courier::uart::tx_interrupt_function::operator()(void){
-	//割り込みフラグをクリア
-//	clear_interrupt_fputflag(Stream_VMC);
-
-	//送信可能なら、送信
-	devmng::courier::uart::fput(vmc1_send(pVMC));
-
-	//送信可能でなくなった場合は、割り込みを切る
-	if(!vmc1_can_send(pVMC)){
-		//uart1_disable_fput_interrupt();
-		devmng::interrupt_disable_streamVMC_fput_interrupt();
-	}
-}
-devmng::courier::uart::rx_interrupt_function devmng::courier::uart::CourierRxInterruptFunc;
-void devmng::courier::uart::rx_interrupt_function::operator()(void){
-	//割込みフラグをクリア
-//	clear_interrupt_fgetflag(Stream_VMC);
-
-	//データを受信し、Comに処理させる
-	vmc1_recv(pVMC,devmng::courier::uart::fget());
-}
-
 //====== main 関数 ======
 using namespace hmr::machine::mihara;
 using namespace hmr::machine::service;

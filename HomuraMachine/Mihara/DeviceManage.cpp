@@ -628,8 +628,6 @@ namespace hmr {
 //					Device.PinCamera0Power.lock();
 //					Device.PinCamera1Power.lock();
 //					Device.PinCameraLED.lock();
-					Device.PinCO2PumpPower.lock();
-					Device.PinCO2SensorPower.lock();
 					Device.PinDevicePower.lock();
 					Device.PinExtI2CPower.lock();
 //					Device.PinHeadLightPower.lock();
@@ -657,6 +655,7 @@ namespace hmr {
 
 					//デバイスの電源を落とす
 					power(0);
+
 					//モードシステム初期化
 					mode_initialize(NormalMode);
 
@@ -679,36 +678,6 @@ namespace hmr {
 						else rf_module_uart_initialize(rf_module_mode::rf_module,Device.RF_uart_Baudrate);
 						com::wdt_disable();
 					}
-
-					//=== Coamera
-//					Device.Camera1_uart.initialize(Device.Camera1_uart_register);
-//					Device.Camera1_uart.config(Device.Camera1_uart_Baudrate, Device.Camera1_uart_flowctrl, camera::uart_camera1::Camera1TxInterruptFunc, camera::uart_camera1::Camera1RxInterruptFunc);
-//					Device.Camera1_uart.lock();
-		
-/*					Device.Camera2_uart.initialize(Device.Camera2_uart_register);
-					Device.Camera2_uart.config(Device.Camera2_uart_Baudrate, Device.Camera2_uart_flowctrl, camera::uart_camera2::Camera2TxInterruptFunc, camera::uart_camera2::Camera2RxInterruptFunc);
-					Device.Camera2_uart.lock();
-
-					//=== SD card spi
-					Device.SDcard_spi.initialize(Device.SDcard_spi_register);
-					Device.SDcard_spi.config(true, );
-					Device.SDcard_spi.lock();
-*/
-					//=== Inertial i2c
-/*					Device.Axcel_i2c.config(Device.Axcel_i2c_clock, 0);
-					Device.Axcel_i2c.lock();
-					
-					if(!Device.Compass_i2c.is_lock()){
-						Device.Compass_i2c.config(Device.Compass_i2c_clock, 0);
-						Device.Compass_i2c.lock();
-					}
-
-					if(!Device.Gyro_i2c.is_lock()) {
-						Device.Gyro_i2c.config(Device.Gyro_i2c_clock, 0);
-						Device.Gyro_i2c.lock();
-					}
-*/					
-//					hmr_adc_initialize(); -> analog_pinから設定できるので各モジュールが行う
 
 					//デバイスの電源を入れる
 					service::delay_ms(500);

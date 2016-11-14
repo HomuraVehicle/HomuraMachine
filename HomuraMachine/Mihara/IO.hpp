@@ -20,26 +20,59 @@ namespace hmr{
 		#define RFDebug_BaudRate 38400
 		#define MP_BaudRate 38400
 
-
 			template<typename io_device_>
-			struct cIO :public message_host_interface, public io_device_{
-				typedef cIO<io_device_> this_type;
+			struct cUartSwitcher: public io_device_{
+				typedef cUartSwitcher<io_device_> this_type;
 			private:
 				//ロックフラグ
 				bool Lock;
-			private:
-				//レジスタ系
-				xc32::interrupt_uart<RF0_uart_register_> Uart0;
-				xc32::interrupt_uart<RF1_uart_register_> Uart1;
-				RF0_power PinPowerUart0;
-				RF1_power PinPowerUart1;
-			private:
+			public:
 				//ModuleID
 				typedef enum{
 					null = 0x00,
 					mobile_phone = 0x01,
 					rf_module = 0x02
 				}rf_module_mode;
+			private:
+				//レジスタ系
+				xc32::interrupt_uart<RF0_uart_register_> Uart0;
+				xc32::interrupt_uart<RF1_uart_register_> Uart1;
+				RF0_power PinPowerUart0;
+				RF1_power PinPowerUart1;
+			public:
+				bool lock(){
+					if(is_lock())return false;
+					Lock = true;
+
+					Uart0.lock( 9600, xc32::uart::flowcontrol::rts_cts_control, SendInterrupt, RecvInterrupt);
+					Uart1.lock(38400, xc32::uart::flowcontrol::rts_cts_control, SendInterrupt, RecvInterrupt);
+
+					Uart0.recv_disable();
+					Uart0.send_disable();
+					Uart1.recv_disable();
+					Uart1.send_disable();
+
+					devmng::courier::uart::fput_set_interrupt();//streamVMC_set_fput_interrupt_flag();//set_interrupt_fputflag(Stream_VMC);//割り込み予約
+					devmng::interrupt_enable_streamVMC_fget_interrupt();// enable_interrupt_fget(Stream_VMC);
+					devmng::interrupt_enable_streamVMC_fput_interrupt();// enable_interrupt_fput(Stream_VMC);
+
+					return false;
+				}
+				bool is_lock()const{ return Lock; }
+				void unlock(){
+					Lock = false;
+
+					//割り込み禁止
+					devmng::courier::uart::fget_disable_interrupt();
+					devmng::courier::uart::fput_disable_interrupt();
+				}
+			};
+			template<typename io_device_>
+			struct cIO :public message_host_interface{
+				typedef cIO<io_device_> this_type;
+			private:
+				//ロックフラグ
+				bool Lock;
 			private:
 				//=== モード制御機能 ===
 				typedef enum{ NormalMode, SleepMode, RoamingMode }mode;
@@ -92,6 +125,23 @@ namespace hmr{
 				virtual void regist(message::element& rElement_){
 					Message.regist(rElement_);
 				}
+			private:
+				struct tx_interrupt{
+					void operator()(void){
+						//送信可能なら、送信
+						devmng::courier::uart::fput(vmc1_send(pVMC));
+
+						//送信可能でなくなった場合は、割り込みを切る
+						if(!vmc1_can_send(pVMC)){
+							//uart1_disable_fput_interrupt();
+							devmng::interrupt_disable_streamVMC_fput_interrupt();
+						}
+					}
+				};
+				struct rx_interrput{
+					//データを受信し、Comに処理させる
+					vmc1_recv(pVMC, devmng::courier::uart::fget());
+				};
 			public:
 				void operator()(void){
 					//受信可能なデータがある場合
