@@ -107,16 +107,6 @@ namespace hmr {
 				//クロック変更の通知関数
 				void mode_informClockChange(void);
 
-				//=== クロック制御機能 ===
-				//クロック制御機能初期化
-				void clock_initialize(clock Clock_);
-				//クロック制御機能終端化
-				void clock_finalize();
-				//クロック速度の変更関数
-				void clock_restartClock(clock Clock_);
-				//クロック速度をデフォルトに変更
-				void clock_restartClockDefault();
-
 				//=== スリープモード制御 ===
 				//スリープモード制御初期化
 				void sleep_initialize(void);
@@ -232,60 +222,6 @@ namespace hmr {
 					//クロックモードをただちに反映
 					clock_restartClockDefault();
 				}
-				//=== クロック制御機能 ===
-				//デバイスの現クロック
-				volatile clock clock_Clock;
-				//クロック制御機能初期化
-				void clock_initialize(clock Clock_) {
-					//指定クロックに変更
-					clock_Clock=Clock_;
-
-					//ただちにクロック速度反映
-					clock_restartClockDefault();
-				}
-				//クロック制御機能終端化
-				void clock_finalize() {
-//					hmr_clock_finalize();
-				}
-				//クロック速度の変更関数
-				void clock_restartClock(clock Clock_) {
-					
-					//一度クロックを終了
-//					hmr_clock_finalize();
-
-					switch(Clock_) {
-					case LowClock:
-//						hmr_clock_initialize(CLOCK_SLOW);
-						break;
-					case HighClock:
-//						hmr_clock_initialize(CLOCK_FAST);
-						break;
-					default:
-//						hmr_clock_initialize(CLOCK_NORMAL);
-						break;
-					}
-
-					//クロック変更をほかのモジュールにも通知
-					//	hmr_uart1_initialize(hmr_uart1_getModuleID(),);
-					//	hmr_uart2_initialize(38400);
-					//	hmr_adc_initialize();
-					
-				}
-				//クロック速度をデフォルトに変更
-				void clock_restartClockDefault() {
-					clock_restartClock(clock_Clock);
-				}
-				//クロックを変更する
-				void clock_set(clock Clock_) {
-					//すでに設定済みなら無視
-					if(clock_Clock==Clock_)return;
-
-					//変更を反映して、モード制御に通知
-					clock_Clock=Clock_;
-					mode_informClockChange();
-				}
-				//クロックを取得する
-				volatile clock clock_get(void) { return clock_Clock; }
 
 				//=== スリープモード制御 ===
 				//スリープ/覚醒通知用関数
