@@ -10,47 +10,51 @@ namespace hmr{
 			private:
 				systems::chain Chain;
 			private:
-				//Message Mode
-				bool Info_i;				// 情報送信モード受理
-				bool SleepMode_i;			// sleep mode 受理
-				bool KillCom_i;				// kill command 受理 
-				bool SleepModeCodeFail;		// sleep mode exe 受理したがCode認識失敗
-				bool RoamingModeCodeFail;	// roaming mode exe 受理したが失敗
-				bool KillCodeFail;			// normal mode exe 受理したが失敗
 
-				// ロック用のコード
-				unsigned char _devmngmsg_sleep_Code = 0;	//ロック解除用のコード
-				unsigned char _devmngmsg_roaming_Code = 0;	//ロック解除用のコード
-				unsigned char _devmngmsg_kill_Code = 0;	//ロック解除用のコード
-
-				uint16 _devmngmsg_sleep_sec_rem;
-				uint16 _devmngmsg_sleep_sec_nonRem;
-				unsigned char _devmngmsg_clockMode;
-				uint16 _devmngmsg_roaming_sec_interval;
-			private:
-				struct inform_task :public hmr::task::client_interface{
-					duration operator()(duration dt){
-						_devmngmsg_Mode.Info_i = true;
-						return dt;
-					}
-				}InformTask;
+				uint16 SleepSecRem;
+				uint16 SleepSecNonRem;
+				uint16 RoamingSecInterval;
 			private:
 				//通信受領クラス
 				struct message_client : public message_client_interface{
 				private:
 					this_type& Ref;
 				public:
-					message_client(this_type& Ref_) :Ref(Ref_){
-						_devmngmsg_Mode.Info_i = false;
-						_devmngmsg_Mode.SleepMode_i = false;
-						_devmngmsg_Mode.RoamingMode_i = false;
-						_devmngmsg_Mode.NormalMode_i = false;
-						_devmngmsg_Mode.KillCom_i = false;
-						_devmngmsg_Mode.ClockMode_i = false;
-						_devmngmsg_Mode.ClockModeFail = false;
-						_devmngmsg_Mode.SleepModeCodeFail = false;
-						_devmngmsg_Mode.RoamingModeCodeFail = false;
-						_devmngmsg_Mode.KillCodeFail = false;
+					struct inform_task :public hmr::task::client_interface{
+					private:
+						message_client& RefMessageClient;
+					public:
+						inform_task(message_client& RefMessageClient_) :RefMessageClient(RefMessageClient_){}
+						duration operator()(duration dt){
+							RefMessageClient.inform();
+							return dt;
+						}
+					}InformTask;
+				private:
+					//Message Mode
+					bool Info_i;				// 情報送信モード受理
+					bool SleepMode_i;			// sleep mode 受理
+					bool KillCom_i;				// kill command 受理 
+					bool SleepModeCodeFail;		// sleep mode exe 受理したがCode認識失敗
+					bool RoamingModeCodeFail;	// roaming mode exe 受理したが失敗
+					bool KillCodeFail;			// normal mode exe 受理したが失敗
+					// ロック用のコード
+					unsigned char _devmngmsg_sleep_Code = 0;	//ロック解除用のコード
+					unsigned char _devmngmsg_roaming_Code = 0;	//ロック解除用のコード
+					unsigned char _devmngmsg_kill_Code = 0;	//ロック解除用のコード
+				public:
+					message_client(this_type& Ref_) :Ref(Ref_), InformTask(*this){
+						Info_i = false;
+						SleepMode_i = false;
+						RoamingMode_i = false;
+						NormalMode_i = false;
+						KillCom_i = false;
+						SleepModeCodeFail = false;
+						RoamingModeCodeFail = false;
+						KillCodeFail = false;
+
+						//タスク登録
+						service::task::quick_start(InformTask, 5);
 					}
 				public:
 					bool listen(hmLib::cstring Str){
@@ -63,7 +67,7 @@ namespace hmr{
 
 							// Infomation mode
 						case 0xA0:
-							_devmngmsg_Mode.Info_i = true;
+							Info_i = true;
 							return false;
 
 							// 各種待機モード設定
@@ -73,20 +77,20 @@ namespace hmr{
 							case 0x00:// normal 
 								devmng::mode_set(devmng::NormalMode);
 
-								_devmngmsg_Mode.NormalMode_i = true;
+								NormalMode_i = true;
 								return false;
 
 							case 0x10:// sleep mode
 								if(hmLib::cstring_size(&Str) != 6)return true;
-								_devmngmsg_sleep_sec_nonRem = ((uint16)hmLib::cstring_getc(&Str, 2) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 3) * 256;
-								_devmngmsg_sleep_sec_rem = ((uint16)hmLib::cstring_getc(&Str, 4) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 5) * 256;
+								SleepSecNonRem = ((uint16)hmLib::cstring_getc(&Str, 2) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 3) * 256;
+								SleepSecRem = ((uint16)hmLib::cstring_getc(&Str, 4) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 5) * 256;
 								// sleep mode　設定準備
-								devmng::sleep_setInterval(_devmngmsg_sleep_sec_nonRem, _devmngmsg_sleep_sec_rem);
-								//devmng::sleep_getInterval(&_devmngmsg_sleep_sec_nonRem, &_devmngmsg_sleep_sec_rem); 
+								devmng::sleep_setInterval(SleepSecNonRem, SleepSecRem);
+								//devmng::sleep_getInterval(&SleepSecNonRem, &SleepSecRem); 
 								// code 取得
 								_devmngmsg_sleep_Code = service::lockcode();
 
-								_devmngmsg_Mode.SleepMode_i = true;
+								SleepMode_i = true;
 								return false;
 
 							case 0x11:// sleep execute mode
@@ -99,19 +103,19 @@ namespace hmr{
 									devmng::mode_set(devmng::SleepMode);
 								} else{
 									// 失敗通知
-									_devmngmsg_Mode.SleepModeCodeFail = true;
+									SleepModeCodeFail = true;
 								}
 								return false;
 
 							case 0x20:// roaming mode 
 								if(hmLib::cstring_size(&Str) != 4)return true;
-								_devmngmsg_roaming_sec_interval = ((uint16)hmLib::cstring_getc(&Str, 2) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 3) * 256;
+								RoamingSecInterval = ((uint16)hmLib::cstring_getc(&Str, 2) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 3) * 256;
 								// sleep mode　設定準備
-								devmng::roaming_setInterval(_devmngmsg_roaming_sec_interval);
-								//devmng::roaming_getInterval(&_devmngmsg_roaming_sec_interval); 
+								devmng::roaming_setInterval(RoamingSecInterval);
+								//devmng::roaming_getInterval(&RoamingSecInterval); 
 								// code 取得
 								_devmngmsg_roaming_Code = service::lockcode();
-								_devmngmsg_Mode.RoamingMode_i = true;
+								RoamingMode_i = true;
 								return false;
 
 							case 0x21:// roaming execute mode
@@ -124,14 +128,14 @@ namespace hmr{
 									devmng::mode_set(devmng::RoamingMode);
 								} else{
 									// 失敗通知
-									_devmngmsg_Mode.RoamingModeCodeFail = true;
+									RoamingModeCodeFail = true;
 								}
 								return false;
 							}
 
 						case 0x20:
 							_devmngmsg_kill_Code = service::lockcode();
-							_devmngmsg_Mode.KillCom_i = true;
+							KillCom_i = true;
 							return false;
 
 						case 0x21:
@@ -142,26 +146,8 @@ namespace hmr{
 								devmng::kill();
 							} else{
 								// 失敗通知
-								_devmngmsg_Mode.KillCodeFail = true;
+								KillCodeFail = true;
 							}
-							return false;
-
-						case 0x30:
-							if(hmLib::cstring_size(&Str) != 2)return true;
-							// mode のチェック
-							_devmngmsg_clockMode = hmLib::cstring_getc(&Str, 1);
-							if(_devmngmsg_clockMode == 0){
-								devmng::clock_set(devmng::NormalClock);
-							} else if(_devmngmsg_clockMode == 1){
-								devmng::clock_set(devmng::LowClock);
-							} else if(_devmngmsg_clockMode == 2){
-								devmng::clock_set(devmng::HighClock);
-							} else{
-								_devmngmsg_Mode.ClockModeFail = true;
-								return false;
-							}
-							// clock mode 受理
-							_devmngmsg_Mode.ClockMode_i = true;
 							return false;
 						default:
 							return true;
@@ -171,7 +157,7 @@ namespace hmr{
 						devmng::mode mode;
 						devmng::clock clockMode;
 						//hmLib_uint16 sumadc;
-						if(_devmngmsg_Mode.Info_i){
+						if(Info_i){
 							service::cstring_construct_safe(pStr, 4);
 							hmLib::cstring_putc(pStr, 0, 0xA0);
 
@@ -200,44 +186,44 @@ namespace hmr{
 								hmLib::cstring_putc(pStr, 3, 0x01);
 							}
 
-							_devmngmsg_Mode.Info_i = false;
+							Info_i = false;
 							return false;
 
-						} else if(_devmngmsg_Mode.NormalMode_i){
+						} else if(NormalMode_i){
 							service::cstring_construct_safe(pStr, 2);
 							hmLib::cstring_putc(pStr, 0, 0x10);
 							hmLib::cstring_putc(pStr, 1, 0x00);
 
-							_devmngmsg_Mode.NormalMode_i = false;
+							NormalMode_i = false;
 							return false;
 
-						} else if(_devmngmsg_Mode.SleepMode_i){
+						} else if(SleepMode_i){
 							service::cstring_construct_safe(pStr, 7);
 							hmLib::cstring_putc(pStr, 0, 0x10);
 							hmLib::cstring_putc(pStr, 1, 0x10);
-							hmLib::cstring_putc(pStr, 2, (unsigned char)(_devmngmsg_sleep_sec_nonRem & 0x00FF));
-							hmLib::cstring_putc(pStr, 3, (unsigned char)((_devmngmsg_sleep_sec_nonRem >> 8) & 0x00FF));
-							hmLib::cstring_putc(pStr, 4, (unsigned char)(_devmngmsg_sleep_sec_rem & 0x00FF));
-							hmLib::cstring_putc(pStr, 5, (unsigned char)((_devmngmsg_sleep_sec_rem >> 8) & 0x00FF));
+							hmLib::cstring_putc(pStr, 2, (unsigned char)(SleepSecNonRem & 0x00FF));
+							hmLib::cstring_putc(pStr, 3, (unsigned char)((SleepSecNonRem >> 8) & 0x00FF));
+							hmLib::cstring_putc(pStr, 4, (unsigned char)(SleepSecRem & 0x00FF));
+							hmLib::cstring_putc(pStr, 5, (unsigned char)((SleepSecRem >> 8) & 0x00FF));
 							hmLib::cstring_putc(pStr, 6, _devmngmsg_sleep_Code);
 
-							_devmngmsg_Mode.SleepMode_i = false;
+							SleepMode_i = false;
 							return false;
 
-						} else if(_devmngmsg_Mode.SleepModeCodeFail){
+						} else if(SleepModeCodeFail){
 							service::cstring_construct_safe(pStr, 2);
 							hmLib::cstring_putc(pStr, 0, 0x10);
 							hmLib::cstring_putc(pStr, 1, 0xF1);
 
-							_devmngmsg_Mode.SleepModeCodeFail = false;
+							SleepModeCodeFail = false;
 							return false;
 
-						} else if(_devmngmsg_Mode.RoamingMode_i){
+						} else if(RoamingMode_i){
 							service::cstring_construct_safe(pStr, 6);
 							hmLib::cstring_putc(pStr, 0, 0x10);
 							hmLib::cstring_putc(pStr, 1, 0x20);
-							hmLib::cstring_putc(pStr, 2, (unsigned char)(_devmngmsg_roaming_sec_interval & 0x00FF));
-							hmLib::cstring_putc(pStr, 3, (unsigned char)((_devmngmsg_roaming_sec_interval >> 8) & 0x00FF));
+							hmLib::cstring_putc(pStr, 2, (unsigned char)(RoamingSecInterval & 0x00FF));
+							hmLib::cstring_putc(pStr, 3, (unsigned char)((RoamingSecInterval >> 8) & 0x00FF));
 							hmLib::cstring_putc(pStr, 4, _devmngmsg_roaming_Code);
 
 							//変更先の通信手段を返す
@@ -247,44 +233,29 @@ namespace hmr{
 								hmLib::cstring_putc(pStr, 5, 0x00); // 現状がMPなら次はRF 
 							}
 
-							_devmngmsg_Mode.RoamingMode_i = false;
+							RoamingMode_i = false;
 							return false;
 
-						} else if(_devmngmsg_Mode.RoamingModeCodeFail){
+						} else if(RoamingModeCodeFail){
 							service::cstring_construct_safe(pStr, 2);
 							hmLib::cstring_putc(pStr, 0, 0x10);
 							hmLib::cstring_putc(pStr, 1, 0xF2);
 
-							_devmngmsg_Mode.RoamingModeCodeFail = false;
+							RoamingModeCodeFail = false;
 							return false;
 
-						} else if(_devmngmsg_Mode.KillCom_i){
+						} else if(KillCom_i){
 							service::cstring_construct_safe(pStr, 2);
 							hmLib::cstring_putc(pStr, 0, 0x20);
 							hmLib::cstring_putc(pStr, 1, _devmngmsg_kill_Code);
 
-							_devmngmsg_Mode.KillCom_i = false;
+							KillCom_i = false;
 							return false;
-						} else if(_devmngmsg_Mode.KillCodeFail){
+						} else if(KillCodeFail){
 							service::cstring_construct_safe(pStr, 1);
 							hmLib::cstring_putc(pStr, 1, 0xF2);
 
-							_devmngmsg_Mode.KillCodeFail = false;
-							return false;
-
-						} else if(_devmngmsg_Mode.ClockMode_i){
-							service::cstring_construct_safe(pStr, 2);
-							hmLib::cstring_putc(pStr, 0, 0x30);
-							hmLib::cstring_putc(pStr, 1, _devmngmsg_clockMode);
-
-							_devmngmsg_Mode.ClockMode_i = false;
-							return false;
-
-						} else if(_devmngmsg_Mode.ClockModeFail){
-							service::cstring_construct_safe(pStr, 1);
-							hmLib::cstring_putc(pStr, 0, 0xF3);
-
-							_devmngmsg_Mode.ClockModeFail = false;
+							KillCodeFail = false;
 							return false;
 						}
 
@@ -292,6 +263,10 @@ namespace hmr{
 					}
 					void setup_listen(void){ return; }
 					void setup_talk(void){ return; }
+				public:
+					void inform(){
+						Info_i = true;
+					}
 				}MessageClient;
 				message::element MessageElement;
 			public:
@@ -301,8 +276,6 @@ namespace hmr{
 				}
 			public:
 				cSystem(unsigned char ID_):MessageClient(*this), MessageElement(message_client_holder(ID_,MessageClient)){
-					//タスク登録
-					service::task::quick_start(InformTask, 5);
 				}
 			};
 		}
