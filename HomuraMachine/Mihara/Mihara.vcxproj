@@ -133,7 +133,6 @@
     <ClCompile Include="Com.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="DeviceManage.cpp" />
-    <ClCompile Include="DeviceManageMessage.cpp" />
     <ClCompile Include="Drive.cpp" />
     <ClCompile Include="GPS.cpp" />
     <ClCompile Include="Inertial.cpp" />
@@ -339,7 +338,6 @@
     <ClInclude Include="Data.hpp" />
     <ClInclude Include="Device.hpp" />
     <ClInclude Include="DeviceManage.hpp" />
-    <ClInclude Include="DeviceManageMessage.hpp" />
     <ClInclude Include="Drive.hpp" />
     <ClInclude Include="GPS.hpp" />
     <ClInclude Include="Inertial.hpp" />

@@ -181,9 +181,6 @@
     <ClCompile Include="DeviceManage.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
-    <ClCompile Include="DeviceManageMessage.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
     <ClCompile Include="Drive.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
@@ -682,9 +679,6 @@
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
     <ClInclude Include="DeviceManage.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManageMessage.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
     <ClInclude Include="Drive.hpp">
