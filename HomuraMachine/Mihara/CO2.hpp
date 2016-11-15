@@ -29,56 +29,73 @@ namespace hmr {
 			struct cCO2 : public co2_device_{
 				typedef cCO2<co2_device_> this_type;
 			private:
-				//ロックフラグ
-				bool Lock;
-			private:
-				//ピンフラグ
-				apinData ApinData;
-				powerPump PinPowerPump;
-				powerSensor PinPowerSensor;
-			private:
-				//モード
-				bool SendDataMode;
-				bool SendDataMode_i;
-				bool PowerPumpMode;
-				bool PowerPumpMode_i;
-				bool PowerSensorMode;
-				bool PowerSensorMode_i;
-				xc32::future<uint16> FutureData;
-			public:
-				//タスク
-				struct data_task :public hmr::task::client_interface{
+				struct sensor{
 				private:
-					this_type& Ref;
-				public:
-					data_task(this_type& Ref_) :Ref(Ref_){}
-					duration operator()(duration dt){
-						if(SendDataMode){
-							Ref.requestData();
+					//ピンフラグ
+					apinData ApinData;
+					powerPump PinPowerPump;
+					powerSensor PinPowerSensor;
+				private:
+					//モード
+					bool SendDataMode;
+					bool PowerPumpMode;
+					bool PowerSensorMode;
+					xc32::future<uint16> FutureData;
+				private:
+					//タスク
+					struct data_task :public hmr::task::client_interface{
+					private:
+						sensor& Ref;
+					public:
+						data_task(sensor& Ref_) :Ref(Ref_){}
+						duration operator()(duration dt){
+							if(Ref.SendDataMode){
+								Ref.FutureData = Ref.ApinData(100);
+							}
+							return dt;
 						}
-						return dt;
-					}
-				}DataTask;
-				struct inform_task :public hmr::task::client_interface{
-				private:
-					this_type& Ref;
+					}DataTask;
 				public:
-					inform_task(this_type& Ref_) :Ref(Ref_){}
-					duration operator()(duration dt){
-						Ref.SendDataMode_i = true;
-						Ref.PowerPumpMode_i = true;
-						Ref.PowerSensorMode_i = true;
-						return dt;
+					sensor()
+						: SendDataMode(false)
+						, PowerPumpMode(false)
+						, PowerSensorMode(false)
+						, DataTask(*this){
+						//pin設定
+						ApinData.lock(xc32::sfr::adc::vref_mode::vref_Vref_Gnd, 1);
+						PinPowerPump.lock();
+						PinPowerSensor.lock();
+
+						//タスク登録
+						service::task::quick_start(DataTask, 5);
 					}
-				}InformTask;
-			private:
+					~sensor(){
+						//pin設定
+						ApinData.unlock();
+						PinPowerPump.unlock();
+						PinPowerSensor.unlock();
+					}
+				public:
+					void setDataMode(bool OnOff){
+						DataMode = OnOff;
+					}
+					void powerSensor(bool OnOff){
+						PowerSensorMode = OnOff;
+						if(SystemClient.mode() == systems::mode::drive)PinPowerSensor(OnOff);
+					}
+					void powerPump(bool OnOff){
+						PowerPumpMode = OnOff;
+						if(SystemClient.mode() == systems::mode::drive)PinPowerPump(OnOff);
+					}
+				}Sensor;
+		private:
 				//モード通知受領クラス
 				struct system_client : public system_client_interface{
 				private:
-					this_type& Ref;
+					sensor& Ref;
 					systems::mode::type CurrentMode;
 				public:
-					system_client(this_type& Ref_) :Ref(Ref_){}
+					system_client(sensor& Ref_) :Ref(Ref_){}
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
 						switch(NewMode_){
 						case systems::mode::drive:
@@ -98,29 +115,53 @@ namespace hmr {
 				//通信受領クラス
 				struct message_client : public message_client_interface{
 				private:
-					this_type& Ref;
+					sensor& Ref;
+				private:
+					bool SendDataMode_i;
+					bool PowerPumpMode_i;
+					bool PowerSensorMode_i;
+				private:
+					struct inform_task :public hmr::task::client_interface{
+					private:
+						message_client& Ref;
+					public:
+						inform_task(message_client& Ref_) :Ref(Ref_){}
+						duration operator()(duration dt){
+							SendDataMode_i = true;
+							PowerPumpMode_i = true;
+							PowerSensorMode_i = true;
+							return dt;
+						}
+					}InformTask;
 				public:
-					message_client(this_type& Ref_) :Ref(Ref_){}
+					message_client(sensor& Ref_) :Ref(Ref_)
+						, InformTask(*this)
+						, SendDataMode_i(false)
+						, PowerPumpMode_i(false)
+						, PowerSensorMode_i(false){
+						//タスク登録
+						service::task::quick_start(InformTask, 5);
+					}
 				public:
 					void setup_talk(void){ return; }
 					bool talk(hmLib::cstring* pStr){
-						if(Ref.SendDataMode_i){
+						if(SendDataMode_i){
 							service::cstring_construct_safe(pStr, 1);
 							if(Ref.SendDataMode)hmLib::cstring_putc(pStr, 0, 0x10);
 							else hmLib::cstring_putc(pStr, 0, 0x11);
-							Ref.SendDataMode_i = false;
+							SendDataMode_i = false;
 							return false;
-						} else if(Ref.Mode.PowerSensor_i){
+						} else if(PowerSensor_i){
 							service::cstring_construct_safe(pStr, 1);
-							if(Ref.Mode.PowerSensor)hmLib::cstring_putc(pStr, 0, 0x20);
+							if(Ref.PowerSensorMode)hmLib::cstring_putc(pStr, 0, 0x20);
 							else hmLib::cstring_putc(pStr, 0, 0x21);
-							Ref.Mode.PowerSensor_i = false;
+							PowerSensorMode_i = false;
 							return false;
-						} else if(Ref.Mode.PowerPump_i){
+						} else if(PowerPump_i){
 							service::cstring_construct_safe(pStr, 1);
-							if(Ref.Mode.PowerPump)hmLib::cstring_putc(pStr, 0, 0x30);
+							if(Ref.PowerPumpMode)hmLib::cstring_putc(pStr, 0, 0x30);
 							else hmLib::cstring_putc(pStr, 0, 0x31);
-							Ref.Mode.PowerPump_i = false;
+							PowerPumpMode_i = false;
 							return false;
 						} else if(Ref.FutureData.can_get()){
 							service::cstring_construct_safe(pStr, 3);
@@ -138,30 +179,30 @@ namespace hmr {
 						switch(hmLib::cstring_getc(&Str, 0)){
 						case 0x10://SendDataMode ON
 							Ref.SendDataMode = true;
-							Ref.SendDataMode_i = true;
+							SendDataMode_i = true;
 							return false;
 						case 0x11://SendDataMode OFF
 							Ref.SendDataMode = false;
-							Ref.SendDataMode_i = true;
+							SendDataMode_i = true;
 							return false;
 						case 0x20://sensor on
-							Ref.Mode.PowerSensor = true;
-							Ref.Mode.PowerSensor_i = true;
+							Ref.PowerSensorMode = true;
+							PowerSensorMode_i = true;
 							Ref.powerSensor(true);
 							return false;
 						case 0x21://sensor on
-							Ref.Mode.PowerSensor = false;
-							Ref.Mode.PowerSensor_i = true;
+							Ref.PowerSensorMode = false;
+							PowerSensorMode_i = true;
 							Ref.powerSensor(false);
 							return false;
 						case 0x30://pump on
-							Ref.Mode.PowerPump = true;
-							Ref.Mode.PowerPump_i = true;
+							Ref.PowerPumpMode = true;
+							PowerPumpMode_i = true;
 							Ref.powerPump(true);
 							return false;
 						case 0x31://pump off
-							Ref.Mode.PowerPump = false;
-							Ref.Mode.PowerPump_i = true;
+							Ref.PowerPumpMode = false;
+							PowerPumpMode_i = true;
 							Ref.powerPump(false);
 							return false;
 						default:
@@ -172,63 +213,23 @@ namespace hmr {
 				message::element MessageElement;
 			public:
 				cCO2(unsigned char ID_)
-					: Lock(false)
-					, SendDataMode(false)
-					, SendDataMode_i(false)
-					, PowerPumpMode(false)
-					, PowerPumpMode_i(false)
-					, PowerSensorMode(false)
-					, PowerSensorMode_i(false)
-					, DataTask(*this)
-					, InformTask(*this)
-					, SystemClient(*this)
+					: Sensor()
+					, SystemClient(Sensor)
 					, SystemElement(system_client_holder(SystemClient))
-					, MessageClient(*this)
+					, MessageClient(Sensor)
 					, MessageElement(message_client_holder(ID_,MessageClient)){
-				}
-				bool lock(system_host_interface& SystemHost_, message_host_interface& MessageHost_){
-					if(is_lock())return false;
-					Lock = true;
-
-					//pin設定
-					ApinData.lock(xc32::sfr::adc::vref_mode::vref_Vref_Gnd, 1);
-					PinPowerPump.lock();
-					PinPowerSensor.lock();
-
-					//タスク登録
-					service::task::quick_start(InformTask, 5);
-					service::task::quick_start(DataTask, 5);
 
 					//Client登録
 					SystemHost_.regist(SystemElement);
 					MessageHost_.regist(MessageElement);
 
-					return false;
 				}
-				bool is_lock()const{ return Lock; }
-				void unlock(){
-					Lock = false;
-
-					//pin設定
-					ApinData.unlock();
-					PinPowerPump.unlock();
-					PinPowerSensor.unlock();
+				~cCO2(){
 
 					//タスク停止
 					service::task::stop(InformTask);
 					service::task::stop(DataTask);
-				}
-			public:
-				bool requestData(){
-					if(!FutureData.valid())return true;
-					FutureData = ApinData(100);
-					return false;
-				}
-				void powerSensor(bool OnOff){
-					if(SystemClient.mode()==systems::mode::drive)PinPowerSensor(OnOff);
-				}
-				void powerPump(bool OnOff){
-					if(SystemClient.mode() == systems::mode::drive)PinPowerPump(OnOff);
+
 				}
 			};
 		}
