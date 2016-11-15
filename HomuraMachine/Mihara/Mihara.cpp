@@ -121,10 +121,6 @@ int main(void){
 	cGPS<typename cDevice::gps_device> GPS;
 	gps::initialize(GPS);
 
-	//Lock
-	CO2.lock(System, IO);
-
-
 	//メッセージ登録
 //	message::regist('!',debug_setup_listen,debug_listen,debug_setup_talk,debug_talk);
 	Message.regist('m',motor::setup_listen,motor::listen,motor::setup_talk,motor::talk);
@@ -158,6 +154,8 @@ int main(void){
 		delay_ms(5);
 
 		IO();
+
+		CO2();
 	}
 
 	//終端化処理
