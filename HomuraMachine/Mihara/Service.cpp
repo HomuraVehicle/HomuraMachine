@@ -3,6 +3,7 @@
 #
 #include<homuraLib_v2/machine/service/delay.hpp>
 #include<homuraLib_v2/machine/service/exclusive_delay.hpp>
+#include<homuraLib_v2/task.hpp>
 #include"Service.hpp"
 namespace hmr{
 	namespace machine{
@@ -21,6 +22,14 @@ namespace hmr{
 				mihara::cService::exclusive_delay_timer(ms_);
 			}
 //			hmr::chrono::clock_interface& Chrono(mihara::cService::clock());
+		}
+		namespace service{
+			namespace{
+				//関数駆動型のタスクホスト
+				hmr::task::functional_host<> TaskHost;
+			}
+			//serviceのタスクとして登録
+			hmr::task::host_interface& Task(TaskHost);
 		}
 	}
 }

@@ -18,24 +18,10 @@
 
 namespace hmr {
 	namespace machine {
-		namespace service{
-			namespace{
-				//関数駆動型のタスクホスト
-				hmr::task::functional_host<> TaskHost;
-			}
-			//serviceのタスクとして登録
-			hmr::task::host_interface& Task(TaskHost);
-		}
 		namespace mihara {
 			namespace devmng {
 				class device :public mihara::cDevice::devmng_device {
 				public:
-					pinRedLED PinRedLED;
-					pinDevicePower PinDevicePower;
-					timer_register Task_timer_register;
-					xc32::interrupt_timer<timer_register> Task_timer;
-					static const uint16 TaskTimerMS=1000;//DevMng専用タイマーの初期化値(milisecond)
-
 					static const uint8 TaskTimerIPL=2;//DevMng専用タイマーの割り込み優先度
 					static const uint8 Camera1_uart_tx_IPL=6;
 					static const uint8 Camera1_uart_rx_IPL=7;

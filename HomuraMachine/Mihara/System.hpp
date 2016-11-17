@@ -5,15 +5,26 @@
 namespace hmr{
 	namespace machine{
 		namespace mihara{
-			struct cSystem : public system_host_interface{
+			template<typename system_device_>
+			struct cSystem : public system_host_interface, public system_device_{
 				typedef cSystem this_type;
 			private:
 				systems::chain Chain;
 			private:
-
+				pinRedLED PinRedLED;
+				pinDevicePower PinDevicePower;
+				timer_register Task_timer_register;
+				xc32::interrupt_timer<timer_register> Task_timer;
+				static const uint16 TaskTimerMS = 1000;//DevMng専用タイマーの初期化値(milisecond)
+			private:
 				uint16 SleepSecRem;
 				uint16 SleepSecNonRem;
 				uint16 RoamingSecInterval;
+			private:
+				//モード制御クラス
+				struct mode_driver{
+
+				};
 			private:
 				//通信受領クラス
 				struct message_client : public message_client_interface{

@@ -94,12 +94,31 @@ namespace hmr {
 					typedef xc32::sfr::timer3 chrono_timer_register;
 					typedef xc32::sfr::timer4 delay_timer_register;
 					typedef xc32::sfr::timer5 exclusive_delay_timer_register;
+					//====ADC====
+					typedef my_device::opinADC0Power pinADC0Power;
+					typedef my_device::opinADC1to4Power pinADC1to4Power;
+					
 				};
 
 				class system_device {
 				protected:
+					//=====DIP pin=====
+					typedef my_device::ipinDip1 pinDip1;
+					typedef my_device::ipinDip2 pinDip2;
+					typedef my_device::ipinDip3 pinDip3;
+					typedef my_device::ipinDip4 pinDip4;
+
+				protected:
 					typedef xc32::sfr::timer6 longtimer_register1;
 					typedef xc32::sfr::timer7 longtimer_register2;
+				protected:
+					typedef xc32::sfr::timer8 timer_register;
+					typedef my_device::opinRedLED pinRedLED;
+					typedef my_device::opinDevicePower pinDevicePower;
+
+
+					typedef my_device::opin5VDCDC pin5VDCDC;
+					typedef my_device::opinExternalI2C_Pw pinExternalI2C_Pw;
 				};
 
 				class microphone_device {
@@ -133,7 +152,9 @@ namespace hmr {
 					typedef my_device::opinMotorLB pinMotorLB;
 					typedef my_device::opinMotorRA pinMotorRA;
 					typedef my_device::opinMotorRB pinMotorRB;
+					typedef my_device::opinMotorPower pinMotorPower;
 				};
+
 				class inertial_device{
 				protected:
 					typedef xc32::sfr::i2c5 AcceleCompass_i2c;
@@ -143,49 +164,12 @@ namespace hmr {
 					typedef my_device::opinInertialPower powerInertial;
 				};
 
-				class devmng_device {
+				class logger_device{
 				protected:
-					typedef xc32::sfr::timer8 timer_register;
-					typedef my_device::opinRedLED pinRedLED;
-					typedef my_device::opinDevicePower pinDevicePower;
-
-//================================================================================================
-					//=====DIP pin=====
-					typedef my_device::ipinDip1 pinDip1;
-					typedef my_device::ipinDip2 pinDip2;
-					typedef my_device::ipinDip3 pinDip3;
-					typedef my_device::ipinDip4 pinDip4;
-
-					//====rf module====
-					typedef my_device::opinRF0Power pinRF_Power;
-					typedef my_device::opinRF1Power pinMobilePhone_Power;
-					typedef xc32::sfr::uart1 rf_uart_register;
-					typedef xc32::sfr::uart3 mobilephone_uart_register;
-
 					//====SD card=====
 					typedef my_device::opinSDPower pinSDPower;
 					typedef my_device::opinSD_SPISelect pinSD_SPISelect;
 					typedef xc32::sfr::spi2 sdcard_spi_register;
-
-					//====CO2 sensor====
-					typedef my_device::opinCO2PumpsPw pinCO2PumpsPower;
-					typedef my_device::opinCO2SensorPw pinCO2SensorPower;
-
-					//====ADC====
-					typedef my_device::opinADC0Power pinADC0Power;
-					typedef my_device::opinADC1to4Power pinADC1to4Power;
-					
-					//====Motor====
-					typedef my_device::opinMotorLA pinMotorLA;
-					typedef my_device::opinMotorLB pinMotorLB;
-					typedef my_device::opinMotorRA pinMotorRA;
-					typedef my_device::opinMotorRB pinMotorRB;
-					typedef my_device::opinMotorPower pinMotorPower;
-
-					typedef my_device::opin5VDCDC pin5VDCDC;
-					typedef my_device::opinExternalI2C_Pw pinExternalI2C_Pw;
-
-//================================================================================================
 				};
 			public:
 				cDevice():KK10()/*:WDTLock(WDT)*/ {
