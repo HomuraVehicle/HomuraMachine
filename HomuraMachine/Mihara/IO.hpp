@@ -7,6 +7,7 @@
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>
+#include<homuraLib_v2/gate.hpp>
 #include"Com.hpp"
 #include"System_base.hpp"
 #include"Message_base.hpp"
@@ -24,7 +25,7 @@ namespace hmr{
 				//ModuleID
 				enum module_mode{
 					module_null = 0x00,
-					module_mobile = 0x01,
+					module_phone = 0x01,
 					module_rf = 0x02
 				};
 				struct module_selector_interface{
@@ -42,12 +43,11 @@ namespace hmr{
 				public:
 					void operator()(void){
 						//送信可能なら、送信
-						devmng::courier::uart::fput(vmc1_send(pVMC));
+						Ref.Uart.putc(vmc1_send(pVMC);
 
 						//送信可能でなくなった場合は、割り込みを切る
 						if(!vmc1_can_send(pVMC)){
-							//uart1_disable_fput_interrupt();
-							devmng::interrupt_disable_streamVMC_fput_interrupt();
+							Ref.Uart.disable_tx_interrupt();
 						}
 					}
 				};
@@ -57,7 +57,7 @@ namespace hmr{
 				public:
 					void operator()(void){
 						//データを受信し、Comに処理させる
-						vmc1_recv(pVMC, devmng::courier::uart::fget());
+						vmc1_recv(pVMC, Ref.Uart.getc());
 					}
 				};
 			private:
@@ -94,7 +94,7 @@ namespace hmr{
 
 						Mode = ModuleMode_;
 						switch(Mode){
-						case io::module_mobile:
+						case io::module_phone:
 							RFUart.unlock();
 							PhoneUart.lock(38400, xc32::uart::flowcontrol::rts_cts_control, SendInterrupt, RecvInterrupt);
 							PinPowerRFUartlock(false);
@@ -112,6 +112,58 @@ namespace hmr{
 						}
 					}
 					io::module_mode getMode()const{ return Mode; }
+					operator bool()const{ return Mode == io::module_null; }
+				public:
+					//送信文字列を1byte取得する
+					unsigned char getc(){
+						switch(Mode){
+						case io::module_rf:
+							return RFUart.recv_data();
+						case io::module_phone:
+							return PhoneUart.recv_data();
+						default:
+							return 0;
+						}
+					}
+					//受信文字列を1byte与える
+					void putc(unsigned char c){
+						switch(Mode){
+						case io::module_rf:
+							RFUart.send_data(c);
+							return;
+						case io::module_phone:
+							PhoneUart.send_data(c);
+							return;
+						default:
+							return;
+						}
+					}
+					//tx interrupt enable
+					void enable_tx_interrupt(){
+						switch(Mode){
+						case io::module_rf:
+							RFUart.send_enable();
+							return;
+						case io::module_phone:
+							PhoneUart.send_enable();
+							return;
+						default:
+							return;
+						}
+					}
+					//tx interrupt disable
+					void disable_tx_interrupt(){
+						switch(Mode){
+						case io::module_rf:
+							RFUart.send_disable();
+							return;
+						case io::module_phone:
+							PhoneUart.send_disable();
+							return;
+						default:
+							return;
+						}
+					}
 				};
 			private:
 				//Uart
@@ -131,16 +183,8 @@ namespace hmr{
 					pVMC = com::createVMC1();
 					vmc1_initialize(pVMC, (const unsigned char*)("hmr"), (const unsigned char*)("ctr"));
 					com::initialize();
-
-					devmng::courier::uart::fput_set_interrupt();//streamVMC_set_fput_interrupt_flag();//set_interrupt_fputflag(Stream_VMC);//割り込み予約
-					devmng::interrupt_enable_streamVMC_fget_interrupt();// enable_interrupt_fget(Stream_VMC);
-					devmng::interrupt_enable_streamVMC_fput_interrupt();// enable_interrupt_fput(Stream_VMC);
 				}
 				~cIO{
-					//割り込み禁止
-					devmng::courier::uart::fget_disable_interrupt();
-					devmng::courier::uart::fput_disable_interrupt();
-
 					//通信関連の終端化処理
 					vmc1_finalize(pVMC);
 					com::finalize();
@@ -157,7 +201,7 @@ namespace hmr{
 					Uart.setMode(Mode_);
 					return false;
 				}
-				virtual module_mode getModuleMode()const{
+				virtual io::module_mode getModuleMode()const{
 					return Uart.getMode();
 				}
 			public:
@@ -223,12 +267,9 @@ namespace hmr{
 
 					//送信割り込みが切られていて、かつ送信可能状態のときには、送信割り込みをオンにする
 					if(!devmng::courier::uart::fput_is_interrupt_enable()){
-						if(vmc1_can_send(pVMC))devmng::interrupt_enable_streamVMC_fput_interrupt();//uart1_enable_fput_interrupt();
+						if(vmc1_can_send(pVMC))Uart.enable_tx_interrupt();
 					}
 				}
-			public:
-				//現在の通信先が全二重通信対応かを返す
-				bool isFullDuplex(void);
 			};
 		}
 	}
