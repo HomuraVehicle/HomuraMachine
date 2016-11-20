@@ -9,27 +9,14 @@
 namespace hmr{
 	namespace machine{
 		namespace mihara{
-			class cService :public cDevice::service_device{
+			template<typename service_device_>
+			class cService :public service_device_{
 				friend void hmr::machine::service::delay_ms(unsigned int ms_);
 				friend void hmr::machine::service::exclusive_delay_ms(unsigned int ms_);
 			private:
-/*				struct message :public msgset::machine::chrono{
-				private:
-					cService& ref;
-				public:
-					message(cService& ref_) :ref(ref_){}
-				private://msgset::maachine::chrono
-					virtual void recv_time(){
-						send_time(service::chrono::now());
-					}
-					virtual void recv_hds_time(){
-						send_hds_time(service::chrono::now_hds());
-					}
-					virtual void recv_correction(hmr::chrono::unix_time_point TimeCorrection_Unix_, hmr::chrono::msec_time_point TimeCorrection_AddMSec_){
-						ref.Clock.correct(TimeCorrection_Unix_, TimeCorrection_AddMSec_);
-						send_inform_correction(TimeCorrection_Unix_, TimeCorrection_AddMSec_);
-					}
-				}Message;*/
+				timer_register Task_timer_register;
+				xc32::interrupt_timer<timer_register> Task_timer;
+				static const uint16 TaskTimerMS = 1000;//DevMng専用タイマーの初期化値(milisecond)
 			private:
 				static xc32::delay_ms_timer<delay_timer_register> delay_timer;
 				xc::lock_guard<xc32::delay_ms_timer<delay_timer_register>> delay_timer_Lock;
