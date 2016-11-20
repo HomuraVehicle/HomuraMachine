@@ -13,26 +13,10 @@
 #include"Message_base.hpp"
 #include"Message.hpp"
 #include"Device.hpp"
+#include"IO_base.hpp"
 namespace hmr{
 	namespace machine{
 		namespace mihara{
-			//=== Šî–{’è‹` ===
-			#define RF_BaudRate 9600
-			#define RFDebug_BaudRate 38400
-			#define MP_BaudRate 38400
-
-			namespace io{
-				//ModuleID
-				enum module_mode{
-					module_null = 0x00,
-					module_phone = 0x01,
-					module_rf = 0x02
-				};
-				struct module_selector_interface{
-					virtual bool setModuleMode(module_mode Mode_) = 0;
-					virtual module_mode getModuleMode()const = 0;
-				};
-			}
 			template<typename io_device_>
 			struct cIO :public message_host_interface, public io::module_selector_interface, public io_device_{
 				typedef cIO<io_device_> this_type;
