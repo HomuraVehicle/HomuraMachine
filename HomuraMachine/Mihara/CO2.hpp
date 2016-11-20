@@ -60,7 +60,7 @@ namespace hmr {
 				private:
 					this_type& Ref;
 				public:
-					data_task(sensor& Ref_) :Ref(Ref_){}
+					data_task(this_type& Ref_) :Ref(Ref_){}
 					duration operator()(duration dt){
 						if(Ref.DataMode){
 							Ref.FutureData = Ref.ApinData(100);
@@ -75,15 +75,17 @@ namespace hmr {
 					this_type& Ref;
 					systems::mode::type CurrentMode;
 				public:
-					system_client(sensor& Ref_) :Ref(Ref_){}
+					system_client(this_type& Ref_) :Ref(Ref_){}
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
 						switch(NewMode_){
 						case systems::mode::drive:
 							Ref.PinPowerPump(PowerPumpMode);
 							Ref.PinPowerSensor(PowerSensorMode);
+							break;
 						default:
 							Ref.PinPowerPump(false);
 							Ref.PinPowerSensor(false);
+							break;
 						}
 						CurrentMode = NewMode_;
 					}
@@ -116,7 +118,7 @@ namespace hmr {
 						}
 					}InformTask;
 				public:
-					message_client(sensor& Ref_)
+					message_client(this_type& Ref_)
 						: Ref(Ref_)
 						, DataMode_i(true)
 						, PowerPumpMode_i(true)
@@ -126,6 +128,9 @@ namespace hmr {
 						, InformTask(*this){
 						//タスク登録
 						service::task::quick_start(InformTask, 5);
+					}
+					~message_client(){
+						service::task::stop(InformTask);
 					}
 				public:
 					void setup_talk(void){ return; }
@@ -207,9 +212,9 @@ namespace hmr {
 					, PowerPumpMode(false)
 					, PowerSensorMode(false)
 					, DataTask(*this)
-					, SystemClient(Sensor)
+					, SystemClient(*this)
 					, SystemElement(system_client_holder(SystemClient))
-					, MessageClient(Sensor)
+					, MessageClient(*this)
 					, MessageElement(message_client_holder(ID_,MessageClient)){
 
 					//pin設定
