@@ -771,5 +771,8 @@
     <ClInclude Include="System.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
+    <ClInclude Include="IO_base.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

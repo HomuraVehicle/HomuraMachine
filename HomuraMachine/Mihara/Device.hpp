@@ -40,26 +40,24 @@ namespace hmr {
 			private:
 				//‹¤—Ladc
 				struct shared_adc_identifer{};
-				typedef xc32::async_interrupt_adc<xc32::sfr::adc_block, shared_adc_identifer> default_adc;
+				typedef xc32::async_interrupt_adc<xc32::sfr::adc_block, shared_adc_identifer> async_adc;
 				//‹¤—Li2c
 				struct shared_i2c5_default_identifer{};
-				typedef xc32::shared_i2c<xc32::sfr::i2c5,shared_i2c5_default_identifer> shared_i2c5;
+				typedef xc32::shared_i2c<xc32::sfr::i2c5,shared_i2c5_default_identifer> shared_i2c;
 				//‹¤—Lspi
 				struct shared_spi2_default_identifer{};
-				typedef xc32::shared_spi<xc32::sfr::spi2,shared_spi2_default_identifer> shared_spi2;
+				typedef xc32::shared_spi<xc32::sfr::spi2,shared_spi2_default_identifer> shared_spi;
 			private:
 				my_device KK10;
-				default_adc ADC;
-				shared_i2c5 I2C5;
-				shared_spi2 SPI2;
-//				my_device::opinDevicePower PinDevicePower;
-//				xc32::wdt WDT;
-//				xc::lock_guard<xc32::wdt> WDTLock;
+				async_adc ADC;
+				shared_i2c I2C5;
+				shared_spi SPI2;
 			public:
 				class io_device {
 				protected:
 					//courier stream tx interrupt priority level 3
 					//courier stream rx interrupt priority level 4
+					typedef xc32::output_pin<xc32::sfr::portC::pin15, true> pinGreenLED;
 					typedef xc32::sfr::uart1 RF0_uart_register;
 					typedef xc32::sfr::uart3 RF1_uart_register;
 					typedef my_device::opinRF0Power RF0_power;
@@ -70,7 +68,6 @@ namespace hmr {
 				protected:
 					typedef xc32::sfr::uart3 debug_uart_register;
 					typedef xc32::sfr::timer1 timer_register;
-					typedef xc32::output_pin<xc32::sfr::portC::pin15, true> pinGreenLED;
 				};
 
 				class gps_device {
@@ -94,10 +91,18 @@ namespace hmr {
 					typedef xc32::sfr::timer3 chrono_timer_register;
 					typedef xc32::sfr::timer4 delay_timer_register;
 					typedef xc32::sfr::timer5 exclusive_delay_timer_register;
-					//====ADC====
 					typedef my_device::opinADC0Power pinADC0Power;
 					typedef my_device::opinADC1to4Power pinADC1to4Power;
-					
+				protected:
+					typedef xc32::sfr::timer6 longtimer_register1;
+					typedef xc32::sfr::timer7 longtimer_register2;
+					typedef xc32::sfr::timer8 timer_register;
+				protected:
+					typedef async_adc async_adc;
+					typedef shared_i2c shared_i2c;
+					typedef shared_spi shared_spi;
+					typedef my_device::opin5VDCDC pin5VDCDC;
+					typedef my_device::opinExternalI2C_Pw pinExternalI2C_Pw;
 				};
 
 				class system_device {
@@ -107,18 +112,8 @@ namespace hmr {
 					typedef my_device::ipinDip2 pinDip2;
 					typedef my_device::ipinDip3 pinDip3;
 					typedef my_device::ipinDip4 pinDip4;
-
-				protected:
-					typedef xc32::sfr::timer6 longtimer_register1;
-					typedef xc32::sfr::timer7 longtimer_register2;
-				protected:
-					typedef xc32::sfr::timer8 timer_register;
 					typedef my_device::opinRedLED pinRedLED;
 					typedef my_device::opinDevicePower pinDevicePower;
-
-
-					typedef my_device::opin5VDCDC pin5VDCDC;
-					typedef my_device::opinExternalI2C_Pw pinExternalI2C_Pw;
 				};
 
 				class microphone_device {
@@ -129,21 +124,21 @@ namespace hmr {
 
 				class co2_device {
 				protected:
-					typedef default_adc::analog_pin<my_device::apinCO2> apinData;
+					typedef async_adc::analog_pin<my_device::apinCO2> apinData;
 					typedef my_device::opinCO2PumpsPw powerPump;
 					typedef my_device::opinCO2SensorPw powerSensor;
 				};
 
 				class battery_device {
 				protected:
-					typedef default_adc::analog_pin<my_device::apinMainBoardBattery> apinData1;
-					typedef default_adc::analog_pin<my_device::apinRightMotorBattery> apinData2;
-					typedef default_adc::analog_pin<my_device::apinLeftMotorBattery> apinData3;
+					typedef async_adc::analog_pin<my_device::apinMainBoardBattery> apinData1;
+					typedef async_adc::analog_pin<my_device::apinRightMotorBattery> apinData2;
+					typedef async_adc::analog_pin<my_device::apinLeftMotorBattery> apinData3;
 				};
 
 				class thermo_device {
 				protected:
-					typedef default_adc::analog_pin<my_device::apinThermo> apinData;
+					typedef async_adc::analog_pin<my_device::apinThermo> apinData;
 				};
 
 				class motor_device {
@@ -172,14 +167,7 @@ namespace hmr {
 					typedef xc32::sfr::spi2 sdcard_spi_register;
 				};
 			public:
-				cDevice():KK10()/*:WDTLock(WDT)*/ {
-					I2C5.lock(xc32::i2c::clockmode::type::_400kHz,0);
-					SPI2.lock(true,true,1);
-					}
-				~cDevice() {
-					I2C5.unlock();
-					SPI2.unlock();
-				}
+				cDevice():KK10(){}
 				void operator()(void) {
 //					WDT.clear();
 				}

@@ -342,6 +342,7 @@
     <ClInclude Include="GPS.hpp" />
     <ClInclude Include="Inertial.hpp" />
     <ClInclude Include="IO.hpp" />
+    <ClInclude Include="IO_base.hpp" />
     <ClInclude Include="Message.hpp" />
     <ClInclude Include="Message_base.hpp" />
     <ClInclude Include="Service.hpp" />
