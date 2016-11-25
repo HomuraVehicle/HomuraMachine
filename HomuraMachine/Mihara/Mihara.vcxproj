@@ -139,7 +139,6 @@
     <ClCompile Include="Inertial.cpp" />
     <ClCompile Include="Mihara.cpp" />
     <ClCompile Include="Service.cpp" />
-    <ClCompile Include="Thermo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\device_include.h" />

@@ -199,9 +199,6 @@
     <ClCompile Include="Service.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
-    <ClCompile Include="Thermo.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
     <ClCompile Include="Battery.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
