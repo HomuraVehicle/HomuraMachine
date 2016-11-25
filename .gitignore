@@ -190,3 +190,5 @@ ModelManifest.xml
 
 # Erase HomuraMachine.X folder
 HomuraMachine/HomuraMachine.X/*
+HomuraMachine/HomuraMachine.VC.VC.opendb
+HomuraMachine/HomuraMachine.VC.db
