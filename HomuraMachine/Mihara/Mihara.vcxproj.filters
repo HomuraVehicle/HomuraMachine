@@ -184,9 +184,6 @@
     <ClCompile Include="DeviceManageMessage.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
-    <ClCompile Include="Drive.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
     <ClCompile Include="GPS.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
@@ -197,9 +194,6 @@
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
     <ClCompile Include="Service.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Battery.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
