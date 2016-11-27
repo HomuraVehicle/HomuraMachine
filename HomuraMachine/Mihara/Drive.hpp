@@ -31,6 +31,15 @@ namespace hmr {
 				pinMotorLB PinMotorLB;
 				pinMotorRA PinMotorRA;
 				pinMotorRB PinMotorRB;
+				pinMotorPower PinMotorPower;
+			private:
+				bool MotorPower;
+			private:
+				void setMotorPower(bool OnOff_){
+					MotorPower = OnOff_;
+					if(SystemClient.mode() == systems::mode::drive)PinMotorPower(MotorPower);
+				}
+				bool getMotoPower()const{ return MotorPower; }
 			private:
 				//í êMífê‚éûÇÃé©ìÆí‚é~ópwatch dog count
 				uint16 wdt_count;
@@ -67,6 +76,11 @@ namespace hmr {
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
 						switch(NewMode_){
 						case systems::mode::drive:
+							Ref.PinMotorLA(0);
+							Ref.PinMotorLB(0);
+							Ref.PinMotorRA(0);
+							Ref.PinMotorRB(0);
+							Ref.PinMotorPower(Ref.MotorPower);
 							break;
 						default:
 							Ref.PinMotorLA(0);
@@ -144,6 +158,9 @@ namespace hmr {
 					PinMotorLB.lock();
 					PinMotorRA.lock();
 					PinMotorRB.lock();
+					PinMotorPower.lock();
+					PinMotorPower(true);
+					MotorPower = true;
 
 					service::task::quick_start(WdtTask, 5);
 
