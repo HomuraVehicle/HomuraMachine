@@ -187,9 +187,6 @@
     <ClCompile Include="GPS.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
-    <ClCompile Include="Inertial.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
     <ClCompile Include="Mihara.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>

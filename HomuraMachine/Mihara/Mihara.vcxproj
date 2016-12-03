@@ -134,7 +134,6 @@
     <ClCompile Include="DeviceManage.cpp" />
     <ClCompile Include="DeviceManageMessage.cpp" />
     <ClCompile Include="GPS.cpp" />
-    <ClCompile Include="Inertial.cpp" />
     <ClCompile Include="Mihara.cpp" />
     <ClCompile Include="Service.cpp" />
   </ItemGroup>
