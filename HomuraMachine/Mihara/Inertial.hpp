@@ -623,11 +623,11 @@ namespace hmr {
 					: SensorManager()
 					, SystemElemet(system_client_holder(SensorManager))
 					, AxelMessageClient(SensorManager)
-					, AxelMessageElement(message_client_holder(AxelMessageClient))
+					, AxelMessageElement(message_client_holder(AxelID_, AxelMessageClient))
 					, CompassMessageClient(SensorManager)
-					, CompassMessageElement(message_client_holder(CompassMessageClient))
+					, CompassMessageElement(message_client_holder(CompassID_, CompassMessageClient))
 					, GyroMessageClient(SensorManager)
-					, GyroMessageElement(message_client_holder(GyroMessageClient)){
+					, GyroMessageElement(message_client_holder(GyroID_, GyroMessageClient)){
 
 					SystemHost_.regist(SystemElement);
 					MessageHost_.regist(AxelMessageElement);
