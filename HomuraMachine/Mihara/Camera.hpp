@@ -410,7 +410,7 @@ namespace hmr {
 				private:
 					systems::mode::type CurrentMode;
 				public://override function of system_client_interface
-					void operator()(systems::node::type NewMode_, systems::mode::type PreMode_)override{
+					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_)override{
 						switch(NewMode_){
 						case systems::mode::drive:
 							if(CameraPower){
@@ -427,6 +427,7 @@ namespace hmr {
 							Camera.unlock();
 							break;
 						}
+						CurrentMode = NewMode_;
 					}
 				public:
 					systems::mode::type mode()const{ return CurrentMode; }
@@ -839,7 +840,7 @@ namespace hmr {
 					: CameraManager()
 					, SystemElement(system_client_holder(CameraManager))
 					, MessageClient(CameraManager)
-					, MessageElement(message_client_holder(SpriteID_, MessageClient)){
+					, MessageElement(message_client_holder(CameraID_, MessageClient)){
 					SystemHost_.regist(SystemElement);
 					MessageHost_.regist(MessageElement);
 				}
