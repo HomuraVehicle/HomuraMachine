@@ -11,11 +11,11 @@ namespace hmr{
 			struct cSystem : public system_host_interface, public system_device_{
 				typedef cSystem this_type;
 			private:
-				enum system_sensor_mode{
+				enum sensor_mode{
 					sensor_sleep, sensor_passive, sensor_observe, sensor_intobserve
 				};
-				enum system_io_mode{
-					io_sleep, io_passive, io_roaming, io_introaming 
+				enum io_mode{
+					io_sleep, io_passive, io_roaming, io_sleep_roaming 
 				};
 			private:
 				systems::chain Chain;
@@ -28,14 +28,25 @@ namespace hmr{
 				xc32::wdt WDT;
 				xc::lock_guard<xc32::wdt> WDTLock;
 			private:
-				uint16 SleepSecRem;
-				uint16 SleepSecNonRem;
-				uint16 RoamingSecInterval;
-			private:
 				io::module_selector_interface* pIO;
 			private:
 				//モード制御クラス
 				struct mode_driver{
+				private:
+					sensor_mode SensorMode;
+					io_mode IOMode;
+				private:
+					uint16 SleepSecRem;
+					uint16 SleepSecNonRem;
+					uint16 RoamingSecInterval;
+				public:
+					mode_driver()
+						: SensorMode(sensor_sleep)
+						, IOMode(io_sleep)
+						, SleepSecRem(0)
+						, SleepSecNonRem(0)
+						, RoamingSecInterval(0){
+					}
 				};
 			private:
 				//通信受領クラス
