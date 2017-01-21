@@ -128,17 +128,15 @@
     <ClCompile Include="..\..\XC32\sfr\uart4.cpp" />
     <ClCompile Include="..\..\XC32\sfr\uart5.cpp" />
     <ClCompile Include="..\..\XC32\sfr\uart6.cpp" />
-    <ClCompile Include="Battery.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Com.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="DeviceManage.cpp" />
     <ClCompile Include="Drive.cpp" />
+    <ClCompile Include="DeviceManageMessage.cpp" />
     <ClCompile Include="GPS.cpp" />
-    <ClCompile Include="Inertial.cpp" />
     <ClCompile Include="Mihara.cpp" />
     <ClCompile Include="Service.cpp" />
-    <ClCompile Include="Thermo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\device_include.h" />

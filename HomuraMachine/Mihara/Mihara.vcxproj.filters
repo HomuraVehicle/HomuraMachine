@@ -184,22 +184,16 @@
     <ClCompile Include="Drive.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
-    <ClCompile Include="GPS.cpp">
+    <ClCompile Include="DeviceManageMessage.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
-    <ClCompile Include="Inertial.cpp">
+    <ClCompile Include="GPS.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
     <ClCompile Include="Mihara.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
     <ClCompile Include="Service.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Thermo.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Battery.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
