@@ -11,11 +11,16 @@ namespace hmr{
 			struct cSystem : public system_host_interface, public system_device_{
 				typedef cSystem this_type;
 			private:
-				enum sensor_mode{
-					sensor_sleep, sensor_passive, sensor_observe, sensor_intobserve
-				};
+				/*!@brief cSystemから制御するために使うモード分類。*/
 				enum io_mode{
-					io_sleep, io_passive, io_roaming, io_sleep_roaming 
+					/*!通信機器を通常状態で待機する。*/
+					io_passive,
+					/*!通信機器の定期的なON-OFFを繰り返す。*/
+					io_sleep, 
+					/*!通信機器の通信モードを切り替え続ける。*/
+					io_roaming, 
+					/*!通信機器の定期的なON-OFFを繰り返しつつ、通信モードも切り替え続ける。*/
+					io_sleep_roaming 
 				};
 			private:
 				systems::chain Chain;

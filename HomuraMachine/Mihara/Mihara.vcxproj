@@ -40,11 +40,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(USERPROFILE)\Documents\GIt\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(IncludePath);C:\Users\homura\Documents\Git\HomuraMachine;C:\Users\homura\Documents\Git\HomuraMachine\hmLib;$(USERPROFILE)\Documents\Projects\HomuraMachine;$(USERPROFILE)\Documents\Projects\HomuraMachine\hmLib</IncludePath>
+    <IncludePath>$(USERPROFILE)\Documents\GIt\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(USERPROFILE)\Documents\Projects\HomuraMachine;$(USERPROFILE)\Documents\Projects\HomuraMachine\hmLib;$(IncludePath)</IncludePath>
     <SourcePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(USERPROFILE)\Documents\Projects\HomuraMachine;$(USERPROFILE)\Documents\Projects\HomuraMachine\hmLib;$(IncludePath);C:\Users\homura\Documents\Projects\HomuraMachine;C:\Users\homura\Documents\Git\HomuraMachine\hmLib</IncludePath>
+    <IncludePath>$(USERPROFILE)\Documents\Projects\HomuraMachine;$(USERPROFILE)\Documents\Projects\HomuraMachine\hmLib;$(IncludePath)</IncludePath>
     <SourcePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

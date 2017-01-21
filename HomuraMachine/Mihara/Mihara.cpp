@@ -72,7 +72,8 @@ v1_00/120921 hmIto
 
 #include <homuraLib_v2/machine/service/delay.hpp>
 #include <homuraLib_v2/machine/service/task.hpp>
-#include <homuraLib_v2/type.hpp>#include "Device.hpp"
+#include <homuraLib_v2/type.hpp>
+#include "Device.hpp"
 #include "Service.hpp"
 #include "Com.hpp"
 #include "IO.hpp"
