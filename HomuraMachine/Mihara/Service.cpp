@@ -5,31 +5,33 @@
 #include<homuraLib_v2/machine/service/exclusive_delay.hpp>
 #include<homuraLib_v2/task.hpp>
 #include"Service.hpp"
+#include"System_base.hpp"
+#include"Device.hpp"
 namespace hmr{
 	namespace machine{
-		namespace mihara {
-			xc32::delay_ms_timer<cService::delay_timer_register> cService::delay_timer;
-			xc32::delay_ms_timer<cService::exclusive_delay_timer_register> cService::exclusive_delay_timer;
-//			cService::clock_timer cService::Clock;
-//			cService::task_host_type cService::TaskHost;
-		}
-		namespace service {
-			void delay_ms(unsigned int ms_) {
-				mihara::cService::delay_timer(ms_);
-			}
-			void exclusive_delay_ms(unsigned int ms_) {
-				xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
-				mihara::cService::exclusive_delay_timer(ms_);
-			}
-//			hmr::chrono::clock_interface& Chrono(mihara::cService::clock());
-		}
-		namespace service{
+		namespace mihara{
 			namespace{
-				//関数駆動型のタスクホスト
-				hmr::task::functional_host<> TaskHost;
+				cService<cDevice::service_device>* pService = 0;
 			}
-			//serviceのタスクとして登録
-			hmr::task::host_interface& Task(TaskHost);
+			void delay_ms(unsigned int ms_){
+				pService->delay_ms(ms_);
+			}
+			void exclusive_delay_ms(unsigned int ms_){
+				pService->exclusive_delay_ms(ms_);
+			}
+
+			namespace task{
+				bool start(hmr::task::client_interface& Client_, hmr::task::duration Interval_, hmr::task::duration Count_ = 0){return pService->task_start(Client_, Interval_, Count_); }
+				void quick_start(hmr::task::client_interface& Client_, hmr::task::duration Interval_, hmr::task::duration Count_ = 0){pService->task_quick_start(Client_, Interval_, Count_); }
+				bool is_start(hmr::task::client_interface& Client_){ return pService->task_is_start(Client_); }
+				bool restart(hmr::task::client_interface& Client_, hmr::task::duration Interval_, hmr::task::duration Count_ = 0){ return pService->task_restart(Client_, Interval_, Count_); }
+				void stop(hmr::task::client_interface& Client_){ pService->task_stop(Client_); }
+			}
+		}
+		namespace mihara{
+			namespace services{
+				void initialize(cService<cDevice::service_device>& Service_){pService = &Service_;}
+			}
 		}
 	}
 }

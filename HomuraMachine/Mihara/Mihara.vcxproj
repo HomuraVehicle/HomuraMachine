@@ -132,7 +132,6 @@
     <ClCompile Include="Com.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="DeviceManage.cpp" />
-    <ClCompile Include="Drive.cpp" />
     <ClCompile Include="DeviceManageMessage.cpp" />
     <ClCompile Include="GPS.cpp" />
     <ClCompile Include="Mihara.cpp" />
@@ -344,6 +343,7 @@
     <ClInclude Include="Message.hpp" />
     <ClInclude Include="Message_base.hpp" />
     <ClInclude Include="Service.hpp" />
+    <ClInclude Include="Service_base.hpp" />
     <ClInclude Include="System.hpp" />
     <ClInclude Include="System_base.hpp" />
     <ClInclude Include="Thermo.hpp" />

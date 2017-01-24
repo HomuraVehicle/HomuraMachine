@@ -310,17 +310,18 @@ namespace hmr{
 				message::element MessageElement;
 			public:
 				//system host function
-				void regist(systems::element& rElement_){
+				void regist(systems::value_type& rElement_){
 					Chain.push_back(rElement_);
 				}
 			public:
-				cSystem(unsigned char ID_)
+				cSystem(unsigned char ID_, message_host& MessageHost_)
 					: PinRedLED()
 					, PinDevicePower()
 					, PinRedLEDLock(PinRedLED)
 					, PinDevicePowerLock(PinDevicePower)
 					, MessageClient(*this)
 					, MessageElement(message_client_holder(ID_,MessageClient)){
+					MessageHost_.regist(MessageElement);
 				}
 				void operator()(void){
 				}

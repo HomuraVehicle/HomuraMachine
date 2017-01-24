@@ -70,10 +70,9 @@ v1_00/120921 hmIto
 	ファイルを複数に分割
 */
 
-#include <homuraLib_v2/machine/service/delay.hpp>
-#include <homuraLib_v2/machine/service/task.hpp>
 #include <homuraLib_v2/type.hpp>
 #include "Device.hpp"
+#include "System.hpp"
 #include "Service.hpp"
 #include "Com.hpp"
 #include "IO.hpp"
@@ -87,17 +86,21 @@ v1_00/120921 hmIto
 #include "Camera.hpp" 
 #include "Thermo.hpp"
 #include "Battery.hpp"
-#include "DeviceManage.hpp"
-#include "DeviceManage_forCourier.hpp"
-#include "DeviceManageMessage.hpp"
+//#include "DeviceManage.hpp"
+//#include "DeviceManage_forCourier.hpp"
+//#include "DeviceManageMessage.hpp"
 
 //====== main 関数 ======
 using namespace hmr::machine::mihara;
-using namespace hmr::machine::service;
 int main(void){
 	cDevice Device;
-	cService Service;
-	cSystem System;
+	cMessage Message;
+	cSystem<typename cDevice::system_device> System('S', Message);
+	cService<typename cDevice::service_device> Service(System);
+
+	//システムタスクを登録登録
+	System.regist_task(Service.system_taskhost());
+
 	cIO<typename cDevice::io_device> IO;
 
 	//デバイスの初期化

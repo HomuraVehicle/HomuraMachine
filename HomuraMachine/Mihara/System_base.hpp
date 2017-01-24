@@ -28,19 +28,19 @@ namespace hmr {
 			}
 			/*!
 			@brief システムホストからモードを受け取るために各モジュールが送り込む、クライアントのインターフェースです。*/
-			struct system_client_interface: public xc::chain_element{
+			struct system_client_interface: public ::xc::chain_element{
 				virtual void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_) = 0;
 			};
 
 			namespace systems{
-				typedef xc::chain<system_client_interface> chain;
-				typedef typename chain::element element;
+				typedef ::xc::chain<system_client_interface> chain;
+				typedef typename chain::value_type value_type;
 			}
 
 			/*!
 			@brief クライアントにモードを通知する、システムホストからのインターフェースです。*/
 			struct system_host_interface{
-				virtual void regist(systems::element& rElement_) = 0;
+				virtual void regist(systems::value_type& rElement_) = 0;
 			};
 		}
 	}
