@@ -94,7 +94,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.c" />
-    <ClCompile Include="..\..\homuraLib_v2\machine\service\functional_task.cpp" />
     <ClCompile Include="..\..\homuraLib_v2\old\hmrVCom1.c" />
     <ClCompile Include="..\..\homuraLib_v2\old\hmrVComData.c" />
     <ClCompile Include="..\..\homuraLib_v2\old\hmrVIC1.c" />
@@ -225,13 +224,6 @@
     <ClInclude Include="..\..\homuraLib_v2\machine\module\Sprite.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\machine\module\Sprite\command.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\machine\module\Sprite\command_uart.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\chrono.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\delay.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\exclusive_delay.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\functional_task.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\lock_code.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\safe_cstring.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\task.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\message.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\old\crc7_sd.h" />
     <ClInclude Include="..\..\homuraLib_v2\old\hmrVCom1.h" />

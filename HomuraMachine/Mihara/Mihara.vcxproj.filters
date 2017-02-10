@@ -38,9 +38,6 @@
     <Filter Include="Common\homuraLib_v2\machine\module\Sprite">
       <UniqueIdentifier>{e1ad6cb1-0a35-4544-b47b-18ad161fd7cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\homuraLib_v2\machine\service">
-      <UniqueIdentifier>{86ecfc47-077f-4b0c-aaed-806d481ac772}</UniqueIdentifier>
-    </Filter>
     <Filter Include="HomuraMachine">
       <UniqueIdentifier>{938fde31-9f74-4d1c-82e9-36fd932f175a}</UniqueIdentifier>
     </Filter>
@@ -168,9 +165,6 @@
     </ClCompile>
     <ClCompile Include="..\..\homuraLib_v2\machine\device\p24EP512GU810_defines.c">
       <Filter>Common\homuraLib_v2\machine\device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\homuraLib_v2\machine\service\functional_task.cpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
     </ClCompile>
     <ClCompile Include="Com.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
@@ -620,27 +614,6 @@
     </ClInclude>
     <ClInclude Include="..\..\homuraLib_v2\machine\module\Sprite\command_uart.hpp">
       <Filter>Common\homuraLib_v2\machine\module\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\delay.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\exclusive_delay.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\functional_task.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\lock_code.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\safe_cstring.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\task.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\chrono.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
     </ClInclude>
     <ClInclude Include="..\..\local_allocator.hpp">
       <Filter>HomuraMachine</Filter>
