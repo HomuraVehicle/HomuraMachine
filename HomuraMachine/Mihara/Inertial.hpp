@@ -34,7 +34,8 @@ v0_00/121208 hmIto
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>
 #include"System_base.hpp"
-#include"Message_base.hpp"
+#include"IO_base.hpp"
+#include"Service_base.hpp"
 #include"Device.hpp"
 
 namespace hmr {
@@ -48,74 +49,7 @@ namespace hmr {
 					class sensor{
 				private:
 					typedef module::cAcceleCompassLSM303DLH<typename inertial_device_::AcceleCompass_i2c, typename inertial_device_::AccelCompass_shaerd_i2c_identifer> cAcceleCompass;
-					//typedef module::cGyroL3G4200D<typename inertial_device_::Gyro_i2c> cGyro;
-					typedef module::cGyroL3G4200D_I2C<typename inertial_device_::Gyro_i2c, typename inertial_device_::Gyro_shared_i2c_identifer> cGyro_I2C;
-					class cGyro{
-					private:
-						typedef xc::function<void(module::gyroL3G4200D::raw_data)> observer;
-						typedef xc::lock_guard<cGyro_I2C> lock_guard;
-					private:
-						cGyro_I2C I2C;
-						bool IsLock;
-						observer Observer;
-					public:
-						cGyro()
-							:I2C()
-							, IsLock(false){
-						}
-					public:
-						void config(const observer& Observer_){
-							if(is_lock())return;
-							Observer = Observer_;
-						}
-						bool lock(const observer& Observer){
-							config(Observer);
-							return lock();
-						}
-						bool lock(){
-							if(is_lock())return false;
-
-							lock_guard Lock(I2C);
-							if(!Lock.owns_lock())return true;
-
-							I2C.module_config(false);
-
-							machine::service::exclusive_delay_ms(500);
-
-							//power ON!
-							I2C.module_config(true, module::gyroL3G4200D::sampling_rate::_100Hz, module::gyroL3G4200D::fullscale::_250dps);
-
-							//buffer ê›íË
-							I2C.buffer_config(module::gyroL3G4200D::buffer_mode::stream, 31);
-
-							IsLock = true;
-
-							return false;
-						}
-						bool is_lock()const{ return IsLock; }
-						void unlock(){
-							if(!is_lock())return;
-
-							lock_guard Lock(I2C);
-							if(!Lock.owns_lock())return;
-
-							//power OFF!
-							I2C.module_config(false);
-
-							IsLock = false;
-						}
-					public:
-						void operator()(void){
-							if(!is_lock())return;
-
-							lock_guard Lock(I2C);
-							if(!Lock.owns_lock())return;
-
-							if(Observer){
-								I2C.read_raw_all(Observer);
-							}
-						}
-					};
+					typedef module::cGyroL3G4200D<typename inertial_device_::Gyro_i2c, typename inertial_device_::Gyro_shared_i2c_identifer> cGyro;
 				private:
 					struct cPositionObserver{
 					private:
@@ -183,15 +117,17 @@ namespace hmr {
 
 					cAcceleCompass AcceleCompass;
 					cGyro Gyro;
+					hmr::delay_interface* pDelay;
 					typename inertial_device_::powerInertial PowerInertial;
 					xc::lock_guard<typename inertial_device_::powerInertial> PowerInertialLock;
 				private:
 					bool GyroDataMode;
 					bool AxelCompassDataMode;
 				public:
-					sensor()
+					sensor(service_interface& Service_)
 						: AcceleCompass()
 						, Gyro()
+						, pDelay(&Service_.delay())
 						, PowerInertialLock(PowerInertial)
 						, GyroDataMode(false)
 						, AxelCompassDataMode(false){
@@ -202,8 +138,8 @@ namespace hmr {
 						if(is_lock())return false;
 
 						PowerInertial(true);
-						AcceleCompass.lock(xc32::ref(AxelObserver), xc32::ref(CompassObserver));
-						Gyro.lock(xc32::ref(GyroObserver));
+						AcceleCompass.lock(xc32::ref(AxelObserver), xc32::ref(CompassObserver), *pDelay);
+						Gyro.lock(xc32::ref(GyroObserver), *pDelay);
 
 						return false;
 					}
@@ -283,8 +219,9 @@ namespace hmr {
 						else return std::make_pair(0, hmLib::coordinates3D::position());
 					}
 				public:
-					sensor_manager()
-						: SensorPower(true)
+					sensor_manager(service_interface& Service_)
+						: Sensor(Service_)
+						, SensorPower(true)
 						, AxelDataMdode(false)
 						, CompassDataMode(false)
 						, GyroDataMode(false){
@@ -301,7 +238,6 @@ namespace hmr {
 					}
 				};
 				senstor_manager SensorManager;
-				systems::element SystemElement;
 			private:
 				class axel_message_client :public message_client_interface{
 				private:
@@ -322,16 +258,18 @@ namespace hmr {
 						}
 					};
 					inform_task InformTask;
+					task::handler InformTaskHandler;
 				public:
-					axel_message_client(sensor_manager& Ref_)
-						: Ref(Ref_)
+					axel_message_client(sensor_manager& Ref_, com::did_t ID_, service_interface& Service_)
+						: message_client_interface(ID_)
+						, Ref(Ref_)
 						, DataMode_i(true)
 						, SendData_i(false)
 						, InformTask(*this){
-						task::quick_start(InformTask, 5);
+						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
 					~axel_message_client(){
-						task::stop(InformTask);
+						InformTaskHandler.stop();
 					}
 				public:
 					void setSendData(const hmLib::coordinates3D::position& SendData_){
@@ -402,7 +340,6 @@ namespace hmr {
 					void setup_talk(void){ return; }
 				};
 				axel_message_client AxelMessageClient;
-				message::element AxelMessageElement;
 			private:
 				class compass_message_client :public message_client_interface{
 				private:
@@ -423,16 +360,18 @@ namespace hmr {
 						}
 					};
 					inform_task InformTask;
+					task::handler InformTaskHandler;
 				public:
-					compass_message_client(sensor_manager& Ref_)
-						: Ref(Ref_)
+					compass_message_client(sensor_manager& Ref_, com::did_t ID_ , service_interface& Service_)
+						: message_client_interface(ID_)
+						, Ref(Ref_)
 						, DataMode_i(true)
 						, SendData_i(false)
 						, InformTask(*this){
-						task::quick_start(InformTask, 5);
+						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
 					~compass_message_client(){
-						task::stop(InformTask);
+						InformTaskHandler.stop();
 					}
 				public:
 					void setSendData(const hmLib::coordinates3D::position& SendData_){
@@ -503,7 +442,6 @@ namespace hmr {
 					void setup_talk(void){ return; }
 				};
 				compass_message_client CompassMessageClient;
-				message::element CompassMessageElement;
 			private:
 				class gyro_message_client :public message_client_interface{
 				private:
@@ -524,16 +462,18 @@ namespace hmr {
 						}
 					};
 					inform_task InformTask;
+					task::handler InformTaskHandler;
 				public:
-					gyro_message_client(sensor_manager& Ref_)
-						: Ref(Ref_)
+					gyro_message_client(sensor_manager& Ref_, com::did_t ID_, service_interface& Service_)
+						: message_client_interface(ID_)
+						, Ref(Ref_)
 						, DataMode_i(true)
 						, SendData_i(false)
 						, InformTask(*this){
-						task::quick_start(InformTask, 5);
+						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
 					~gyro_message_client(){
-						task::stop(InformTask);
+						InformTaskHandler.stop();
 					}
 				public:
 					void setSendData(const std::pair<uint16, hmLib::coordinates3D::position>& SendData_){
@@ -618,21 +558,16 @@ namespace hmr {
 					void setup_talk(void){ return; }
 				};
 				compass_message_client GyroMessageClient;
-				message::element GyroMessageElement;
-				cInertial(unsigned char AxelID_, unsigned char CompassID_, unsigned char GyroID_, system_host& SystemHost_, message_host& MessageHost_)
-					: SensorManager()
-					, SystemElemet(system_client_holder(SensorManager))
-					, AxelMessageClient(SensorManager)
-					, AxelMessageElement(message_client_holder(AxelID_, AxelMessageClient))
-					, CompassMessageClient(SensorManager)
-					, CompassMessageElement(message_client_holder(CompassID_, CompassMessageClient))
-					, GyroMessageClient(SensorManager)
-					, GyroMessageElement(message_client_holder(GyroID_, GyroMessageClient)){
+				cInertial(unsigned char AxelID_, unsigned char CompassID_, unsigned char GyroID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
+					: SensorManager(Service_)
+					, AxelMessageClient(SensorManager, AxelID_, Service_)
+					, CompassMessageClient(SensorManager, CompassID_, Service_)
+					, GyroMessageClient(SensorManager, GyroID_, Service_){
 
-					SystemHost_.regist(SystemElement);
-					MessageHost_.regist(AxelMessageElement);
-					MessageHost_.regist(CompassMessageElement);
-					MessageHost_.regist(GyroMessageElement);
+					System_.regist(SensorManager);
+					IO_.regist(AxelMessageClient);
+					IO_.regist(CompassMessageClient);
+					IO_.regist(GyroMessageClient);
 				}
 			public:
 				void operator()(){
