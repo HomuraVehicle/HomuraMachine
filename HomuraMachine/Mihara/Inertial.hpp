@@ -32,7 +32,6 @@ v0_00/121208 hmIto
 #include<XC32/i2c.hpp>
 #include<hmLib/coordinates.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
-#include<homuraLib_v2/machine/service/task.hpp>
 #include"System_base.hpp"
 #include"IO_base.hpp"
 #include"Service_base.hpp"

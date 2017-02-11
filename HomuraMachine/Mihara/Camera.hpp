@@ -63,9 +63,9 @@ v0_00/121216 iwahori
 #include<homuraLib_v2/machine/module/Sprite.hpp>
 #include<homuraLib_v2/static_buffer_allocator.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
-#include<homuraLib_v2/machine/service/task.hpp>
 #include"System_base.hpp"
-#include"Message_base.hpp"
+#include"IO_base.hpp"
+#include"Service_base.hpp"
 #include"Device.hpp"
 #include<XCBase/future.hpp>
 
