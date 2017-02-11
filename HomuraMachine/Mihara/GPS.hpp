@@ -18,7 +18,6 @@ v0_00/121208 hmIto
 */
 #include<hmLib/cstring.h>
 #include<homuraLib_v2/type.hpp>
-#include<homuraLib_v2/machine/service/task.hpp>
 #include<homuraLib_v2/machine/module/GPS52D.hpp>
 #include<homuraLib_v2/machine/module/GPSSwitcher.hpp>
 #include<HomuraMachine/Mihara/Device.hpp>
@@ -116,10 +115,10 @@ namespace hmr {
 						, PowerGPS_i(false)
 						, SendData(false){
 						
-						service::task::quick_start(InformTask, 5);
+						task::quick_start(InformTask, 5);
 					}
 					~message_client(){
-						service::task::stop(InformTask);
+						task::stop(InformTask);
 					}
 				public:
 					bool listen(hmLib::cstring Str) {
@@ -268,10 +267,10 @@ namespace hmr {
 					SystemHost_.regist(SystemElement);
 					MessageHost_.regist(MessageElement);
 
-					service::task::quick_start(DataTask,3);
+					task::quick_start(DataTask,3);
 				}
 				~cGPS(){
-					service::task::stop(DataTask);
+					task::stop(DataTask);
 				}
 			};
 		}

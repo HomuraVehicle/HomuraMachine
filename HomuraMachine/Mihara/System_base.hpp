@@ -34,13 +34,12 @@ namespace hmr {
 
 			namespace systems{
 				typedef ::xc::chain<system_client_interface> chain;
-				typedef typename chain::value_type value_type;
 			}
 
 			/*!
 			@brief クライアントにモードを通知する、システムホストからのインターフェースです。*/
 			struct system_host_interface{
-				virtual void regist(systems::value_type& rElement_) = 0;
+				virtual void regist(system_client_interface& rElement_) = 0;
 			};
 		}
 	}

@@ -568,10 +568,10 @@ namespace hmr {
 						, SendPictureData(false)
 						, SendErrorResult(false)
 						, InformTask(*this){
-						service::task::quick_start(InformTask, 5);
+						task::quick_start(InformTask, 5);
 					}
 					~message_client(){
-						service::task::stop(InformTask);
+						task::stop(InformTask);
 					}
 				public://override function of message_client_interface
 					void setup_listen(void)override{ return; }

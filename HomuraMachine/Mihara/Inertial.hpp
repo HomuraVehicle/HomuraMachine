@@ -328,10 +328,10 @@ namespace hmr {
 						, DataMode_i(true)
 						, SendData_i(false)
 						, InformTask(*this){
-						service::task::quick_start(InformTask, 5);
+						task::quick_start(InformTask, 5);
 					}
 					~axel_message_client(){
-						service::task::stop(InformTask);
+						task::stop(InformTask);
 					}
 				public:
 					void setSendData(const hmLib::coordinates3D::position& SendData_){
@@ -429,10 +429,10 @@ namespace hmr {
 						, DataMode_i(true)
 						, SendData_i(false)
 						, InformTask(*this){
-						service::task::quick_start(InformTask, 5);
+						task::quick_start(InformTask, 5);
 					}
 					~compass_message_client(){
-						service::task::stop(InformTask);
+						task::stop(InformTask);
 					}
 				public:
 					void setSendData(const hmLib::coordinates3D::position& SendData_){
@@ -530,10 +530,10 @@ namespace hmr {
 						, DataMode_i(true)
 						, SendData_i(false)
 						, InformTask(*this){
-						service::task::quick_start(InformTask, 5);
+						task::quick_start(InformTask, 5);
 					}
 					~gyro_message_client(){
-						service::task::stop(InformTask);
+						task::stop(InformTask);
 					}
 				public:
 					void setSendData(const std::pair<uint16, hmLib::coordinates3D::position>& SendData_){

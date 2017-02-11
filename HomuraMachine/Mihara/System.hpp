@@ -82,7 +82,7 @@ namespace hmr{
 					unsigned char RoamingCode = 0;	//ロック解除用のコード
 					unsigned char KillCode = 0;	//ロック解除用のコード
 				public:
-					message_client(this_type& Ref_) :Ref(Ref_), InformTask(*this){
+					message_client(this_type& Ref_, service_interface& Service_) :Ref(Ref_), InformTask(*this){
 						Info_i = false;
 						SleepMode_i = false;
 						RoamingMode_i = false;
@@ -93,7 +93,7 @@ namespace hmr{
 						KillCodeFail = false;
 
 						//タスク登録
-						service::task::quick_start(InformTask, 5);
+						task::quick_start(InformTask, 5);
 					}
 				public:
 					bool listen(hmLib::cstring Str){

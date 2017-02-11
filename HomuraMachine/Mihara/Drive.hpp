@@ -162,13 +162,13 @@ namespace hmr {
 					PinMotorPower(true);
 					MotorPower = true;
 
-					service::task::quick_start(WdtTask, 5);
+					task::quick_start(WdtTask, 5);
 
 					SystemHost_.regist(SystemElement);
 					MessageHost_.regist(MessageElement);
 				}
 				~cMotor(){
-					service::task::stop(WdtTask);
+					task::stop(WdtTask);
 
 					PinMotorLA.unlock();
 					PinMotorLB.unlock();

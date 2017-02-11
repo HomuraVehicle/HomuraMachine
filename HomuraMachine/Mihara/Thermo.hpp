@@ -18,7 +18,6 @@ v0_00/121208 hmIto
 #include<XCBase/future.hpp>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
-#include<homuraLib_v2/machine/service/task.hpp>
 #include"System_base.hpp"
 #include"Message_base.hpp"
 #include"Device.hpp"
@@ -53,6 +52,7 @@ namespace hmr {
 						return dt;
 					}
 				}DataTask;
+				task::handler DataTaskHandler;
 			private:
 				//モード通知受領クラス
 				struct system_client :public system_client_interface{
@@ -73,7 +73,6 @@ namespace hmr {
 				public:
 					systems::mode::type mode()const{ return CurrentMode; }
 				}SystemClient;
-				systems::element SystemElement;
 			private:
 				//通信受領クラス
 				struct message_client :public message_client_interface{
@@ -94,17 +93,20 @@ namespace hmr {
 							return dt;
 						}
 					}InformTask;
+				private:
+					task::handler TaskHandler;
 				public:
-					message_client(this_type& Ref_)
-						: Ref(Ref_)
+					message_client(this_type& Ref_, com::did_t ID_, service_interface& Service_)
+						: message_client_interface(ID_)
+						, Ref(Ref_)
 						, DataMode_i(true)
 						, SendData_i(false)
 						, SendData(0)
 						, InformTask(*this){
-						service::task::quick_start(InformTask, 5);
+						TaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
 					~message_client(){
-						service::task::stop(InformTask);
+						TaskHandler.stop();
 					}
 				public:
 					void setup_listen(void)override{ return; }
@@ -156,43 +158,28 @@ namespace hmr {
 						SendData = SendData_;
 					}
 				}MessageClient;
-				message::element MessageElement;
-				public:
-					cThermo(unsigned char ID_, system_host& SystemHost_, message_host& MessageHost_)
-						: DataMode(false)
-						, DataTask(*this)
-						, SysemClient(*this)
-						, SystemElement(system_client_holder(SystemClient))
-						, MessageClient(*this)
-						, MessageElement(message_client_holder(ID_, MessageClient)){
+			public:
+				cThermo(unsigned char ID_, system_host& SystemHost_, message_host& MessageHost_, service_interface& Service_)
+					: DataMode(false)
+					, DataTask(*this)
+					, SysemClient(*this)
+					, MessageClient(*this, ID_, Service_){
 
-						ApinData.lock();
-						service::task::quick_start(DataTasd, 5);
-						SystemHost_.regist(SystemElement);
-						MessageHost_.regist(MessageElement);
+					ApinData.lock();
+					DataTaskHandler = Service_.task().quick_start(DataTask, 5);
+					SystemHost_.regist(SystemClient);
+					MessageHost_.regist(MessageClient);
+				}
+				~cThermo(){
+					DataTaskHandler.stop(DataTask);
+					ApinData.unlock();
+				}
+				void operator()(){
+					if(FututeData.valid() && FutureData.can_get()){
+						MessageClient.setSendData(FutureData.get());
 					}
-					~cThermo(){
-						service::task::stop(DataTask);
-						ApinData.unlock();
-					}
-					void operator()(){
-						if(FututeData.valid() && FutureData.can_get()){
-							MessageClient.setSendData(FutureData.get());
-						}
-					}
+				}
 			};
-
-			namespace thermo {
-				//batttery監視用関数群
-				void initialize();
-				void finalize();
-				bool listen(hmLib::cstring Str);
-				bool talk(hmLib::cstring* pStr);
-				void setup_listen(void);
-				void setup_talk(void);
-				void task_setup_listen(void);
-				void task_setup_talk(void);
-			}
 		}
 	}
 }

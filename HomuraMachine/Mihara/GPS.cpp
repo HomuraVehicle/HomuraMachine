@@ -181,8 +181,8 @@ namespace hmr {
 					pGPS = &rGPS_; 
 
 					//É^ÉXÉNìoò^
-					service::task::quick_start(InformTask, 5);
-					service::task::quick_start(DataTask, 3);
+					task::quick_start(InformTask, 5);
+					task::quick_start(DataTask, 3);
 				}
 			}
 		}

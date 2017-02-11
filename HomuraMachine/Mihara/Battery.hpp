@@ -108,10 +108,10 @@ namespace hmr {
 						, SendData3(0)
 						, InformTask(*this){
 						//É^ÉXÉNìoò^
-						service::task::quick_start(InformTask, 5);
+						task::quick_start(InformTask, 5);
 					}
 					~message_client(){
-						service::task::stop(InformTask);
+						task::stop(InformTask);
 					}
 				public:
 					void setup_talk(void){ return; }
@@ -182,7 +182,7 @@ namespace hmr {
 					ApinData3.lock();
 
 					//É^ÉXÉNìoò^
-					service::task::quick_start(DataTask, 5);
+					task::quick_start(DataTask, 5);
 
 					//Clientìoò^
 					SystemHost_.regist(SystemElement);
@@ -190,7 +190,7 @@ namespace hmr {
 				}
 				~cBattery(){
 					//É^ÉXÉNí‚é~
-					service::task::stop(DataTask);
+					task::stop(DataTask);
 					
 					ApinData1.unlock();
 					ApinData2.unlock();

@@ -8,7 +8,7 @@
 #include<hmLib/type.h>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
-#include<homuraLib_v2/machine/service/task.hpp>
+#include"Service_base.hpp"
 #include"Com.hpp"
 #include"DeviceManage.hpp"
 #define HMR_COM_BufqueSize 20
@@ -394,7 +394,7 @@ namespace hmr {
 					odata_format(&SendDat);
 					SendDatCnt=0;
 
-					hmr::machine::service::task::quick_start(WdtTask, 1);
+					hmr::machine::task::quick_start(WdtTask, 1);
 
 					wdt_restart();
 				}

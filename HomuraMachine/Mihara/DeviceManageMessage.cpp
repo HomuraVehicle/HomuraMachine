@@ -408,7 +408,7 @@ namespace hmr{
 //					devmng::initialize();
 
 					//É^ÉXÉNìoò^
-					service::task::quick_start(InformTask, 5);
+					task::quick_start(InformTask, 5);
 				}
 				// finalize ä÷êî
 				void finalize(){}

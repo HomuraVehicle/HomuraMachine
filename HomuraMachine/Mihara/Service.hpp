@@ -10,33 +10,43 @@ namespace hmr{
 	namespace machine{
 		namespace mihara{
 			template<typename service_device_>
-			class cService :public service_device_{
+			class cService :public service_device_, public service_interface{
 			private:
-				typedef cService<serivice_device_> my_type;
+				typedef service_device_ my_device;
+				typedef cService<service_device_> my_type;
 			private:
-				/*!delay関数用タイマー*/
-				xc32::delay_ms_timer<delay_timer_register> delay_timer;
-				/*!delay関数用タイマーロック*/
-				xc::lock_guard<xc32::delay_ms_timer<delay_timer_register>> delay_timer_Lock;
-			public:
-				/*!delay関数*/
-				void delay_ms(unsigned int ms_){delay_timer(ms_);}
-			private:
-				/*!exclusive_delay関数用タイマー*/
-				xc32::delay_ms_timer<exclusive_delay_timer_register> exclusive_delay_timer;
-				/*!exclusive_delay関数用タイマーロック*/
-				xc::lock_guard<xc32::delay_ms_timer<exclusive_delay_timer_register>> exclusive_delay_timer_Lock;
-			public:
-				/*!割り込み排除delay関数*/
-				void exclusive_delay_ms(unsigned int ms_){
-					xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
-					exclusive_delay_timer(ms_); 
-				}
+				struct delay : public hmr::delay_interface{
+				private:
+					/*!delay関数用タイマー*/
+					xc32::delay_ms_timer<delay_timer_register> delay_timer;
+					/*!delay関数用タイマーロック*/
+					xc::lock_guard<xc32::delay_ms_timer<delay_timer_register>> delay_timer_Lock;
+					/*!exclusive_delay関数用タイマー*/
+					xc32::delay_ms_timer<exclusive_delay_timer_register> exclusive_delay_timer;
+					/*!exclusive_delay関数用タイマーロック*/
+					xc::lock_guard<xc32::delay_ms_timer<exclusive_delay_timer_register>> exclusive_delay_timer_Lock;
+				public:
+					delay()
+						: delay_timer()
+						, delay_timer_Lock(delay_timer)
+						, exclusive_delay_timer()
+						, exclusive_delay_timer_Lock(exclusive_delay_timer){
+					}
+				public:
+					/*!delay関数*/
+					void delay_ms(duration ms_){ delay_timer(ms_); }
+					/*!割り込み排除delay関数*/
+					void exclusive_delay_ms(duration ms_){
+						xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
+						exclusive_delay_timer(ms_);
+					}
+				};
+				delay Delay;
 			private:
 				typedef xc32::interrupt_timer<task_timer_register> task_timer;
 				/*!タスク駆動用タイマー*/
 				task_timer TaskTimer;
-				xc::unique_lock<task_timer> TaskTimerLock;
+				xc::lock_guard<task_timer> TaskTimerLock;
 			private:
 				bool TaskSleep;
 				/*!タスクホスト Sleep時は停止する。*/
@@ -44,13 +54,11 @@ namespace hmr{
 				/*!システム用タスク Sleep時も駆動する。*/
 				hmr::task::functional_host<> SystemTaskHost;
 			public:
-				bool task_start(hmr::task::client_interface& Client_, hmr::task::duration Interval_, hmr::task::duration Count_ = 0){ return TaskHost.start(Client_, Interval_, Count_); }
-				void task_quick_start(hmr::task::client_interface& Client_, hmr::task::duration Interval_, hmr::task::duration Count_ = 0){ TaskHost.quick_start(Client_, Interval_, Count_); }
-				bool task_is_start(hmr::task::client_interface& Client_){ return TaskHost.is_start(Client_); }
-				bool task_restart(hmr::task::client_interface& Client_, hmr::task::duration Interval_, hmr::task::duration Count_ = 0){ return TaskHost.restart(Client_, Interval_, Count_); }
-				void task_stop(hmr::task::client_interface& Client_){ TaskHost.stop(Client_); }
+				virtual hmr::delay_interface& delay(){ return Delay; }
+				virtual hmr::task::host_interface& task(){ return TaskHost; }
 			public:
-				hmr::task::host_interface& system_taskhost(){ return SystemTaskHost; }
+				virtual hmr::delay_interface& delay(){ return Delay; }
+				hmr::task::host_interface& system_task(){ return SystemTaskHost; }
 			private:
 				/*!@brief タスクタイマー用割り込み関数処理関数*/
 				struct task_interrupt_function : public xc32::sfr::interrupt::function{
@@ -81,7 +89,9 @@ namespace hmr{
 					}
 				}SystemClient;
 			public:
-				cService(system_host& SystemHost_):TaskTimerLock(TaskTimer,true), SystemClient(*this){
+				cService(system_host& SystemHost_)
+					: TaskTimerLock(TaskTimer,true)
+					, SystemClient(*this){
 					//1000ms = 1秒おきに駆動するようセット
 					TaskTimer.config(1000, TaskInterrupt, task_timer_ipl());
 					TaskTimerLock.lock();
@@ -89,9 +99,6 @@ namespace hmr{
 					SystemHost_.regist(SystemClient);
 				}
 			};
-			namespace services{
-				void initialize(cService<cDevice::service_device>& Service_);
-			}
 		}
 	}
 }

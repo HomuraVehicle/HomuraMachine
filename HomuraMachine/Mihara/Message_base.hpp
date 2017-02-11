@@ -7,7 +7,7 @@
 namespace hmr{
 	namespace machine{
 		namespace mihara{
-			struct message_client_interface: public xc::chain_element{
+			struct message_client_interface: public ::xc::chain_element{
 			public:
 				typedef hmLib::cstring cstring;
 				typedef com::did_t did_t;
@@ -22,11 +22,10 @@ namespace hmr{
 				virtual bool listen(cstring Str) = 0;
 			};
 			namespace message{
-				typedef xc::chain<message_client_interface> chain;
-				typedef typename chain::value_type value_type;
+				typedef ::xc::chain<message_client_interface> chain;
 			}
 			struct message_host_interface{
-				virtual void regist(message::value_type& Client_) = 0;
+				virtual void regist(message_client_interface& Client_) = 0;
 			};
 
 		}

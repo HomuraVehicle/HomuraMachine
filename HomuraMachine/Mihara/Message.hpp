@@ -74,8 +74,8 @@ namespace hmr {
 				int talkconfig_DSRPAG = 0;
 			public:
 				//メッセージ登録関数
-				virtual void regist(message::value_type& rElement_){
-					Chain.push_back(rElement_);
+				virtual void regist(message::value_type& Client_){
+					Chain.push_back(Client_);
 				}
 			public:
 				//受信準備関数
