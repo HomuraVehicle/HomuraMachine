@@ -38,7 +38,7 @@ namespace hmr {
 
 			/*!
 			@brief クライアントにモードを通知する、システムホストからのインターフェースです。*/
-			struct system_host_interface{
+			struct system_interface{
 				virtual void regist(system_client_interface& rElement_) = 0;
 			};
 		}

@@ -8,7 +8,7 @@ namespace hmr{
 	namespace machine{
 		namespace mihara{
 			template<typename system_device_>
-			struct cSystem : public system_host_interface, public system_device_{
+			struct cSystem : public system_interface, public system_device_{
 				typedef cSystem this_type;
 			private:
 				/*!@brief cSystemから制御するために使うモード分類。*/

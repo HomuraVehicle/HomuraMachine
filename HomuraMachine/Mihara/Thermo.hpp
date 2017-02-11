@@ -159,7 +159,7 @@ namespace hmr {
 					}
 				}MessageClient;
 			public:
-				cThermo(unsigned char ID_, system_host& SystemHost_, message_host& MessageHost_, service_interface& Service_)
+				cThermo(unsigned char ID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
 					: DataMode(false)
 					, DataTask(*this)
 					, SysemClient(*this)
@@ -167,8 +167,8 @@ namespace hmr {
 
 					ApinData.lock();
 					DataTaskHandler = Service_.task().quick_start(DataTask, 5);
-					SystemHost_.regist(SystemClient);
-					MessageHost_.regist(MessageClient);
+					System_.regist(SystemClient);
+					IO_.regist(MessageClient);
 				}
 				~cThermo(){
 					DataTaskHandler.stop(DataTask);
