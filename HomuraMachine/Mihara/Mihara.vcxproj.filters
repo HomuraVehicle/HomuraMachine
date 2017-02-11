@@ -750,9 +750,6 @@
     <ClInclude Include="Message.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
-    <ClInclude Include="Message_base.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
     <ClInclude Include="Service.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
