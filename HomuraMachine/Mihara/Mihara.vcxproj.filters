@@ -50,6 +50,9 @@
     <Filter Include="Common\homuraLib_v2\task">
       <UniqueIdentifier>{a5203e34-e51e-4089-8803-2a3c9cc3e9fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HomuraMachine\Mihara\IO">
+      <UniqueIdentifier>{71b46411-c5f6-4386-bf0d-afa48a2abbb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\XC32\clock.cpp">
@@ -214,10 +217,10 @@
     <ClCompile Include="Inertial.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
-    <ClCompile Include="Mihara.cpp">
+    <ClCompile Include="Service.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
-    <ClCompile Include="Service.cpp">
+    <ClCompile Include="HomuraMachine.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
   </ItemGroup>
@@ -709,9 +712,6 @@
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
     <ClInclude Include="CO2.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="CO2_separate.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
     <ClInclude Include="Com.hpp">

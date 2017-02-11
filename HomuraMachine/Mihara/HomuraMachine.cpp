@@ -1,5 +1,5 @@
-#ifndef HMR_MACHINE_MIHARA_INC
-#define HMR_MACHINE_MIHARA_INC 0
+#ifndef HMR_MACHINE_INC
+#define HMR_MACHINE_INC 0
 #
 #
 #define HMLIB_NOLIB
@@ -76,7 +76,6 @@ v1_00/120921 hmIto
 #include "Service.hpp"
 #include "Com.hpp"
 #include "IO.hpp"
-#include "System.hpp"
 #include "Message.hpp"
 #include "CO2.hpp"
 #include "Battery.hpp"

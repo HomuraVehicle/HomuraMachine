@@ -57,7 +57,6 @@ namespace hmr{
 				virtual hmr::delay_interface& delay(){ return Delay; }
 				virtual hmr::task::host_interface& task(){ return TaskHost; }
 			public:
-				virtual hmr::delay_interface& delay(){ return Delay; }
 				hmr::task::host_interface& system_task(){ return SystemTaskHost; }
 			private:
 				/*!@brief タスクタイマー用割り込み関数処理関数*/

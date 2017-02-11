@@ -33,7 +33,7 @@ namespace hmr {
 			};
 
 			namespace systems{
-				typedef ::xc::chain<system_client_interface> chain;
+				typedef xc::chain<system_client_interface> chain;
 			}
 
 			/*!

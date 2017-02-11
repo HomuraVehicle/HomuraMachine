@@ -6,11 +6,9 @@
 #include<homuraLib_v2/old/hmrVMC1.h>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
-#include<homuraLib_v2/machine/service/task.hpp>
 #include<homuraLib_v2/gate.hpp>
 #include"Com.hpp"
 #include"System_base.hpp"
-#include"Message_base.hpp"
 #include"Message.hpp"
 #include"Device.hpp"
 #include"IO_base.hpp"
@@ -18,7 +16,7 @@ namespace hmr{
 	namespace machine{
 		namespace mihara{
 			template<typename io_device_>
-			struct cIO :public message_host_interface, public io::module_selector_interface, public io_device_{
+			struct cIO :public io_interface, public io::mode_selector_interface, public io_device_{
 				typedef cIO<io_device_> this_type;
 			private:
 				struct cDualUart: public io_device_{

@@ -136,7 +136,7 @@
     <ClCompile Include="hmrDeviceManage.c" />
     <ClCompile Include="hmrDeviceManageMessage.c" />
     <ClCompile Include="Inertial.cpp" />
-    <ClCompile Include="Mihara.cpp" />
+    <ClCompile Include="HomuraMachine.cpp" />
     <ClCompile Include="Service.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -327,7 +327,6 @@
     <ClInclude Include="bitset.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CO2.hpp" />
-    <ClInclude Include="CO2_separate.hpp" />
     <ClInclude Include="Com.hpp" />
     <ClInclude Include="Courier.hpp" />
     <ClInclude Include="Data.hpp" />
