@@ -78,7 +78,6 @@ namespace hmr {
 				public:
 					systems::mode::type mode()const{ return CurrrentMode; }
 				}SystemClient;
-				systems::element SystemElement;
 				//’ÊMó—ÌƒNƒ‰ƒX
 				struct message_client : public message_client_interface{
 				private:
