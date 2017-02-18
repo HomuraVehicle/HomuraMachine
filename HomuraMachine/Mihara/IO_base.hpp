@@ -22,6 +22,8 @@ namespace hmr{
 			public:
 				message_client_interface(com::did_t ID_) :ID(ID_){}
 			public:
+				did_t id()const{ return ID; }
+			public:
 				virtual void setup_talk(void) = 0;
 				virtual bool talk(cstring* pStr) = 0;
 				virtual void setup_listen(void) = 0;
@@ -49,6 +51,7 @@ namespace hmr{
 				};
 			}
 		}
+	}
 }
 #
 #endif

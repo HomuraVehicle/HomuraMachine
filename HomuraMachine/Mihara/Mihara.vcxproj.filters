@@ -193,31 +193,7 @@
     <ClCompile Include="Com.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
-    <ClCompile Include="Courier.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
     <ClCompile Include="Data.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="DeviceManage.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="DeviceManageMessage.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="GPS.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="hmrDeviceManage.c">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="hmrDeviceManageMessage.c">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Inertial.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Service.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClCompile>
     <ClCompile Include="HomuraMachine.cpp">
@@ -717,19 +693,10 @@
     <ClInclude Include="Com.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
-    <ClInclude Include="Courier.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
     <ClInclude Include="Data.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
     <ClInclude Include="Device.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManage.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManageMessage.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
     <ClInclude Include="Drive.hpp">

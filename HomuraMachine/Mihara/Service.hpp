@@ -18,13 +18,13 @@ namespace hmr{
 				struct delay : public hmr::delay_interface{
 				private:
 					/*!delay関数用タイマー*/
-					xc32::delay_ms_timer<delay_timer_register> delay_timer;
+					xc32::delay_ms_timer<typename my_device::delay_timer_register> delay_timer;
 					/*!delay関数用タイマーロック*/
-					xc::lock_guard<xc32::delay_ms_timer<delay_timer_register>> delay_timer_Lock;
+					xc::lock_guard<xc32::delay_ms_timer<typename my_device::delay_timer_register>> delay_timer_Lock;
 					/*!exclusive_delay関数用タイマー*/
-					xc32::delay_ms_timer<exclusive_delay_timer_register> exclusive_delay_timer;
+					xc32::delay_ms_timer<typename my_device::exclusive_delay_timer_register> exclusive_delay_timer;
 					/*!exclusive_delay関数用タイマーロック*/
-					xc::lock_guard<xc32::delay_ms_timer<exclusive_delay_timer_register>> exclusive_delay_timer_Lock;
+					xc::lock_guard<xc32::delay_ms_timer<typename my_device::exclusive_delay_timer_register>> exclusive_delay_timer_Lock;
 				public:
 					delay()
 						: delay_timer()
@@ -43,7 +43,7 @@ namespace hmr{
 				};
 				delay Delay;
 			private:
-				typedef xc32::interrupt_timer<task_timer_register> task_timer;
+				typedef xc32::interrupt_timer<typename my_device::task_timer_register> task_timer;
 				/*!タスク駆動用タイマー*/
 				task_timer TaskTimer;
 				xc::lock_guard<task_timer> TaskTimerLock;
@@ -72,9 +72,9 @@ namespace hmr{
 					}
 				}TaskInterrupt;
 			private:
-				async_adc ADC;
-				shared_i2c I2C;
-				shared_spi SPI;
+				typename my_device::async_adc ADC;
+				typename my_device::shared_i2c I2C;
+				typename my_device::shared_spi SPI;
 			private:
 				struct system_client : public system_client_interface{
 				private:
@@ -88,13 +88,14 @@ namespace hmr{
 					}
 				}SystemClient;
 			public:
-				cService(system_host& SystemHost_)
+				cService()
 					: TaskTimerLock(TaskTimer,true)
 					, SystemClient(*this){
 					//1000ms = 1秒おきに駆動するようセット
 					TaskTimer.config(1000, TaskInterrupt, task_timer_ipl());
 					TaskTimerLock.lock();
-
+				}
+				void connect(system_interface& SystemHost_){
 					SystemHost_.regist(SystemClient);
 				}
 			};

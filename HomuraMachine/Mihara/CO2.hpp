@@ -235,7 +235,7 @@ namespace hmr {
 				}
 				void operator()(void){
 					if(!FutureData.valid())return 0xffff;
-					if(!FutureData.can_get()return 0xffff;
+					if(!FutureData.can_get())return 0xffff;
 					MessageClient.setSendData(FutureData.get(););
 				}
 			};

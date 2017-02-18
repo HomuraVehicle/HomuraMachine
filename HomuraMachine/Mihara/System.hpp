@@ -4,18 +4,21 @@
 #include<XCBase/lock.hpp>
 #include<homuraLib_v2/task.hpp>
 #include"System_base.hpp"
+#include"Service_base.hpp"
 #include"IO_base.hpp"
 namespace hmr{
 	namespace machine{
 		namespace mihara{
 			template<typename system_device_>
 			struct cSystem : public system_interface, public system_device_{
-				typedef cSystem this_type;
+				typedef system_device_ my_device;
+				typedef cSystem<system_device_> this_type;
 			private:
-				pinDevicePower PinDevicePower;
-				xc::lock_guard<pinDevicePower> PinDevicePowerLock;
+				typename my_device::pinDevicePower PinDevicePower;
+				xc::lock_guard<typename my_device::pinDevicePower> PinDevicePowerLock;
 			private:
 				typedef io::mode::type io_mode;
+				typedef systems::mode::type system_mode;
 				struct status{
 				private:
 					struct io_mode_holder{
@@ -41,11 +44,11 @@ namespace hmr{
 					};
 					struct system_mode_holder{
 					private:
-						sensor_mode SensorMode;
+						system_mode SensorMode;
 						systems::chain Chain;
 					public:
-						sensor_mode get()const{ return SensorMode; }
-						void set(systems::mode::type SystemMode_){
+						system_mode get()const{ return SensorMode; }
+						void set(system_mode SystemMode_){
 							if(SensorMode != SystemMode_){
 								for(systems::chain::iterator Itr = Chain.begin(); Itr != Chain.end(); ++Itr){
 									(*Itr)(SystemMode_, SensorMode);
@@ -53,17 +56,17 @@ namespace hmr{
 								}
 							}
 						}
-						void regist(systems_client_interface& rElement_){
+						void regist(system_client_interface& rElement_){
 							Chain.push_back(rElement_);
 						}
 					};
 				public:
-					pinRedLED PinRedLED;
+					typename my_device::pinRedLED PinRedLED;
 					xc32::wdt WDT;
 					io_mode_holder IOMode;
 					system_mode_holder SystemMode;
 				private:
-					xc::lock_guard<pinRedLED> PinRedLEDLock;
+					xc::lock_guard<typename my_device::pinRedLED> PinRedLEDLock;
 					xc::lock_guard<xc32::wdt> WDTLock;
 				public:
 					status()
@@ -121,7 +124,7 @@ namespace hmr{
 						RemPhaseLength = RemPhaseLength_;
 						RoamingInterval = RoamingInterval_;
 					}
-					void start(mode_status& Status){
+					void start(status& Status){
 						Status.WDT.disable();
 
 						if(Cnt<RemPhaseLength){
@@ -136,7 +139,7 @@ namespace hmr{
 							Status.setSystemMode(systems::mode::sleep);
 						}
 					}
-					void task(hmr::task::duration Duration, mode_status& Status){
+					void task(hmr::task::duration Duration, status& Status){
 						bool PrevIsRem = (Cnt<RemPhaseLength);
 						bool PreDefaultIO = (RoamingInterval == 0 || (Cnt%RoamingInterval) % 2 == 0);
 						Cnt = ((Cnt + Duration) % Interval);
@@ -170,7 +173,7 @@ namespace hmr{
 							Status.PinRedLED(Cnt % 4<2);
 						}
 					}
-					void work(mode_status& Status){}
+					void work(status& Status){}
 				};	
 				mode_interface* pMode;
 				normal_mode NormalMode;
@@ -452,11 +455,11 @@ namespace hmr{
 				}MessageClient;
 			public:
 				//system host function
-				void regist(systems_client_interface& rElement_){
+				void regist(system_client_interface& rElement_){
 					Status.SystemMode.regist(rElement_);
 				}
 			public:
-				cSystem(unsigned char ID_, message_host& MessageHost_)
+				cSystem(unsigned char ID_, io_interface& MessageHost_)
 					: PinDevicePower()
 					, PinDevicePowerLock(PinDevicePower)
 					, MessageClient(*this)

@@ -41,7 +41,7 @@ namespace hmr{
 						tx_interrupt(cDualUart& Ref_) :Ref(Ref_){}
 						void operator()(void){
 							//送信可能なら、送信
-							Ref.putc(vmc1_send(Ref.pVMC);
+							Ref.putc(vmc1_send(Ref.pVMC));
 
 							//送信可能でなくなった場合は、割り込みを切る
 							if(!vmc1_can_send(Ref.pVMC)){
@@ -194,14 +194,14 @@ namespace hmr{
 				//メッセージホルダー
 				cMessage Message;
 			public:
-				cIO()
+				cIO(service_interface& Service)
 					: Uart()
 					, IData()
 					, IPacketMode(false)
 					, OData()
 					, OPacketMode(false)
 					, Message(){
-					com::initialize();
+					com::initialize(Service);
 				}
 				~cIO{
 					//通信関連の終端化処理

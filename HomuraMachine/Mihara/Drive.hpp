@@ -16,7 +16,6 @@ v0_00/130112 iwahori
 #include<XCBase/future.hpp>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
-#include<homuraLib_v2/machine/service/task.hpp>
 #include"System_base.hpp"
 #include"IO_base.hpp"
 #include"Service_base.hpp"

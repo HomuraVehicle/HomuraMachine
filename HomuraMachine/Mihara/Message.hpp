@@ -54,10 +54,10 @@ namespace hmr {
 	namespace machine {
 		namespace mihara {
 			namespace message {	
-				typedef com::did_t did_t;
-				typedef com::dsize_t dsize_t;
-				typedef com::dsizeFp_v dsizeFp_v;
-				typedef com::vFp_v vFp_v;			
+				typedef hmr::machine::mihara::com::did_t did_t;
+				typedef hmr::machine::mihara::com::dsize_t dsize_t;
+				typedef hmr::machine::mihara::com::dsizeFp_v dsizeFp_v;
+				typedef hmr::machine::mihara::com::vFp_v vFp_v;
 			}
 			struct cMessage{
 				typedef ::xc::chain<message_client_interface> chain;

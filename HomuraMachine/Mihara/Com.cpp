@@ -377,7 +377,7 @@ namespace hmr {
 
 				//**************comŠÖ”ŒQ*************//
 				//‰Šú‰»ŠÖ”
-				void initialize() {
+				void initialize(service_interface& Service) {
 					iBuf_initialize();
 					oBuf_initialize();
 
@@ -394,7 +394,7 @@ namespace hmr {
 					odata_format(&SendDat);
 					SendDatCnt=0;
 
-					hmr::machine::task::quick_start(WdtTask, 1);
+					Service.task().quick_start(WdtTask, 1, 0);
 
 					wdt_restart();
 				}

@@ -3,8 +3,6 @@
 #
 #define HMLIB_NOLIB
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
-#include<homuraLib_v2/machine/service/delay.hpp>
-#include<homuraLib_v2/machine/service/task.hpp>
 #include"GPS.hpp"
 #include"Device.hpp"
 
