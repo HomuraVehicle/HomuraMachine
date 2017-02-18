@@ -95,18 +95,18 @@ int main(void){
 	cDevice Device;
 	cService<typename cDevice::service_device> Service;
 	cIO<typename cDevice::io_device> IO(Service);
-	cSystem<typename cDevice::system_device> System('S',IO);
+	cSystem<typename cDevice::system_device> System('S',IO, Service);
 	Service.connect(System);
 	System.regist_task(Service.system_task());
 	
 	//モジュール初期化
 	cThermo<typename cDevice::thermo_device> Thermo('t', System, IO, Service);
-	cBattery<typename cDevice::battery_device> Battery('b', System, IO);
-	cCamera<typename cDevice::sprite_device> Camera('j', System, IO);
+	cBattery<typename cDevice::battery_device> Battery('b', System, IO, Service);
+	cCamera<typename cDevice::sprite_device> Camera('j', System, IO, Service);
 	cInertial<typename cDevice::inertial_device> Inertial('a', 'c', 'G', System, IO, Service);
-	cCO2<typename cDevice::co2_device> CO2('C');
-	cMotor<typename cDevice::motor_device> Motor('m', System, IO);
-	cGPS<typename cDevice::gps_device> GPS;
+	cCO2<typename cDevice::co2_device> CO2('C', System, IO, Service);
+	cMotor<typename cDevice::motor_device> Motor('m', System, IO, Service);
+	cGPS<typename cDevice::gps_device> GPS('g', System, IO, Service);
 
 	while(1){
 		Service();

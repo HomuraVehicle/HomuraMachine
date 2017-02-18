@@ -3,9 +3,12 @@
 #
 #include<XCBase/lock.hpp>
 #include<homuraLib_v2/task.hpp>
+#include<homuraLib_v2/lock_code.hpp>
+#include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include"System_base.hpp"
 #include"Service_base.hpp"
 #include"IO_base.hpp"
+#include"DeviceManage.hpp"
 namespace hmr{
 	namespace machine{
 		namespace mihara{
@@ -30,7 +33,7 @@ namespace hmr{
 						io::mode_selector_interface* pIOModeSelector;
 					public:
 						io_mode getSelectIO()const{ return CurIO; }
-						io_mode get()const{ reutnr IOMode; }
+						io_mode get()const{ return IOMode; }
 						void set(io_mode IOMode_){
 							if(IOMode != IOMode_){
 								pIOModeSelector->setModuleMode(IOMode_);
@@ -85,7 +88,7 @@ namespace hmr{
 					//!@brief モード中のメインループ呼び出し時の処理
 					virtual void work(status& Status) = 0;
 				};
-				struct normal_mode{
+				struct normal_mode : public mode_interface{
 				private:
 					unsigned int Cnt = 0;
 				public:
@@ -106,6 +109,8 @@ namespace hmr{
 					virtual void work(status& Status){
 						Status.WDT.clear();
 					}
+				public:
+					normal_mode() :Cnt(0){}
 				};
 				struct sleep_mode : public mode_interface{
 				private:
@@ -152,7 +157,7 @@ namespace hmr{
 								Status.setIOMode(Status.IOMode.getSelectIO());
 								Status.setSystemMode(systems::mode::passive);
 							} else{
-								Status.setIOMode(io::mode::sleep);
+								Status.setIOMode(io::mode::module_null);
 								Status.setSystemMode(systems::mode::sleep);
 							}
 						} else if(PreDefaultIO != DefaultIO){
@@ -191,11 +196,12 @@ namespace hmr{
 				public:
 					system_task(this_type& Ref_) :Ref(Ref_){}
 					duration operator()(duration dt){
-						Ref.pMode->task(dt, Status);
+						Ref.pMode->task(dt, Ref.Status);
 						return dt;
 					}
 				};
-				system_task Task;
+				system_task SystemTask;
+				task::handler SystemTaskHandler;
 			public:
 				void operator()(void){
 					pMode->work(Status);
@@ -216,10 +222,13 @@ namespace hmr{
 							return dt;
 						}
 					}InformTask;
+					task::handler InformTaskHandler;
 				private:
 					//Message Mode
 					bool Info_i;				// 情報送信モード受理
 					bool SleepMode_i;			// sleep mode 受理
+					bool RoamingMode_i;
+					bool NormalMode_i;
 					bool KillCom_i;				// kill command 受理 
 					bool SleepModeCodeFail;		// sleep mode exe 受理したがCode認識失敗
 					bool RoamingModeCodeFail;	// roaming mode exe 受理したが失敗
@@ -228,11 +237,18 @@ namespace hmr{
 					unsigned char SleepCode = 0;	//ロック解除用のコード
 					unsigned char RoamingCode = 0;	//ロック解除用のコード
 					unsigned char KillCode = 0;	//ロック解除用のコード
+					//
+					unsigned int SleepSecNonRem = 0;
+					unsigned int SleepSecRem = 0;
+					unsigned int RoamingSecInterval = 0;
 				public:
-					message_client(this_type& Ref_, service_interface& Service_)
+					message_client(this_type& Ref_, com::did_t ID_, service_interface& Service_)
 						: message_client_interface(ID_)
 						, Ref(Ref_)
-						, InformTask(*this){
+						, InformTask(*this)
+						, SleepSecNonRem(0)
+						, SleepSecRem(0)
+						, RoamingSecInterval(0){
 						Info_i = false;
 						SleepMode_i = false;
 						RoamingMode_i = false;
@@ -243,7 +259,10 @@ namespace hmr{
 						KillCodeFail = false;
 
 						//タスク登録
-						task::quick_start(InformTask, 5);
+						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
+					}
+					~message_client(){
+						InformTaskHandler.stop();
 					}
 				public:
 					bool listen(hmLib::cstring Str){
@@ -278,7 +297,7 @@ namespace hmr{
 								Ref.SleepMode.set(SleepSecRem, SleepSecRem+ SleepSecNonRem, SleepSecRem, 0);
 								//devmng::sleep_getInterval(&SleepSecNonRem, &SleepSecRem); 
 								// code 取得
-								SleepCode = service::lockcode();
+								SleepCode = hmr::lockcode();
 
 								SleepMode_i = true;
 								return false;
@@ -302,7 +321,7 @@ namespace hmr{
 								Ref.RoamingMode.set(0, RoamingSecInterval*2, RoamingSecInterval*2, RoamingSecInterval);
 								//devmng::roaming_getInterval(&RoamingSecInterval); 
 								// code 取得
-								RoamingCode = service::lockcode();
+								RoamingCode = hmr::lockcode();
 								RoamingMode_i = true;
 								return false;
 
@@ -320,7 +339,7 @@ namespace hmr{
 							}
 
 						case 0x20:
-							KillCode = service::lockcode();
+							KillCode = hmr::lockcode();
 							KillCom_i = true;
 							return false;
 
@@ -459,14 +478,20 @@ namespace hmr{
 					Status.SystemMode.regist(rElement_);
 				}
 			public:
-				cSystem(unsigned char ID_, io_interface& MessageHost_)
+				cSystem(unsigned char ID_, io_interface& MessageHost_, service_interface& Service_)
 					: PinDevicePower()
 					, PinDevicePowerLock(PinDevicePower)
-					, MessageClient(*this)
+					, MessageClient(*this, ID_, Service_)
+					, SystemTask(*this)
 					, pMode(&NormalMode){
+
+					SystemTaskHandler = Service_.task().quick_start(SystemTask, 5);
 					MessageHost_.regist(MessageClient);
 					PinDevicePower(true);
 					pMode->start(Status);
+				}
+				~cSystem(){
+					SystemTaskHandler.stop();
 				}
 			};
 		}

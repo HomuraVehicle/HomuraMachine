@@ -67,7 +67,7 @@ namespace hmr{
 					task_interrupt_function(my_type& Ref_):Ref(Ref_){}
 					//!xc32::sfr::interrupt::function用の関数
 					void operator()(void){
-						if(!TaskSleep)Ref.TaskHost(1);
+						if(!Ref.TaskSleep)Ref.TaskHost(1);
 						Ref.SystemTaskHost(1);
 					}
 				}TaskInterrupt;
@@ -83,17 +83,18 @@ namespace hmr{
 					system_client(my_type& Ref_):Ref(Ref_){}
 				public://system_clien_interface
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
-						if(NewMode_ == systems::mode::sleep)TaskSleep = true;
-						else TaskSleep = false;
+						if(NewMode_ == systems::mode::sleep)Ref.TaskSleep = true;
+						else Ref.TaskSleep = false;
 					}
 				}SystemClient;
 			public:
 				cService()
-					: TaskTimerLock(TaskTimer,true)
+					: TaskTimerLock(TaskTimer)
+					, TaskInterrupt(*this)
 					, SystemClient(*this){
 					//1000ms = 1秒おきに駆動するようセット
-					TaskTimer.config(1000, TaskInterrupt, task_timer_ipl());
-					TaskTimerLock.lock();
+					TaskTimer.config(1000, TaskInterrupt, service_device_::task_timer_ipl());
+					//TaskTimerLock.lock();
 				}
 				void connect(system_interface& SystemHost_){
 					SystemHost_.regist(SystemClient);

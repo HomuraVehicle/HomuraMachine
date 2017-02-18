@@ -96,7 +96,7 @@ namespace hmr {
 
 				//**************Com関数群*************//
 				//初期化関数
-				void initialize(void);
+				void initialize(service_interface& Service);
 				//終端化関数
 				void finalize(void);
 				//受信モードか確認

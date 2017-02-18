@@ -22,19 +22,19 @@ namespace hmr{
 				struct cDualUart: public io_device_{
 				private:
 					//レジスタ系
-					xc32::interrupt_uart<RF0_uart_register> RFUart;
-					xc32::interrupt_uart<RF1_uart_register> PhoneUart;
-					RF0_power PinPowerRFUart;
-					RF1_power PinPowerPhoneUart;
+					xc32::interrupt_uart<typename io_device_::RF0_uart_register> RFUart;
+					xc32::interrupt_uart<typename io_device_::RF1_uart_register> PhoneUart;
+					typename io_device_::RF0_power PinPowerRFUart;
+					typename io_device_::RF1_power PinPowerPhoneUart;
 					//現在のモード
-					io::module_mode Mode;
+					io::mode::type Mode;
 					//送信割り込み状態
 					bool IsTxInterruptEnable;
 					//文字列変換モジュールVMC1
 					VMC1* pVMC;
 				private:
 					//送受信用タスク VMCと割り込みレジスタをつなぐ
-					struct tx_interrupt{
+					struct tx_interrupt:public xc32::sfr::interrupt::function{
 					private:
 						cDualUart& Ref;
 					public:
@@ -49,11 +49,11 @@ namespace hmr{
 							}
 						}
 					};
-					struct rx_interrput{
+					struct rx_interrupt:public xc32::sfr::interrupt::function{
 					private:
 						cDualUart& Ref;
 					public:
-						rx_interrput(cDualUart& Ref_) :Ref(Ref_){}
+						rx_interrupt(cDualUart& Ref_) :Ref(Ref_){}
 						void operator()(void){
 							//データを受信し、Comに処理させる
 							vmc1_recv(Ref.pVMC, Ref.getc());
@@ -66,9 +66,9 @@ namespace hmr{
 					//送信文字列を1byte取得する
 					unsigned char getc(){
 						switch(Mode){
-						case io::module_rf:
+						case io::mode::type::module_rf:
 							return RFUart.recv_data();
-						case io::module_phone:
+						case io::mode::type::module_phone:
 							return PhoneUart.recv_data();
 						default:
 							return 0;
@@ -77,10 +77,10 @@ namespace hmr{
 					//受信文字列を1byte与える
 					void putc(unsigned char c){
 						switch(Mode){
-						case io::module_rf:
+						case io::mode::type::module_rf:
 							RFUart.send_data(c);
 							return;
-						case io::module_phone:
+						case io::mode::type::module_phone:
 							PhoneUart.send_data(c);
 							return;
 						default:
@@ -90,11 +90,11 @@ namespace hmr{
 					//tx interrupt enable
 					void enable_tx_interrupt(){
 						switch(Mode){
-						case io::module_rf:
+						case io::mode::type::module_rf:
 							RFUart.send_enable();
 							IsTxInterruptEnable = true;
 							return;
-						case io::module_phone:
+						case io::mode::type::module_phone:
 							PhoneUart.send_enable();
 							IsTxInterruptEnable = true;
 							return;
@@ -105,11 +105,11 @@ namespace hmr{
 					//tx interrupt disable
 					void disable_tx_interrupt(){
 						switch(Mode){
-						case io::module_rf:
+						case io::mode::type::module_rf:
 							RFUart.send_disable();
 							IsTxInterruptEnable = false;
 							return;
-						case io::module_phone:
+						case io::mode::type::module_phone:
 							PhoneUart.send_disable();
 							IsTxInterruptEnable = false;
 							return;
@@ -120,15 +120,15 @@ namespace hmr{
 					//interrupt再開を試みる
 					void check_tx_interrupt(){
 						//送信割り込みが切られていて、かつ送信可能状態のときには、送信割り込みをオンにする
-						if(Mode != io::module_null && !IsTxInterruptEnable && vmc1_can_send(pVMC)){
-							Uart.enable_tx_interrupt();
+						if(Mode != io::mode::type::module_null && !IsTxInterruptEnable && vmc1_can_send(pVMC)){
+							enable_tx_interrupt();
 						}
 					}
 				public:
 					cDualUart()
 						: TxInterrupt(*this)
 						, RxInterrupt(*this)
-						, Mode(module_null){
+						, Mode(io::mode::type::module_null){
 						PinPowerRFUart.lock();
 						PinPowerPhoneUart.lock();
 
@@ -141,13 +141,13 @@ namespace hmr{
 						vmc1_finalize(pVMC);
 						com::releaseVMC1(pVMC);
 
-						setMode(module_null);
+						setMode(io::mode::type::module_null);
 						PinPowerRFUart.unlock();
 						PinPowerPhoneUart.unlock();
 					}
 				public:
 					//モジュール選択
-					void setMode(io::module_mode ModuleMode_){
+					void setMode(io::mode::type ModuleMode_){
 						//同じモードなら、無視
 						if(ModuleMode_ == Mode)return;
 
@@ -155,15 +155,15 @@ namespace hmr{
 
 						IsTxInterruptEnable = false;
 						switch(Mode){
-						case io::module_phone:
+						case io::mode::type::module_phone:
 							RFUart.unlock();
-							PhoneUart.lock(38400, xc32::uart::flowcontrol::rts_cts_control, SendInterrupt, RecvInterrupt);
+							PhoneUart.lock(38400, xc32::uart::flowcontrol::rts_cts_control, TxInterrupt, RxInterrupt);
 							PinPowerRFUart(false);
 							PinPowerPhoneUart(true);
 							check_tx_interrupt();
-						case io::module_rf:
+						case io::mode::type::module_rf:
 							PhoneUart.unlock();
-							RFUart.lock(9600, xc32::uart::flowcontrol::rts_cts_control, SendInterrupt, RecvInterrupt);
+							RFUart.lock(9600, xc32::uart::flowcontrol::rts_cts_control, TxInterrupt, RxInterrupt);
 							PinPowerRFUart(true);
 							PinPowerPhoneUart(false);
 							check_tx_interrupt();
@@ -175,9 +175,9 @@ namespace hmr{
 						}
 					}
 					//現モジュール取得
-					io::module_mode getMode()const{ return Mode; }
+					io::mode::type getMode()const{ return Mode; }
 					//どこも使ってなければ、falseを返す
-					operator bool()const{ return Mode != io::module_null; }
+					operator bool()const{ return Mode != io::mode::type::module_null; }
 					//Uart駆動関数
 					void operator()(void){
 						check_tx_interrupt();
@@ -209,16 +209,16 @@ namespace hmr{
 				}
 			public:
 				//message_host_interface
-				virtual void regist(message::element& rElement_){
-					Message.regist(rElement_);
+				virtual void regist(message_client_interface& Client_){
+					Message.regist(Client_);
 				}
 			public:
 				//module_selector_interface
-				virtual bool setModuleMode(io::module_mode Mode_){
+				virtual bool setModuleMode(io::mode::type Mode_){
 					Uart.setMode(Mode_);
 					return false;
 				}
-				virtual io::module_mode getModuleMode()const{
+				virtual io::mode::type getModuleMode()const{
 					return Uart.getMode();
 				}
 			public:
@@ -257,7 +257,7 @@ namespace hmr{
 					}
 
 					//早すぎるので待機
-					delay_ms(5);
+					//delay_ms(5);
 
 					//送信待ちのPacketがなく、comの送信バッファがいっぱいでもないとき
 					if(!com::isWaitSendPacket() && !com::out_full()){
