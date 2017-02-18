@@ -18,9 +18,9 @@ v0_00/121208 hmIto
 #include<XCBase/future.hpp>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
+#include<homuraLib_v2/machine/service/task.hpp>
 #include"System_base.hpp"
-#include"IO_base.hpp"
-#include"Service_base.hpp"
+#include"Message_base.hpp"
 #include"Device.hpp"
 namespace hmr {
 	namespace machine {
@@ -29,75 +29,104 @@ namespace hmr {
 			struct cCO2 : public co2_device_{
 				typedef cCO2<co2_device_> this_type;
 			private:
-				//ピンフラグ
-				apinData ApinData;
-				setPumpPower PinPowerPump;
-				setSensorPower PinPowerSensor;
-			private:
-				//モード
-				bool DataMode;
-				bool PowerPumpMode;
-				bool PowerSensorMode;
-				xc32::future<uint16> FutureData;
-			private:
-				void setDataMode(bool OnOff){
-					DataMode = OnOff;
-				}
-				void setPowerSensor(bool OnOff){
-					PowerSensorMode = OnOff;
-					if(SystemClient.mode() == systems::mode::drive)PinPowerSensor(OnOff);
-				}
-				void setPowerPump(bool OnOff){
-					PowerPumpMode = OnOff;
-					if(SystemClient.mode() == systems::mode::drive)PinPowerPump(OnOff);
-				}
-				bool getDataMode()const{ return DataMode; }
-				bool getPowerSensor()const{ return PowerPumpMode; }
-				bool getPowerPump()const{ return PowerSensorMode; }
-			private:
-				//タスク
-				struct data_task :public hmr::task::client_interface{
+				//CO2センサー管理クラス
+				struct sensor{
 				private:
-					this_type& Ref;
-				public:
-					data_task(this_type& Ref_) :Ref(Ref_){}
-					duration operator()(duration dt){
-						if(Ref.DataMode){
-							Ref.FutureData = Ref.ApinData(100);
+					//ピンフラグ
+					apinData ApinData;
+					setPumpPower PinPowerPump;
+					setSensorPower PinPowerSensor;
+				private:
+					//モード
+					bool DataMode;
+					bool PowerPumpMode;
+					bool PowerSensorMode;
+					xc32::future<uint16> FutureData;
+				private:
+					//タスク
+					struct data_task :public hmr::task::client_interface{
+					private:
+						sensor& Ref;
+					public:
+						data_task(sensor& Ref_) :Ref(Ref_){}
+						duration operator()(duration dt){
+							if(Ref.DataMode){
+								Ref.FutureData = Ref.ApinData(100);
+							}
+							return dt;
 						}
-						return dt;
+					}DataTask;
+				public:
+					sensor()
+						: DataMode(false)
+						, PowerPumpMode(false)
+						, PowerSensorMode(false)
+						, DataTask(*this){
+						//pin設定
+						ApinData.lock(xc32::sfr::adc::vref_mode::vref_Vref_Gnd, 1);
+						PinPowerPump.lock();
+						PinPowerSensor.lock();
+
+						//タスク登録
+						service::task::quick_start(DataTask, 5);
 					}
-				}DataTask;
-				task::handler DataTaskHandler;
+					~sensor(){
+						//pin設定
+						ApinData.unlock();
+						PinPowerPump.unlock();
+						PinPowerSensor.unlock();
+					}
+				public:
+					void setDataMode(bool OnOff){
+						DataMode = OnOff;
+					}
+					void setPowerSensor(bool OnOff){
+						PowerSensorMode = OnOff;
+						if(SystemClient.mode() == systems::mode::drive)PinPowerSensor(OnOff);
+					}
+					void setPowerPump(bool OnOff){
+						PowerPumpMode = OnOff;
+						if(SystemClient.mode() == systems::mode::drive)PinPowerPump(OnOff);
+					}
+					bool getDataMode()const{return DataMode;}
+					bool getPowerSensor()const{ return PowerPumpMode; }
+					bool getPowerPump()const{ return PowerSensorMode; }
+					//失敗したら、0xffffを返す
+					//DataTask駆動後、一回のみ成功
+					uint16 try_readData(){
+						if(!FutureData.valid())return 0xffff;
+						if(!FutureData.can_get()return 0xffff;
+						return FutureData.get();
+					}
+				}Sensor;
 			private:
 				//モード通知受領クラス
 				struct system_client : public system_client_interface{
 				private:
-					this_type& Ref;
+					sensor& Ref;
 					systems::mode::type CurrentMode;
 				public:
-					system_client(this_type& Ref_) :Ref(Ref_){}
+					system_client(sensor& Ref_) :Ref(Ref_){}
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
 						switch(NewMode_){
 						case systems::mode::drive:
 							Ref.PinPowerPump(PowerPumpMode);
 							Ref.PinPowerSensor(PowerSensorMode);
-							break;
 						default:
 							Ref.PinPowerPump(false);
 							Ref.PinPowerSensor(false);
-							break;
 						}
 						CurrentMode = NewMode_;
 					}
 				public:
 					systems::mode::type mode()const{ return CurrrentMode; }
 				}SystemClient;
+				systems::element SystemElement;
 			private:
 				//通信受領クラス
 				struct message_client : public message_client_interface{
 				private:
-					this_type& Ref;
+					sensor& Ref;
 				private:
 					bool DataMode_i;
 					bool PowerPumpMode_i;
@@ -117,11 +146,9 @@ namespace hmr {
 							return dt;
 						}
 					}InformTask;
-					task::handler InformTaskHandler;
 				public:
-					message_client(this_type& Ref_, com::did_t ID_, service_interface& Service_)
-						: message_client_interface(ID_)
-						, Ref(Ref_)
+					message_client(sensor& Ref_)
+						: Ref(Ref_)
 						, DataMode_i(true)
 						, PowerPumpMode_i(true)
 						, PowerSensorMode_i(true)
@@ -129,10 +156,7 @@ namespace hmr {
 						, SendData(0)
 						, InformTask(*this){
 						//タスク登録
-						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
-					}
-					~message_client(){
-						InformTaskHandler.stop();
+						service::task::quick_start(InformTask, 5);
 					}
 				public:
 					void setup_talk(void){ return; }
@@ -207,36 +231,23 @@ namespace hmr {
 						SendData = SendData_;
 					}
 				}MessageClient;
+				message::element MessageElement;
 			public:
-				cCO2(unsigned char ID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
-					: DataMode(false)
-					, PowerPumpMode(false)
-					, PowerSensorMode(false)
-					, DataTask(*this)
-					, SystemClient(*this)
-					, MessageClient(*this, ID_, Service_){
+				cCO2(unsigned char ID_, system_host& SystemHost_, message_host& MessageHost_)
+					: Sensor()
+					, SystemClient(Sensor)
+					, SystemElement(system_client_holder(SystemClient))
+					, MessageClient(Sensor)
+					, MessageElement(message_client_holder(ID_,MessageClient)){
 
-					//pin設定
-					ApinData.lock(xc32::sfr::adc::vref_mode::vref_Vref_Gnd, 1);
-					PinPowerPump.lock();
-					PinPowerSensor.lock();
-
-					//タスク登録
-					DataTaskHandler = Service_.task().quick_start(DataTask, 5);
-						
 					//Client登録
-					System_.regist(SystemClient);
-					IO_.regist(MessageClient);
+					SystemHost_.regist(SystemElement);
+					MessageHost_.regist(MessageElement);
 
-				}
-				~cCO2(){
-					//タスク停止
-					DataTaskHandler.stop(DataTask);
 				}
 				void operator()(void){
-					if(!FutureData.valid())return 0xffff;
-					if(!FutureData.can_get())return 0xffff;
-					MessageClient.setSendData(FutureData.get(););
+					uint16 Data = Sensor.try_readData();
+					if(Data != 0xffff)MessageClient.setSendData(Data);
 				}
 			};
 		}

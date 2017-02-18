@@ -5,80 +5,80 @@
 ===hmrDeviceManage===
 
 v1_02/131019 amby
-	ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é–¢æ•°è£½ä½œã€ãã®ä»–ã®æ©Ÿèƒ½ã¯ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸â€¦
+	ƒƒbƒZ[ƒWŠÖ”»ìA‚»‚Ì‘¼‚Ì‹@”\‚ÍƒCƒ“ƒ^[ƒtƒF[ƒX‚Öc
 
 v1_01/131013 hmIto
-	ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’å¤§å¹…ã«å¤‰æ›´ï¼†æ•´ç†
-		ãƒ¢ãƒ¼ãƒ‰ã‹ã‚‰ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦æŒ‡å®šã‚’é™¤å¤–
+	ƒCƒ“ƒ^[ƒtƒF[ƒX‚ğ‘å•‚É•ÏX•®—
+		ƒ‚[ƒh‚©‚çƒNƒƒbƒN‘¬“xw’è‚ğœŠO
 */
 
 /*===hmrDeviceManage===
 'D'
-ãƒ¢ãƒ¼ãƒ‰å–å¾—ã‚³ãƒãƒ³ãƒ‰
+ƒ‚[ƒhæ“¾ƒRƒ}ƒ“ƒh
 >> 0xA0 
 << 0xA0, DeviceManageMode, ClockModeSpeed  
 	DeviceManageMode : 0x00:normal, 0x10:sleep, 0x20:roaming  
 	ClockModeSpeed   : 0x00:normal, 0x01:low, 0x02:high  
 
-Device Manage Mode è¨­å®š 
+Device Manage Mode İ’è 
 
-ã‚¹ãƒªãƒ¼ãƒ—è¨­å®šã‚³ãƒãƒ³ãƒ‰ï¼ˆå®Ÿè¡Œã¯ã•ã‚Œãªã„ï¼‰
+ƒXƒŠ[ƒvİ’èƒRƒ}ƒ“ƒhiÀs‚Í‚³‚ê‚È‚¢j
 >> 0x10, 0x10, secSleepLength[2],secRemLength[2]
-	secSleepLengthç§’ã§ç¡çœ ã‚µã‚¤ã‚¯ãƒ«ã€‚ã†ã¡ã€secSleepLengthç§’ã ã‘ãƒ¬ãƒ çŠ¶æ…‹ã€‚
-	secSleepLengthã¯sint16ã®æ­£æ•°ã€ã¤ã¾ã‚Š1ï½32767ç§’â‰’9æ™‚é–“å¼·ãŒå…¥ã‚‹
+	secSleepLength•b‚Å‡–°ƒTƒCƒNƒ‹B‚¤‚¿AsecSleepLength•b‚¾‚¯ƒŒƒ€ó‘ÔB
+	secSleepLength‚Ísint16‚Ì³”A‚Â‚Ü‚è1`32767•bà9ŠÔ‹­‚ª“ü‚é
 << 0x10, 0x10, secSleepLength[2],secRemLength[2],Code
-	è¨­å®šå€¤ã¨å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ãŒè¿”ã£ã¦ãã‚‹
+	İ’è’l‚ÆÀs—pƒR[ƒh‚ª•Ô‚Á‚Ä‚­‚é
 << 0x10, 0xF1
-	è¨­å®šå€¤ãŒç•°å¸¸ãªå ´åˆã¯ã€0xF1ãŒæˆ»ã‚‹
+	İ’è’l‚ªˆÙí‚Èê‡‚ÍA0xF1‚ª–ß‚é
 
-ã‚¹ãƒªãƒ¼ãƒ—å®Ÿè¡Œã‚³ãƒãƒ³ãƒ‰
+ƒXƒŠ[ƒvÀsƒRƒ}ƒ“ƒh
 >> 0x10, 0x11, Code
-	å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã‚’é€ä¿¡ã—ã¦ã€å®Ÿè¡Œã‚’ç¢ºèª
-		ç›´å‰ã®ã‚¹ãƒªãƒ¼ãƒ—è¨­å®šã‚³ãƒãƒ³ãƒ‰ã§å–å¾—ã—ãŸå®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã®ã¿æœ‰åŠ¹
-<< ãªã—ï¼ˆå…¥çœ ï¼‰
+	Às—pƒR[ƒh‚ğ‘—M‚µ‚ÄAÀs‚ğŠm”F
+		’¼‘O‚ÌƒXƒŠ[ƒvİ’èƒRƒ}ƒ“ƒh‚Åæ“¾‚µ‚½Às—pƒR[ƒh‚Ì‚İ—LŒø
+<< ‚È‚µi“ü–°j
 
 
-ãƒ­ãƒ¼ãƒŸãƒ³ã‚°è¨­å®šã‚³ãƒãƒ³ãƒ‰ï¼ˆå®Ÿè¡Œã¯ã•ã‚Œãªã„ï¼‰
+ƒ[ƒ~ƒ“ƒOİ’èƒRƒ}ƒ“ƒhiÀs‚Í‚³‚ê‚È‚¢j
 >> 0x10, 0x20, ModuleID[1],secRoamLength[1]
-	ModuleIDã®é€šä¿¡ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’æœ‰åŠ¹ã«ã™ã‚‹
+	ModuleID‚Ì’ÊMƒ‚ƒWƒ…[ƒ‹‚ğ—LŒø‚É‚·‚é
 		ModuleID 0:RF, 1:MP
-	secRoamLengthç§’å¾…æ©Ÿã—ãŸå¾Œã€å…ƒã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã«æˆ»ã‚‹(æ­£ç¢ºã«ã¯secRoamLengthç§’ã”ã¨ã«æ¢ã™ç›¸æ‰‹ã‚’å¤‰ãˆã‚‹)
-	secRoamLengthã«ã¯uint8ã®æ­£æ•°ã€ã¤ã¾ã‚Š1ï½255ç§’ãŒå…¥ã‚‹
+	secRoamLength•b‘Ò‹@‚µ‚½ŒãAŒ³‚Ìƒ‚ƒWƒ…[ƒ‹‚É–ß‚é(³Šm‚É‚ÍsecRoamLength•b‚²‚Æ‚É’T‚·‘Šè‚ğ•Ï‚¦‚é)
+	secRoamLength‚É‚Íuint8‚Ì³”A‚Â‚Ü‚è1`255•b‚ª“ü‚é
 << 0x10, 0x20,ModuleID,Code
-	è¨­å®šå€¤ã¨å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ãŒè¿”ã£ã¦ãã‚‹
+	İ’è’l‚ÆÀs—pƒR[ƒh‚ª•Ô‚Á‚Ä‚­‚é
 << 0x10, 0xF2
-	è¨­å®šå€¤ãŒç•°å¸¸ãªå ´åˆã¯ã€0xF2ãŒæˆ»ã‚‹
-ãƒ­ãƒ¼ãƒŸãƒ³ã‚°å®Ÿè¡Œã‚³ãƒãƒ³ãƒ‰
+	İ’è’l‚ªˆÙí‚Èê‡‚ÍA0xF2‚ª–ß‚é
+ƒ[ƒ~ƒ“ƒOÀsƒRƒ}ƒ“ƒh
 >> 0x10, 0x21,Code
-	å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã‚’é€ä¿¡ã—ã¦ã€å®Ÿè¡Œã‚’ç¢ºèª
-		ç›´å‰ã®ã‚¹ãƒªãƒ¼ãƒ—è¨­å®šã‚³ãƒãƒ³ãƒ‰ã§å–å¾—ã—ãŸå®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã®ã¿æœ‰åŠ¹
-<< ãªã—ï¼ˆãƒ­ãƒ¼ãƒŸãƒ³ã‚°ï¼‰
+	Às—pƒR[ƒh‚ğ‘—M‚µ‚ÄAÀs‚ğŠm”F
+		’¼‘O‚ÌƒXƒŠ[ƒvİ’èƒRƒ}ƒ“ƒh‚Åæ“¾‚µ‚½Às—pƒR[ƒh‚Ì‚İ—LŒø
+<< ‚È‚µiƒ[ƒ~ƒ“ƒOj
 
-ãƒ¢ãƒ¼ãƒ‰ãƒªã‚»ãƒƒãƒˆï¼ˆãƒãƒ¼ãƒãƒ«ãƒ¢ãƒ¼ãƒ‰å®Ÿè¡Œï¼‰ã‚³ãƒãƒ³ãƒ‰
+ƒ‚[ƒhƒŠƒZƒbƒgiƒm[ƒ}ƒ‹ƒ‚[ƒhÀsjƒRƒ}ƒ“ƒh
 >> 0x10, 0x00
-	ãƒãƒ¼ãƒãƒ«ãƒ¢ãƒ¼ãƒ‰
+	ƒm[ƒ}ƒ‹ƒ‚[ƒh
 << 0x10, 0x00
 
 
-KILLè¨­å®šã‚³ãƒãƒ³ãƒ‰ï¼ˆå®Ÿè¡Œã¯ã•ã‚Œãªã„ï¼‰
+KILLİ’èƒRƒ}ƒ“ƒhiÀs‚Í‚³‚ê‚È‚¢j
 >> 0x20
 << 0x20,Code
-	è¨­å®šå€¤ã¨å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ãŒè¿”ã£ã¦ãã‚‹
+	İ’è’l‚ÆÀs—pƒR[ƒh‚ª•Ô‚Á‚Ä‚­‚é
 << 0xF2
-	è¨­å®šå€¤ãŒç•°å¸¸ãªå ´åˆã¯ã€0xF1ãŒæˆ»ã‚‹
-KILLå®Ÿè¡Œã‚³ãƒãƒ³ãƒ‰
+	İ’è’l‚ªˆÙí‚Èê‡‚ÍA0xF1‚ª–ß‚é
+KILLÀsƒRƒ}ƒ“ƒh
 >> 0x21,Code
-	å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã‚’é€ä¿¡ã—ã¦ã€å®Ÿè¡Œã‚’ç¢ºèª
-		ç›´å‰ã®KILLè¨­å®šã‚³ãƒãƒ³ãƒ‰ã§å–å¾—ã—ãŸå®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã®ã¿æœ‰åŠ¹
-<< ãªã—ï¼ˆæ°¸çœ ï¼‰
+	Às—pƒR[ƒh‚ğ‘—M‚µ‚ÄAÀs‚ğŠm”F
+		’¼‘O‚ÌKILLİ’èƒRƒ}ƒ“ƒh‚Åæ“¾‚µ‚½Às—pƒR[ƒh‚Ì‚İ—LŒø
+<< ‚È‚µi‰i–°j
 
 
-ã‚¯ãƒ­ãƒƒã‚¯è¨­å®šç”¨ã‚³ãƒãƒ³ãƒ‰
+ƒNƒƒbƒNİ’è—pƒRƒ}ƒ“ƒh
 >> 0x30, Speed
 	Speed : 0:normal, 1:low, 2:high 	
 << 0x30, Speed 
 
-initialize , sleep ã¨ã‹ã®ã‚¤ãƒ³ãƒ•ã‚©ãƒ¼ãƒ ã‚’è€ƒãˆã‚‹
+initialize , sleep ‚Æ‚©‚ÌƒCƒ“ƒtƒH[ƒ€‚ğl‚¦‚é
 
 */
 #include<homuraLib_v2/machine/service/lock_code.hpp>
@@ -93,29 +93,29 @@ namespace hmr{
 				namespace{
 					// mode flag
 					struct{
-						unsigned Info_i : 1;	     // æƒ…å ±é€ä¿¡ãƒ¢ãƒ¼ãƒ‰å—ç†
+						unsigned Info_i : 1;	     // î•ñ‘—Mƒ‚[ƒhó—
 
-						unsigned SleepMode_i : 1;  // sleep mode å—ç†
-						//unsigned SleepModeFail:1; // sleep mode å—ç†å¤±æ•—(å…¥åŠ›ãŒãŠã‹ã—ã‹ã£ãŸ)
+						unsigned SleepMode_i : 1;  // sleep mode ó—
+						//unsigned SleepModeFail:1; // sleep mode ó—¸”s(“ü—Í‚ª‚¨‚©‚µ‚©‚Á‚½)
 
-						unsigned RoamingMode_i : 1;// roaming mode å—ç†
-						//unsigned RoamingModeFail:1; // roaming mode å—ç†å¤±æ•—
+						unsigned RoamingMode_i : 1;// roaming mode ó—
+						//unsigned RoamingModeFail:1; // roaming mode ó—¸”s
 
-						unsigned NormalMode_i : 1; // normal mode å—ç†
-						unsigned KillCom_i : 1;    // kill command å—ç† 
+						unsigned NormalMode_i : 1; // normal mode ó—
+						unsigned KillCom_i : 1;    // kill command ó— 
 
-						unsigned ClockMode_i : 1;  // clock å¤‰æ›´ã‚³ãƒãƒ³ãƒ‰å—ç†
+						unsigned ClockMode_i : 1;  // clock •ÏXƒRƒ}ƒ“ƒhó—
 						unsigned ClockModeFail : 1;
 
-						unsigned SleepModeCodeFail : 1;   // sleep mode exe å—ç†ã—ãŸãŒCodeèªè­˜å¤±æ•—
-						unsigned RoamingModeCodeFail : 1; // roaming mode exe å—ç†ã—ãŸãŒå¤±æ•—
-						unsigned KillCodeFail : 1;		  // normal mode exe å—ç†ã—ãŸãŒå¤±æ•—
+						unsigned SleepModeCodeFail : 1;   // sleep mode exe ó—‚µ‚½‚ªCode”F¯¸”s
+						unsigned RoamingModeCodeFail : 1; // roaming mode exe ó—‚µ‚½‚ª¸”s
+						unsigned KillCodeFail : 1;		  // normal mode exe ó—‚µ‚½‚ª¸”s
 					}_devmngmsg_Mode = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-					// ãƒ­ãƒƒã‚¯ç”¨ã®ã‚³ãƒ¼ãƒ‰
-					unsigned char _devmngmsg_sleep_Code = 0;	//ãƒ­ãƒƒã‚¯è§£é™¤ç”¨ã®ã‚³ãƒ¼ãƒ‰
-					unsigned char _devmngmsg_roaming_Code = 0;	//ãƒ­ãƒƒã‚¯è§£é™¤ç”¨ã®ã‚³ãƒ¼ãƒ‰
-					unsigned char _devmngmsg_kill_Code = 0;	//ãƒ­ãƒƒã‚¯è§£é™¤ç”¨ã®ã‚³ãƒ¼ãƒ‰
+					// ƒƒbƒN—p‚ÌƒR[ƒh
+					unsigned char _devmngmsg_sleep_Code = 0;	//ƒƒbƒN‰ğœ—p‚ÌƒR[ƒh
+					unsigned char _devmngmsg_roaming_Code = 0;	//ƒƒbƒN‰ğœ—p‚ÌƒR[ƒh
+					unsigned char _devmngmsg_kill_Code = 0;	//ƒƒbƒN‰ğœ—p‚ÌƒR[ƒh
 
 					uint16 _devmngmsg_sleep_sec_rem;
 					uint16 _devmngmsg_sleep_sec_nonRem;
@@ -125,10 +125,10 @@ namespace hmr{
 				}
 				bool listen(hmLib::cstring Str){
 
-					//ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºç¢ºèª
+					//ƒf[ƒ^ƒTƒCƒYŠm”F
 					if (hmLib::cstring_size(&Str) == 0)return true;
 
-					//1byteç›®ã§ãƒ¢ãƒ¼ãƒ‰ã‚’åˆ†ã‘ã‚‹
+					//1byte–Ú‚Åƒ‚[ƒh‚ğ•ª‚¯‚é
 					switch (hmLib::cstring_getc(&Str, 0)){
 
 						// Infomation mode
@@ -136,7 +136,7 @@ namespace hmr{
 						_devmngmsg_Mode.Info_i = true;
 						return false;
 
-						// å„ç¨®å¾…æ©Ÿãƒ¢ãƒ¼ãƒ‰è¨­å®š
+						// Šeí‘Ò‹@ƒ‚[ƒhİ’è
 					case 0x10:
 						if (hmLib::cstring_size(&Str) == 1)return true;
 						switch (hmLib::cstring_getc(&Str, 1)){
@@ -150,10 +150,10 @@ namespace hmr{
 							if (hmLib::cstring_size(&Str) != 6)return true;
 							_devmngmsg_sleep_sec_nonRem = ((uint16)hmLib::cstring_getc(&Str, 2) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 3) * 256;
 							_devmngmsg_sleep_sec_rem = ((uint16)hmLib::cstring_getc(&Str, 4) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 5) * 256;
-							// sleep modeã€€è¨­å®šæº–å‚™
+							// sleep mode@İ’è€”õ
 							devmng::sleep_setInterval(_devmngmsg_sleep_sec_nonRem, _devmngmsg_sleep_sec_rem);
 							//devmng::sleep_getInterval(&_devmngmsg_sleep_sec_nonRem, &_devmngmsg_sleep_sec_rem); 
-							// code å–å¾—
+							// code æ“¾
 							_devmngmsg_sleep_Code = service::lockcode();
 
 							_devmngmsg_Mode.SleepMode_i = true;
@@ -161,15 +161,15 @@ namespace hmr{
 
 						case 0x11:// sleep execute mode
 							if (hmLib::cstring_size(&Str) != 3)return true;
-							// code ã®ãƒã‚§ãƒƒã‚¯
-							if (hmLib::cstring_getc(&Str, 2) == _devmngmsg_sleep_Code){// ä¸€è‡´
-								// inform é–¢æ•°ã®ã‚»ãƒƒãƒˆ
+							// code ‚Ìƒ`ƒFƒbƒN
+							if (hmLib::cstring_getc(&Str, 2) == _devmngmsg_sleep_Code){// ˆê’v
+								// inform ŠÖ”‚ÌƒZƒbƒg
 
-								// sleep ã®å®Ÿè¡Œ
+								// sleep ‚ÌÀs
 								devmng::mode_set(devmng::SleepMode);
 							}
 							else{
-								// å¤±æ•—é€šçŸ¥
+								// ¸”s’Ê’m
 								_devmngmsg_Mode.SleepModeCodeFail = true;
 							}
 							return false;
@@ -177,25 +177,25 @@ namespace hmr{
 						case 0x20:// roaming mode 
 							if (hmLib::cstring_size(&Str) != 4)return true;
 							_devmngmsg_roaming_sec_interval = ((uint16)hmLib::cstring_getc(&Str, 2) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 3) * 256;
-							// sleep modeã€€è¨­å®šæº–å‚™
+							// sleep mode@İ’è€”õ
 							devmng::roaming_setInterval(_devmngmsg_roaming_sec_interval);
 							//devmng::roaming_getInterval(&_devmngmsg_roaming_sec_interval); 
-							// code å–å¾—
+							// code æ“¾
 							_devmngmsg_roaming_Code = service::lockcode();
 							_devmngmsg_Mode.RoamingMode_i = true;
 							return false;
 
 						case 0x21:// roaming execute mode
 							if (hmLib::cstring_size(&Str) != 3)return true;
-							// code ã®ãƒã‚§ãƒƒã‚¯
-							if (hmLib::cstring_getc(&Str, 2) == _devmngmsg_roaming_Code){// ä¸€è‡´
-								// inform é–¢æ•°ã®ã‚»ãƒƒãƒˆ
+							// code ‚Ìƒ`ƒFƒbƒN
+							if (hmLib::cstring_getc(&Str, 2) == _devmngmsg_roaming_Code){// ˆê’v
+								// inform ŠÖ”‚ÌƒZƒbƒg
 
-								// roaming ã®å®Ÿè¡Œ
+								// roaming ‚ÌÀs
 								devmng::mode_set(devmng::RoamingMode);
 							}
 							else{
-								// å¤±æ•—é€šçŸ¥
+								// ¸”s’Ê’m
 								_devmngmsg_Mode.RoamingModeCodeFail = true;
 							}
 							return false;
@@ -208,20 +208,20 @@ namespace hmr{
 
 					case 0x21:
 						if (hmLib::cstring_size(&Str) != 2)return true;
-						// code ã®ãƒã‚§ãƒƒã‚¯
-						if (hmLib::cstring_getc(&Str, 1) == _devmngmsg_kill_Code){// ä¸€è‡´
-							// kill ã®å®Ÿè¡Œ
+						// code ‚Ìƒ`ƒFƒbƒN
+						if (hmLib::cstring_getc(&Str, 1) == _devmngmsg_kill_Code){// ˆê’v
+							// kill ‚ÌÀs
 							devmng::kill();
 						}
 						else{
-							// å¤±æ•—é€šçŸ¥
+							// ¸”s’Ê’m
 							_devmngmsg_Mode.KillCodeFail = true;
 						}
 						return false;
 
 					case 0x30:
 						if (hmLib::cstring_size(&Str) != 2)return true;
-						// mode ã®ãƒã‚§ãƒƒã‚¯
+						// mode ‚Ìƒ`ƒFƒbƒN
 						_devmngmsg_clockMode = hmLib::cstring_getc(&Str, 1);
 						if (_devmngmsg_clockMode == 0){
 							devmng::clock_set(devmng::NormalClock);
@@ -236,7 +236,7 @@ namespace hmr{
 							_devmngmsg_Mode.ClockModeFail = true;
 							return false;
 						}
-						// clock mode å—ç†
+						// clock mode ó—
 						_devmngmsg_Mode.ClockMode_i = true;
 						return false;
 					default:
@@ -325,12 +325,12 @@ namespace hmr{
 						hmLib::cstring_putc(pStr, 3, (unsigned char)((_devmngmsg_roaming_sec_interval >> 8) & 0x00FF));
 						hmLib::cstring_putc(pStr, 4, _devmngmsg_roaming_Code);
 
-						//å¤‰æ›´å…ˆã®é€šä¿¡æ‰‹æ®µã‚’è¿”ã™
+						//•ÏXæ‚Ì’ÊMè’i‚ğ•Ô‚·
 						if (devmng::rf_module_uart_getModuleID() == devmng::rf_module){
-							hmLib::cstring_putc(pStr, 5, 0x01); // ç¾çŠ¶ãŒRFãªã‚‰æ¬¡ã¯MP
+							hmLib::cstring_putc(pStr, 5, 0x01); // Œ»ó‚ªRF‚È‚çŸ‚ÍMP
 						}
 						else{
-							hmLib::cstring_putc(pStr, 5, 0x00); // ç¾çŠ¶ãŒMPãªã‚‰æ¬¡ã¯RF 
+							hmLib::cstring_putc(pStr, 5, 0x00); // Œ»ó‚ªMP‚È‚çŸ‚ÍRF 
 						}
 
 						_devmngmsg_Mode.RoamingMode_i = false;
@@ -392,7 +392,7 @@ namespace hmr{
 						return dt;
 					}
 				}InformTask;
-				// initialize é–¢æ•°
+				// initialize ŠÖ”
 				void initialize(){
 					_devmngmsg_Mode.Info_i = false;
 					_devmngmsg_Mode.SleepMode_i = false;
@@ -407,10 +407,10 @@ namespace hmr{
 
 //					devmng::initialize();
 
-					//ã‚¿ã‚¹ã‚¯ç™»éŒ²
-					service::task::quick_start(InformTask, 5);
+					//ƒ^ƒXƒN“o˜^
+					task::quick_start(InformTask, 5);
 				}
-				// finalize é–¢æ•°
+				// finalize ŠÖ”
 				void finalize(){}
 			}
 		}

@@ -62,8 +62,13 @@ v0_00/121216 iwahori
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/module/Sprite.hpp>
 #include<homuraLib_v2/static_buffer_allocator.hpp>
+#include<homuraLib_v2/machine/service/safe_cstring.hpp>
+#include"System_base.hpp"
+#include"IO_base.hpp"
+#include"Service_base.hpp"
 #include"Device.hpp"
-#include"Message.hpp"
+#include<XCBase/future.hpp>
+
 namespace hmr {
 	namespace machine {
 		namespace mihara {
@@ -331,15 +336,16 @@ namespace hmr {
 					PictureData_ = xc::move(PictureDataArray.next());
 					PictureDataArray.pop();
 				}
-				bool can_getResultTakeAndRead(){ return CanGetResultTakeAndRead; }
+				bool can_getResultTakeAndRead()const{ return CanGetResultTakeAndRead; }
 				sprite_ans_type getResultTakeAndRead(){ CanGetResultTakeAndRead = false; return ResultTakeAndRead; }
-				bool can_getResultCommandReset(){ return CanGetResultCommandReset; }
+				bool can_getResultCommandReset()const{ return CanGetResultCommandReset; }
 				sprite_ans_type getResultCommandReset(){ CanGetResultCommandReset = false; return ResultCommandReset; }
-				bool can_getResultPowerReset(){ return CanGetResultPowerReset; }
+				bool can_getResultPowerReset()const{ return CanGetResultPowerReset; }
 				sprite_ans_type getResultPowerReset(){ CanGetResultPowerReset = false; return ResultPowerReset; }
 			public:
-				cSpriteCamera()
-					: SpriteLock(Sprite, true)
+				cSpriteCamera(service_interface& Service_)
+					: Sprite()
+					, SpriteLock(Sprite, true)
 					, PowerLightLock(PowerLight)
 					, IsAutoLight(false)
 					, Seq_take_and_read(*this)
@@ -353,6 +359,8 @@ namespace hmr {
 					, CanGetResultTakeAndRead(false)
 					, CanGetResultCommandReset(false)
 					, CanGetResultPowerReset(false){
+
+					Sprite.config(Service_.task());
 					PowerLight(false);
 				}
 				bool lock(){
@@ -385,15 +393,486 @@ namespace hmr {
 				}
 			};
 
-			namespace camera {
-				void setup_listen(void);
-				void setup_talk(void);
-				bool listen(hmLib::cstring Str);
-				bool talk(hmLib::cstring* pStr);
-				void initialize(void);
-				void finalize(void);
-				void work(void);
-			}
+			template<typename camera_device_>
+			class cCamera :public camera_device_{
+			private:
+				class sensor_manager :public system_client_interface{
+				private:
+					class sprite1_identifer{};
+					using my_camera = cSpriteCamera<camera_device_, sprite1_identifer>;
+					using camera_ans_type = my_camera::sprite_ans_type;
+					using camera_error_type = my_camera::sprite_error_type;
+				private:
+					my_camera Camera;
+					bool CameraPower;
+					bool LightPower;
+					bool MiniPacketMode;
+					bool AutoLight;
+					bool AutoReset;
+					camera::imagesize::type AutoTakePicImageSize;
+				private:
+					systems::mode::type CurrentMode;
+				public://override function of system_client_interface
+					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_)override{
+						switch(NewMode_){
+						case systems::mode::drive:
+							if(CameraPower){
+								Camera.lock();
+							}
+							Camera.setLight(LightPower);
+							Camera.setAutoLightMode(AutoLight);
+							Camera.setMiniPacketMode(MiniPacketMode);
+							Camera.setAutoResetMode(AutoReset);
+							Camera.auto_takePicture(AutoTakePicImageSize);
+							break;
+						default:
+							Camera.cancel();
+							Camera.unlock();
+							break;
+						}
+						CurrentMode = NewMode_;
+					}
+				public:
+					systems::mode::type mode()const{ return CurrentMode; }
+					void setCameraPower(bool OnOff_){
+						if((CameraPower != OnOff_) && CurrentMode == systems::mode::drive){
+							if(OnOff_)Camera.lock();
+							else Camera.unlock();
+						}
+						CameraPower = OnOff_;
+					}
+					bool getCameraPower()const{ return CameraPower; }
+					void setLightPower(bool OnOff_){
+						LightPower = OnOff_;
+						if(CurrentMode == systems::mode::drive)Camera.setLight(LightPower);
+					}
+					bool getLightPower()const{ return LightPower; }
+					void setMiniPacketMode(bool OnOff_){
+						MiniPacketMode = OnOff_;
+						if(CurrentMode == systems::mode::drive)Camera.setMiniPacketMode(MiniPackerMode);
+					}
+					bool getMiniPacketMode()const{ return MiniPacketMode; }
+					void setAutoLight(bool OnOff_){
+						AutoLight = OnOff_;
+						if(CurrentMode == systems::mode::drive)Camera.setAutoLightMode(AutoLight);
+					}
+					bool getAutoLight()const{ return AutoLight; }
+					void setAutoReset(bool OnOff_){
+						AutoReset = OnOff_;
+						if(CurrentMode == systems::mode::drive)Camera.setAutoResetMode(AutoReset);
+					}
+					bool getAutoReset()const{ return AutoReset; }
+					void setAutoTakePicMode(camera::imagesize::type PictureSize_){
+						AutoTakePicImageSize = PictureSize_;
+						if(CurrentMode == systems::mode::drive)Camera.auto_takePicture(AutoTakePicImageSize);
+					}
+					camera::imagesize::type getAutoTakePicMode()const{ return AutoTakePicImageSize; }
+				public://wrapper functions of cSpriteCamera
+					sprite_status_type  status(){ return Camera.status(); }
+					void takePicture(camera::imagesize::type ImageSize_){
+						if(CurrentMode == systems::mode::drive && Camera.is_lock())Camera.takePicture(ImageSize);
+					}
+					//引数がimagesize::nullなら、auto_takePicture無効
+					//void auto_takePicture(camera::imagesize::type ImageSize_){ AutoTakeImageSize = ImageSize_; }
+					//auto_takePicture機能が有効か？
+					bool is_auto_takePicture()const{ return AutoTakePicImageSize != camera::imagesize::null; }
+					//カメラのコマンドリセット
+					void command_reset(){ 
+						if(CurrentMode == systems::mode::drive && Camera.is_lock())Camera.command_reset();
+					}
+					//カメラのパワーリセット
+					void power_reset(){
+						if(CurrentMode == systems::mode::drive && Camera.is_lock())Camera.power_reset();
+					}
+					//全命令のキャンセル
+					void cancel(){ Camera.cancel(); }
+					bool can_getPictureInfo()const{ return Camera.can_getPictureInfo(); }
+					camera::picture_info getPictureInfo(){ return Camera.getPictureInfo(); }
+					bool can_readPictureData()const{ return Camera.can_readPictureData(); }
+					void readPictureData(camera::picture_bytes& PictureData_){ Camera.readPictureData(PictureData_); }
+					bool can_getResultTakeAndRead()const{ return Camera.can_getResultTakeAndRead(); }
+					camera_ans_type getResultTakeAndRead(){ return Camera.getResultTakeAndRead(); }
+					bool can_getResultCommandReset()const{ return Camera.can_getResultCommandReset(); }
+					camera_ans_type getResultCommandReset(){ return Camera.getResultCommandReset(); }
+					bool can_getResultPowerReset()const{ return Camera.can_getResultPowerReset(); }
+					camera_ans_type getResultPowerReset(){ return Camera.getResultPowerReset(); }
+				public:
+					sensor_manager(service_interface& Service_)
+						: Camera(Service_)
+						, CameraPower(false)
+						, LightPower(false)
+						, MiniPacketMode(false)
+						, AutoLight(false)
+						, AutoReset(false)
+						, AutoTakePicImageSize(camera::imagesize::null){
+						Camera.lock();
+						CameraPower = true;
+					}
+					~sensor_manager(){
+						Camera.unlock();
+					}
+				public:
+					void operator()(){
+						if(Camera.is_lock())Camera();
+					}
+				};
+				sensor_manager CameraManager;
+			private:
+				class message_client :public message_client_interface{
+				private:
+					sensor_manager& Ref;
+				private:
+					bool MiniPackMode_i;
+					bool AutoTakePicMode_i;
+					bool AutoResetMode_i;
+					bool LightPower_i;
+					bool AutoLight_i;
+
+					bool CommandReset_i;
+					bool PowerReset_i;
+
+					bool StatusSendMode;
+					bool StatusSendMode_i;
+					bool SendStatus;
+					bool SendPictureInfo;
+					bool SendPictureData;
+					bool SendErrorResult;
+					typename sensor_manager::camera_error_type Error;
+				public:
+					void setSendPictureInfo(bool OnOff_){ SendPictureInfo = OnOff_; }
+					void setSendPictureData(bool OnOff_){ SendPictureData = OnOff_; }
+				private:
+					class inform_task :public hmr::task::client_interface{
+					private:
+						message_client& Ref;
+					public:
+						inform_task(message_client& Ref_):Ref(Ref_){}
+						duration operator()(duration dt){
+							Ref.SendStatus = true;
+							return dt;
+						}
+					};
+					inform_task InformTask;
+					task::handler InformTaskHandler;
+				public:
+					message_client(sensor_manager& Ref_, com::did_t ID_, service_interface& Service_)
+						: message_client_interface(ID_)
+						, Ref(Ref_)
+						, MiniPackMode_i(true)
+						, AutoTakePicMode_i(true)
+						, AutoResetMode_i(true)
+						, LightPower_i(true)
+						, AutoLight_i(true)
+						, CommandReset_i(false)
+						, PowerReset_i(false)
+						, StatusSendMode(false)
+						, StatusSendMode_i(false)
+						, SendStatus(false)
+						, SendPictureInfo(false)
+						, SendPictureData(false)
+						, SendErrorResult(false)
+						, InformTask(*this){
+						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
+					}
+					~message_client(){
+						InformTaskHandler.stop();
+					}
+				public://override function of message_client_interface
+					void setup_listen(void)override{ return; }
+					void setup_talk(void)override{
+						//内部情報送信モード時
+						if(StatusSendMode)SendStatus = true;
+					}
+					bool listen(hmLib::cstring Str)override{
+						static uint8 c = 0;
+
+						//データサイズ確認
+						if(hmLib::cstring_size(&Str) == 0)return true;
+
+						c = hmLib::cstring_getc(&Str, 0);
+
+						//1byte目でモードを分ける
+						switch(c){
+						case 0x00://写真取得モード
+							if(hmLib::cstring_size(&Str) != 2)return true;
+							{
+								//PictureSize設定							
+								camera::imagesize::type ImageSize = camera::imagesize::size_160_120;
+								if(hmLib::cstring_getc(&Str, 1) >= 2){
+									ImageSize = camera::imagesize::size_640_480;
+								} else if(hmLib::cstring_getc(&Str, 1) == 1){
+									ImageSize = camera::imagesize::size_320_240;
+								}
+
+								Ref.takePicture(ImageSize);
+							}
+							return false;
+						case 0x10://連続撮影モードON
+							if(hmLib::cstring_size(&Str) < 2)return true;
+
+							AutoTakePicMode_i = true;
+							{
+								//PictureSize設定							
+								camera::imagesize::type ImageSize = camera::imagesize::size_160_120;
+								if(hmLib::cstring_getc(&Str, 1) >= 2){
+									ImageSize = camera::imagesize::size_640_480;
+								} else if(hmLib::cstring_getc(&Str, 1) == 1){
+									ImageSize = camera::imagesize::size_320_240;
+								}
+
+								Ref.setAutoTakePicMode(ImageSize);
+							}
+							return false;
+						case 0x11://連続撮影モードOFF
+							AutoTakePicMode_i = true;
+
+							Ref.setAutoTakePicMode(camera::imagesize::null);
+
+							return false;
+						case 0x30:	//ライトのON要求
+							LightPower_i = true;
+
+							//ライトON
+							Ref.setLightPower(true);
+							return false;
+						case 0x31://ライトのOFF要求
+							LightPower_i = true;
+
+							//ライトOFF
+							Ref.setLightPower(false);
+							return false;
+						case 0x40:	//自動フラッシュON設定
+							AutoLight_i = true;
+
+							//自動フラッシュモードON
+							Ref.setAutoLight(true);
+
+							return false;
+						case 0x41:	//自動フラッシュOFF設定
+							AutoLight_i = true;
+
+							//自動フラッシュモードOFF
+							Ref.setAutoLight(false);
+
+							return false;
+						case 0x50:	//ミニパケットモードON設定
+							MiniPackMode_i = true;
+
+							//ミニパケットモードON予約
+							Ref.setMiniPacketMode(true);
+
+							return false;
+						case 0x51:	//ミニパケットモードOFF設定
+							MiniPackMode_i = true;
+
+							//ミニパケットモードOFF予約
+							Ref.setMiniPacketMode(false);
+
+							return false;
+						case 0x60:	//内部リセット要求
+							CommandReset_i = true;
+							//リセットを行う
+							Ref.command_reset();
+							return false;
+						case 0x70:	//強制リセット要求
+									//強制リセットをかける
+							Ref.power_reset();
+							Error = sensor_manager::camera_error_type();
+							SendErrorResult = false;
+
+							return false;
+						case 0x80:	//エラー時自動強制リセットON設定
+							AutoResetMode_i = true;
+							//AutoReset機能ON
+							Ref.setAutoReset(true);
+							return false;
+						case 0x81:	//エラー時自動強制リセットOFF設定
+							AutoResetMode_i = true;
+							//AutoReset機能OFF
+							Ref.setAutoReset(false);
+							return false;
+						case 0xB0:	//内部データ送信モードON
+							StatusSendMode_i = true;
+							StatusSendMode = true;
+							return false;
+						case 0xB1:	//内部データ送信モードOFF
+							StatusSendMode_i = true;
+							StatusSendMode = false;
+							return false;
+						default:
+							return true;
+						}
+					}
+					bool talk(hmLib::cstring* pStr)override{
+						//連続撮影モードのON/OFF設定
+						if(AutoTakePicMode_i){
+							//フラグをおろす
+							AutoTakePicMode_i = false;
+							service::cstring_construct_safe(pStr, 1);
+							if(Ref.is_auto_takePicture())hmLib::cstring_putc(pStr, 0, 0x10);
+							else hmLib::cstring_putc(pStr, 0, 0x11);
+
+							return false;
+						}
+						//ライトのON/OFF
+						else if(LightPower_i){
+							//フラグをおろす
+							LightPower_i = false;
+
+							service::cstring_construct_safe(pStr, 1);
+							if(Ref.getLightPower())hmLib::cstring_putc(pStr, 0, 0x30);
+							else hmLib::cstring_putc(pStr, 0, 0x31);
+							return false;
+						}
+						//フラッシュ機能ON/OFFの設定
+						else if(AutoLight_i){
+							//フラグをおろす
+							AutoLight_i = false;
+
+							service::cstring_construct_safe(pStr, 1);
+							if(Ref.getAutoLight())hmLib::cstring_putc(pStr, 0, 0x40);
+							else hmLib::cstring_putc(pStr, 0, 0x41);
+
+							return false;
+						}
+						//ミニパケットモードかどうかの設定
+						else if(MiniPackMode_i){
+							//フラグをおろす
+							MiniPackMode_i = false;
+
+							service::cstring_construct_safe(pStr, 1);
+							if(Ref.getMiniPacketMode()) hmLib::cstring_putc(pStr, 0, 0x50);
+							else hmLib::cstring_putc(pStr, 0, 0x51);
+
+							return false;
+						}
+						//内部リセット要求
+						else if(CommandReset_i){
+							//フラグをおろす．
+							CommandReset_i = false;
+
+							service::cstring_construct_safe(pStr, 2);
+							hmLib::cstring_putc(pStr, 0, 0x60);
+							hmLib::cstring_putc(pStr, 1, Ref.status().byte());
+
+							return false;
+						}
+						//エラー時自動強制リセットON・OFF設定
+						else if(AutoResetMode_i){
+							//フラグをおろす
+							AutoResetMode_i = false;
+
+							service::cstring_construct_safe(pStr, 1);
+
+							if(Ref.getAutoReset())hmLib::cstring_putc(pStr, 0, 0x80);
+							else hmLib::cstring_putc(pStr, 0, 0x81);
+
+							return false;
+						} else if(StatusSendMode_i){
+							StatusSendMode_i = false;
+
+							service::cstring_construct_safe(pStr, 1);
+							if(StatusSendMode)hmLib::cstring_putc(pStr, 0, 0xB0);
+							else hmLib::cstring_putc(pStr, 0, 0xB1);
+
+							return false;
+
+							//内部情報取得
+						} else if(SendStatus){
+							//フラグをおろす．
+							SendStatus = false;
+
+							service::cstring_construct_safe(pStr, 4);
+							hmLib::cstring_putc(pStr, 0, 0xA0);
+							hmLib::cstring_putc(pStr, 1, Ref.status().byte());			//現在のステータス
+							if(SendErrorResult){
+								hmLib::cstring_putc(pStr, 2, Error.byte_category());				//現在エラー状態かどうか
+								hmLib::cstring_putc(pStr, 3, Error.byte_pos());		//エラー時のステータス
+							} else{
+								hmLib::cstring_putc(pStr, 2, 0);				//現在エラー状態かどうか
+								hmLib::cstring_putc(pStr, 3, 0);		//エラー時のステータス
+							}
+							return false;
+						}
+						//写真取得モードACK返信
+						else if(SendPictureInfo){
+							//フラグをおろす
+							SendPictureInfo = false;
+
+							module::sprite::picture_info PictureInfo = Ref.getPictureInfo();
+
+							//ACK送信
+							service::cstring_construct_safe(pStr, 4);
+							hmLib::cstring_putc(pStr, 0, (unsigned char)(0x00));
+							hmLib::cstring_putc(pStr, 1, (unsigned char)(PictureInfo.ImageSize));
+							hmLib::cstring_putc(pStr, 2, (unsigned char)(PictureInfo.PictureSize));
+							hmLib::cstring_putc(pStr, 3, (unsigned char)(PictureInfo.PictureSize >> 8));
+
+							return false;
+						}
+						//写真撮影orデータ要求モード
+						else if(SendPictureData){
+							//フラグをおろす
+							SendPictureData = false;
+
+							//talk待ちキューから吸い出し
+							camera::picture_bytes PictureData;
+							Ref.readPictureData(PictureData);
+
+							//cstringを作成 3byteのヘッダ分だけ余計に確保してくれているので、その分を考慮して作成
+							hmLib::cstring_placement_construct(pStr, 3 + PictureData.PictureData.DataSize, PictureData.Bytes.release(), PictureData.DeleteFp);
+
+							//messageに渡す
+							hmLib::cstring_putc(pStr, 0, 0x01);
+							hmLib::cstring_putc(pStr, 1, static_cast<unsigned char>(PictureData.PictureData.PicturePos));
+							hmLib::cstring_putc(pStr, 2, static_cast<unsigned char>((PictureData.PictureData.PicturePos) >> 8));
+
+							return false;
+						}
+						return true;
+					}
+				public:
+					void setSendErrorData(sensor_manager::camera_error_type Error_){
+						Error = Error_;
+						SendErrorResult = true;
+					}
+				};
+				message_client MessageClient;
+			public:
+				cCamera(unsigned char CameraID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
+					: CameraManager(Service_)
+					, MessageClient(CameraManager, CameraID_, Service_){
+					System_.regist(CameraManager);
+					IO_.regist(MessageClient);
+				}
+			public:
+				void operator()(){
+					CameraManager();
+					//PicInfoを待っている場合
+					if(Ref.can_getPictureInfo())MessageClient.setSendPictureInfo(true);
+					if(Ref.can_readPictureData())MessageClient.setSendPictureData(true);
+
+					//エラーの有無を確認
+					if(Ref.can_getResultTakeAndRead()){
+						typename sensor_manager::camera_ans_type AnsType = Ref.getResultTakeAndRead();
+						if(!AnsType){
+							MessageClient.setSendErrorData(AnsType.alternate());
+						}
+					}
+					if(Ref.can_getResultCommandReset()){
+						typename sensor_manager::camera_ans_type AnsType = Camera.getResultCommandReset();
+						if(!AnsType){
+							MessageClient.setSendErrorData(AnsType.alternate());
+						}
+					}
+					if(Ref.can_getResultPowerReset()){
+						typename sensor_manager::camera_ans_type AnsType = Camera.getResultPowerReset();
+						if(!AnsType){
+							MessageClient.setSendErrorData(AnsType.alternate());
+						}
+					}
+				}
+			};
 		}
 	}
 }

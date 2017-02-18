@@ -1,9 +1,9 @@
 #ifndef HMR_DEVICEMANAGE_C_INC
 #define HMR_DEVICEMANAGE_C_INC 200
 #
-#include<XC32/i2c.hpp>
-#include<XC32/spi.hpp>
-#include<XC32/uart.hpp>
+#include<XC32Lib/i2c.hpp>
+#include<XC32Lib/spi.hpp>
+#include<XC32Lib/uart.hpp>
 #include<homuraLib_v2/machine/service/delay.hpp>
 #include<homuraLib_v2/machine/service/exclusive_delay.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>
@@ -20,46 +20,18 @@ namespace hmr {
 	namespace machine {
 		namespace service{
 			namespace{
-				//関数駆動型のタスクホスト
+				//�֐��쓮�^�̃^�X�N�z�X�g
 				hmr::task::functional_host<> TaskHost;
 			}
-			//serviceのタスクとして登録
+			//service�̃^�X�N�Ƃ��ēo�^
 			hmr::task::host_interface& Task(TaskHost);
 		}
 		namespace mihara {
 			namespace devmng {
 				class device :public mihara::cDevice::devmng_device {
 				public:
-					pinRedLED PinRedLED;
-					pinDevicePower PinDevicePower;
-					timer_register Task_timer_register;
-					xc32::interrupt_timer<timer_register> Task_timer;
-					static const uint16 TaskTimerMS=1000;//DevMng専用タイマーの初期化値(milisecond)
-
-					static const uint8 TaskTimerIPL=2;//DevMng専用タイマーの割り込み優先度
-					static const uint8 Camera1_uart_tx_IPL=6;
-					static const uint8 Camera1_uart_rx_IPL=7;
-					static const uint8 Camera2_uart_tx_IPL=6;
-					static const uint8 Camera2_uart_rx_IPL=7;
-					static const uint8 Camera_timer_IPL=2;
-					static const uint8 RF_uart_tx_IPL=3;
-					static const uint8 RF_uart_rx_IPL=4;
-					static const uint8 MobilePhone_uart_tx_IPL=3;
-					static const uint8 MobilePhone_uart_rx_IPL=4;
-					static const uint8 Main_IPL=1;
-					static const uint8 Lock_level_IPL=5;
-					static const uint8 StrongLock_level_IPL=7;
 
 //=================================================================
-					xc32::wdt WDT;
-//					xc::lock_guard<xc32::wdt> WDTLock;
-
-					//=====DIP pin=====
-					pinDip1 Config_DisableWDT;
-					pinDip2 Config_DefaultMP;
-					pinDip3 Config_DefaultHighClock;
-					pinDip4 Config_RFDebugMode;
-
 					//====rf module====
 					pinRF_Power PinRFPower;
 					pinMobilePhone_Power PinMobilePhonePower;
@@ -71,108 +43,88 @@ namespace hmr {
 					xc32::interrupt_uart<mobilephone_uart_register> MobilePhone_uart;
 					static const uint16 MobilePhone_uart_Baudrate=38400;
 					static const xc32::uart::flowcontrol::mode MobilePhone_uart_flowctrl=xc32::uart::flowcontrol::mode::rts_cts_control;
-
-					//=====SD card=====
-					pinSDPower PinSDPower;
-					pinSD_SPISelect PinSD_SPISelect;
-					sdcard_spi_register SDcard_spi_register;
-					xc32::synchronous_spi<sdcard_spi_register> SDcard_spi;
-
-					//====ADC====
-					pinADC0Power PinADC0Power;
-					pinADC1to4Power PinADC1to4Power;
-
-					//====Motor====
-					pinMotorLA PinMotorLA;
-					pinMotorLB PinMotorLB;
-					pinMotorRA PinMotorRA;
-					pinMotorRB PinMotorRB;
-					pinMotorPower PinMotorPower;
-
-					pin5VDCDC Pin5VDCDC;
-					pinExternalI2C_Pw PinExtI2CPower;
 //=================================================================
 				}Device;
 
-				//++++++++++++++++++ protected宣言 +++++++++++++++++
-				//=== 基本関数 ===
-				//デバイスの電源管理
+				//++++++++++++++++++ protected�錾 +++++++++++++++++
+				//=== ��{�֐� ===
+				//�f�o�C�X�̓d���Ǘ�
 				void power(bool onoff);
 
-				//=== モード制御機能 ===
-				//モード制御機能初期化
+				//=== ���[�h����@�\ ===
+				//���[�h����@�\������
 				void mode_initialize(mode Mode_);
-				//モード制御機能終端化
+				//���[�h����@�\�I�[��
 				void mode_finalize();
-				//クロック変更の通知関数
+				//�N���b�N�ύX�̒ʒm�֐�
 				void mode_informClockChange(void);
 
-				//=== クロック制御機能 ===
-				//クロック制御機能初期化
+				//=== �N���b�N����@�\ ===
+				//�N���b�N����@�\������
 				void clock_initialize(clock Clock_);
-				//クロック制御機能終端化
+				//�N���b�N����@�\�I�[��
 				void clock_finalize();
-				//クロック速度の変更関数
+				//�N���b�N���x�̕ύX�֐�
 				void clock_restartClock(clock Clock_);
-				//クロック速度をデフォルトに変更
+				//�N���b�N���x��f�t�H���g�ɕύX
 				void clock_restartClockDefault();
 
-				//=== スリープモード制御 ===
-				//スリープモード制御初期化
+				//=== �X���[�v���[�h���� ===
+				//�X���[�v���[�h���䏉����
 				void sleep_initialize(void);
-				//スリープモード制御終端化
+				//�X���[�v���[�h����I�[��
 				void sleep_finalize(void);
-				//スリープに入る処理
+				//�X���[�v�ɓ��鏈��
 				void sleep_start();
-				//スリープから出る処理
+				//�X���[�v����o�鏈��
 				void sleep_stop(void);
-				//スリープ制御処理関数
+				//�X���[�v���䏈���֐�
 				void sleep_interrupt_function(sint16 Interval_);
-				//スリープ時の割り込み禁止関数
+				//�X���[�v���̊��荞�݋֎~�֐�
 				void sleep_disable_interrupt(void);
-				//スリープ時の割り込み復帰関数
+				//�X���[�v���̊��荞�ݕ��A�֐�
 				void sleep_enable_interrupt(void);
 
 
-				//=== ローミングモード制御 ===
-				//ローミングモード制御初期化
+				//=== ���[�~���O���[�h���� ===
+				//���[�~���O���[�h���䏉����
 				void roaming_initialize(void);
-				//ローミングモード制御終端化
+				//���[�~���O���[�h����I�[��
 				void roaming_finalize(void);
-				//ローミングに入る処理
+				//���[�~���O�ɓ��鏈��
 				void roaming_start(void);
-				//ローミングから出る処理
+				//���[�~���O����o�鏈��
 				void roaming_stop(void);
-				//ローミング制御処理関数
+				//���[�~���O���䏈���֐�
 				void roaming_interrupt_function(sint16 Interval_);
 
 				//=== RF module uart select ===
-				//ModuleIDのモジュールで初期化する
+				//ModuleID�̃��W���[���ŏ���������
 				void rf_module_uart_initialize(rf_module_mode ModuleID_, uint16 BaudRate_);
-				//ModuleIDに電源を変更する
+				//ModuleID�ɓd����ύX����
 				void rf_module_uart_power_switch(bool onoff, rf_module_mode ModuleID_);
-				//現在のModuleIDを取得する
+				//���݂�ModuleID��擾����
 				rf_module_mode rf_module_uart_getModuleID(void);
 
-				//=== 割り込み関数制御 ===
+				//=== ���荞�݊֐����� ===
 				void interrupt_initialize(void);
 				void interrupt_finalize(void);
 
-				//++++++++++++++++++ 実装 +++++++++++++++++
-				//=== モード制御機能 ===
-				//デバイスの現モード
+				//++++++++++++++++++ ���� +++++++++++++++++
+				//=== ���[�h����@�\ ===
+				//�f�o�C�X�̌����[�h
 				volatile mode mode_Mode=NormalMode;
 
-				//モード制御機能初期化
+				//���[�h����@�\������
 				void mode_initialize(mode Mode_) {
-					//指定のデフォルトモードで開始
+					//�w��̃f�t�H���g���[�h�ŊJ�n
 					mode_Mode=Mode_;
 				}
-				//モード制御機能終端化
+				//���[�h����@�\�I�[��
 				void mode_finalize() {
 					mode_Mode=NormalMode;
 				}
-				//デバイスモードを変更する
+				//�f�o�C�X���[�h��ύX����
 				void mode_set(mode Mode_) {
 					switch(Mode_) {
 					case SleepMode:
@@ -222,35 +174,35 @@ namespace hmr {
 					}
 
 				}
-				//デバイスモードを取得する
+				//�f�o�C�X���[�h��擾����
 				volatile mode mode_get(void) { return mode_Mode; }
-				//クロック変更の通知関数
+				//�N���b�N�ύX�̒ʒm�֐�
 				void mode_informClockChange(void) {
-					//スリープかつノンレム睡眠中はパスする
+					//�X���[�v���m�������������̓p�X����
 					if(sleep_isSleep() && !sleep_isRem())return;
 
-					//クロックモードをただちに反映
+					//�N���b�N���[�h��������ɔ��f
 					clock_restartClockDefault();
 				}
-				//=== クロック制御機能 ===
-				//デバイスの現クロック
+				//=== �N���b�N����@�\ ===
+				//�f�o�C�X�̌��N���b�N
 				volatile clock clock_Clock;
-				//クロック制御機能初期化
+				//�N���b�N����@�\������
 				void clock_initialize(clock Clock_) {
-					//指定クロックに変更
+					//�w��N���b�N�ɕύX
 					clock_Clock=Clock_;
 
-					//ただちにクロック速度反映
+					//�������ɃN���b�N���x���f
 					clock_restartClockDefault();
 				}
-				//クロック制御機能終端化
+				//�N���b�N����@�\�I�[��
 				void clock_finalize() {
 //					hmr_clock_finalize();
 				}
-				//クロック速度の変更関数
+				//�N���b�N���x�̕ύX�֐�
 				void clock_restartClock(clock Clock_) {
 					
-					//一度クロックを終了
+					//��x�N���b�N��I��
 //					hmr_clock_finalize();
 
 					switch(Clock_) {
@@ -265,30 +217,30 @@ namespace hmr {
 						break;
 					}
 
-					//クロック変更をほかのモジュールにも通知
+					//�N���b�N�ύX��ق��̃��W���[���ɂ�ʒm
 					//	hmr_uart1_initialize(hmr_uart1_getModuleID(),);
 					//	hmr_uart2_initialize(38400);
 					//	hmr_adc_initialize();
 					
 				}
-				//クロック速度をデフォルトに変更
+				//�N���b�N���x��f�t�H���g�ɕύX
 				void clock_restartClockDefault() {
 					clock_restartClock(clock_Clock);
 				}
-				//クロックを変更する
+				//�N���b�N��ύX����
 				void clock_set(clock Clock_) {
-					//すでに設定済みなら無視
+					//���łɐݒ�ς݂Ȃ疳��
 					if(clock_Clock==Clock_)return;
 
-					//変更を反映して、モード制御に通知
+					//�ύX�𔽉f���āA���[�h����ɒʒm
 					clock_Clock=Clock_;
 					mode_informClockChange();
 				}
-				//クロックを取得する
+				//�N���b�N��擾����
 				volatile clock clock_get(void) { return clock_Clock; }
 
-				//=== スリープモード制御 ===
-				//スリープ/覚醒通知用関数
+				//=== �X���[�v���[�h���� ===
+				//�X���[�v/�o���ʒm�p�֐�
 				typedef struct {
 					vFp_v InformSleep;
 					vFp_v InformWakeUp;
@@ -296,7 +248,7 @@ namespace hmr {
 				const unsigned int sleep_InformSleepFnBufSize=16;
 				sleep_InformSleepFn sleep_InformSleepFnBuf[sleep_InformSleepFnBufSize];
 				unsigned char sleep_InformSleepFnBufPos=0;
-				//レム/ノンレム通知用関数
+				//����/�m�������ʒm�p�֐�
 				typedef struct {
 					vFp_v InformRem;
 					vFp_v InformNonRem;
@@ -304,15 +256,15 @@ namespace hmr {
 				const unsigned int sleep_InformRemFnBufSize=16;
 				sleep_InformRemFn sleep_InformRemFnBuf[sleep_InformRemFnBufSize];
 				unsigned char sleep_InformRemFnBufPos=0;
-				//スリープ中の時間カウント系
+				//�X���[�v���̎��ԃJ�E���g�n
 				sint16 sleep_secNonRem=540;
 				sint16 sleep_secRem=60;
 				sint16 sleep_secCnt=0;
-				//スリープ状態管理用フラグ
+				//�X���[�v��ԊǗ��p�t���O
 				volatile bool sleep_IsSleep=0;
 				volatile bool sleep_IsRem=0;
 				bool sleep_RequestEndRem=0;
-				//スリープモード制御初期化
+				//�X���[�v���[�h���䏉����
 				void sleep_initialize(void) {
 					sleep_InformSleepFnBufPos=0;
 					sleep_InformRemFnBufPos=0;
@@ -324,9 +276,9 @@ namespace hmr {
 					sleep_IsRem=0;
 					sleep_RequestEndRem=0;
 				}
-				//スリープモード制御終端化
+				//�X���[�v���[�h����I�[��
 				void sleep_finalize(void) {
-					//スリープ中なら停止
+					//�X���[�v���Ȃ��~
 					if(sleep_IsSleep)sleep_stop();
 
 					sleep_InformSleepFnBufPos=0;
@@ -338,16 +290,16 @@ namespace hmr {
 					sleep_IsSleep=0;
 					sleep_IsRem=0;
 				}
-				//レムスリープ状態かどうかを取得する
+				//�����X���[�v��Ԃ��ǂ�����擾����
 				volatile bool sleep_isRem(void) { return sleep_IsRem && sleep_IsSleep; }
-				//スリープ状態かどうかを取得する
+				//�X���[�v��Ԃ��ǂ�����擾����
 				volatile bool sleep_isSleep(void) { return sleep_IsSleep; }
-				//スリープモードのパラメータを取得する
+				//�X���[�v���[�h�̃p�����[�^��擾����
 				void sleep_getInterval(sint16* secNonRem, sint16* secRem) {
 					*secNonRem=sleep_secNonRem;
 					*secRem=sleep_secRem;
 				}
-				//スリープモードのパラメータを設定する
+				//�X���[�v���[�h�̃p�����[�^��ݒ肷��
 				void sleep_setInterval(sint16 secNonRem, sint16 secRem) {
 					if(secNonRem<0)secNonRem=0;
 					if(secRem<1)secRem=1;
@@ -355,9 +307,9 @@ namespace hmr {
 					sleep_secNonRem=secNonRem;
 					sleep_secRem=secRem;
 				}
-				//入眠時＆起床時に呼び出される通知関数を登録できるか
+				//���������N�����ɌĂяo�����ʒm�֐���o�^�ł��邩
 				bool sleep_can_registSleepInformFunction() { return sleep_InformSleepFnBufPos!=sleep_InformSleepFnBufSize; }
-				//入眠時＆起床時に呼び出される通知関数を登録する
+				//���������N�����ɌĂяo�����ʒm�֐���o�^����
 				bool sleep_registSleepInformFunction(vFp_v InformSleep, vFp_v InformWakeUp) {
 					if(!sleep_can_registSleepInformFunction())return true;
 					sleep_InformSleepFnBuf[sleep_InformSleepFnBufPos].InformSleep=InformSleep;
@@ -366,9 +318,9 @@ namespace hmr {
 
 					return false;
 				}
-				//レムスリープに入る/出る際の通知関数を登録できるか
+				//�����X���[�v�ɓ���/�o��ۂ̒ʒm�֐���o�^�ł��邩
 				bool sleep_can_registRemInformFunction() { return sleep_InformRemFnBufPos!=sleep_InformRemFnBufSize; }
-				//レムスリープに入る/出る際の通知関数を登録する
+				//�����X���[�v�ɓ���/�o��ۂ̒ʒm�֐���o�^����
 				bool sleep_registRemInformFunction(vFp_v InformRem, vFp_v InformNonRem) {
 					if(!sleep_can_registRemInformFunction())return true;
 					sleep_InformRemFnBuf[sleep_InformRemFnBufPos].InformRem=InformRem;
@@ -377,110 +329,110 @@ namespace hmr {
 
 					return false;
 				}
-				//スリープへ入る処理
+				//�X���[�v�֓��鏈��
 				void sleep_start() {
 					sleep_InformSleepFn* Itr;
 
-					//すでにスリープ中なら終了
+					//���łɃX���[�v���Ȃ�I��
 					if(sleep_IsSleep)return;
 
-					//カウンターをリセット
+					//�J�E���^�[����Z�b�g
 					sleep_secCnt=0;
 					sleep_IsRem=0;
 
-					//スリープ状態に変更
+					//�X���[�v��ԂɕύX
 					sleep_IsSleep=1;
 
-					// 割り込み禁止
+					// ���荞�݋֎~
 					sleep_disable_interrupt();
 
-					//Inform関数
+					//Inform�֐�
 					for(Itr=sleep_InformSleepFnBuf; Itr!=sleep_InformSleepFnBuf+sleep_InformSleepFnBufSize; ++Itr) {
 						//if(sleep_InformSleepFnBuf->InformSleep)sleep_InformSleepFnBuf->InformSleep();
 						if(Itr->InformSleep)Itr->InformSleep();
 					}
 
-					//電源を落とす
+					//�d���𗎂Ƃ�
 					power(0);
 
-					//クロック速度を落とす
+					//�N���b�N���x�𗎂Ƃ�
 					clock_restartClock(LowClock);
 				}
-				//スリープから出る処理
+				//�X���[�v����o�鏈��
 				void sleep_stop(void) {
 					sleep_InformSleepFn* Itr;
 
-					//すでに非スリープ中なら終了
+					//���łɔ�X���[�v���Ȃ�I��
 					if(!sleep_IsSleep)return;
 
-					//クロック速度をデフォルトに戻す
+					//�N���b�N���x��f�t�H���g�ɖ߂�
 					clock_restartClockDefault();
 
-					//電源を戻す すでにレム睡眠なのでカット
+					//�d����߂� ���łɃ��������Ȃ̂ŃJ�b�g
 					//power(1);
 
-					//スリープ状態を解除
+					//�X���[�v��Ԃ���
 					sleep_IsSleep=0;
 
-					//Inform関数
+					//Inform�֐�
 					for(Itr=sleep_InformSleepFnBuf; Itr!=sleep_InformSleepFnBuf+sleep_InformSleepFnBufSize; ++Itr) {
 						//if(sleep_InformSleepFnBuf->InformWakeUp)sleep_InformSleepFnBuf->InformWakeUp();
 						if(Itr->InformWakeUp)Itr->InformWakeUp();
 					}
 
-					// 割り込み許可
+					// ���荞�݋���
 					sleep_enable_interrupt();
 
 				}
-				// スリープ時の割り込み禁止
+				// �X���[�v���̊��荞�݋֎~
 				void sleep_disable_interrupt() {
-					// Main stream の割り込み禁止
+					// Main stream �̊��荞�݋֎~
 					if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_disable();
 					else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_disable();
 					//streamVMC_disable_fput_interrupt();
-					// Camera stream の割り込み禁止
+					// Camera stream �̊��荞�݋֎~
 //					Device.Camera1_uart.recv_disable();
 //					Device.Camera2_uart.recv_disable();
 					//streamCMR_disable_fput_interrupt();
-					// カメラ のTimer 割り込み禁止
+					// �J���� ��Timer ���荞�݋֎~
 //					Device.Camera_timer.clear_count();
 //					Device.Camera_timer.stop();
 				}
-				// スリープ時の割り込み復帰
+				// �X���[�v���̊��荞�ݕ��A
 				void sleep_enable_interrupt() {
-					// Main stream の受信割り込み開始
+					// Main stream �̎�M���荞�݊J�n
 					if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_enable();
 					else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_enable();
-					// Camera stream の受信割り込み開始
+					// Camera stream �̎�M���荞�݊J�n
 //					Device.Camera1_uart.recv_enable();
 //					Device.Camera2_uart.recv_enable();
-					// カメラ のTimer 割り込み開始
+					// �J���� ��Timer ���荞�݊J�n
 //					Device.Camera_timer.clear_count();
 //					Device.Camera_timer.start();
 				}
-				//スリープ制御処理割込関数
+				//�X���[�v���䏈�������֐�
 				void sleep_interrupt_function(sint16 Interval_) {
 					sleep_InformRemFn* Itr;
 
-					//SleepCntを加算
+					//SleepCnt����Z
 					sleep_secCnt+=Interval_;
 
-					//レム状態のとき 
+					//������Ԃ̂Ƃ� 
 					if(sleep_IsRem) {
-						//割り込みで急に電源を落とすのは危険なので、リクエストだけ送っておく(実際の終了は、work関数に委譲)
+						//���荞�݂ŋ}�ɓd���𗎂Ƃ��̂͊댯�Ȃ̂ŁA���N�G�X�g���������Ă���(���ۂ̏I���́Awork�֐��ɈϏ�)
 						if(sleep_secCnt>=sleep_secRem)sleep_RequestEndRem=1;
-					}//ノンレム状態のとき
+					}//�m��������Ԃ̂Ƃ�
 					else {
 						if(sleep_secCnt>=sleep_secNonRem) {
-							//カウンターを初期化
+							//�J�E���^�[�������
 							sleep_secCnt=0;
 
-							//クロック速度をデフォルトに戻す
+							//�N���b�N���x��f�t�H���g�ɖ߂�
 							clock_restartClockDefault();
 
-							//電源を入れる
+							//�d��������
 							power(1);
-							// 安定待ち
+							// ����҂�
 							service::exclusive_delay_ms(300);
 							Device.PinRedLED(1);
 							service::exclusive_delay_ms(300);
@@ -492,96 +444,96 @@ namespace hmr {
 							service::exclusive_delay_ms(300);
 							Device.PinRedLED(1);
 
-							//レム状態に移行
+							//������ԂɈڍs
 							sleep_IsRem=1;
 
-							//Inform関数
+							//Inform�֐�
 							for(Itr=sleep_InformRemFnBuf; Itr!=(sleep_InformRemFnBuf+sleep_InformRemFnBufSize); ++Itr) {
 								//if(sleep_InformRemFnBuf->InformRem)sleep_InformRemFnBuf->InformRem();
 								if(Itr->InformRem)Itr->InformRem();
 							}
 
-							// 割り込み許可
+							// ���荞�݋���
 							sleep_enable_interrupt();
 
 						}
 					}
 				}
-				//スリープ制御処理通常関数
+				//�X���[�v���䏈���ʏ�֐�
 				void sleep_interrupt_yield(void) {
 					sleep_InformRemFn* Itr;
 
-					//レム睡眠終了要求関数
+					//���������I���v���֐�
 					if(sleep_RequestEndRem) {
-						//フラグを下げる
+						//�t���O�������
 						sleep_RequestEndRem=0;
-						//カウンターを初期化
+						//�J�E���^�[�������
 						sleep_secCnt=0;
 
-						// 割り込みを禁止
+						// ���荞�݂�֎~
 						sleep_disable_interrupt();
 
-						//ノンレム状態に移行
+						//�m��������ԂɈڍs
 						sleep_IsRem=0;
 
-						//Inform関数
+						//Inform�֐�
 						for(Itr=sleep_InformRemFnBuf; Itr!=sleep_InformRemFnBuf+sleep_InformRemFnBufSize; ++Itr) {
 							//if(sleep_InformRemFnBuf->InformNonRem)sleep_InformRemFnBuf->InformNonRem();
 							if(Itr->InformNonRem)Itr->InformNonRem();
 						}
 
-						//クロック速度を落とす
+						//�N���b�N���x�𗎂Ƃ�
 						clock_restartClock(LowClock);
 
-						//電源を落とす
+						//�d���𗎂Ƃ�
 						power(0);
 					}
 				}
-				//=== ローミングモード制御 ===
-				//ローミングの間隔制御変数
+				//=== ���[�~���O���[�h���� ===
+				//���[�~���O�̊Ԋu����ϐ�
 				sint16 roaming_secInterval=0;
 				sint16 roaming_secCnt=0;
-				//ローミングの状態変数
+				//���[�~���O�̏�ԕϐ�
 				volatile bool roaming_IsRoaming=0;
-				//ローミングモード制御初期化
+				//���[�~���O���[�h���䏉����
 				void roaming_initialize(void) {
 					roaming_secInterval=0;
 					roaming_secCnt=0;
 					roaming_IsRoaming=0;
 				}
-				//ローミングモード制御終端化
+				//���[�~���O���[�h����I�[��
 				void roaming_finalize(void) {
-					//ローミング中なら、停止
+					//���[�~���O���Ȃ�A��~
 					if(roaming_IsRoaming)roaming_stop();
 
 					roaming_secInterval=0;
 					roaming_secCnt=0;
 					roaming_IsRoaming=0;
 				}
-				//ローミングモードのパラメータを取得する
+				//���[�~���O���[�h�̃p�����[�^��擾����
 				void roaming_getInterval(sint16* secInterval) {
 					*secInterval=roaming_secInterval;
 				}
-				//ローミングモードのパラメータを設定する
+				//���[�~���O���[�h�̃p�����[�^��ݒ肷��
 				void roaming_setInterval(sint16 secInterval) {
-					//ローミング間隔は10秒以上である必要
+					//���[�~���O�Ԋu��10�b�ȏ�ł���K�v
 					if(secInterval<=10)secInterval=10;
 					roaming_secInterval=secInterval;
 				}
-				//ローミング状態かどうかを取得する
+				//���[�~���O��Ԃ��ǂ�����擾����
 				volatile bool roaming_isRoaming(void) { return roaming_IsRoaming; }
-				//ローミング状態に入る
+				//���[�~���O��Ԃɓ���
 				void roaming_start(void) {
-					//すでにローミング中なら無視
+					//���łɃ��[�~���O���Ȃ疳��
 					if(roaming_IsRoaming)return;
 
-					//カウンタリセット
+					//�J�E���^���Z�b�g
 					roaming_secCnt=0;
 
-					//ローミング状態へ移行
+					//���[�~���O��Ԃֈڍs
 					roaming_IsRoaming=1;
 
-					//通信デバイス切り替え
+					//�ʐM�f�o�C�X�؂�ւ�
 					if(rf_module_uart_getModuleID()==rf_module_mode::rf_module) {
 						Device.PinRedLED(1);
 						rf_module_uart_initialize(rf_module_mode::mobile_phone, MP_BaudRate);
@@ -591,20 +543,20 @@ namespace hmr {
 						else rf_module_uart_initialize(rf_module_mode::rf_module, RF_BaudRate);
 					}
 				}
-				//ローミング状態を解除
+				//���[�~���O��Ԃ���
 				void roaming_stop(void) {
-					//すでにローミング中でないなら無視
+					//���łɃ��[�~���O���łȂ��Ȃ疳��
 					if(!roaming_IsRoaming)return;
 
-					//ローミング状態を解除
+					//���[�~���O��Ԃ���
 					roaming_IsRoaming=0;
 				}
-				//ローミング制御処理関数
+				//���[�~���O���䏈���֐�
 				void roaming_interrupt_function(sint16 Interval_) {
-					//カウンターを進める
+					//�J�E���^�[��i�߂�
 					roaming_secCnt+=Interval_;
 
-					//カウンターが切り替え値を超えた場合は、通信デバイス切り替え
+					//�J�E���^�[���؂�ւ��l�𒴂����ꍇ�́A�ʐM�f�o�C�X�؂�ւ�
 					if(roaming_secCnt>roaming_secInterval) {
 						if(rf_module_uart_getModuleID()==rf_module_mode::rf_module) {
 							Device.PinRedLED(1);
@@ -618,8 +570,8 @@ namespace hmr {
 					}
 				}
 
-				//=== 基本操作関数 ===
-				//デバイス初期化関数
+				//=== ��{����֐� ===
+				//�f�o�C�X�������֐�
 				void initialize(void) {
 					Device.PinRedLED.lock();
 					Device.Pin5VDCDC.lock();
@@ -628,6 +580,8 @@ namespace hmr {
 //					Device.PinCamera0Power.lock();
 //					Device.PinCamera1Power.lock();
 //					Device.PinCameraLED.lock();
+					Device.PinCO2PumpPower.lock();
+					Device.PinCO2SensorPower.lock();
 					Device.PinDevicePower.lock();
 					Device.PinExtI2CPower.lock();
 //					Device.PinHeadLightPower.lock();
@@ -645,30 +599,29 @@ namespace hmr {
 					Device.Config_DisableWDT.lock();
 					Device.Config_RFDebugMode.lock();
 
-					//wdt初期化
+					//wdt������
 					Device.WDT.lock();
 
 
-					//Pic自体のパワーを入れておく
+					//Pic���̂̃p���[�����Ă���
 					Device.PinDevicePower(1);
 					Device.Pin5VDCDC(1);
 
-					//デバイスの電源を落とす
+					//�f�o�C�X�̓d���𗎂Ƃ�
 					power(0);
-
-					//モードシステム初期化
+					//���[�h�V�X�e��������
 					mode_initialize(NormalMode);
 
-					//クロック初期化
+					//�N���b�N������
 					if(Device.Config_DefaultHighClock())clock_initialize(HighClock);
 					else clock_initialize(NormalClock);
 
-					//割り込み初期化->各モジュール初期化時に設定
+					//���荞�ݏ�����->�e���W���[�����������ɐݒ�
 //					xc32::interrupt::initialize();
 					xc32::sfr::interrupt::cpu_priority(Device.Main_IPL);
 //					hmr_interrupt_initalize();
 
-					//通信系モジュール初期化
+					//�ʐM�n���W���[��������
 					if(Device.Config_DefaultMP()) {
 						rf_module_uart_initialize(rf_module_mode::mobile_phone,Device.MobilePhone_uart_Baudrate);
 						com::wdt_restart();
@@ -679,16 +632,46 @@ namespace hmr {
 						com::wdt_disable();
 					}
 
-					//デバイスの電源を入れる
+					//=== Coamera
+//					Device.Camera1_uart.initialize(Device.Camera1_uart_register);
+//					Device.Camera1_uart.config(Device.Camera1_uart_Baudrate, Device.Camera1_uart_flowctrl, camera::uart_camera1::Camera1TxInterruptFunc, camera::uart_camera1::Camera1RxInterruptFunc);
+//					Device.Camera1_uart.lock();
+		
+/*					Device.Camera2_uart.initialize(Device.Camera2_uart_register);
+					Device.Camera2_uart.config(Device.Camera2_uart_Baudrate, Device.Camera2_uart_flowctrl, camera::uart_camera2::Camera2TxInterruptFunc, camera::uart_camera2::Camera2RxInterruptFunc);
+					Device.Camera2_uart.lock();
+
+					//=== SD card spi
+					Device.SDcard_spi.initialize(Device.SDcard_spi_register);
+					Device.SDcard_spi.config(true, );
+					Device.SDcard_spi.lock();
+*/
+					//=== Inertial i2c
+/*					Device.Axcel_i2c.config(Device.Axcel_i2c_clock, 0);
+					Device.Axcel_i2c.lock();
+					
+					if(!Device.Compass_i2c.is_lock()){
+						Device.Compass_i2c.config(Device.Compass_i2c_clock, 0);
+						Device.Compass_i2c.lock();
+					}
+
+					if(!Device.Gyro_i2c.is_lock()) {
+						Device.Gyro_i2c.config(Device.Gyro_i2c_clock, 0);
+						Device.Gyro_i2c.lock();
+					}
+*/					
+//					hmr_adc_initialize(); -> analog_pin����ݒ�ł���̂Ŋe���W���[�����s��
+
+					//�f�o�C�X�̓d��������
 					service::delay_ms(500);
 					power(1);
 
-					//devmngモジュール初期化
+					//devmng���W���[��������
 					sleep_initialize();
 					roaming_initialize();
 					interrupt_initialize();
 
-					//WatchDogTimer開始
+					//WatchDogTimer�J�n
 					if(Device.Config_DisableWDT())Device.WDT.disable();
 					else Device.WDT.enable();
 
@@ -708,18 +691,18 @@ namespace hmr {
 //					Device.PinCameraLED(0);
 
 				}
-				//デバイス終端化関数
+				//�f�o�C�X�I�[���֐�
 				void finalize(void) {
-					//WatchDogTimer終了
+					//WatchDogTimer�I��
 					Device.WDT.disable();
 					Device.WDT.unlock();
 
-					//devmngモジュール終端化
+					//devmng���W���[���I�[��
 					sleep_finalize();
 					roaming_finalize();
 					interrupt_finalize();
 
-					//通信系モジュール終端化
+					//�ʐM�n���W���[���I�[��
 					Device.RF_uart.recv_disable();
 					Device.RF_uart.send_disable();
 					Device.RF_uart.release();
@@ -742,34 +725,34 @@ namespace hmr {
 //					hmr_spi2_finalize();
 //					hmr_adc_finalize();
 
-					//デバイスの電源を落とす
+					//�f�o�C�X�̓d���𗎂Ƃ�
 					power(0);
 
-					//割り込み終了
+					//���荞�ݏI��
 //					hmr_interrupt_finalize();
 
-					//クロック終了
+					//�N���b�N�I��
 					clock_finalize();
 
-					//モード管理終了
+					//���[�h�Ǘ��I��
 					mode_finalize();
 
 					power(0);
 					Device.PinDevicePower(0);
 					Device.WDT.disable();
 					Device.WDT.unlock();
-					//デバイス自体を終了
+					//�f�o�C�X���̂�I��
 //					hmr_device_finalize();
 				}
-				//デバイス強制終了
+				//�f�o�C�X�����I��
 				void kill(void) {
-					//自身の電源を切る
+					//���g�̓d����؂�
 					Device.PinDevicePower(0);
 				}
-				//デバイスの電源管理関数
+				//�f�o�C�X�̓d���Ǘ��֐�
 				void power(bool onoff_) {
 					bool onoff= (onoff_!=0);
-					//電源オフの場合は、モジュール側も切る
+					//�d���I�t�̏ꍇ�́A���W���[������؂�
 					if(!onoff) {
 //						Device.PinCamera0Power(0);
 //						Device.PinCamera1Power(0);
@@ -784,15 +767,49 @@ namespace hmr {
 					Device.PinADC1to4Power(onoff);
 					Device.PinMotorPower(onoff);
 				}
-				//現在の通信先が全二重通信対応かを返す
+				//���݂̒ʐM�悪�S��d�ʐM�Ή�����Ԃ�
 				bool isFullDuplex(void) {
 					return rf_module_uart_getModuleID()==rf_module_mode::mobile_phone || Device.Config_RFDebugMode();
 				}
 				//clear wdt
 				void clear_wdt(void) { Device.WDT.clear(); }
+				//=== rf module uart select ===
+				//���݃A�N�e�B�u��ID
+				rf_module_mode rf_module_uart_ModuleID = rf_module_mode::null;
+				//ModuleID�̃��W���[���ŏ���������
+				void rf_module_uart_initialize(rf_module_mode ModuleID_, uint16 BaudRate_) {
+					if(ModuleID_==rf_module_mode::mobile_phone) {
+						rf_module_uart_ModuleID = rf_module_mode::mobile_phone;
+						Device.MobilePhone_uart.initialize(Device.MobilePhone_uart_register);
+						Device.MobilePhone_uart.config(Device.MobilePhone_uart_Baudrate, Device.MobilePhone_uart_flowctrl, courier::uart::CourierTxInterruptFunc, courier::uart::CourierRxInterruptFunc);
+						Device.MobilePhone_uart.lock();
+						//Device.RF_uart.release();
+					} else if(ModuleID_==rf_module_mode::rf_module) {
+						rf_module_uart_ModuleID = rf_module_mode::rf_module;
+						Device.RF_uart.initialize(Device.RF_uart_register);
+						Device.RF_uart.config(Device.RF_uart_Baudrate, Device.RF_uart_flowctrl, courier::uart::CourierTxInterruptFunc, courier::uart::CourierRxInterruptFunc);
+						Device.RF_uart.lock();
+						//Device.MobilePhone_uart.release();
+					}
+				}
+				//ModuleID�ɓd����ύX����
+				void rf_module_uart_power_switch(bool onoff, rf_module_mode ModuleID_) {
+					if(onoff && ModuleID_==rf_module_mode::mobile_phone) {
+						Device.PinMobilePhonePower(1);
+						Device.PinRFPower(0);
+					} else if(onoff && ModuleID_==rf_module_mode::rf_module) {
+						Device.PinMobilePhonePower(0);
+						Device.PinRFPower(1);
+					} else {
+						Device.PinMobilePhonePower(0);
+						Device.PinRFPower(0);
+					}
+				}
+				//���݂�ModuleID��擾����
+				rf_module_mode rf_module_uart_getModuleID(void) { return rf_module_uart_ModuleID; }
 
-				//=== 割り込み関数 ===
-				//DevMng用タイマー割り込み関数
+				//=== ���荞�݊֐� ===
+				//DevMng�p�^�C�}�[���荞�݊֐�
 				class:public xc32::interrupt::function {
 				private:
 					virtual void operator()(void) {
@@ -802,13 +819,13 @@ namespace hmr {
 						Device.PinRedLED(flag);
 						flag = (!flag);
 
-						//デバイスマネージの定期実行処理（引数を秒間隔で使用）
+						//�f�o�C�X�}�l�[�W�̒�����s�����i������b�Ԋu�Ŏg�p�j
 						interrupt_function(1);
 					}
 				}DevMngInterruptFunction;
-				//タスク、スリープ、およびローミング実行用関数
+				//�^�X�N�A�X���[�v�A����у��[�~���O���s�p�֐�
 				void interrupt_function(sint16 Interval_) {
-					//モードによって割り込み処理を分岐
+					//���[�h�ɂ���Ċ��荞�ݏ����𕪊�
 					switch(mode_get()) {
 					case SleepMode:
 						sleep_interrupt_function(Interval_);
@@ -821,11 +838,11 @@ namespace hmr {
 						break;
 					}
 				}
-				//割り込みのmainループへの委譲処理関数
+				//���荞�݂�main���[�v�ւ̈Ϗ������֐�
 				bool interrupt_yield(void) {
 					sleep_interrupt_yield();
 
-					//スリープを除外
+					//�X���[�v����O
 					if(sleep_isSleep() && !sleep_isRem()) {
 						//__asm__("PWRSAV #IDLE_MODE");
 						//Idle();
@@ -846,7 +863,21 @@ namespace hmr {
 					Device.Task_timer.release();
 				}
 
-				// camera stream 割り込みの許可禁止をいじくってよいかを返す関数
+				// main stream ���荞�݂̋��֎~����������Ă悢����Ԃ��֐�
+				bool interrupt_can_enable_streamVMC_fget_interrupt() {
+					return !(sleep_isSleep() && !sleep_isRem());
+				}
+				bool interrupt_can_disable_streamVMC_fget_interrupt() {
+					return true;//!( sleep_isSleep() && !sleep_isRem() );
+				}
+				bool interrupt_can_enable_streamVMC_fput_interrupt() {
+					return !(sleep_isSleep() && !sleep_isRem());
+				}
+				bool interrupt_can_disable_streamVMC_fput_interrupt() {
+					return true;//!( sleep_isSleep() && !sleep_isRem() );
+				}
+
+				// camera stream ���荞�݂̋��֎~����������Ă悢����Ԃ��֐�
 				bool interrupt_can_enable_streamCMR_fget_interrupt() {
 					return !(sleep_isSleep() && !sleep_isRem());
 				}
@@ -860,14 +891,14 @@ namespace hmr {
 					return true;//!( sleep_isSleep() && !sleep_isRem() );
 				}
 
-				// camera timer  割り込みの許可禁止をいじくってよいかを返す関数
+				// camera timer  ���荞�݂̋��֎~����������Ă悢����Ԃ��֐�
 				bool interrupt_can_enable_timerCMR_interrupt() {
 					return !(sleep_isSleep() && !sleep_isRem());
 				}
 				bool interrupt_can_disable_timerCMR_interrupt() {
 					return true;//!( sleep_isSleep() && !sleep_isRem() );
 				}
-				// DevMng timer の割り込みの許可禁止をいじくってよいかを返す関数
+				// DevMng timer �̊��荞�݂̋��֎~����������Ă悢����Ԃ��֐�
 				bool interrupt_can_enable_timerDevmng_interrupt() {
 					return true;
 				}
@@ -875,7 +906,45 @@ namespace hmr {
 					return true;
 				}
 
-				// camera stream の割り込み許可禁止関数
+				// main stream �̊��荞�݋��֎~�֐�
+				bool interrupt_enable_streamVMC_fget_interrupt() {
+					if(interrupt_can_enable_streamVMC_fget_interrupt()) {
+						if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_enable();
+						else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_enable();
+						return true;
+					} else {
+						return false;
+					}
+				}
+				bool interrupt_disable_streamVMC_fget_interrupt() {
+					if(interrupt_can_disable_streamVMC_fget_interrupt()) {
+						if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_disable();
+						else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_disable();
+						return true;
+					} else {
+						return false;
+					}
+				}
+				bool interrupt_enable_streamVMC_fput_interrupt() {
+					if(interrupt_can_enable_streamVMC_fput_interrupt()) {
+						if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_enable();
+						else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_enable();
+						return true;
+					} else {
+						return false;
+					}
+				}
+				bool interrupt_disable_streamVMC_fput_interrupt() {
+					if(interrupt_can_disable_streamVMC_fput_interrupt()) {
+						if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_disable();
+						else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_disable();
+						return true;
+					} else {
+						return false;
+					}
+				}
+
+				// camera stream �̊��荞�݋��֎~�֐�
 				bool interrupt_enable_streamCMR_fget_interrupt() {
 					if(interrupt_can_enable_streamCMR_fget_interrupt()) {
 //						Device.Camera1_uart.recv_enable();
@@ -913,7 +982,7 @@ namespace hmr {
 					}
 				}
 
-				// timer camera の割り込み許可禁止関数
+				// timer camera �̊��荞�݋��֎~�֐�
 				bool interrupt_enable_timerCMR_interrupt() {
 					if(interrupt_can_enable_timerCMR_interrupt()) {
 //						Device.Camera_timer.clear_count();
@@ -933,7 +1002,7 @@ namespace hmr {
 					}
 				}
 
-				// timer Device manager の割り込み許可禁止関数
+				// timer Device manager �̊��荞�݋��֎~�֐�
 				bool interrupt_enable_timerDevmng_interrupt() {
 					if(interrupt_can_enable_timerDevmng_interrupt()) {
 						Device.Task_timer.clear_count();
@@ -955,6 +1024,8 @@ namespace hmr {
 					}
 				}
 
+//=================================Intertial===============================
+
 //=================================SD card===============================
 				namespace sdcard{
 					void Power(bool val_){Device.PinSDPower(val_);}
@@ -964,7 +1035,141 @@ namespace hmr {
 						bool in_data(){return Device.SDcard_spi.in_data();}
 						void select(bool val_){Device.PinSD_SPISelect(val_);}
 					}
-				}	
+				}
+//================================= CO2 ===============================
+				namespace co2{
+					void PumpPower(bool val_){Device.PinCO2PumpPower(val_);}
+					void SensorPower(bool val_){Device.PinCO2SensorPower(val_);}
+				}
+//=================================Camera===============================
+/*				namespace camera{
+					void setLED(bool val_){Device.PinCameraLED(val_);}
+					namespace timer{
+						void clear_count(){Device.Camera_timer.clear_count();}
+						void clear_interrupt_flag(){Device.Camera_timer.clear_flag();}
+						void initialize(uint32 MSec_){
+							if(!Device.Camera_timer.is_initialize())Device.Camera_timer.initialize(Device.Camera_timer_register);
+							Device.Camera_timer.stop();
+							if(Device.Camera_timer.is_lock())Device.Camera_timer.unlock();
+							Device.Camera_timer.lock(MSec_, CameraInterruptFunc);
+						}
+						void enable_interrupt(){
+							Device.Camera_timer.clear_count();
+							Device.Camera_timer.start();
+						}
+						void disable_interrupt(){
+							Device.Camera_timer.stop();
+							Device.Camera_timer.clear_count();
+						}
+					}
+					namespace uart_camera1 {
+						void initialize(uint32 BoudRate_) {
+							if(!Device.Camera1_uart.is_initialize())Device.Camera1_uart.initialize(Device.Camera1_uart_register);
+							if(Device.Camera1_uart.is_lock())Device.Camera1_uart.unlock();
+							Device.Camera1_uart.lock(Device.Camera1_uart_Baudrate, Device.Camera1_uart_flowctrl, uart_camera1::Camera1TxInterruptFunc, uart_camera1::Camera1RxInterruptFunc);
+						}
+						void disable() { Device.Camera1_uart_register.enable(0); }
+
+						void fputc(uint8 data_){Device.Camera1_uart.send_data(data_);}
+						void fput_set_interrupt(){Device.Camera1_uart.send_set_flag();}
+						void fput_clear_interrupt(){Device.Camera1_uart.send_clear_flag();}
+						void fput_enable_interrupt() { Device.Camera1_uart.send_enable(); }
+						void fput_disable_interrupt() { Device.Camera1_uart.send_disable(); }
+
+						uint8 fgetc(){return Device.Camera1_uart.recv_data();}
+						void fget_set_interrupt(){Device.Camera1_uart.recv_set_flag();}
+						void fget_clear_interrupt(){Device.Camera1_uart.recv_clear_flag();}
+						void fget_enable_interrupt() { Device.Camera1_uart.recv_enable(); }
+						void fget_disable_interrupt() { Device.Camera1_uart.recv_disable(); }
+					}
+					namespace uart_camera2 {
+						void initialize(uint32 BoudRate_) {
+							if(!Device.Camera2_uart.is_initialize())Device.Camera2_uart.initialize(Device.Camera2_uart_register);
+							if(Device.Camera2_uart.is_lock())Device.Camera2_uart.unlock();
+							Device.Camera2_uart.lock(Device.Camera2_uart_Baudrate, Device.Camera2_uart_flowctrl, uart_camera2::Camera2TxInterruptFunc, uart_camera2::Camera2RxInterruptFunc);
+						}
+						void disable() { Device.Camera2_uart_register.enable(0); }
+
+						void fputc(uint8 data_) { Device.Camera2_uart.send_data(data_); }
+						void fput_set_interrupt() { Device.Camera2_uart.send_set_flag(); }
+						void fput_clear_interrupt() { Device.Camera2_uart.send_clear_flag(); }
+						void fput_enable_interrupt() { Device.Camera2_uart.send_enable(); }
+						void fput_disable_interrupt() { Device.Camera2_uart.send_disable(); }
+
+						uint8 fgetc() { return Device.Camera2_uart.recv_data(); }
+						void fget_set_interrupt() { Device.Camera2_uart.recv_set_flag(); }
+						void fget_clear_interrupt() { Device.Camera2_uart.recv_clear_flag(); }
+						void fget_enable_interrupt() { Device.Camera2_uart.recv_enable(); }
+						void fget_disable_interrupt() { Device.Camera2_uart.recv_disable(); }
+					}
+				}*/
+//=================================Courier===============================
+				namespace courier{
+					namespace uart{
+						uint8 fget() {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)return Device.MobilePhone_uart.recv_data();
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)return Device.RF_uart.recv_data();
+							else return 0;
+						}
+						void fget_set_interrupt() {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_set_flag();
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_set_flag();
+						}
+						void fget_clear_interrupt() {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_clear_flag();
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_clear_flag();
+						}
+						void fget_enable_interrupt() {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_enable();
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_enable();
+						}
+						void fget_disable_interrupt() {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.recv_disable();
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.recv_disable();
+						}
+						bool fget_is_interrupt_enable() {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)return Device.MobilePhone_uart.recv_is_enable();
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)return Device.RF_uart.recv_is_enable();
+							else return false;
+						}
+
+						void fput(uint8 data_) {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_data(data_);
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_data(data_);
+						}
+						void fput_set_interrupt() {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_set_flag();
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_set_flag();
+						}
+						void fput_clear_interrupt() {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_clear_flag();
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_clear_flag();
+						}
+						void fput_enable_interrupt() {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_enable();
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_enable();
+						}
+						void fput_disable_interrupt() {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)Device.MobilePhone_uart.send_disable();
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)Device.RF_uart.send_disable();
+						}
+						bool fput_is_interrupt_enable() {
+							if(rf_module_uart_getModuleID()==rf_module_mode::mobile_phone)return Device.MobilePhone_uart.send_is_enable();
+							else if(rf_module_uart_getModuleID()==rf_module_mode::rf_module)return Device.RF_uart.send_is_enable();
+							else return false;
+						}
+					}
+				}
+//=================================GPS module===============================
+				namespace gps{
+					namespace gps1{
+						
+					}
+					namespace gps2{
+						
+					}
+				}
+				
 			}
 		}
 	}

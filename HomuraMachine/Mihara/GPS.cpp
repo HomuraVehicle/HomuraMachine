@@ -3,8 +3,6 @@
 #
 #define HMLIB_NOLIB
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
-#include<homuraLib_v2/machine/service/delay.hpp>
-#include<homuraLib_v2/machine/service/task.hpp>
 #include"GPS.hpp"
 #include"Device.hpp"
 
@@ -181,8 +179,8 @@ namespace hmr {
 					pGPS = &rGPS_; 
 
 					//É^ÉXÉNìoò^
-					service::task::quick_start(InformTask, 5);
-					service::task::quick_start(DataTask, 3);
+					task::quick_start(InformTask, 5);
+					task::quick_start(DataTask, 3);
 				}
 			}
 		}

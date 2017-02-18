@@ -47,23 +47,24 @@ v1_00/121005 hmIto
 */
 #include<homuraLib_v2/type.hpp>
 #include<hmLib/cstring.h>
-#include"Message_base.hpp"
+#include"IO_base.hpp"
 #include"Com.hpp"
 
 namespace hmr {
 	namespace machine {
 		namespace mihara {
 			namespace message {	
-				typedef com::did_t did_t;
-				typedef com::dsize_t dsize_t;
-				typedef com::dsizeFp_v dsizeFp_v;
-				typedef com::vFp_v vFp_v;			
+				typedef hmr::machine::mihara::com::did_t did_t;
+				typedef hmr::machine::mihara::com::dsize_t dsize_t;
+				typedef hmr::machine::mihara::com::dsizeFp_v dsizeFp_v;
+				typedef hmr::machine::mihara::com::vFp_v vFp_v;
 			}
-			struct cMessage :public message_host_interface{
-				typedef typename message::chain::iterator iterator;
+			struct cMessage{
+				typedef ::xc::chain<message_client_interface> chain;
+				typedef typename chain::iterator iterator;
 			private:
 				//client chain
-				message::chain Chain;
+				chain Chain;
 				//Current Iterator
 				iterator TalkItr;
 				//FpSendable関数登録用一時変数
@@ -74,8 +75,8 @@ namespace hmr {
 				int talkconfig_DSRPAG = 0;
 			public:
 				//メッセージ登録関数
-				virtual void regist(message::element& rElement_){
-					Chain.push_back(rElement_);
+				virtual void regist(message_client_interface& Client_){
+					Chain.push_back(Client_);
 				}
 			public:
 				//受信準備関数

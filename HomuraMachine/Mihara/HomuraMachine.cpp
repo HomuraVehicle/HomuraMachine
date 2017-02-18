@@ -1,5 +1,5 @@
-#ifndef HMR_MACHINE_MIHARA_INC
-#define HMR_MACHINE_MIHARA_INC 0
+#ifndef HMR_MACHINE_INC
+#define HMR_MACHINE_INC 0
 #
 #
 #define HMLIB_NOLIB
@@ -70,13 +70,12 @@ v1_00/120921 hmIto
 	ファイルを複数に分割
 */
 
-#include <homuraLib_v2/machine/service/delay.hpp>
-#include <homuraLib_v2/machine/service/task.hpp>
-#include <homuraLib_v2/type.hpp>#include "Device.hpp"
+#include <homuraLib_v2/type.hpp>
+#include "Device.hpp"
+#include "System.hpp"
 #include "Service.hpp"
 #include "Com.hpp"
 #include "IO.hpp"
-#include "System.hpp"
 #include "Message.hpp"
 #include "CO2.hpp"
 #include "Battery.hpp"
@@ -86,92 +85,44 @@ v1_00/120921 hmIto
 #include "Camera.hpp" 
 #include "Thermo.hpp"
 #include "Battery.hpp"
-#include "DeviceManage.hpp"
-#include "DeviceManage_forCourier.hpp"
-#include "DeviceManageMessage.hpp"
+//#include "DeviceManage.hpp"
+//#include "DeviceManage_forCourier.hpp"
+//#include "DeviceManageMessage.hpp"
 
 //====== main 関数 ======
 using namespace hmr::machine::mihara;
-using namespace hmr::machine::service;
 int main(void){
 	cDevice Device;
-	cService Service;
-	cSystem System;
-	cIO<typename cDevice::io_device> IO;
-
-	//デバイスの初期化
-	devmng::initialize();
-
-	if(devmng::sleep_can_registRemInformFunction())devmng::sleep_registRemInformFunction(inertial::axel::device_initialize, 0);
-	if(devmng::sleep_can_registRemInformFunction())devmng::sleep_registRemInformFunction(inertial::compass::device_initialize, 0);
-	if(devmng::sleep_can_registRemInformFunction())devmng::sleep_registRemInformFunction(inertial::gyro::device_initialize, 0);
-
+	cService<typename cDevice::service_device> Service;
+	cIO<typename cDevice::io_device> IO(Service);
+	cSystem<typename cDevice::system_device> System('S',IO);
+	Service.connect(System);
+	System.regist_task(Service.system_task());
 	
-	//割り込み整理
-	devmng::interrupt_enable_timerDevmng_interrupt();
-
 	//モジュール初期化
-	devmngmsg::initialize();
-	thermo::initialize();
-	battery::initialize();
-	camera::initialize();
-	inertial::initialize();
+	cThermo<typename cDevice::thermo_device> Thermo('t', System, IO, Service);
+	cBattery<typename cDevice::battery_device> Battery('b', System, IO);
+	cCamera<typename cDevice::sprite_device> Camera('j', System, IO);
+	cInertial<typename cDevice::inertial_device> Inertial('a', 'c', 'G', System, IO, Service);
 	cCO2<typename cDevice::co2_device> CO2('C');
-	motor::initialize();
+	cMotor<typename cDevice::motor_device> Motor('m', System, IO);
 	cGPS<typename cDevice::gps_device> GPS;
-	gps::initialize(GPS);
-
-	//Lock
-	CO2.lock(System, IO);
-
-
-	//メッセージ登録
-//	message::regist('!',debug_setup_listen,debug_listen,debug_setup_talk,debug_talk);
-	Message.regist('m',motor::setup_listen,motor::listen,motor::setup_talk,motor::talk);
-	Message.regist('c',inertial::compass::setup_listen,inertial::compass::listen,inertial::compass::setup_talk,inertial::compass::talk);
-	Message.regist('a',inertial::axel::setup_listen,inertial::axel::listen,inertial::axel::setup_talk,inertial::axel::talk);
-	Message.regist('G',inertial::gyro::setup_listen,inertial::gyro::listen,inertial::gyro::setup_talk,inertial::gyro::talk);
-	Message.regist('j', camera::setup_listen, camera::listen, camera::setup_talk, camera::talk);
-	Message.regist('g',gps::setup_listen,gps::listen,gps::task_setup_talk,gps::talk);
-	Message.regist('b',battery::setup_listen,battery::listen,battery::task_setup_talk,battery::talk);
-//	Message.regist('C',co2::setup_listen,co2::listen,co2::task_setup_talk,co2::talk);
-	Message.regist('t',thermo::setup_listen,thermo::listen,thermo::task_setup_talk,thermo::talk);
-	Message.regist('D', devmngmsg::setup_listen, devmngmsg::listen, devmngmsg::setup_talk, devmngmsg::talk);
-//	message::regist('T',infrared_setup_listen,infrared_listen,infrared_task_setup_talk,infrared_talk);
-//	message::regist('S',h2s_message);
-//	message::regist('7',sht75_setup_listen,sht75_listen,sht75_task_setup_talk,sht75_talk);
-
 
 	while(1){
-		Device();
 		Service();
-		camera::work();
-		inertial::work();
-		//Watch Dog Timer リセット
-		devmng::clear_wdt();
-//		restart_wdt();
-
-		//DeviceManageの割り込み委譲処理関数
-		if(devmng::interrupt_yield())continue;
-
-		//早すぎるので待機
-		delay_ms(5);
+		System();
 
 		IO();
+
+		CO2();
+		Camera();
+		Inertial();
+
+		//早すぎるので待機
+		Service.delay.delay_ms(5);
 	}
 
-	//終端化処理
-
-
-	//デバイス終端化
-	devmng::finalize();
-	camera::finalize();
-	inertial::finalize();
-	thermo::finalize();
-	battery::finalize();
-
-	IO.unlock();
-	
+	//終端化処理	
 
 	return 0;
 }
