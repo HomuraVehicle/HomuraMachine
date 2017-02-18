@@ -20,7 +20,8 @@ v0_00/121208 hmIto
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>
 #include"System_base.hpp"
-#include"Message_base.hpp"
+#include"IO_base.hpp"
+#include"Service_base.hpp"
 #include"Device.hpp"
 namespace hmr {
 	namespace machine {
@@ -56,6 +57,7 @@ namespace hmr {
 						return dt;
 					}
 				}DataTask;
+				task::handler DataTaskHandler;
 			private:
 				//モード通知受領クラス
 				struct system_client : public system_client_interface{
@@ -76,7 +78,6 @@ namespace hmr {
 				public:
 					systems::mode::type mode()const{ return CurrrentMode; }
 				}SystemClient;
-				systems::element SystemElement;
 				//通信受領クラス
 				struct message_client : public message_client_interface{
 				private:
@@ -98,9 +99,11 @@ namespace hmr {
 							return dt;
 						}
 					}InformTask;
+					task::handler InformTaskHandler;
 				public:
-					message_client(this_type& Ref_)
-						: Ref(Ref_)
+					message_client(this_type& Ref_, com::did_t ID_, service_interface& Service_)
+						: message_client_interface(ID_)
+						, Ref(Ref_)
 						, DataMode_i(true)
 						, SendData_i(false)
 						, SendData1(0)
@@ -108,10 +111,10 @@ namespace hmr {
 						, SendData3(0)
 						, InformTask(*this){
 						//タスク登録
-						task::quick_start(InformTask, 5);
+						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
 					~message_client(){
-						task::stop(InformTask);
+						InformTaskHandler.stop(InformTask);
 					}
 				public:
 					void setup_talk(void){ return; }
@@ -166,15 +169,12 @@ namespace hmr {
 						SendData3 = SendData3_;
 					}
 				}MessageClient;
-				message::element MessageElement;
 			public:
-				cBattery(unsigned char ID_, system_host& SystemHost_, message_host& MessageHost_)
+				cBattery(unsigned char ID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
 					: DataMode(false)
 					, DataTask(*this)
 					, SystemClient(*this)
-					, SystemElement(system_client_holder(SystemClient))
-					, MessageClient(*this)
-					, MessageElement(message_client_holder(ID_, MessageClient)){
+					, MessageClient(*this, ID_, Service_){
 
 					//pin設定
 					ApinData1.lock();
@@ -182,15 +182,15 @@ namespace hmr {
 					ApinData3.lock();
 
 					//タスク登録
-					task::quick_start(DataTask, 5);
+					DataTaskHandler = Service_.task().quick_start(DataTask, 5);
 
 					//Client登録
-					SystemHost_.regist(SystemElement);
-					MessageHost_.regist(MessageElement);
+					System_.regist(SystemClient);
+					IO_.regist(MessageClient);
 				}
 				~cBattery(){
 					//タスク停止
-					task::stop(DataTask);
+					DataTaskHandler.stop(DataTask);
 					
 					ApinData1.unlock();
 					ApinData2.unlock();

@@ -63,9 +63,9 @@ v0_00/121216 iwahori
 #include<homuraLib_v2/machine/module/Sprite.hpp>
 #include<homuraLib_v2/static_buffer_allocator.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
-#include<homuraLib_v2/machine/service/task.hpp>
 #include"System_base.hpp"
-#include"Message_base.hpp"
+#include"IO_base.hpp"
+#include"Service_base.hpp"
 #include"Device.hpp"
 #include<XCBase/future.hpp>
 
@@ -343,8 +343,9 @@ namespace hmr {
 				bool can_getResultPowerReset()const{ return CanGetResultPowerReset; }
 				sprite_ans_type getResultPowerReset(){ CanGetResultPowerReset = false; return ResultPowerReset; }
 			public:
-				cSpriteCamera()
-					: SpriteLock(Sprite, true)
+				cSpriteCamera(service_interface& Service_)
+					: Sprite()
+					, SpriteLock(Sprite, true)
 					, PowerLightLock(PowerLight)
 					, IsAutoLight(false)
 					, Seq_take_and_read(*this)
@@ -358,6 +359,8 @@ namespace hmr {
 					, CanGetResultTakeAndRead(false)
 					, CanGetResultCommandReset(false)
 					, CanGetResultPowerReset(false){
+
+					Sprite.config(Service_.task());
 					PowerLight(false);
 				}
 				bool lock(){
@@ -494,8 +497,8 @@ namespace hmr {
 					bool can_getResultPowerReset()const{ return Camera.can_getResultPowerReset(); }
 					camera_ans_type getResultPowerReset(){ return Camera.getResultPowerReset(); }
 				public:
-					sensor_manager()
-						: Camera()
+					sensor_manager(service_interface& Service_)
+						: Camera(Service_)
 						, CameraPower(false)
 						, LightPower(false)
 						, MiniPacketMode(false)
@@ -514,7 +517,6 @@ namespace hmr {
 					}
 				};
 				sensor_manager CameraManager;
-				systems::element SystemElement;
 			private:
 				class message_client :public message_client_interface{
 				private:
@@ -551,9 +553,11 @@ namespace hmr {
 						}
 					};
 					inform_task InformTask;
+					task::handler InformTaskHandler;
 				public:
-					message_client(sensor_manager& Ref_)
-						: Ref(Ref_)
+					message_client(sensor_manager& Ref_, com::did_t ID_, service_interface& Service_)
+						: message_client_interface(ID_)
+						, Ref(Ref_)
 						, MiniPackMode_i(true)
 						, AutoTakePicMode_i(true)
 						, AutoResetMode_i(true)
@@ -568,10 +572,10 @@ namespace hmr {
 						, SendPictureData(false)
 						, SendErrorResult(false)
 						, InformTask(*this){
-						task::quick_start(InformTask, 5);
+						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
 					~message_client(){
-						task::stop(InformTask);
+						InformTaskHandler.stop();
 					}
 				public://override function of message_client_interface
 					void setup_listen(void)override{ return; }
@@ -834,15 +838,12 @@ namespace hmr {
 					}
 				};
 				message_client MessageClient;
-				message::element MessageElement;
 			public:
-				cCamera(unsigned char CameraID_, system_host& SystemHost_, message_host& MessageHost_)
-					: CameraManager()
-					, SystemElement(system_client_holder(CameraManager))
-					, MessageClient(CameraManager)
-					, MessageElement(message_client_holder(CameraID_, MessageClient)){
-					SystemHost_.regist(SystemElement);
-					MessageHost_.regist(MessageElement);
+				cCamera(unsigned char CameraID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
+					: CameraManager(Service_)
+					, MessageClient(CameraManager, CameraID_, Service_){
+					System_.regist(CameraManager);
+					IO_.regist(MessageClient);
 				}
 			public:
 				void operator()(){

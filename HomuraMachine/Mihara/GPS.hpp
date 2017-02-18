@@ -22,7 +22,8 @@ v0_00/121208 hmIto
 #include<homuraLib_v2/machine/module/GPSSwitcher.hpp>
 #include<HomuraMachine/Mihara/Device.hpp>
 #include"System_base.hpp"
-#include"Message_base.hpp"
+#include"IO_base.hpp"
+#include"Service_base.hpp"
 #include"Device.hpp"
 #include<XCBase/future.hpp>
 
@@ -83,7 +84,6 @@ namespace hmr {
 					gps_manager():GPS1(),GPS2(),GPSSwitcher(GPS1,GPS2),GPSPower(false){}
 				};
 				gps_manager GPSManager;
-				systems::element SystemElement;
 			private:
 				class message_client:public message_client_interface{
 				private:
@@ -107,18 +107,20 @@ namespace hmr {
 						}
 					};
 					inform_task InformTask;
+					task::handler InformTaskHandler;
 				public:
-					message_client(this_type& Ref_)
-						: Ref(Ref_)
+					message_client(this_type& Ref_, com::did_t ID_, service_interface& Service_)
+						: message_client_interface(ID_)
+						, Ref(Ref_)
 						, DataMode_i(true)
 						, Swap_i(false)
 						, PowerGPS_i(false)
 						, SendData(false){
 						
-						task::quick_start(InformTask, 5);
+						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
 					~message_client(){
-						task::stop(InformTask);
+						InformTaskHandler.stop();
 					}
 				public:
 					bool listen(hmLib::cstring Str) {
@@ -241,7 +243,6 @@ namespace hmr {
 					}
 				};
 				message_client MessageClient;
-				message::element MessageElement;
 			private:
 				bool DataMode;
 			private:
@@ -256,21 +257,20 @@ namespace hmr {
 					}
 				};
 				data_task DataTask;
+				task::handler DataTaskHandler;
 			public:
-				cGPS(unsigned char ID_,system_host& SystemHost_,message_host& MessageHost_)
+				cGPS(unsigned char ID_, system_client_interface& System_, io_interface& IO_, service_interface& Service_)
 					:GPSManager()
-					,SystemElement(system_client_holder(GPSManager))
-					,MessageClient(*this)
-					,MessageElement(message_client_holder(ID_, MessageClient))
+					,MessageClient(*this, ID_, Service_)
 					,DataMode(false)
 					,DataTask(*this){
-					SystemHost_.regist(SystemElement);
-					MessageHost_.regist(MessageElement);
+					System_.regist(GPSManager);
+					IO_.regist(MessageClient);
 
-					task::quick_start(DataTask,3);
+					DataTaskHandler = Service_.task().quick_start(DataTask, 3);
 				}
 				~cGPS(){
-					task::stop(DataTask);
+					DataTaskHandler.stop();
 				}
 			};
 		}

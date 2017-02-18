@@ -18,7 +18,8 @@ v0_00/130112 iwahori
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include<homuraLib_v2/machine/service/task.hpp>
 #include"System_base.hpp"
-#include"Message_base.hpp"
+#include"IO_base.hpp"
+#include"Service_base.hpp"
 #include"Device.hpp"
 namespace hmr {
 	namespace machine {
@@ -65,6 +66,7 @@ namespace hmr {
 						return dt;
 					}
 				}WdtTask;
+				task::handler WdtTaskHandler;
 			private:
 				//モード通知受領クラス
 				struct system_client : public system_client_interface{
@@ -94,14 +96,15 @@ namespace hmr {
 				public:
 					systems::mode::type mode()const{ return CurrrentMode; }
 				}SystemClient;
-				systems::element SystemElement;
 			private:
 				//通信受領クラス
 				struct message_client : public message_client_interface{
 				private:
 					this_type& Ref;
 				public:
-					message_client(this_type& Ref_): Ref(Ref_){}
+					message_client(this_type& Ref_, com::did_t ID_)
+						: message_client_interface(ID_)
+						, Ref(Ref_){}
 					~message_client(){}
 				public:
 					void setup_talk(void){ return; }
@@ -144,15 +147,12 @@ namespace hmr {
 					}
 
 				}MessageClient;
-				message::element MessageElement;
 			public:
-				cMotor(unsigned char ID_, system_host& SystemHost_, message_host& MessageHost_)
+				cMotor(unsigned char ID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
 					: wdt_count(0)
 					, WdtTask(*this)
 					, SystemClient(*this)
-					, SystemElement(system_client_holder(SystemClient))
-					, MessageClient(*this)
-					, MessageElement(message_client_holder(ID_, MessageClient)){
+					, MessageClient(*this, ID_){
 
 					PinMotorLA.lock();
 					PinMotorLB.lock();
@@ -162,13 +162,13 @@ namespace hmr {
 					PinMotorPower(true);
 					MotorPower = true;
 
-					task::quick_start(WdtTask, 5);
+					WdtTaskHandler = Service_.task().quick_start(WdtTask, 5);
 
-					SystemHost_.regist(SystemElement);
-					MessageHost_.regist(MessageElement);
+					System_.regist(SystemClient);
+					IO_.regist(MessageClient);
 				}
 				~cMotor(){
-					task::stop(WdtTask);
+					WdtTaskHandler.stop(WdtTask);
 
 					PinMotorLA.unlock();
 					PinMotorLB.unlock();
