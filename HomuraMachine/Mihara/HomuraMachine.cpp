@@ -93,8 +93,7 @@ v1_00/120921 hmIto
 using namespace hmr::machine::mihara;
 int main(void){
 	cDevice Device;
-	cMessage Message;
-	cSystem<typename cDevice::system_device> System('S', Message);
+	cSystem<typename cDevice::system_device> System('S');
 	cService<typename cDevice::service_device> Service(System);
 
 	//システムタスクを登録登録
@@ -144,6 +143,8 @@ int main(void){
 	while(1){
 		Device();
 		Service();
+		System();
+
 		camera::work();
 		inertial::work();
 		//Watch Dog Timer リセット

@@ -223,6 +223,9 @@ namespace hmr{
 				}
 			public:
 				void operator()(void){
+					//スリープなら終了
+					if(Uart.getMode() == io::mode::module_null)return;
+
 					//受信可能なデータがある場合
 					if(!com::in_empty()){
 						//受信データを取得

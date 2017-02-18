@@ -13,137 +13,189 @@ namespace hmr{
 				typedef cSystem this_type;
 			private:
 				pinDevicePower PinDevicePower;
+				xc::lock_guard<pinDevicePower> PinDevicePowerLock;
 			private:
-				struct mode_status{
+				typedef io::mode::type io_mode;
+				struct status{
 				private:
-					pinRedLED PinRedLED;
-					xc32::wdt WDT;
-				private:
-					sensor_mode SensorMode;
-					systems::chain Chain;
-				private:
-					//!現在通信可能なIO
-					io::mode::type CurIO;
-					//!現在の通信モード OFFの時やスイッチング中はCurIOとは異なる
-					io::mode::type IOMode;
-					io::mode_selector_interface* pIOModeSelector;
-				public:
-					io::mode::type currentIOMode()const{return CurIO;}
-					void setIOMode(io::mode::type IOMode_){
-						if(IOMode != IOMode_){
-							pIOModeSelector->setModuleMode(IOMode_);
-							IOMode = IOMode_;
-						}
-					}
-					void setSystemMode(systems::mode::type SystemMode_){
-						if(SensorMode != SystemMode_){
-							for(systems::chain::iterator Itr = Chain.begin(); Itr != Chain.end(); ++Itr){
-								(*Itr)(SystemMode_, SensorMode);
-								SensorMode = SystemMode_;
+					struct io_mode_holder{
+					private:
+						//!現在通信可能なIO
+						io_mode CurIO;
+						//!現在の通信モード OFFの時やスイッチング中はCurIOとは異なる
+						io_mode IOMode;
+						io::mode_selector_interface* pIOModeSelector;
+					public:
+						io_mode getSelectIO()const{ return CurIO; }
+						io_mode get()const{ reutnr IOMode; }
+						void set(io_mode IOMode_){
+							if(IOMode != IOMode_){
+								pIOModeSelector->setModuleMode(IOMode_);
+								IOMode = IOMode_;
+
+								if(IOMode != io::mode::module_null){
+									CurIO = IOMode;
+								}
 							}
 						}
-					}
-				private:
-				private:
-					struct mode_interface{
+					};
+					struct system_mode_holder{
+					private:
+						sensor_mode SensorMode;
+						systems::chain Chain;
 					public:
-						//!@brief モード遷移後、最初の処理
-						virtual void start(mode_status& Status) = 0;
-						//!@brief モード中のタスク呼び出し時の処理
-						virtual void task(hmr::task::duration Duration, mode_status& Status) = 0;
-						//!@brief モード中のメインループ呼び出し時の処理
-						virtual void work(mode_status& Status) = 0;
+						sensor_mode get()const{ return SensorMode; }
+						void set(systems::mode::type SystemMode_){
+							if(SensorMode != SystemMode_){
+								for(systems::chain::iterator Itr = Chain.begin(); Itr != Chain.end(); ++Itr){
+									(*Itr)(SystemMode_, SensorMode);
+									SensorMode = SystemMode_;
+								}
+							}
+						}
+						void regist(systems_client_interface& rElement_){
+							Chain.push_back(rElement_);
+						}
 					};
 				public:
-					struct sleep_mode: public mode_interface{
-						struct phase_counter{
-						private:
-							unsigned int RemPhaseLength;
-							unsigned int Interval;
-							unsigned int Cnt;
-						public:
-							phase_counter():RemPhaseLength(60), Interval(120),Cnt(0){}
-							bool set_interval(unsigned int RemPhaseLengthSec_, unsigned int IntervalSec_){
-								if(RemPhaseLengthSec_ > Interval)return true;
+					pinRedLED PinRedLED;
+					xc32::wdt WDT;
+					io_mode_holder IOMode;
+					system_mode_holder SystemMode;
+				private:
+					xc::lock_guard<pinRedLED> PinRedLEDLock;
+					xc::lock_guard<xc32::wdt> WDTLock;
+				public:
+					status()
+						: PinRedLEDLock(PinRedLED)
+						, WDTLock(WDT){
+						PinRedLED(false);
+						WDT.disable();
+					}
+				}Status;
+				struct mode_interface{
+				public:
+					//!@brief モード遷移後、最初の処理
+					virtual void start(status& Status) = 0;
+					//!@brief モード中のタスク呼び出し時の処理
+					virtual void task(hmr::task::duration Duration, status& Status) = 0;
+					//!@brief モード中のメインループ呼び出し時の処理
+					virtual void work(status& Status) = 0;
+				};
+				struct normal_mode{
+				private:
+					unsigned int Cnt = 0;
+				public:
+					//!@brief モード遷移後、最初の処理
+					virtual void start(status& Status){
+						Status.WDT.enable();
+					}
+					//!@brief モード中のタスク呼び出し時の処理
+					virtual void task(hmr::task::duration Duration, status& Status){
+						if(Cnt == 0 || (Cnt == 2 && Status.IOMode.getSelectIO() == io::mode::module_phone)){
+							Status.PinRedLED(true);
+						} else{
+							Status.PinRedLED(false);
+						}
+						Cnt = (Cnt + 1)%4;
+					}
+					//!@brief モード中のメインループ呼び出し時の処理
+					virtual void work(status& Status){
+						Status.WDT.clear();
+					}
+				};
+				struct sleep_mode : public mode_interface{
+				private:
+					unsigned int Cnt;
+					//!@brief 全体のモード遷移の基準となるインターバル
+					unsigned int Interval;
+					//!@brief Rem（通信起動時間）の長さ Intervalと一致すると、SleepせずRoamingのみ
+					unsigned int RemPhaseLength;
+					//!@brief 通信機自動切り替え探索の間隔 0,だと切り替えない
+					unsigned int RoamingInterval;
+				public:
+					sleep_mode() :Cnt(0), RemPhaseLength(60), Interval(120), RoamingInterval(30){}
+					void set(unsigned int Cnt_, unsigned int Interval_, unsigned int RemPhaseLength_, unsigned int RoamingInterval_){
+						Cnt = Cnt_;
+						Interval = Interval_;
+						RemPhaseLength = RemPhaseLength_;
+						RoamingInterval = RoamingInterval_;
+					}
+					void start(mode_status& Status){
+						Status.WDT.disable();
 
-								RemPhaseLength = RemPhaseLengthSec_;
-								Interval = IntervalSec_;
-								if(Cnt > Interval)Cnt = 0;
-								return false;
+						if(Cnt<RemPhaseLength){
+							if(RoamingInterval== 0 || (Cnt%RoamingInterval) % 2 == 0){
+								Status.IOMode.set(Status.getSelectIO());
+							} else{
+								Status.IOMode.set(Status.getSelectIO() == io::mode::module_phone ? io::mode::module_rf : io::mode::module_phone);
 							}
-							void clear(){ Cnt = 0; }
-							bool progress(unsigned int CntSec_){
-								bool PrevIsRem = is_rem();
-								Cnt = ((Cnt+CntSec)%Interval);
-								return PrevIsRem != is_rem();
-							}
-							bool is_rem()const{ return RemPhaseLength <= Cnt; }
-							unsigned int counter()const{ return Cnt; }
-						}PhaseCounter;
-					public:
-						void start(mode_status& Status){
-							WDT.disable();
+							Status.setSystemMode(systems::mode::passive);
+						} else{
+							Status.setIOMode(io::mode::module_null);
+							Status.setSystemMode(systems::mode::sleep);
+						}
+					}
+					void task(hmr::task::duration Duration, mode_status& Status){
+						bool PrevIsRem = (Cnt<RemPhaseLength);
+						bool PreDefaultIO = (RoamingInterval == 0 || (Cnt%RoamingInterval) % 2 == 0);
+						Cnt = ((Cnt + Duration) % Interval);
+						bool IsRem = (Cnt<RemPhaseLength);
+						bool DefaultIO = (RoamingInterval == 0 || (Cnt%RoamingInterval) % 2 == 0);
 
-							if(PhaseCounter.is_rem()){
-								Status.setIOMode(Status.currentIOMode());
+
+						if(PrevIsRem != IsRem){
+							if(IsRem){
+								Status.setIOMode(Status.IOMode.getSelectIO());
 								Status.setSystemMode(systems::mode::passive);
 							} else{
 								Status.setIOMode(io::mode::sleep);
 								Status.setSystemMode(systems::mode::sleep);
 							}
-						}
-						void task(hmr::task::duration Duration, mode_status& Status){
-							if(PhaseCounter.progress(Duration)){
-								if(PhaseCounter.is_rem()){
-									Status.setIOMode(Status.currentIOMode());
-									Status.setSystemMode(systems::mode::passive);
-								} else{
-									Status.setIOMode(io::mode::sleep);
-									Status.setSystemMode(systems::mode::sleep);
-								}
-							}
-
-							if(PhaseCounter.is_rem()){
-								if(Status.currentIOMode() == io::mode::module_phone){
-									PinRedLED(PhaseCounter.counter() % 3 == 0);
-								} else{
-									PinRedLED(PhaseCounter.counter() % 3 != 0);
-								}
+						} else if(PreDefaultIO != DefaultIO){
+							if(DefaultIO){
+								Status.IOMode.set(Status.getSelectIO());
 							} else{
-								PinRedLED(PhaseCounter.counter() % 4<2);
+								Status.IOMode.set(Status.getSelectIO() == io::mode::module_phone ? io::mode::module_rf : io::mode::module_phone);
 							}
 						}
-						void work(mode_status& Status){}
-					};
 
-				private:
-					struct mode_task :public hmr::task::client_interface{
-					public:
-						//task::client_interface
-						virtual duration operator()(duration Duration_) = 0;
-					};
-				private:
-					xc::lock_guard<pinRedLED> PinRedLEDLock;
-					xc::lock_guard<pinDevicePower> PinDevicePowerLock;
-					xc::lock_guard<xc32::wdt> WDTLock;
-				};
-				//モード制御クラス
-				struct mode_driver{
-					uint16 RoamingSecInterval;
-				private:
-				public:
-					mode_driver()
-						: SensorMode(sensor_sleep)
-						, IOMode(io_sleep)
-						, SleepSecRem(0)
-						, SleepSecNonRem(0)
-						, RoamingSecInterval(0){}
-					void setMode(io_mode IOMode_, semsor_mode SensorMode_){
+						if(Cnt<RemPhaseLength){
+							if(Status.IOMode.getSelectIO() == io::mode::module_phone){
+								Status.PinRedLED(Cnt % 3 == 0);
+							} else{
+								Status.PinRedLED(Cnt % 3 != 0);
+							}
+						} else{
+							Status.PinRedLED(Cnt % 4<2);
+						}
 					}
-				};
+					void work(mode_status& Status){}
+				};	
+				mode_interface* pMode;
+				normal_mode NormalMode;
+				sleep_mode RoamingMode;
+				sleep_mode SleepMode;
+				sleep_mode RoamingSleepMode;
+			private:
 				void kill(){
 					PinDevicePower(false);
-					PinRedLED(false);
+				}
+			private:
+				class system_task :public hmr::task::client_interface{
+				private:
+					this_type& Ref;
+				public:
+					system_task(this_type& Ref_) :Ref(Ref_){}
+					duration operator()(duration dt){
+						Ref.pMode->task(dt, Status);
+						return dt;
+					}
+				};
+				system_task Task;
+			public:
+				void operator()(void){
+					pMode->work(Status);
 				}
 			private:
 				//通信受領クラス
@@ -208,8 +260,9 @@ namespace hmr{
 						case 0x10:
 							if(hmLib::cstring_size(&Str) == 1)return true;
 							switch(hmLib::cstring_getc(&Str, 1)){
-							case 0x00:// normal 
-								devmng::mode_set(devmng::NormalMode);
+							case 0x00:// normal
+								Ref.pMode = &Ref.NormalMode;
+								Ref.pMode->start(Ref.Status);
 
 								NormalMode_i = true;
 								return false;
@@ -219,7 +272,7 @@ namespace hmr{
 								SleepSecNonRem = ((uint16)hmLib::cstring_getc(&Str, 2) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 3) * 256;
 								SleepSecRem = ((uint16)hmLib::cstring_getc(&Str, 4) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 5) * 256;
 								// sleep mode　設定準備
-								devmng::sleep_setInterval(SleepSecNonRem, SleepSecRem);
+								Ref.SleepMode.set(SleepSecRem, SleepSecRem+ SleepSecNonRem, SleepSecRem, 0);
 								//devmng::sleep_getInterval(&SleepSecNonRem, &SleepSecRem); 
 								// code 取得
 								SleepCode = service::lockcode();
@@ -231,10 +284,8 @@ namespace hmr{
 								if(hmLib::cstring_size(&Str) != 3)return true;
 								// code のチェック
 								if(hmLib::cstring_getc(&Str, 2) == SleepCode){// 一致
-																						  // inform 関数のセット
-
-																						  // sleep の実行
-									devmng::mode_set(devmng::SleepMode);
+									Ref.pMode = &Ref.SleepMode;
+									Ref.pMode->start(Ref.Status);
 								} else{
 									// 失敗通知
 									SleepModeCodeFail = true;
@@ -245,7 +296,7 @@ namespace hmr{
 								if(hmLib::cstring_size(&Str) != 4)return true;
 								RoamingSecInterval = ((uint16)hmLib::cstring_getc(&Str, 2) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 3) * 256;
 								// sleep mode　設定準備
-								devmng::roaming_setInterval(RoamingSecInterval);
+								Ref.RoamingMode.set(0, RoamingSecInterval*2, RoamingSecInterval*2, RoamingSecInterval);
 								//devmng::roaming_getInterval(&RoamingSecInterval); 
 								// code 取得
 								RoamingCode = service::lockcode();
@@ -256,10 +307,8 @@ namespace hmr{
 								if(hmLib::cstring_size(&Str) != 3)return true;
 								// code のチェック
 								if(hmLib::cstring_getc(&Str, 2) == RoamingCode){// 一致
-																							// inform 関数のセット
-
-																							// roaming の実行
-									devmng::mode_set(devmng::RoamingMode);
+									Ref.pMode = &Ref.RoamingMode;
+									Ref.pMode->start(Ref.Status);
 								} else{
 									// 失敗通知
 									RoamingModeCodeFail = true;
@@ -276,8 +325,7 @@ namespace hmr{
 							if(hmLib::cstring_size(&Str) != 2)return true;
 							// code のチェック
 							if(hmLib::cstring_getc(&Str, 1) == KillCode){// 一致
-																					 // kill の実行
-								devmng::kill();
+								Ref.kill();
 							} else{
 								// 失敗通知
 								KillCodeFail = true;
@@ -405,19 +453,17 @@ namespace hmr{
 			public:
 				//system host function
 				void regist(systems_client_interface& rElement_){
-					Chain.push_back(rElement_);
+					Status.SystemMode.regist(rElement_);
 				}
 			public:
 				cSystem(unsigned char ID_, message_host& MessageHost_)
-					: PinRedLED()
-					, PinDevicePower()
-					, PinRedLEDLock(PinRedLED)
+					: PinDevicePower()
 					, PinDevicePowerLock(PinDevicePower)
 					, MessageClient(*this)
-					, MessageElement(message_client_holder(ID_,MessageClient)){
-					MessageHost_.regist(MessageElement);
-				}
-				void operator()(void){
+					, pMode(&NormalMode){
+					MessageHost_.regist(MessageClient);
+					PinDevicePower(true);
+					pMode->start(Status);
 				}
 			};
 		}
