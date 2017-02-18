@@ -31,7 +31,7 @@ namespace hmr {
 				using this_type = cThermo<thermo_device_>;
 			private:
 				//analog pin
-				apinData ApinData;
+				typename thermo_device_::apinData ApinData;
 			private:
 				//mode of sensor
 				bool DataMode;
@@ -64,7 +64,7 @@ namespace hmr {
 					system_client(this_type& Ref_):Ref(Ref_){}
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
 						switch(NewMode_){
-						case systems::mode::drive:
+						case systems::mode::observe:
 							break;
 						default:
 							break;
@@ -163,7 +163,7 @@ namespace hmr {
 				cThermo(unsigned char ID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
 					: DataMode(false)
 					, DataTask(*this)
-					, SysemClient(*this)
+					, SystemClient(*this)
 					, MessageClient(*this, ID_, Service_){
 
 					ApinData.lock();
@@ -172,11 +172,11 @@ namespace hmr {
 					IO_.regist(MessageClient);
 				}
 				~cThermo(){
-					DataTaskHandler.stop(DataTask);
+					DataTaskHandler.stop();
 					ApinData.unlock();
 				}
 				void operator()(){
-					if(FututeData.valid() && FutureData.can_get()){
+					if(FutureData.valid() && FutureData.can_get()){
 						MessageClient.setSendData(FutureData.get());
 					}
 				}

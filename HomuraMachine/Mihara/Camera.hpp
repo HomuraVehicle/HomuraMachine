@@ -400,8 +400,10 @@ namespace hmr {
 				private:
 					class sprite1_identifer{};
 					using my_camera = cSpriteCamera<camera_device_, sprite1_identifer>;
-					using camera_ans_type = my_camera::sprite_ans_type;
-					using camera_error_type = my_camera::sprite_error_type;
+				public:
+					using camera_ans_type = typename my_camera::sprite_ans_type;
+					using camera_error_type = typename my_camera::sprite_error_type;
+					using camera_status_type = typename my_camera::sprite_status_type;
 				private:
 					my_camera Camera;
 					bool CameraPower;
@@ -415,7 +417,7 @@ namespace hmr {
 				public://override function of system_client_interface
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_)override{
 						switch(NewMode_){
-						case systems::mode::drive:
+						case systems::mode::observe:
 							if(CameraPower){
 								Camera.lock();
 							}
@@ -435,7 +437,7 @@ namespace hmr {
 				public:
 					systems::mode::type mode()const{ return CurrentMode; }
 					void setCameraPower(bool OnOff_){
-						if((CameraPower != OnOff_) && CurrentMode == systems::mode::drive){
+						if((CameraPower != OnOff_) && CurrentMode == systems::mode::observe){
 							if(OnOff_)Camera.lock();
 							else Camera.unlock();
 						}
@@ -444,33 +446,33 @@ namespace hmr {
 					bool getCameraPower()const{ return CameraPower; }
 					void setLightPower(bool OnOff_){
 						LightPower = OnOff_;
-						if(CurrentMode == systems::mode::drive)Camera.setLight(LightPower);
+						if(CurrentMode == systems::mode::observe)Camera.setLight(LightPower);
 					}
 					bool getLightPower()const{ return LightPower; }
 					void setMiniPacketMode(bool OnOff_){
 						MiniPacketMode = OnOff_;
-						if(CurrentMode == systems::mode::drive)Camera.setMiniPacketMode(MiniPackerMode);
+						if(CurrentMode == systems::mode::observe)Camera.setMiniPacketMode(MiniPacketMode);
 					}
 					bool getMiniPacketMode()const{ return MiniPacketMode; }
 					void setAutoLight(bool OnOff_){
 						AutoLight = OnOff_;
-						if(CurrentMode == systems::mode::drive)Camera.setAutoLightMode(AutoLight);
+						if(CurrentMode == systems::mode::observe)Camera.setAutoLightMode(AutoLight);
 					}
 					bool getAutoLight()const{ return AutoLight; }
 					void setAutoReset(bool OnOff_){
 						AutoReset = OnOff_;
-						if(CurrentMode == systems::mode::drive)Camera.setAutoResetMode(AutoReset);
+						if(CurrentMode == systems::mode::observe)Camera.setAutoResetMode(AutoReset);
 					}
 					bool getAutoReset()const{ return AutoReset; }
 					void setAutoTakePicMode(camera::imagesize::type PictureSize_){
 						AutoTakePicImageSize = PictureSize_;
-						if(CurrentMode == systems::mode::drive)Camera.auto_takePicture(AutoTakePicImageSize);
+						if(CurrentMode == systems::mode::observe)Camera.auto_takePicture(AutoTakePicImageSize);
 					}
 					camera::imagesize::type getAutoTakePicMode()const{ return AutoTakePicImageSize; }
 				public://wrapper functions of cSpriteCamera
-					sprite_status_type  status(){ return Camera.status(); }
+					camera_status_type  status(){ return Camera.status(); }
 					void takePicture(camera::imagesize::type ImageSize_){
-						if(CurrentMode == systems::mode::drive && Camera.is_lock())Camera.takePicture(ImageSize);
+						if(CurrentMode == systems::mode::observe && Camera.is_lock())Camera.takePicture(ImageSize_);
 					}
 					//引数がimagesize::nullなら、auto_takePicture無効
 					//void auto_takePicture(camera::imagesize::type ImageSize_){ AutoTakeImageSize = ImageSize_; }
@@ -478,11 +480,11 @@ namespace hmr {
 					bool is_auto_takePicture()const{ return AutoTakePicImageSize != camera::imagesize::null; }
 					//カメラのコマンドリセット
 					void command_reset(){ 
-						if(CurrentMode == systems::mode::drive && Camera.is_lock())Camera.command_reset();
+						if(CurrentMode == systems::mode::observe && Camera.is_lock())Camera.command_reset();
 					}
 					//カメラのパワーリセット
 					void power_reset(){
-						if(CurrentMode == systems::mode::drive && Camera.is_lock())Camera.power_reset();
+						if(CurrentMode == systems::mode::observe && Camera.is_lock())Camera.power_reset();
 					}
 					//全命令のキャンセル
 					void cancel(){ Camera.cancel(); }
@@ -677,7 +679,7 @@ namespace hmr {
 						case 0x70:	//強制リセット要求
 									//強制リセットをかける
 							Ref.power_reset();
-							Error = sensor_manager::camera_error_type();
+							Error = typename sensor_manager::camera_error_type();
 							SendErrorResult = false;
 
 							return false;
@@ -832,7 +834,7 @@ namespace hmr {
 						return true;
 					}
 				public:
-					void setSendErrorData(sensor_manager::camera_error_type Error_){
+					void setSendErrorData(typename sensor_manager::camera_error_type Error_){
 						Error = Error_;
 						SendErrorResult = true;
 					}
@@ -849,24 +851,24 @@ namespace hmr {
 				void operator()(){
 					CameraManager();
 					//PicInfoを待っている場合
-					if(Ref.can_getPictureInfo())MessageClient.setSendPictureInfo(true);
-					if(Ref.can_readPictureData())MessageClient.setSendPictureData(true);
+					if(CameraManager.can_getPictureInfo())MessageClient.setSendPictureInfo(true);
+					if(CameraManager.can_readPictureData())MessageClient.setSendPictureData(true);
 
 					//エラーの有無を確認
-					if(Ref.can_getResultTakeAndRead()){
-						typename sensor_manager::camera_ans_type AnsType = Ref.getResultTakeAndRead();
+					if(CameraManager.can_getResultTakeAndRead()){
+						typename sensor_manager::camera_ans_type AnsType = CameraManager.getResultTakeAndRead();
 						if(!AnsType){
 							MessageClient.setSendErrorData(AnsType.alternate());
 						}
 					}
-					if(Ref.can_getResultCommandReset()){
-						typename sensor_manager::camera_ans_type AnsType = Camera.getResultCommandReset();
+					if(CameraManager.can_getResultCommandReset()){
+						typename sensor_manager::camera_ans_type AnsType = CameraManager.getResultCommandReset();
 						if(!AnsType){
 							MessageClient.setSendErrorData(AnsType.alternate());
 						}
 					}
-					if(Ref.can_getResultPowerReset()){
-						typename sensor_manager::camera_ans_type AnsType = Camera.getResultPowerReset();
+					if(CameraManager.can_getResultPowerReset()){
+						typename sensor_manager::camera_ans_type AnsType = CameraManager.getResultPowerReset();
 						if(!AnsType){
 							MessageClient.setSendErrorData(AnsType.alternate());
 						}

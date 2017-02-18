@@ -30,9 +30,9 @@ namespace hmr {
 				typedef cCO2<co2_device_> this_type;
 			private:
 				//ピンフラグ
-				apinData ApinData;
-				setPumpPower PinPowerPump;
-				setSensorPower PinPowerSensor;
+				typename co2_device_::apinData ApinData;
+				typename co2_device_::powerPump PinPowerPump;
+				typename co2_device_::powerSensor PinPowerSensor;
 			private:
 				//モード
 				bool DataMode;
@@ -45,11 +45,11 @@ namespace hmr {
 				}
 				void setPowerSensor(bool OnOff){
 					PowerSensorMode = OnOff;
-					if(SystemClient.mode() == systems::mode::drive)PinPowerSensor(OnOff);
+					if(SystemClient.mode() == systems::mode::observe)PinPowerSensor(OnOff);
 				}
 				void setPowerPump(bool OnOff){
 					PowerPumpMode = OnOff;
-					if(SystemClient.mode() == systems::mode::drive)PinPowerPump(OnOff);
+					if(SystemClient.mode() == systems::mode::observe)PinPowerPump(OnOff);
 				}
 				bool getDataMode()const{ return DataMode; }
 				bool getPowerSensor()const{ return PowerPumpMode; }
@@ -79,9 +79,9 @@ namespace hmr {
 					system_client(this_type& Ref_) :Ref(Ref_){}
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
 						switch(NewMode_){
-						case systems::mode::drive:
-							Ref.PinPowerPump(PowerPumpMode);
-							Ref.PinPowerSensor(PowerSensorMode);
+						case systems::mode::observe:
+							Ref.PinPowerPump(Ref.PowerPumpMode);
+							Ref.PinPowerSensor(Ref.PowerSensorMode);
 							break;
 						default:
 							Ref.PinPowerPump(false);
@@ -91,7 +91,7 @@ namespace hmr {
 						CurrentMode = NewMode_;
 					}
 				public:
-					systems::mode::type mode()const{ return CurrrentMode; }
+					systems::mode::type mode()const{ return CurrentMode; }
 				}SystemClient;
 			private:
 				//通信受領クラス
@@ -144,18 +144,18 @@ namespace hmr {
 							if(Ref.getDataMode())hmLib::cstring_putc(pStr, 0, 0x10);
 							else hmLib::cstring_putc(pStr, 0, 0x11);
 							return false;
-						} else if(PowerSensor_i){
+						} else if(PowerSensorMode_i){
 							PowerSensorMode_i = false;
 
 							service::cstring_construct_safe(pStr, 1);
-							if(Ref.getSensorPower())hmLib::cstring_putc(pStr, 0, 0x20);
+							if(Ref.getPowerSensor())hmLib::cstring_putc(pStr, 0, 0x20);
 							else hmLib::cstring_putc(pStr, 0, 0x21);
 							return false;
-						} else if(PowerPump_i){
+						} else if(PowerPumpMode_i){
 							PowerPumpMode_i = false;
 
 							service::cstring_construct_safe(pStr, 1);
-							if(Ref.getPumpPower())hmLib::cstring_putc(pStr, 0, 0x30);
+							if(Ref.getPowerPump())hmLib::cstring_putc(pStr, 0, 0x30);
 							else hmLib::cstring_putc(pStr, 0, 0x31);
 							return false;
 						} else if(SendData_i){
@@ -183,19 +183,19 @@ namespace hmr {
 							return false;
 						case 0x20://sensor on
 							PowerSensorMode_i = true;
-							Ref.setSensorPower(true);
+							Ref.setPowerSensor(true);
 							return false;
 						case 0x21://sensor on
 							PowerSensorMode_i = true;
-							Ref.setSensorPower(false);
+							Ref.setPowerSensor(false);
 							return false;
 						case 0x30://pump on
 							PowerPumpMode_i = true;
-							Ref.setPumpPower(true);
+							Ref.setPowerPump(true);
 							return false;
 						case 0x31://pump off
 							PowerPumpMode_i = true;
-							Ref.setPumpPower(false);
+							Ref.setPowerPump(false);
 							return false;
 						default:
 							return true;
@@ -217,7 +217,7 @@ namespace hmr {
 					, MessageClient(*this, ID_, Service_){
 
 					//pin設定
-					ApinData.lock(xc32::sfr::adc::vref_mode::vref_Vref_Gnd, 1);
+					ApinData.lock();
 					PinPowerPump.lock();
 					PinPowerSensor.lock();
 
@@ -231,12 +231,12 @@ namespace hmr {
 				}
 				~cCO2(){
 					//タスク停止
-					DataTaskHandler.stop(DataTask);
+					DataTaskHandler.stop();
 				}
 				void operator()(void){
-					if(!FutureData.valid())return 0xffff;
-					if(!FutureData.can_get())return 0xffff;
-					MessageClient.setSendData(FutureData.get(););
+					if(!FutureData.valid())return;
+					if(!FutureData.can_get())return;
+					MessageClient.setSendData(FutureData.get());
 				}
 			};
 		}

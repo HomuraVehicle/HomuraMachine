@@ -27,17 +27,17 @@ namespace hmr {
 			class cMotor :public motor_device_{
 				using this_type = cMotor<motor_device_>;
 			private:
-				pinMotorLA PinMotorLA;
-				pinMotorLB PinMotorLB;
-				pinMotorRA PinMotorRA;
-				pinMotorRB PinMotorRB;
-				pinMotorPower PinMotorPower;
+				typename motor_device_::pinMotorLA PinMotorLA;
+				typename motor_device_::pinMotorLB PinMotorLB;
+				typename motor_device_::pinMotorRA PinMotorRA;
+				typename motor_device_::pinMotorRB PinMotorRB;
+				typename motor_device_::pinMotorPower PinMotorPower;
 			private:
 				bool MotorPower;
 			private:
 				void setMotorPower(bool OnOff_){
 					MotorPower = OnOff_;
-					if(SystemClient.mode() == systems::mode::drive)PinMotorPower(MotorPower);
+					if(SystemClient.mode() == systems::mode::observe)PinMotorPower(MotorPower);
 				}
 				bool getMotoPower()const{ return MotorPower; }
 			private:
@@ -53,7 +53,7 @@ namespace hmr {
 				public:
 					wdt_task(this_type& Ref_):Ref(Ref_){}
 					duration operator()(duration dt){
-						Ref_.increment_wdt_count();
+						Ref.increment_wdt_count();
 
 						if(Ref.get_wtd_count() >= 2){
 							Ref.clear_wdt_count();
@@ -76,7 +76,7 @@ namespace hmr {
 					system_client(this_type& Ref_):Ref(Ref_){}
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
 						switch(NewMode_){
-						case systems::mode::drive:
+						case systems::mode::observe:
 							Ref.PinMotorLA(0);
 							Ref.PinMotorLB(0);
 							Ref.PinMotorRA(0);
@@ -93,7 +93,7 @@ namespace hmr {
 						CurrentMode = NewMode_;
 					}
 				public:
-					systems::mode::type mode()const{ return CurrrentMode; }
+					systems::mode::type mode()const{ return CurrentMode; }
 				}SystemClient;
 			private:
 				//通信受領クラス
@@ -111,13 +111,13 @@ namespace hmr {
 					void setup_listen(void){ return; }
 					bool listen(hmLib::cstring Str){
 						//左車輪制御
-						if(cstring_getc(&Str, 1) != 0x00){
+						if(hmLib::cstring_getc(&Str, 1) != 0x00){
 							Ref.PinMotorLA(1);
 							Ref.PinMotorLB(1);
-						} else if(cstring_getc(&Str, 0) == 0x64){
+						} else if(hmLib::cstring_getc(&Str, 0) == 0x64){
 							Ref.PinMotorLA(1);
 							Ref.PinMotorLB(0);
-						} else if(cstring_getc(&Str, 0) == 0x9C){
+						} else if(hmLib::cstring_getc(&Str, 0) == 0x9C){
 							Ref.PinMotorLA(0);
 							Ref.PinMotorLB(1);
 						} else{
@@ -126,13 +126,13 @@ namespace hmr {
 						}
 
 						//右車輪制御
-						if(cstring_getc(&Str, 3) != 0x00){
+						if(hmLib::cstring_getc(&Str, 3) != 0x00){
 							Ref.PinMotorRA(1);
 							Ref.PinMotorRB(1);
-						} else if(cstring_getc(&Str, 2) == 0x64){
+						} else if(hmLib::cstring_getc(&Str, 2) == 0x64){
 							Ref.PinMotorRA(1);
 							Ref.PinMotorRB(0);
-						} else if(cstring_getc(&Str, 2) == 0x9C){
+						} else if(hmLib::cstring_getc(&Str, 2) == 0x9C){
 							Ref.PinMotorRA(0);
 							Ref.PinMotorRB(1);
 						} else{
@@ -167,7 +167,7 @@ namespace hmr {
 					IO_.regist(MessageClient);
 				}
 				~cMotor(){
-					WdtTaskHandler.stop(WdtTask);
+					WdtTaskHandler.stop();
 
 					PinMotorLA.unlock();
 					PinMotorLB.unlock();

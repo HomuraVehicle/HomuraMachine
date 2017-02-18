@@ -28,7 +28,6 @@ v0_00/121208 hmIto
 #include<XCBase/future.hpp>
 #include<homuraLib_v2/machine/module/GyroL3G4200D.hpp>
 #include<homuraLib_v2/machine/module/AcceleCompassLSM303DLH.hpp>
-//#include<homuraLib_v2/task.hpp>
 #include<XC32/i2c.hpp>
 #include<hmLib/coordinates.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
@@ -163,7 +162,7 @@ namespace hmr {
 				private:
 					sensor Sensor;
 					bool SensorPower;
-					bool AxelDataMdode:
+					bool AxelDataMode;
 					bool CompassDataMode;
 					bool GyroDataMode;
 				private:
@@ -171,7 +170,7 @@ namespace hmr {
 				public://override funcition of system_client_interface
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_)override{
 						switch(NewMode_){
-						case systems::mode::drive:
+						case systems::mode::observe:
 							Sensor.PowerInertial(SensorPower);
 							break;
 						default:
@@ -184,7 +183,7 @@ namespace hmr {
 					systems::mode::type mode()const{ return CurrentMode; }
 					void setSensorPower(bool OnOff_){
 						SensorPower = OnOff_;
-						if(CurrentMode = systems::mode::drive)Sensor.InertialPower(SensorPower);
+						if(CurrentMode = systems::mode::observe)Sensor.InertialPower(SensorPower);
 					}
 					bool getSensorPower()const{ return SensorPower; }
 					void setAxelDataMode(bool OnOff_){ 
@@ -221,7 +220,7 @@ namespace hmr {
 					sensor_manager(service_interface& Service_)
 						: Sensor(Service_)
 						, SensorPower(true)
-						, AxelDataMdode(false)
+						, AxelDataMode(false)
 						, CompassDataMode(false)
 						, GyroDataMode(false){
 						Sensor.lock();
@@ -231,12 +230,12 @@ namespace hmr {
 					}
 				public:
 					void operator()(){
-						if(CurrentMode == systems::mode::drive && SensorPower){
+						if(CurrentMode == systems::mode::observe && SensorPower){
 							Sensor();
 						}
 					}
 				};
-				senstor_manager SensorManager;
+				sensor_manager SensorManager;
 			private:
 				class axel_message_client :public message_client_interface{
 				private:
@@ -556,7 +555,8 @@ namespace hmr {
 					void setup_listen(void){ return; }
 					void setup_talk(void){ return; }
 				};
-				compass_message_client GyroMessageClient;
+				gyro_message_client GyroMessageClient;
+			public:
 				cInertial(unsigned char AxelID_, unsigned char CompassID_, unsigned char GyroID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
 					: SensorManager(Service_)
 					, AxelMessageClient(SensorManager, AxelID_, Service_)

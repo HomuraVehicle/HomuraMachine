@@ -27,16 +27,16 @@ namespace hmr {
 		namespace mihara {
 			template<typename battery_device_>
 			struct cBattery :public battery_device_{
-				using this_type = battery_device_;
+				using this_type = cBattery<battery_device_>;
 			private:
-				apinData1 ApinData1;
-				apinData2 ApinData2;
-				apinData3 ApinData3;
+				typename battery_device_::apinData1 ApinData1;
+				typename battery_device_::apinData2 ApinData2;
+				typename battery_device_::apinData3 ApinData3;
 			private:
 				bool DataMode;
-				xc32::future<uint16> FututeData1;
-				xc32::future<uint16> FututeData2;
-				xc32::future<uint16> FututeData3;
+				xc32::future<uint16> FutureData1;
+				xc32::future<uint16> FutureData2;
+				xc32::future<uint16> FutureData3;
 			private:
 				void setDataMode(bool OnOff_){ DataMode = OnOff_; }
 				bool getDataMode()const{ return DataMode; }
@@ -67,7 +67,7 @@ namespace hmr {
 					system_client(this_type& Ref_):Ref(Ref_){}
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
 						switch(NewMode_){
-						case systems::mode::drive:
+						case systems::mode::observe:
 							break;
 						default:
 							break;
@@ -75,7 +75,7 @@ namespace hmr {
 						CurrentMode = NewMode_;
 					}
 				public:
-					systems::mode::type mode()const{ return CurrrentMode; }
+					systems::mode::type mode()const{ return CurrentMode; }
 				}SystemClient;
 				//通信受領クラス
 				struct message_client : public message_client_interface{
@@ -113,7 +113,7 @@ namespace hmr {
 						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
 					~message_client(){
-						InformTaskHandler.stop(InformTask);
+						InformTaskHandler.stop();
 					}
 				public:
 					void setup_talk(void){ return; }
@@ -189,7 +189,7 @@ namespace hmr {
 				}
 				~cBattery(){
 					//タスク停止
-					DataTaskHandler.stop(DataTask);
+					DataTaskHandler.stop();
 					
 					ApinData1.unlock();
 					ApinData2.unlock();

@@ -43,8 +43,6 @@ namespace hmr {
 					gps1 GPS1;
 					gps2 GPS2;
 					gps_switcher GPSSwitcher;
-				public:
-					using gps_ch =  gps_switcher::gps_ch;
 				private:
 					bool GPSPower;
 					systems::mode::type CurrentMode;
@@ -52,7 +50,7 @@ namespace hmr {
 					systems::mode::type mode()const{ return CurrentMode; }
 					bool getGPSPower()const{ return GPSPower; }
 					void setGPSPower(bool OnOff_){
-						if((GPSPower != OnOff_) && CurrentMode == systems::mode::drive){
+						if((GPSPower != OnOff_) && CurrentMode == systems::mode::observe){
 							if(OnOff_)GPSSwitcher.lock();
 							else GPSSwitcher.unlock();
 						}
@@ -61,7 +59,7 @@ namespace hmr {
 				public://override function of system_client_interface
 					void operator()(systems::mode::type NewMode_,systems::mode::type PreMode_)override{
 						switch(NewMode_){
-						case systems::mode::drive:
+						case systems::mode::observe:
 							if(GPSPower)GPSSwitcher.lock();
 							else GPSSwitcher.unlock();
 							break;
@@ -72,8 +70,8 @@ namespace hmr {
 						CurrentMode = NewMode_;
 					}
 				public://wrapper function of GPSSwithcer
-					void setChannel(gps_ch GPSCh_){ GPSSwitcher.setCh(GPSCh_); }
-					gps_ch getChannel()const{ return GPSSwitcher.getCh(); }
+					void setChannel(typename gps_switcher::gps_ch GPSCh_){ GPSSwitcher.setCh(GPSCh_); }
+					typename gps_switcher::gps_ch getChannel()const{ return GPSSwitcher.getCh(); }
 					unsigned char getChannelNo()const{ return GPSSwitcher.getChNo(); }
 					bool swapChannel(){ GPSSwitcher.swapCh(); }
 					bool roamChannel(){ GPSSwitcher.roamCh(); }
@@ -111,6 +109,7 @@ namespace hmr {
 				public:
 					message_client(this_type& Ref_, com::did_t ID_, service_interface& Service_)
 						: message_client_interface(ID_)
+						, InformTask(*this)
 						, Ref(Ref_)
 						, DataMode_i(true)
 						, Swap_i(false)
@@ -251,7 +250,7 @@ namespace hmr {
 				public:
 					data_task(this_type& Ref_):Ref(Ref_){}
 					duration operator()(duration dt){
-						if(DataMode && Ref.GPSManager.can_read()){
+						if(Ref.DataMode && Ref.GPSManager.can_read()){
 							Ref.MessageClient.setSendData(Ref.GPSManager.read());
 						}
 					}
@@ -259,7 +258,7 @@ namespace hmr {
 				data_task DataTask;
 				task::handler DataTaskHandler;
 			public:
-				cGPS(unsigned char ID_, system_client_interface& System_, io_interface& IO_, service_interface& Service_)
+				cGPS(unsigned char ID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
 					:GPSManager()
 					,MessageClient(*this, ID_, Service_)
 					,DataMode(false)
