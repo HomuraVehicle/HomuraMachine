@@ -738,5 +738,8 @@
     <ClInclude Include="IO\Data.hpp">
       <Filter>HomuraMachine\Mihara\IO</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\XCBase\chain.hpp">
+      <Filter>Common\XCBase</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

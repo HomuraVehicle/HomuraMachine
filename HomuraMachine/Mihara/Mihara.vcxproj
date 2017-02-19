@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>LLVM-vs2014_xp</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>LLVM-vs2014</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -305,6 +305,7 @@
     <ClInclude Include="..\..\XCBase\allocator.hpp" />
     <ClInclude Include="..\..\XCBase\array_queue.hpp" />
     <ClInclude Include="..\..\XCBase\bytes.hpp" />
+    <ClInclude Include="..\..\XCBase\chain.hpp" />
     <ClInclude Include="..\..\XCBase\constexpr_no.hpp" />
     <ClInclude Include="..\..\XCBase\either.hpp" />
     <ClInclude Include="..\..\XCBase\exceptions.hpp" />
