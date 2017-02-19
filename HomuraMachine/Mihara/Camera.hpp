@@ -153,8 +153,12 @@ namespace hmr {
 						typedef hmr::static_buffer_allocator<unsigned char, 4096, 3, my_type> sprite_allocator;
 					public:
 						void operator()(xc::bytes& Bytes_, unsigned int Size_){					
-							if(sprite_allocator::allocated_full())return;
+							//if(sprite_allocator::allocated_full())return;
 							Bytes_.assign(Size_, sprite_allocator());
+							if(Bytes_.empty()){
+								Bytes_.release();
+								return;
+							}
 						}
 						static vFp_p get_delete_fp(const xc::bytes& Bytes_){
 							if(!Bytes_)return 0;
