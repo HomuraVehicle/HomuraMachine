@@ -33,6 +33,13 @@ namespace hmr{
 						io::mode_selector_interface* pIOModeSelector;
 					public:
 						io_mode getSelectIO()const{ return CurIO; }
+						void setSelectIO(bool UseAlternative=false){
+							if(UseAlternative){
+								set(CurIO == io::mode::module_phone ? io::mode::module_rf : io::mode::module_phone);
+							} else{
+								set(CurIO);
+							}
+						}
 						io_mode get()const{ return IOMode; }
 						void set(io_mode IOMode_){
 							if(IOMode != IOMode_){
@@ -154,17 +161,17 @@ namespace hmr{
 
 						if(PrevIsRem != IsRem){
 							if(IsRem){
-								Status.setIOMode(Status.IOMode.getSelectIO());
-								Status.setSystemMode(systems::mode::passive);
+								Status.IOMode.setSelectIO();
+								Status.SystemMode.set(systems::mode::passive);
 							} else{
-								Status.setIOMode(io::mode::module_null);
-								Status.setSystemMode(systems::mode::sleep);
+								Status.IOMode.set(io::mode::module_null);
+								Status.SystemMode.set(systems::mode::sleep);
 							}
 						} else if(PreDefaultIO != DefaultIO){
 							if(DefaultIO){
-								Status.IOMode.set(Status.getSelectIO());
+								Status.IOMode.setSelectIO();
 							} else{
-								Status.IOMode.set(Status.getSelectIO() == io::mode::module_phone ? io::mode::module_rf : io::mode::module_phone);
+								Status.IOMode.setSelectIO(true);
 							}
 						}
 
