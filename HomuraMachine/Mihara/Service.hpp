@@ -17,13 +17,13 @@ namespace hmr{
 			private:
 				struct delay : public hmr::delay_interface{
 				private:
-					/*!delayŠÖ”—pƒ^ƒCƒ}[*/
+					/*!delayé–¢æ•°ç”¨ã‚¿ã‚¤ãƒãƒ¼*/
 					xc32::delay_ms_timer<typename my_device::delay_timer_register> delay_timer;
-					/*!delayŠÖ”—pƒ^ƒCƒ}[ƒƒbƒN*/
+					/*!delayé–¢æ•°ç”¨ã‚¿ã‚¤ãƒãƒ¼ãƒ­ãƒƒã‚¯*/
 					xc::lock_guard<xc32::delay_ms_timer<typename my_device::delay_timer_register>> delay_timer_Lock;
-					/*!exclusive_delayŠÖ”—pƒ^ƒCƒ}[*/
+					/*!exclusive_delayé–¢æ•°ç”¨ã‚¿ã‚¤ãƒãƒ¼*/
 					xc32::delay_ms_timer<typename my_device::exclusive_delay_timer_register> exclusive_delay_timer;
-					/*!exclusive_delayŠÖ”—pƒ^ƒCƒ}[ƒƒbƒN*/
+					/*!exclusive_delayé–¢æ•°ç”¨ã‚¿ã‚¤ãƒãƒ¼ãƒ­ãƒƒã‚¯*/
 					xc::lock_guard<xc32::delay_ms_timer<typename my_device::exclusive_delay_timer_register>> exclusive_delay_timer_Lock;
 				public:
 					delay()
@@ -33,9 +33,9 @@ namespace hmr{
 						, exclusive_delay_timer_Lock(exclusive_delay_timer){
 					}
 				public:
-					/*!delayŠÖ”*/
+					/*!delayé–¢æ•°*/
 					void delay_ms(duration ms_){ delay_timer(ms_); }
-					/*!Š„‚è‚İ”rœdelayŠÖ”*/
+					/*!å‰²ã‚Šè¾¼ã¿æ’é™¤delayé–¢æ•°*/
 					void exclusive_delay_ms(duration ms_){
 						xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
 						exclusive_delay_timer(ms_);
@@ -44,14 +44,14 @@ namespace hmr{
 				delay Delay;
 			private:
 				typedef xc32::interrupt_timer<typename my_device::task_timer_register> task_timer;
-				/*!ƒ^ƒXƒN‹ì“®—pƒ^ƒCƒ}[*/
+				/*!ã‚¿ã‚¹ã‚¯é§†å‹•ç”¨ã‚¿ã‚¤ãƒãƒ¼*/
 				task_timer TaskTimer;
 				xc::lock_guard<task_timer> TaskTimerLock;
 			private:
 				bool TaskSleep;
-				/*!ƒ^ƒXƒNƒzƒXƒg Sleep‚Í’â~‚·‚éB*/
+				/*!ã‚¿ã‚¹ã‚¯ãƒ›ã‚¹ãƒˆ Sleepæ™‚ã¯åœæ­¢ã™ã‚‹ã€‚*/
 				hmr::task::functional_host<> TaskHost;
-				/*!ƒVƒXƒeƒ€—pƒ^ƒXƒN Sleep‚à‹ì“®‚·‚éB*/
+				/*!ã‚·ã‚¹ãƒ†ãƒ ç”¨ã‚¿ã‚¹ã‚¯ Sleepæ™‚ã‚‚é§†å‹•ã™ã‚‹ã€‚*/
 				hmr::task::functional_host<> SystemTaskHost;
 			public:
 				virtual hmr::delay_interface& delay(){ return Delay; }
@@ -59,13 +59,13 @@ namespace hmr{
 			public:
 				hmr::task::host_interface& system_task(){ return SystemTaskHost; }
 			private:
-				/*!@brief ƒ^ƒXƒNƒ^ƒCƒ}[—pŠ„‚è‚İŠÖ”ˆ—ŠÖ”*/
+				/*!@brief ã‚¿ã‚¹ã‚¯ã‚¿ã‚¤ãƒãƒ¼ç”¨å‰²ã‚Šè¾¼ã¿é–¢æ•°å‡¦ç†é–¢æ•°*/
 				struct task_interrupt_function : public xc32::sfr::interrupt::function{
 				private:
 					my_type& Ref;
 				public:
 					task_interrupt_function(my_type& Ref_):Ref(Ref_){}
-					//!xc32::sfr::interrupt::function—p‚ÌŠÖ”
+					//!xc32::sfr::interrupt::functionç”¨ã®é–¢æ•°
 					void operator()(void){
 						if(!Ref.TaskSleep)Ref.TaskHost(1);
 						Ref.SystemTaskHost(1);
@@ -92,11 +92,12 @@ namespace hmr{
 					: TaskTimerLock(TaskTimer)
 					, TaskInterrupt(*this)
 					, SystemClient(*this){
-					//1000ms = 1•b‚¨‚«‚É‹ì“®‚·‚é‚æ‚¤ƒZƒbƒg
+					//1000ms = 1ç§’ãŠãã«é§†å‹•ã™ã‚‹ã‚ˆã†ã‚»ãƒƒãƒˆ
 					TaskTimer.config(1000, TaskInterrupt, service_device_::task_timer_ipl());
 					//TaskTimerLock.lock();
 				}
 				system_client_interface& getSystemClient(){return SystemClient;}
+				void operator()(void){}
 			};
 		}
 	}

@@ -2,19 +2,19 @@
 #define HMR_MACHINE_MIHARA_GPS_INC 100
 #
 /*
-GPSŠÖ˜Aƒ‚ƒWƒ…[ƒ‹
+GPSé–¢é€£ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 === GPS ===
 v1_00/141115 hmIto
-	CPP‰»
+	CPPåŒ–
 ===hmrGPS===
 v0_03/131108 hmIto
-	ƒ^ƒXƒN‚É‚Ì‚Á‚ÄGPS‚ªÀÛ‚ÉØ‚è‘Ö‚¦‚ç‚ê‚Ü‚­‚é–â‘è‚ğC³
+	ã‚¿ã‚¹ã‚¯ã«ã®ã£ã¦GPSãŒå®Ÿéš›ã«åˆ‡ã‚Šæ›¿ãˆã‚‰ã‚Œã¾ãã‚‹å•é¡Œã‚’ä¿®æ­£
 v0_02/131019 iwahori
-	ƒ^ƒXƒNƒVƒXƒeƒ€—p‚Étask_setup_talk‚Ætask_interrupt‚ğì¬
+	ã‚¿ã‚¹ã‚¯ã‚·ã‚¹ãƒ†ãƒ ç”¨ã«task_setup_talkã¨task_interruptã‚’ä½œæˆ
 v0_01/130105 iwahori
-	workŠÖ”‚ğsetup_lisen‚Æsetup_talk‚É•ª—£
+	worké–¢æ•°ã‚’setup_lisenã¨setup_talkã«åˆ†é›¢
 v0_00/121208 hmIto
-	Šî–{ŠÖ”ì¬
+	åŸºæœ¬é–¢æ•°ä½œæˆ
 */
 #include<hmLib/cstring.h>
 #include<homuraLib_v2/type.hpp>
@@ -73,8 +73,8 @@ namespace hmr {
 					void setChannel(typename gps_switcher::gps_ch GPSCh_){ GPSSwitcher.setCh(GPSCh_); }
 					typename gps_switcher::gps_ch getChannel()const{ return GPSSwitcher.getCh(); }
 					unsigned char getChannelNo()const{ return GPSSwitcher.getChNo(); }
-					bool swapChannel(){ GPSSwitcher.swapCh(); }
-					bool roamChannel(){ GPSSwitcher.roamCh(); }
+					bool swapChannel(){ return GPSSwitcher.swapCh(); }
+					bool roamChannel(){ return GPSSwitcher.roamCh(); }
 					bool can_read(){ return GPSSwitcher.can_read(); }
 					gps::data read(){ return GPSSwitcher.read(); }
 					gps::ch_data_pair read_withCh(){ return GPSSwitcher.read_withCh(); }
@@ -123,10 +123,10 @@ namespace hmr {
 					}
 				public:
 					bool listen(hmLib::cstring Str) {
-						//ƒf[ƒ^ƒTƒCƒYŠm”F
+						//ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºç¢ºèª
 						if(hmLib::cstring_size(&Str)==0)return true;
 
-						//1byte–Ú‚Åƒ‚[ƒh‚ğ•ª‚¯‚é
+						//1byteç›®ã§ãƒ¢ãƒ¼ãƒ‰ã‚’åˆ†ã‘ã‚‹
 						switch(hmLib::cstring_getc(&Str,0)) {
 						case 0x10:
 							Ref.DataMode=true;
@@ -137,7 +137,7 @@ namespace hmr {
 							DataMode_i=true;
 							return false;
 						case 0x20:
-							//ƒf[ƒ^ƒTƒCƒYŠm”F
+							//ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºç¢ºèª
 							if(hmLib::cstring_size(&Str)!=2)return true;
 							if(hmLib::cstring_getc(&Str,1)!=Ref.GPSManager.getChannelNo()-1) {
 								Swap_i=true;
@@ -160,7 +160,7 @@ namespace hmr {
 							service::cstring_construct_safe(pStr,1);
 							if(Ref.DataMode)hmLib::cstring_putc(pStr,0,0x10);
 							else hmLib::cstring_putc(pStr,0,0x11);
-							//‘—MŒã©“®“I‚Éƒtƒ‰ƒO‚ğ—‚Æ‚·
+							//é€ä¿¡å¾Œè‡ªå‹•çš„ã«ãƒ•ãƒ©ã‚°ã‚’è½ã¨ã™
 							DataMode_i=false;
 							return false;
 						}
@@ -171,7 +171,7 @@ namespace hmr {
 							Ref.GPSManager.swapChannel();
 							hmLib::cstring_putc(pStr,1,Ref.GPSManager.getChannelNo()-1);
 
-							//‘—MŒã©“®“I‚Éƒtƒ‰ƒO‚ğ—‚Æ‚·
+							//é€ä¿¡å¾Œè‡ªå‹•çš„ã«ãƒ•ãƒ©ã‚°ã‚’è½ã¨ã™
 							Swap_i=false;
 							return false;
 						}
@@ -181,7 +181,7 @@ namespace hmr {
 							if(Ref.GPSManager.getGPSPower())hmLib::cstring_putc(pStr,0,0x30);
 							else hmLib::cstring_putc(pStr,0,0x31);
 
-							//‘—MŒã©“®“I‚Éƒtƒ‰ƒO‚ğ—‚Æ‚·
+							//é€ä¿¡å¾Œè‡ªå‹•çš„ã«ãƒ•ãƒ©ã‚°ã‚’è½ã¨ã™
 							PowerGPS_i=false;
 							return false;
 						}
@@ -253,6 +253,7 @@ namespace hmr {
 						if(Ref.DataMode && Ref.GPSManager.can_read()){
 							Ref.MessageClient.setSendData(Ref.GPSManager.read());
 						}
+						return dt;
 					}
 				};
 				data_task DataTask;

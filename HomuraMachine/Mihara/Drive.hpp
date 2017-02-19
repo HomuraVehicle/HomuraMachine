@@ -3,14 +3,14 @@
 #
 /*
 ===hmrDrive===
-ƒ‚[ƒ^[Aƒ}ƒjƒ…ƒsƒ…ƒŒ[ƒ^Œn‚ğƒRƒ“ƒgƒ[ƒ‹
+ãƒ¢ãƒ¼ã‚¿ãƒ¼ã€ãƒãƒ‹ãƒ¥ãƒ”ãƒ¥ãƒ¬ãƒ¼ã‚¿ç³»ã‚’ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«
 
 === hmr::machine::mihara::drive ===
 v1_00/141121 hmIto
-	cpp‰»
+	cppåŒ–
 === hmrDrive ===
 v0_00/130112 iwahori
-	ƒtƒ@ƒCƒ‹‚ğì¬Eƒ‚[ƒ^[‚ÌƒƒbƒZ[ƒWŠÖ”‚ğtalk‚Ælisten‚É•ª‰ğ
+	ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆãƒ»ãƒ¢ãƒ¼ã‚¿ãƒ¼ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é–¢æ•°ã‚’talkã¨listenã«åˆ†è§£
 */
 #include<hmLib/cstring.h>
 #include<XCBase/future.hpp>
@@ -41,7 +41,7 @@ namespace hmr {
 				}
 				bool getMotoPower()const{ return MotorPower; }
 			private:
-				//’ÊM’fâ‚Ì©“®’â~—pwatch dog count
+				//é€šä¿¡æ–­çµ¶æ™‚ã®è‡ªå‹•åœæ­¢ç”¨watch dog count
 				uint16 wdt_count;
 				void increment_wdt_count(){ ++wdt_count; }
 				void clear_wdt_count(){ wdt_count = 0; }
@@ -67,7 +67,7 @@ namespace hmr {
 				}WdtTask;
 				task::handler WdtTaskHandler;
 			private:
-				//ƒ‚[ƒh’Ê’mó—ÌƒNƒ‰ƒX
+				//ãƒ¢ãƒ¼ãƒ‰é€šçŸ¥å—é ˜ã‚¯ãƒ©ã‚¹
 				struct system_client : public system_client_interface{
 				private:
 					this_type& Ref;
@@ -96,7 +96,7 @@ namespace hmr {
 					systems::mode::type mode()const{ return CurrentMode; }
 				}SystemClient;
 			private:
-				//’ÊMó—ÌƒNƒ‰ƒX
+				//é€šä¿¡å—é ˜ã‚¯ãƒ©ã‚¹
 				struct message_client : public message_client_interface{
 				private:
 					this_type& Ref;
@@ -110,7 +110,7 @@ namespace hmr {
 					bool talk(hmLib::cstring* pStr){ return true; }
 					void setup_listen(void){ return; }
 					bool listen(hmLib::cstring Str){
-						//¶Ô—Ö§Œä
+						//å·¦è»Šè¼ªåˆ¶å¾¡
 						if(hmLib::cstring_getc(&Str, 1) != 0x00){
 							Ref.PinMotorLA(1);
 							Ref.PinMotorLB(1);
@@ -125,7 +125,7 @@ namespace hmr {
 							Ref.PinMotorLB(0);
 						}
 
-						//‰EÔ—Ö§Œä
+						//å³è»Šè¼ªåˆ¶å¾¡
 						if(hmLib::cstring_getc(&Str, 3) != 0x00){
 							Ref.PinMotorRA(1);
 							Ref.PinMotorRB(1);

@@ -18,85 +18,85 @@
 #endif
 
 
-//++++++++++++++++++ protectedéŒ¾ +++++++++++++++++
-//=== Šî–{ŠÖ” ===
-//ƒfƒoƒCƒX‚Ì“dŒ¹ŠÇ—
+//++++++++++++++++++ protectedå®£è¨€ +++++++++++++++++
+//=== åŸºæœ¬é–¢æ•° ===
+//ãƒ‡ãƒã‚¤ã‚¹ã®é›»æºç®¡ç†
 void _devmng_power(boolian onoff);
 
-//=== ƒ‚[ƒh§Œä‹@”\ ===
-//ƒ‚[ƒh§Œä‹@”\‰Šú‰»
+//=== ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½ ===
+//ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½åˆæœŸåŒ–
 void _devmng_mode_initialize(devmng_mode Mode_);
-//ƒ‚[ƒh§Œä‹@”\I’[‰»
+//ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½çµ‚ç«¯åŒ–
 void _devmng_mode_finalize();
-//ƒNƒƒbƒN•ÏX‚Ì’Ê’mŠÖ”
+//ã‚¯ãƒ­ãƒƒã‚¯å¤‰æ›´ã®é€šçŸ¥é–¢æ•°
 void _devmng_mode_informClockChange(void);
 
-//=== ƒNƒƒbƒN§Œä‹@”\ ===
-//ƒNƒƒbƒN§Œä‹@”\‰Šú‰»
+//=== ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½ ===
+//ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½åˆæœŸåŒ–
 void _devmng_clock_initialize(devmng_clock Clock_);
-//ƒNƒƒbƒN§Œä‹@”\I’[‰»
+//ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½çµ‚ç«¯åŒ–
 void _devmng_clock_finalize();
-//ƒNƒƒbƒN‘¬“x‚Ì•ÏXŠÖ”
+//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã®å¤‰æ›´é–¢æ•°
 void _devmng_clock_restartClock(devmng_clock Clock_);
-//ƒNƒƒbƒN‘¬“x‚ğƒfƒtƒHƒ‹ƒg‚É•ÏX
+//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´
 void _devmng_clock_restartClockDefault();
 
-//=== ƒ^ƒXƒN§Œä ===
-//ƒ^ƒXƒN§Œä‰Šú‰»
+//=== ã‚¿ã‚¹ã‚¯åˆ¶å¾¡ ===
+//ã‚¿ã‚¹ã‚¯åˆ¶å¾¡åˆæœŸåŒ–
 void _devmng_task_initialize();
-//ƒ^ƒXƒN§ŒäI’[‰»
+//ã‚¿ã‚¹ã‚¯åˆ¶å¾¡çµ‚ç«¯åŒ–
 void _devmng_task_finalize();
-//ƒ^ƒXƒN§Œäˆ—ŠÖ”
+//ã‚¿ã‚¹ã‚¯åˆ¶å¾¡å‡¦ç†é–¢æ•°
 void _devmng_task_interrupt_function(sint16 Interval_);
 
-//=== ƒXƒŠ[ƒvƒ‚[ƒh§Œä ===
-//ƒXƒŠ[ƒvƒ‚[ƒh§Œä‰Šú‰»
+//=== ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ ===
+//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡åˆæœŸåŒ–
 void _devmng_sleep_initialize(void);
-//ƒXƒŠ[ƒvƒ‚[ƒh§ŒäI’[‰»
+//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡çµ‚ç«¯åŒ–
 void _devmng_sleep_finalize(void);
-//ƒXƒŠ[ƒv‚É“ü‚éˆ—
+//ã‚¹ãƒªãƒ¼ãƒ—ã«å…¥ã‚‹å‡¦ç†
 void _devmng_sleep_start();
-//ƒXƒŠ[ƒv‚©‚ço‚éˆ—
+//ã‚¹ãƒªãƒ¼ãƒ—ã‹ã‚‰å‡ºã‚‹å‡¦ç†
 void _devmng_sleep_stop(void);
-//ƒXƒŠ[ƒv§Œäˆ—ŠÖ”
+//ã‚¹ãƒªãƒ¼ãƒ—åˆ¶å¾¡å‡¦ç†é–¢æ•°
 void _devmng_sleep_interrupt_function(sint16 Interval_);
-//ƒXƒŠ[ƒv‚ÌŠ„‚è‚İ‹Ö~ŠÖ”
+//ã‚¹ãƒªãƒ¼ãƒ—æ™‚ã®å‰²ã‚Šè¾¼ã¿ç¦æ­¢é–¢æ•°
 void _devmng_sleep_disable_interrupt(void);
-//ƒXƒŠ[ƒv‚ÌŠ„‚è‚İ•œ‹AŠÖ”
+//ã‚¹ãƒªãƒ¼ãƒ—æ™‚ã®å‰²ã‚Šè¾¼ã¿å¾©å¸°é–¢æ•°
 void _devmng_sleep_enable_interrupt(void);
 
 
-//=== ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§Œä ===
-//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§Œä‰Šú‰»
+//=== ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ ===
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡åˆæœŸåŒ–
 void _devmng_roaming_initialize(void);
-//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§ŒäI’[‰»
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡çµ‚ç«¯åŒ–
 void _devmng_roaming_finalize(void);
-//ƒ[ƒ~ƒ“ƒO‚É“ü‚éˆ—
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ã«å…¥ã‚‹å‡¦ç†
 void _devmng_roaming_start(void);
-//ƒ[ƒ~ƒ“ƒO‚©‚ço‚éˆ—
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ã‹ã‚‰å‡ºã‚‹å‡¦ç†
 void _devmng_roaming_stop(void);
-//ƒ[ƒ~ƒ“ƒO§Œäˆ—ŠÖ”
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°åˆ¶å¾¡å‡¦ç†é–¢æ•°
 void _devmng_roaming_interrupt_function(sint16 Interval_);
 
-//=== Š„‚è‚İŠÖ”§Œä ===
+//=== å‰²ã‚Šè¾¼ã¿é–¢æ•°åˆ¶å¾¡ ===
 void _devmng_interrupt_initialize(void);
 void _devmng_interrupt_finalize(void);
 
 
-//++++++++++++++++++ À‘• +++++++++++++++++
-//=== ƒ‚[ƒh§Œä‹@”\ ===
-//ƒfƒoƒCƒX‚ÌŒ»ƒ‚[ƒh
+//++++++++++++++++++ å®Ÿè£… +++++++++++++++++
+//=== ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½ ===
+//ãƒ‡ãƒã‚¤ã‚¹ã®ç¾ãƒ¢ãƒ¼ãƒ‰
 volatile devmng_mode x_devmng_mode_Mode=NormalMode;
-//ƒ‚[ƒh§Œä‹@”\‰Šú‰»
+//ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½åˆæœŸåŒ–
 void _devmng_mode_initialize(devmng_mode Mode_){
-	//w’è‚ÌƒfƒtƒHƒ‹ƒgƒ‚[ƒh‚ÅŠJn
+	//æŒ‡å®šã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ¢ãƒ¼ãƒ‰ã§é–‹å§‹
 	x_devmng_mode_Mode=Mode_;
 }
-//ƒ‚[ƒh§Œä‹@”\I’[‰»
+//ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½çµ‚ç«¯åŒ–
 void _devmng_mode_finalize(){
 	x_devmng_mode_Mode=NormalMode;
 }
-//ƒfƒoƒCƒXƒ‚[ƒh‚ğ•ÏX‚·‚é
+//ãƒ‡ãƒã‚¤ã‚¹ãƒ¢ãƒ¼ãƒ‰ã‚’å¤‰æ›´ã™ã‚‹
 void devmng_mode_set(devmng_mode Mode_){
 	switch(Mode_){
 	case SleepMode:
@@ -146,35 +146,35 @@ void devmng_mode_set(devmng_mode Mode_){
 	}
 
 }
-//ƒfƒoƒCƒXƒ‚[ƒh‚ğæ“¾‚·‚é
+//ãƒ‡ãƒã‚¤ã‚¹ãƒ¢ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 volatile devmng_mode devmng_mode_get(void){return x_devmng_mode_Mode;}
-//ƒNƒƒbƒN•ÏX‚Ì’Ê’mŠÖ”
+//ã‚¯ãƒ­ãƒƒã‚¯å¤‰æ›´ã®é€šçŸ¥é–¢æ•°
 void _devmng_mode_informClockChange(void){
-	//ƒXƒŠ[ƒv‚©‚Âƒmƒ“ƒŒƒ€‡–°’†‚ÍƒpƒX‚·‚é
+	//ã‚¹ãƒªãƒ¼ãƒ—ã‹ã¤ãƒãƒ³ãƒ¬ãƒ ç¡çœ ä¸­ã¯ãƒ‘ã‚¹ã™ã‚‹
 	if(devmng_sleep_isSleep() && !devmng_sleep_isRem())return;
 
-	//ƒNƒƒbƒNƒ‚[ƒh‚ğ‚½‚¾‚¿‚É”½‰f
+	//ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã‚’ãŸã ã¡ã«åæ˜ 
 	_devmng_clock_restartClockDefault();
 }
 
-//=== ƒNƒƒbƒN§Œä‹@”\ ===
-//ƒfƒoƒCƒX‚ÌŒ»ƒNƒƒbƒN
+//=== ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½ ===
+//ãƒ‡ãƒã‚¤ã‚¹ã®ç¾ã‚¯ãƒ­ãƒƒã‚¯
 volatile devmng_clock x_devmng_clock_Clock;
-//ƒNƒƒbƒN§Œä‹@”\‰Šú‰»
+//ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½åˆæœŸåŒ–
 void _devmng_clock_initialize(devmng_clock Clock_){
-	//w’èƒNƒƒbƒN‚É•ÏX
+	//æŒ‡å®šã‚¯ãƒ­ãƒƒã‚¯ã«å¤‰æ›´
 	x_devmng_clock_Clock=Clock_;
 
-	//‚½‚¾‚¿‚ÉƒNƒƒbƒN‘¬“x”½‰f
+	//ãŸã ã¡ã«ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦åæ˜ 
 	_devmng_clock_restartClockDefault();
 }
-//ƒNƒƒbƒN§Œä‹@”\I’[‰»
+//ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½çµ‚ç«¯åŒ–
 void _devmng_clock_finalize(){
 	hmr_clock_finalize();
 }
-//ƒNƒƒbƒN‘¬“x‚Ì•ÏXŠÖ”
+//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã®å¤‰æ›´é–¢æ•°
 void _devmng_clock_restartClock(devmng_clock Clock_){
-	//ˆê“xƒNƒƒbƒN‚ğI—¹
+	//ä¸€åº¦ã‚¯ãƒ­ãƒƒã‚¯ã‚’çµ‚äº†
 	hmr_clock_finalize();
 
 	switch(Clock_){
@@ -189,66 +189,66 @@ void _devmng_clock_restartClock(devmng_clock Clock_){
 		break;
 	}
 
-	//ƒNƒƒbƒN•ÏX‚ğ‚Ù‚©‚Ìƒ‚ƒWƒ…[ƒ‹‚É‚à’Ê’m
+	//ã‚¯ãƒ­ãƒƒã‚¯å¤‰æ›´ã‚’ã»ã‹ã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã«ã‚‚é€šçŸ¥
 //	hmr_uart1_initialize(hmr_uart1_getModuleID(),);
 //	hmr_uart2_initialize(38400);
 //	hmr_adc_initialize();
 }
-//ƒNƒƒbƒN‘¬“x‚ğƒfƒtƒHƒ‹ƒg‚É•ÏX
+//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«å¤‰æ›´
 void _devmng_clock_restartClockDefault(){
 	_devmng_clock_restartClock(x_devmng_clock_Clock);
 }
-//ƒNƒƒbƒN‚ğ•ÏX‚·‚é
+//ã‚¯ãƒ­ãƒƒã‚¯ã‚’å¤‰æ›´ã™ã‚‹
 void devmng_clock_set(devmng_clock Clock_){
-	//‚·‚Å‚Éİ’èÏ‚İ‚È‚ç–³‹
+	//ã™ã§ã«è¨­å®šæ¸ˆã¿ãªã‚‰ç„¡è¦–
 	if(x_devmng_clock_Clock==Clock_)return;
 
-	//•ÏX‚ğ”½‰f‚µ‚ÄAƒ‚[ƒh§Œä‚É’Ê’m
+	//å¤‰æ›´ã‚’åæ˜ ã—ã¦ã€ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ã«é€šçŸ¥
 	x_devmng_clock_Clock=Clock_;
 	_devmng_mode_informClockChange();
 }
-//ƒNƒƒbƒN‚ğæ“¾‚·‚é
+//ã‚¯ãƒ­ãƒƒã‚¯ã‚’å–å¾—ã™ã‚‹
 volatile devmng_clock devmng_clock_get(void){return x_devmng_clock_Clock;}
 
-//=== ƒ^ƒXƒN§Œä ===
+//=== ã‚¿ã‚¹ã‚¯åˆ¶å¾¡ ===
 #define x_devmng_task_BufSize 32
 task x_devmng_task_Buf[x_devmng_task_BufSize];
 taskmaster x_devmng_TaskMaster;
-//ƒ^ƒXƒN§Œä‰Šú‰»
+//ã‚¿ã‚¹ã‚¯åˆ¶å¾¡åˆæœŸåŒ–
 void _devmng_task_initialize(){
-	//task¶¬
+	//taskç”Ÿæˆ
 	task_construct_static(&x_devmng_TaskMaster,x_devmng_task_Buf,x_devmng_task_Buf+x_devmng_task_BufSize);
 }
-//ƒ^ƒXƒN§ŒäI’[‰»
+//ã‚¿ã‚¹ã‚¯åˆ¶å¾¡çµ‚ç«¯åŒ–
 void _devmng_task_finalize(){
-	//task”jŠü
+	//taskç ´æ£„
 	task_destruct(&x_devmng_TaskMaster);
 }
-//ƒ^ƒXƒN‚ğV‹K“o˜^‚Å‚«‚éŠm”F‚·‚é
+//ã‚¿ã‚¹ã‚¯ã‚’æ–°è¦ç™»éŒ²ã§ãã‚‹ç¢ºèªã™ã‚‹
 boolian devmng_task_can_start(){return task_can_start(&x_devmng_TaskMaster);}
-//ƒ^ƒXƒN‚ğ“o˜^i“ñd“o˜^‚Í‰ñ”ğj
+//ã‚¿ã‚¹ã‚¯ã‚’ç™»éŒ²ï¼ˆäºŒé‡ç™»éŒ²ã¯å›é¿ï¼‰
 boolian devmng_task_start(sint16 Interval,task_function TaskFp,task_inform TaskInformStopFp){
 	return task_start(&x_devmng_TaskMaster,Interval,TaskFp,TaskInformStopFp);
 }
-//ƒ^ƒXƒN‚ğ“o˜^i“ñd“o˜^‚Å‚«‚Ä‚µ‚Ü‚¤‚Ì‚ÅAŠëŒ¯j
+//ã‚¿ã‚¹ã‚¯ã‚’ç™»éŒ²ï¼ˆäºŒé‡ç™»éŒ²ã§ãã¦ã—ã¾ã†ã®ã§ã€å±é™ºï¼‰
 boolian devmng_task_quick_start(sint16 Interval,task_function TaskFp,task_inform TaskInformStopFp){
 	return task_quick_start(&x_devmng_TaskMaster,Interval,TaskFp,TaskInformStopFp);
 }
-//ƒ^ƒXƒN‚ğİ’è•ÏX
+//ã‚¿ã‚¹ã‚¯ã‚’è¨­å®šå¤‰æ›´
 boolian devmng_task_restart(task_function TaskFp,sint16 Interval){
 	return task_restart(&x_devmng_TaskMaster,TaskFp,Interval);
 }
-//ƒ^ƒXƒN‚ğíœ
+//ã‚¿ã‚¹ã‚¯ã‚’å‰Šé™¤
 boolian devmng_task_stop(task_function TaskFp){
 	return task_stop(&x_devmng_TaskMaster,TaskFp);
 }
-//ƒ^ƒXƒN§Œäˆ—ŠÖ”
+//ã‚¿ã‚¹ã‚¯åˆ¶å¾¡å‡¦ç†é–¢æ•°
 void _devmng_task_interrupt_function(sint16 Interval_){
 	task_interrupt_function(&x_devmng_TaskMaster,Interval_);
 }
 
-//=== ƒXƒŠ[ƒvƒ‚[ƒh§Œä ===
-//ƒXƒŠ[ƒv/ŠoÁ’Ê’m—pŠÖ”
+//=== ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ ===
+//ã‚¹ãƒªãƒ¼ãƒ—/è¦šé†’é€šçŸ¥ç”¨é–¢æ•°
 typedef struct{
 	devmng_vFp_v InformSleep;
 	devmng_vFp_v InformWakeUp;
@@ -256,7 +256,7 @@ typedef struct{
 #define x_devmng_sleep_InformSleepFnBufSize 16
 devmng_sleep_InformSleepFn x_devmng_sleep_InformSleepFnBuf[x_devmng_sleep_InformSleepFnBufSize];
 unsigned char x_devmng_sleep_InformSleepFnBufPos=0;
-//ƒŒƒ€/ƒmƒ“ƒŒƒ€’Ê’m—pŠÖ”
+//ãƒ¬ãƒ /ãƒãƒ³ãƒ¬ãƒ é€šçŸ¥ç”¨é–¢æ•°
 typedef struct{
 	devmng_vFp_v InformRem;
 	devmng_vFp_v InformNonRem;
@@ -264,15 +264,15 @@ typedef struct{
 #define x_devmng_sleep_InformRemFnBufSize 16
 devmng_sleep_InformRemFn x_devmng_sleep_InformRemFnBuf[x_devmng_sleep_InformRemFnBufSize];
 unsigned char x_devmng_sleep_InformRemFnBufPos=0;
-//ƒXƒŠ[ƒv’†‚ÌŠÔƒJƒEƒ“ƒgŒn
+//ã‚¹ãƒªãƒ¼ãƒ—ä¸­ã®æ™‚é–“ã‚«ã‚¦ãƒ³ãƒˆç³»
 sint16 x_devmng_sleep_secNonRem=540;
 sint16 x_devmng_sleep_secRem=60;
 sint16 x_devmng_sleep_secCnt=0;
-//ƒXƒŠ[ƒvó‘ÔŠÇ——pƒtƒ‰ƒO
+//ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ç®¡ç†ç”¨ãƒ•ãƒ©ã‚°
 volatile boolian x_devmng_sleep_IsSleep=0; 
 volatile boolian x_devmng_sleep_IsRem=0;
 boolian x_devmng_sleep_RequestEndRem=0;
-//ƒXƒŠ[ƒvƒ‚[ƒh§Œä‰Šú‰»
+//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡åˆæœŸåŒ–
 void _devmng_sleep_initialize(void){
 	x_devmng_sleep_InformSleepFnBufPos=0;
 	x_devmng_sleep_InformRemFnBufPos=0;
@@ -284,9 +284,9 @@ void _devmng_sleep_initialize(void){
 	x_devmng_sleep_IsRem=0;
 	x_devmng_sleep_RequestEndRem=0;
 }
-//ƒXƒŠ[ƒvƒ‚[ƒh§ŒäI’[‰»
+//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡çµ‚ç«¯åŒ–
 void _devmng_sleep_finalize(void){
-	//ƒXƒŠ[ƒv’†‚È‚ç’â~
+	//ã‚¹ãƒªãƒ¼ãƒ—ä¸­ãªã‚‰åœæ­¢
 	if(x_devmng_sleep_IsSleep)_devmng_sleep_stop();
 
 	x_devmng_sleep_InformSleepFnBufPos=0;
@@ -298,16 +298,16 @@ void _devmng_sleep_finalize(void){
 	x_devmng_sleep_IsSleep=0;
 	x_devmng_sleep_IsRem=0;
 }
-//ƒŒƒ€ƒXƒŠ[ƒvó‘Ô‚©‚Ç‚¤‚©‚ğæ“¾‚·‚é
+//ãƒ¬ãƒ ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹
 volatile boolian devmng_sleep_isRem(void){return x_devmng_sleep_IsRem && x_devmng_sleep_IsSleep;}
-//ƒXƒŠ[ƒvó‘Ô‚©‚Ç‚¤‚©‚ğæ“¾‚·‚é
+//ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹
 volatile boolian devmng_sleep_isSleep(void){return x_devmng_sleep_IsSleep;}
-//ƒXƒŠ[ƒvƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğæ“¾‚·‚é
+//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 void devmng_sleep_getInterval(sint16* secNonRem,sint16* secRem){
 	*secNonRem=x_devmng_sleep_secNonRem;
 	*secRem=x_devmng_sleep_secRem;
 }
-//ƒXƒŠ[ƒvƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğİ’è‚·‚é
+//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹
 void devmng_sleep_setInterval(sint16 secNonRem, sint16 secRem){
 	if(secNonRem<0)secNonRem=0;
 	if(secRem<1)secRem=1;
@@ -315,9 +315,9 @@ void devmng_sleep_setInterval(sint16 secNonRem, sint16 secRem){
 	x_devmng_sleep_secNonRem=secNonRem;
 	x_devmng_sleep_secRem=secRem;
 }
-//“ü–°•‹N°‚ÉŒÄ‚Ño‚³‚ê‚é’Ê’mŠÖ”‚ğ“o˜^‚Å‚«‚é‚©
+//å…¥çœ æ™‚ï¼†èµ·åºŠæ™‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã§ãã‚‹ã‹
 boolian devmng_sleep_can_registSleepInformFunction(){return x_devmng_sleep_InformSleepFnBufPos!=x_devmng_sleep_InformSleepFnBufSize;}
-//“ü–°•‹N°‚ÉŒÄ‚Ño‚³‚ê‚é’Ê’mŠÖ”‚ğ“o˜^‚·‚é
+//å…¥çœ æ™‚ï¼†èµ·åºŠæ™‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã™ã‚‹
 boolian devmng_sleep_registSleepInformFunction(devmng_vFp_v InformSleep,devmng_vFp_v InformWakeUp){
 	if(!devmng_sleep_can_registSleepInformFunction())return hmLib_true;
 	x_devmng_sleep_InformSleepFnBuf[x_devmng_sleep_InformSleepFnBufPos].InformSleep=InformSleep;
@@ -326,9 +326,9 @@ boolian devmng_sleep_registSleepInformFunction(devmng_vFp_v InformSleep,devmng_v
 
 	return hmLib_false;
 }
-//ƒŒƒ€ƒXƒŠ[ƒv‚É“ü‚é/o‚éÛ‚Ì’Ê’mŠÖ”‚ğ“o˜^‚Å‚«‚é‚©
+//ãƒ¬ãƒ ã‚¹ãƒªãƒ¼ãƒ—ã«å…¥ã‚‹/å‡ºã‚‹éš›ã®é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã§ãã‚‹ã‹
 boolian devmng_sleep_can_registRemInformFunction(){return x_devmng_sleep_InformRemFnBufPos!=x_devmng_sleep_InformRemFnBufSize;}
-//ƒŒƒ€ƒXƒŠ[ƒv‚É“ü‚é/o‚éÛ‚Ì’Ê’mŠÖ”‚ğ“o˜^‚·‚é
+//ãƒ¬ãƒ ã‚¹ãƒªãƒ¼ãƒ—ã«å…¥ã‚‹/å‡ºã‚‹éš›ã®é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã™ã‚‹
 boolian devmng_sleep_registRemInformFunction(devmng_vFp_v InformRem,devmng_vFp_v InformNonRem){
 	if(!devmng_sleep_can_registRemInformFunction())return hmLib_true;
 	x_devmng_sleep_InformRemFnBuf[x_devmng_sleep_InformRemFnBufPos].InformRem=InformRem;
@@ -337,104 +337,104 @@ boolian devmng_sleep_registRemInformFunction(devmng_vFp_v InformRem,devmng_vFp_v
 
 	return hmLib_false;
 }
-//ƒXƒŠ[ƒv‚Ö“ü‚éˆ—
+//ã‚¹ãƒªãƒ¼ãƒ—ã¸å…¥ã‚‹å‡¦ç†
 void _devmng_sleep_start(){
 	devmng_sleep_InformSleepFn* Itr;
 
-	//‚·‚Å‚ÉƒXƒŠ[ƒv’†‚È‚çI—¹
+	//ã™ã§ã«ã‚¹ãƒªãƒ¼ãƒ—ä¸­ãªã‚‰çµ‚äº†
 	if(x_devmng_sleep_IsSleep)return;
 
-	//ƒJƒEƒ“ƒ^[‚ğƒŠƒZƒbƒg
+	//ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆ
 	x_devmng_sleep_secCnt=0;
 	x_devmng_sleep_IsRem=0;
 
-	//ƒXƒŠ[ƒvó‘Ô‚É•ÏX
+	//ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ã«å¤‰æ›´
 	x_devmng_sleep_IsSleep=1;
 
-	// Š„‚è‚İ‹Ö~
+	// å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 	_devmng_sleep_disable_interrupt();
 
-	//InformŠÖ”
+	//Informé–¢æ•°
 	for(Itr=x_devmng_sleep_InformSleepFnBuf;Itr!=x_devmng_sleep_InformSleepFnBuf+x_devmng_sleep_InformSleepFnBufSize;++Itr){
 		//if(x_devmng_sleep_InformSleepFnBuf->InformSleep)x_devmng_sleep_InformSleepFnBuf->InformSleep();
 		if(Itr->InformSleep)Itr->InformSleep();	
 	}
 
-	//“dŒ¹‚ğ—‚Æ‚·
+	//é›»æºã‚’è½ã¨ã™
 	_devmng_power(0);
 
-	//ƒNƒƒbƒN‘¬“x‚ğ—‚Æ‚·
+	//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’è½ã¨ã™
 	_devmng_clock_restartClock(LowClock);
 }
-//ƒXƒŠ[ƒv‚©‚ço‚éˆ—
+//ã‚¹ãƒªãƒ¼ãƒ—ã‹ã‚‰å‡ºã‚‹å‡¦ç†
 void _devmng_sleep_stop(void){
 	devmng_sleep_InformSleepFn* Itr;
 
-	//‚·‚Å‚É”ñƒXƒŠ[ƒv’†‚È‚çI—¹
+	//ã™ã§ã«éã‚¹ãƒªãƒ¼ãƒ—ä¸­ãªã‚‰çµ‚äº†
 	if(!x_devmng_sleep_IsSleep)return;
 
-	//ƒNƒƒbƒN‘¬“x‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚·
+	//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™
 	_devmng_clock_restartClockDefault();
 
-	//“dŒ¹‚ğ–ß‚· ‚·‚Å‚ÉƒŒƒ€‡–°‚È‚Ì‚ÅƒJƒbƒg
+	//é›»æºã‚’æˆ»ã™ ã™ã§ã«ãƒ¬ãƒ ç¡çœ ãªã®ã§ã‚«ãƒƒãƒˆ
 	//_devmng_power(1);
 
-	//ƒXƒŠ[ƒvó‘Ô‚ğ‰ğœ
+	//ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ã‚’è§£é™¤
 	x_devmng_sleep_IsSleep=0;
 
-	//InformŠÖ”
+	//Informé–¢æ•°
 	for(Itr=x_devmng_sleep_InformSleepFnBuf;Itr!=x_devmng_sleep_InformSleepFnBuf+x_devmng_sleep_InformSleepFnBufSize;++Itr){
 		//if(x_devmng_sleep_InformSleepFnBuf->InformWakeUp)x_devmng_sleep_InformSleepFnBuf->InformWakeUp();
 		if(Itr->InformWakeUp)Itr->InformWakeUp();
 	}
 
-	// Š„‚è‚İ‹–‰Â
+	// å‰²ã‚Šè¾¼ã¿è¨±å¯
 	_devmng_sleep_enable_interrupt();
 
 }
-// ƒXƒŠ[ƒv‚ÌŠ„‚è‚İ‹Ö~
+// ã‚¹ãƒªãƒ¼ãƒ—æ™‚ã®å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 void _devmng_sleep_disable_interrupt(){
-	// Main stream ‚ÌŠ„‚è‚İ‹Ö~
+	// Main stream ã®å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 	streamVMC_disable_fget_interrupt();
 	//streamVMC_disable_fput_interrupt();
-	// Camera stream ‚ÌŠ„‚è‚İ‹Ö~
+	// Camera stream ã®å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 	streamCMR_disable_fget_interrupt();
 	//streamCMR_disable_fput_interrupt();
-	// ƒJƒƒ‰ ‚ÌTimer Š„‚è‚İ‹Ö~
+	// ã‚«ãƒ¡ãƒ© ã®Timer å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 	timerCMR_disable_interrupt();
 }
-// ƒXƒŠ[ƒv‚ÌŠ„‚è‚İ•œ‹A
+// ã‚¹ãƒªãƒ¼ãƒ—æ™‚ã®å‰²ã‚Šè¾¼ã¿å¾©å¸°
 void _devmng_sleep_enable_interrupt(){
-	// Main stream ‚ÌóMŠ„‚è‚İŠJn
+	// Main stream ã®å—ä¿¡å‰²ã‚Šè¾¼ã¿é–‹å§‹
 	streamVMC_enable_fget_interrupt();
-	// Camera stream ‚ÌóMŠ„‚è‚İŠJn
+	// Camera stream ã®å—ä¿¡å‰²ã‚Šè¾¼ã¿é–‹å§‹
 	streamCMR_enable_fget_interrupt();
-	// ƒJƒƒ‰ ‚ÌTimer Š„‚è‚İŠJn
+	// ã‚«ãƒ¡ãƒ© ã®Timer å‰²ã‚Šè¾¼ã¿é–‹å§‹
 	timerCMR_enable_interrupt();
 }
-//ƒXƒŠ[ƒv§Œäˆ—Š„ŠÖ”
+//ã‚¹ãƒªãƒ¼ãƒ—åˆ¶å¾¡å‡¦ç†å‰²è¾¼é–¢æ•°
 void _devmng_sleep_interrupt_function(sint16 Interval_){
 	devmng_sleep_InformRemFn* Itr;
 
-	//SleepCnt‚ğ‰ÁZ
+	//SleepCntã‚’åŠ ç®—
 	x_devmng_sleep_secCnt+=Interval_;
 
-	//ƒŒƒ€ó‘Ô‚Ì‚Æ‚« 
+	//ãƒ¬ãƒ çŠ¶æ…‹ã®ã¨ã 
 	if(x_devmng_sleep_IsRem){
-		//Š„‚è‚İ‚Å‹}‚É“dŒ¹‚ğ—‚Æ‚·‚Ì‚ÍŠëŒ¯‚È‚Ì‚ÅAƒŠƒNƒGƒXƒg‚¾‚¯‘—‚Á‚Ä‚¨‚­(ÀÛ‚ÌI—¹‚ÍAworkŠÖ”‚ÉˆÏ÷)
+		//å‰²ã‚Šè¾¼ã¿ã§æ€¥ã«é›»æºã‚’è½ã¨ã™ã®ã¯å±é™ºãªã®ã§ã€ãƒªã‚¯ã‚¨ã‚¹ãƒˆã ã‘é€ã£ã¦ãŠã(å®Ÿéš›ã®çµ‚äº†ã¯ã€worké–¢æ•°ã«å§”è­²)
 		if(x_devmng_sleep_secCnt>=x_devmng_sleep_secRem)x_devmng_sleep_RequestEndRem=1;
-	}//ƒmƒ“ƒŒƒ€ó‘Ô‚Ì‚Æ‚«
+	}//ãƒãƒ³ãƒ¬ãƒ çŠ¶æ…‹ã®ã¨ã
 	else{
 		if(x_devmng_sleep_secCnt>=x_devmng_sleep_secNonRem){
-			//ƒJƒEƒ“ƒ^[‚ğ‰Šú‰»
+			//ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’åˆæœŸåŒ–
 			x_devmng_sleep_secCnt=0;
 			
-			//ƒNƒƒbƒN‘¬“x‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚·
+			//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™
 			_devmng_clock_restartClockDefault();
 
-			//“dŒ¹‚ğ“ü‚ê‚é
+			//é›»æºã‚’å…¥ã‚Œã‚‹
 			_devmng_power(1);
-			// ˆÀ’è‘Ò‚¿
+			// å®‰å®šå¾…ã¡
 			exclusive_delay_ms(300);
 			HMR_PIN_RedLED_set(1);
 			exclusive_delay_ms(300);
@@ -446,96 +446,96 @@ void _devmng_sleep_interrupt_function(sint16 Interval_){
 			exclusive_delay_ms(300);
 			HMR_PIN_RedLED_set(1);
 
-			//ƒŒƒ€ó‘Ô‚ÉˆÚs
+			//ãƒ¬ãƒ çŠ¶æ…‹ã«ç§»è¡Œ
 			x_devmng_sleep_IsRem=1;
 
-			//InformŠÖ”
+			//Informé–¢æ•°
 			for(Itr=x_devmng_sleep_InformRemFnBuf;Itr!=(x_devmng_sleep_InformRemFnBuf+x_devmng_sleep_InformRemFnBufSize);++Itr){
 				//if(x_devmng_sleep_InformRemFnBuf->InformRem)x_devmng_sleep_InformRemFnBuf->InformRem();
 				if(Itr->InformRem)Itr->InformRem();
 			}
 
-			// Š„‚è‚İ‹–‰Â
+			// å‰²ã‚Šè¾¼ã¿è¨±å¯
 			_devmng_sleep_enable_interrupt();
 
 		}
 	}
 }
-//ƒXƒŠ[ƒv§Œäˆ—’ÊíŠÖ”
+//ã‚¹ãƒªãƒ¼ãƒ—åˆ¶å¾¡å‡¦ç†é€šå¸¸é–¢æ•°
 void _devmng_sleep_interrupt_yield(void){
 	devmng_sleep_InformRemFn* Itr;
 
-	//ƒŒƒ€‡–°I—¹—v‹ŠÖ”
+	//ãƒ¬ãƒ ç¡çœ çµ‚äº†è¦æ±‚é–¢æ•°
 	if(x_devmng_sleep_RequestEndRem){
-		//ƒtƒ‰ƒO‚ğ‰º‚°‚é
+		//ãƒ•ãƒ©ã‚°ã‚’ä¸‹ã’ã‚‹
 		x_devmng_sleep_RequestEndRem=0;
-		//ƒJƒEƒ“ƒ^[‚ğ‰Šú‰»
+		//ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’åˆæœŸåŒ–
 		x_devmng_sleep_secCnt=0;
 
-		// Š„‚è‚İ‚ğ‹Ö~
+		// å‰²ã‚Šè¾¼ã¿ã‚’ç¦æ­¢
 		_devmng_sleep_disable_interrupt();
 
-		//ƒmƒ“ƒŒƒ€ó‘Ô‚ÉˆÚs
+		//ãƒãƒ³ãƒ¬ãƒ çŠ¶æ…‹ã«ç§»è¡Œ
 		x_devmng_sleep_IsRem=0;
 
-		//InformŠÖ”
+		//Informé–¢æ•°
 		for(Itr=x_devmng_sleep_InformRemFnBuf;Itr!=x_devmng_sleep_InformRemFnBuf+x_devmng_sleep_InformRemFnBufSize;++Itr){
 			//if(x_devmng_sleep_InformRemFnBuf->InformNonRem)x_devmng_sleep_InformRemFnBuf->InformNonRem();
 			if(Itr->InformNonRem)Itr->InformNonRem();
 		}
 
-		//ƒNƒƒbƒN‘¬“x‚ğ—‚Æ‚·
+		//ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’è½ã¨ã™
 		_devmng_clock_restartClock(LowClock);
 
-		//“dŒ¹‚ğ—‚Æ‚·
+		//é›»æºã‚’è½ã¨ã™
 		_devmng_power(0);
 	}
 }
-//=== ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§Œä ===
-//ƒ[ƒ~ƒ“ƒO‚ÌŠÔŠu§Œä•Ï”
+//=== ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ ===
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ã®é–“éš”åˆ¶å¾¡å¤‰æ•°
 sint16 x_devmng_roaming_secInterval=0;
 sint16 x_devmng_roaming_secCnt=0;	
-//ƒ[ƒ~ƒ“ƒO‚Ìó‘Ô•Ï”
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ã®çŠ¶æ…‹å¤‰æ•°
 volatile boolian x_devmng_roaming_IsRoaming=0;
-//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§Œä‰Šú‰»
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡åˆæœŸåŒ–
 void _devmng_roaming_initialize(void){
 	x_devmng_roaming_secInterval=0;
 	x_devmng_roaming_secCnt=0;
 	x_devmng_roaming_IsRoaming=0;
 }
-//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§ŒäI’[‰»
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡çµ‚ç«¯åŒ–
 void _devmng_roaming_finalize(void){
-	//ƒ[ƒ~ƒ“ƒO’†‚È‚çA’â~
+	//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ä¸­ãªã‚‰ã€åœæ­¢
 	if(x_devmng_roaming_IsRoaming)_devmng_roaming_stop();
 
 	x_devmng_roaming_secInterval=0;
 	x_devmng_roaming_secCnt=0;
 	x_devmng_roaming_IsRoaming=0;
 }
-//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğæ“¾‚·‚é
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 void devmng_roaming_getInterval(sint16* secInterval){
 	*secInterval=x_devmng_roaming_secInterval;
 }
-//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğİ’è‚·‚é
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹
 void devmng_roaming_setInterval(sint16 secInterval){
-	//ƒ[ƒ~ƒ“ƒOŠÔŠu‚Í10•bˆÈã‚Å‚ ‚é•K—v
+	//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°é–“éš”ã¯10ç§’ä»¥ä¸Šã§ã‚ã‚‹å¿…è¦
 	if(secInterval<=10)secInterval=10;
 	x_devmng_roaming_secInterval=secInterval;
 }
-//ƒ[ƒ~ƒ“ƒOó‘Ô‚©‚Ç‚¤‚©‚ğæ“¾‚·‚é
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çŠ¶æ…‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹
 volatile boolian _devmng_roaming_isRoaming(void){return x_devmng_roaming_IsRoaming;}
-//ƒ[ƒ~ƒ“ƒOó‘Ô‚É“ü‚é
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çŠ¶æ…‹ã«å…¥ã‚‹
 void _devmng_roaming_start(void){
-	//‚·‚Å‚Éƒ[ƒ~ƒ“ƒO’†‚È‚ç–³‹
+	//ã™ã§ã«ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ä¸­ãªã‚‰ç„¡è¦–
 	if(x_devmng_roaming_IsRoaming)return;
 
-	//ƒJƒEƒ“ƒ^ƒŠƒZƒbƒg
+	//ã‚«ã‚¦ãƒ³ã‚¿ãƒªã‚»ãƒƒãƒˆ
 	x_devmng_roaming_secCnt=0;
 
-	//ƒ[ƒ~ƒ“ƒOó‘Ô‚ÖˆÚs
+	//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çŠ¶æ…‹ã¸ç§»è¡Œ
 	x_devmng_roaming_IsRoaming=1;
 
-	//’ÊMƒfƒoƒCƒXØ‚è‘Ö‚¦
+	//é€šä¿¡ãƒ‡ãƒã‚¤ã‚¹åˆ‡ã‚Šæ›¿ãˆ
 	if(hmr_uart1_getModuleID()==UART1_MODULEID_RF){
 		HMR_PIN_RedLED_set(1);
 		hmr_uart1_initialize(UART1_MODULEID_MP,devmng_MP_BaudRate);
@@ -545,20 +545,20 @@ void _devmng_roaming_start(void){
 		else hmr_uart1_initialize(UART1_MODULEID_RF,devmng_RF_BaudRate);
 	}
 }
-//ƒ[ƒ~ƒ“ƒOó‘Ô‚ğ‰ğœ
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çŠ¶æ…‹ã‚’è§£é™¤
 void _devmng_roaming_stop(void){
-	//‚·‚Å‚Éƒ[ƒ~ƒ“ƒO’†‚Å‚È‚¢‚È‚ç–³‹
+	//ã™ã§ã«ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ä¸­ã§ãªã„ãªã‚‰ç„¡è¦–
 	if(!x_devmng_roaming_IsRoaming)return;
 
-	//ƒ[ƒ~ƒ“ƒOó‘Ô‚ğ‰ğœ
+	//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çŠ¶æ…‹ã‚’è§£é™¤
 	x_devmng_roaming_IsRoaming=0;
 }
-//ƒ[ƒ~ƒ“ƒO§Œäˆ—ŠÖ”
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°åˆ¶å¾¡å‡¦ç†é–¢æ•°
 void _devmng_roaming_interrupt_function(sint16 Interval_){
-	//ƒJƒEƒ“ƒ^[‚ği‚ß‚é
+	//ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’é€²ã‚ã‚‹
 	x_devmng_roaming_secCnt+=Interval_;
 	
-	//ƒJƒEƒ“ƒ^[‚ªØ‚è‘Ö‚¦’l‚ğ’´‚¦‚½ê‡‚ÍA’ÊMƒfƒoƒCƒXØ‚è‘Ö‚¦
+	//ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ãŒåˆ‡ã‚Šæ›¿ãˆå€¤ã‚’è¶…ãˆãŸå ´åˆã¯ã€é€šä¿¡ãƒ‡ãƒã‚¤ã‚¹åˆ‡ã‚Šæ›¿ãˆ
 	if(x_devmng_roaming_secCnt>x_devmng_roaming_secInterval){
 		if(hmr_uart1_getModuleID()==UART1_MODULEID_RF){
 			HMR_PIN_RedLED_set(1);
@@ -572,29 +572,29 @@ void _devmng_roaming_interrupt_function(sint16 Interval_){
 	}
 }
 
-//=== Šî–{‘€ìŠÖ” ===
-//ƒfƒoƒCƒX‰Šú‰»ŠÖ”
+//=== åŸºæœ¬æ“ä½œé–¢æ•° ===
+//ãƒ‡ãƒã‚¤ã‚¹åˆæœŸåŒ–é–¢æ•°
 void devmng_initialize(void){
-	//ƒfƒoƒCƒX‰Šú‰»
+	//ãƒ‡ãƒã‚¤ã‚¹åˆæœŸåŒ–
 	hmr_device_initialize();
 
-	//Pic©‘Ì‚Ìƒpƒ[‚ğ“ü‚ê‚Ä‚¨‚­
+	//Picè‡ªä½“ã®ãƒ‘ãƒ¯ãƒ¼ã‚’å…¥ã‚Œã¦ãŠã
 	hmr_device_power(1);
 
-	//ƒfƒoƒCƒX‚Ì“dŒ¹‚ğ—‚Æ‚·
+	//ãƒ‡ãƒã‚¤ã‚¹ã®é›»æºã‚’è½ã¨ã™
 	_devmng_power(0);
 
-	//ƒ‚[ƒhƒVƒXƒeƒ€‰Šú‰»
+	//ãƒ¢ãƒ¼ãƒ‰ã‚·ã‚¹ãƒ†ãƒ åˆæœŸåŒ–
 	_devmng_mode_initialize(NormalMode);
 
-	//ƒNƒƒbƒN‰Šú‰»
+	//ã‚¯ãƒ­ãƒƒã‚¯åˆæœŸåŒ–
 	if(Config_DefaultHighClock)_devmng_clock_initialize(HighClock);
 	else _devmng_clock_initialize(NormalClock);
 
-	//Š„‚è‚İ‰Šú‰»
+	//å‰²ã‚Šè¾¼ã¿åˆæœŸåŒ–
 	hmr_interrupt_initalize();
 
-	///’ÊMŒnƒ‚ƒWƒ…[ƒ‹‰Šú‰»
+	///é€šä¿¡ç³»ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åˆæœŸåŒ–
 	if(Config_DefaultMobilePhone){
 		hmr_uart1_initialize(UART1_MODULEID_MP,devmng_MP_BaudRate);
 		com_wdt_restart();
@@ -610,61 +610,61 @@ void devmng_initialize(void){
 	hmr_i2c_initialize();
 	hmr_adc_initialize();
 
-	//ƒfƒoƒCƒX‚Ì“dŒ¹‚ğ“ü‚ê‚é
+	//ãƒ‡ãƒã‚¤ã‚¹ã®é›»æºã‚’å…¥ã‚Œã‚‹
 	delay_ms(500);
 	_devmng_power(1);
 	
-	//devmngƒ‚ƒWƒ…[ƒ‹‰Šú‰»
+	//devmngãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åˆæœŸåŒ–
 	_devmng_sleep_initialize();
 	_devmng_roaming_initialize();
 	_devmng_task_initialize();
 	_devmng_interrupt_initialize();
 
-	//WatchDogTimerŠJn
+	//WatchDogTimeré–‹å§‹
 	if(Config_DisableWatchDogTimer)disable_wdt();
 	else enable_wdt();
 }
-//ƒfƒoƒCƒXI’[‰»ŠÖ”
+//ãƒ‡ãƒã‚¤ã‚¹çµ‚ç«¯åŒ–é–¢æ•°
 void devmng_finalize(void){
-	//WatchDogTimerI—¹
+	//WatchDogTimerçµ‚äº†
 	disable_wdt();
 
-	//devmngƒ‚ƒWƒ…[ƒ‹I’[‰»
+	//devmngãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«çµ‚ç«¯åŒ–
 	_devmng_task_finalize();
 	_devmng_sleep_finalize();
 	_devmng_roaming_finalize();
 	_devmng_interrupt_finalize();
 
-	//’ÊMŒnƒ‚ƒWƒ…[ƒ‹I’[‰»
+	//é€šä¿¡ç³»ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«çµ‚ç«¯åŒ–
 	hmr_uart1_finalize();
 	hmr_uart2_finalize();
 	hmr_spi2_finalize();
 	hmr_i2c_finalize();
 	hmr_adc_finalize();
 
-	//ƒfƒoƒCƒX‚Ì“dŒ¹‚ğ—‚Æ‚·
+	//ãƒ‡ãƒã‚¤ã‚¹ã®é›»æºã‚’è½ã¨ã™
 	_devmng_power(0);
 
-	//Š„‚è‚İI—¹
+	//å‰²ã‚Šè¾¼ã¿çµ‚äº†
 	hmr_interrupt_finalize();
 
-	//ƒNƒƒbƒNI—¹
+	//ã‚¯ãƒ­ãƒƒã‚¯çµ‚äº†
 	_devmng_clock_finalize();
 
-	//ƒ‚[ƒhŠÇ—I—¹
+	//ãƒ¢ãƒ¼ãƒ‰ç®¡ç†çµ‚äº†
 	_devmng_mode_finalize();
 
-	//ƒfƒoƒCƒX©‘Ì‚ğI—¹
+	//ãƒ‡ãƒã‚¤ã‚¹è‡ªä½“ã‚’çµ‚äº†
 	hmr_device_finalize();
 }
-//ƒfƒoƒCƒX‹­§I—¹
+//ãƒ‡ãƒã‚¤ã‚¹å¼·åˆ¶çµ‚äº†
 void devmng_kill(void){
-	//©g‚Ì“dŒ¹‚ğØ‚é
+	//è‡ªèº«ã®é›»æºã‚’åˆ‡ã‚‹
 	hmr_device_power(0);
 }
-//ƒfƒoƒCƒX‚Ì“dŒ¹ŠÇ—ŠÖ”
+//ãƒ‡ãƒã‚¤ã‚¹ã®é›»æºç®¡ç†é–¢æ•°
 void _devmng_power(boolian onoff){
-	//“dŒ¹ƒIƒt‚Ìê‡‚ÍAƒ‚ƒWƒ…[ƒ‹‘¤‚àØ‚é
+	//é›»æºã‚ªãƒ•ã®å ´åˆã¯ã€ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«å´ã‚‚åˆ‡ã‚‹
 	if(!onoff){
 		sprite_power(0);
 		sprite_powerLight(0);
@@ -680,15 +680,15 @@ void _devmng_power(boolian onoff){
 	i2c_power(onoff);
 	adc_power(onoff);
 }
-//Œ»İ‚Ì’ÊMæ‚ª‘S“ñd’ÊM‘Î‰‚©‚ğ•Ô‚·
+//ç¾åœ¨ã®é€šä¿¡å…ˆãŒå…¨äºŒé‡é€šä¿¡å¯¾å¿œã‹ã‚’è¿”ã™
 boolian devmng_isFullDuplex(void){
 	return hmr_uart1_getModuleID()==UART1_MODULEID_MP || Config_RFDebugMode;
 }
 
-//=== Š„‚è‚İŠÖ” ===
-//ƒ^ƒXƒNAƒXƒŠ[ƒvA‚¨‚æ‚Ñƒ[ƒ~ƒ“ƒOÀs—pŠÖ”
+//=== å‰²ã‚Šè¾¼ã¿é–¢æ•° ===
+//ã‚¿ã‚¹ã‚¯ã€ã‚¹ãƒªãƒ¼ãƒ—ã€ãŠã‚ˆã³ãƒ­ãƒ¼ãƒŸãƒ³ã‚°å®Ÿè¡Œç”¨é–¢æ•°
 void devmng_interrupt_function(sint16 Interval_){
-	//ƒ‚[ƒh‚É‚æ‚Á‚ÄŠ„‚è‚İˆ—‚ğ•ªŠò
+	//ãƒ¢ãƒ¼ãƒ‰ã«ã‚ˆã£ã¦å‰²ã‚Šè¾¼ã¿å‡¦ç†ã‚’åˆ†å²
 	switch(devmng_mode_get()){
 	case SleepMode:
 		_devmng_sleep_interrupt_function(Interval_);
@@ -701,11 +701,11 @@ void devmng_interrupt_function(sint16 Interval_){
 		break;
 	}
 }
-//Š„‚è‚İ‚Ìmainƒ‹[ƒv‚Ö‚ÌˆÏ÷ˆ—ŠÖ”
+//å‰²ã‚Šè¾¼ã¿ã®mainãƒ«ãƒ¼ãƒ—ã¸ã®å§”è­²å‡¦ç†é–¢æ•°
 boolian devmng_interrupt_yield(void){
 	_devmng_sleep_interrupt_yield();
 
-	//ƒXƒŠ[ƒv‚ğœŠO
+	//ã‚¹ãƒªãƒ¼ãƒ—ã‚’é™¤å¤–
 	if(devmng_sleep_isSleep() && !devmng_sleep_isRem()){
 		//__asm__("PWRSAV #IDLE_MODE");
 		Idle();
@@ -716,12 +716,12 @@ boolian devmng_interrupt_yield(void){
 	return hmLib_false;
 }
 
-//=== Š„‚è‚İ§Œä—pŠÖ”
-// ini fin ŠÖ”
+//=== å‰²ã‚Šè¾¼ã¿åˆ¶å¾¡ç”¨é–¢æ•°
+// ini fin é–¢æ•°
 void _devmng_interrupt_initialize(){}
 void _devmng_interrupt_finalize(){}
 
-// main stream Š„‚è‚İ‚Ì‹–‰Â‹Ö~‚ğ‚¢‚¶‚­‚Á‚Ä‚æ‚¢‚©‚ğ•Ô‚·ŠÖ”
+// main stream å‰²ã‚Šè¾¼ã¿ã®è¨±å¯ç¦æ­¢ã‚’ã„ã˜ãã£ã¦ã‚ˆã„ã‹ã‚’è¿”ã™é–¢æ•°
 boolian devmng_interrupt_can_enable_streamVMC_fget_interrupt(){
 	return !( devmng_sleep_isSleep() && !devmng_sleep_isRem() );
 }
@@ -735,7 +735,7 @@ boolian devmng_interrupt_can_disable_streamVMC_fput_interrupt(){
 	return hmLib_true;//!( devmng_sleep_isSleep() && !devmng_sleep_isRem() );
 }
 
-// camera stream Š„‚è‚İ‚Ì‹–‰Â‹Ö~‚ğ‚¢‚¶‚­‚Á‚Ä‚æ‚¢‚©‚ğ•Ô‚·ŠÖ”
+// camera stream å‰²ã‚Šè¾¼ã¿ã®è¨±å¯ç¦æ­¢ã‚’ã„ã˜ãã£ã¦ã‚ˆã„ã‹ã‚’è¿”ã™é–¢æ•°
 boolian devmng_interrupt_can_enable_streamCMR_fget_interrupt(){
 	return !( devmng_sleep_isSleep() && !devmng_sleep_isRem() );
 }
@@ -749,14 +749,14 @@ boolian devmng_interrupt_can_disable_streamCMR_fput_interrupt(){
 	return hmLib_true;//!( devmng_sleep_isSleep() && !devmng_sleep_isRem() );
 }
 
-// camera timer  Š„‚è‚İ‚Ì‹–‰Â‹Ö~‚ğ‚¢‚¶‚­‚Á‚Ä‚æ‚¢‚©‚ğ•Ô‚·ŠÖ”
+// camera timer  å‰²ã‚Šè¾¼ã¿ã®è¨±å¯ç¦æ­¢ã‚’ã„ã˜ãã£ã¦ã‚ˆã„ã‹ã‚’è¿”ã™é–¢æ•°
 boolian devmng_interrupt_can_enable_timerCMR_interrupt(){
 	return !( devmng_sleep_isSleep() && !devmng_sleep_isRem() );
 }
 boolian devmng_interrupt_can_disable_timerCMR_interrupt(){
 	return hmLib_true;//!( devmng_sleep_isSleep() && !devmng_sleep_isRem() );
 }
-// DevMng timer ‚ÌŠ„‚è‚İ‚Ì‹–‰Â‹Ö~‚ğ‚¢‚¶‚­‚Á‚Ä‚æ‚¢‚©‚ğ•Ô‚·ŠÖ”
+// DevMng timer ã®å‰²ã‚Šè¾¼ã¿ã®è¨±å¯ç¦æ­¢ã‚’ã„ã˜ãã£ã¦ã‚ˆã„ã‹ã‚’è¿”ã™é–¢æ•°
 boolian devmng_interrupt_can_enable_timerDevmng_interrupt(){
 	return hmLib_true;
 }
@@ -764,7 +764,7 @@ boolian devmng_interrupt_can_disable_timerDevmng_interrupt(){
 	return hmLib_true;
 }
 
-// main stream ‚ÌŠ„‚è‚İ‹–‰Â‹Ö~ŠÖ”
+// main stream ã®å‰²ã‚Šè¾¼ã¿è¨±å¯ç¦æ­¢é–¢æ•°
 boolian devmng_interrupt_enable_streamVMC_fget_interrupt(){
 	if(devmng_interrupt_can_enable_streamVMC_fget_interrupt()){
 		streamVMC_enable_fget_interrupt();
@@ -798,7 +798,7 @@ boolian devmng_interrupt_disable_streamVMC_fput_interrupt(){
 	}
 }
 
-// camera stream ‚ÌŠ„‚è‚İ‹–‰Â‹Ö~ŠÖ”
+// camera stream ã®å‰²ã‚Šè¾¼ã¿è¨±å¯ç¦æ­¢é–¢æ•°
 boolian devmng_interrupt_enable_streamCMR_fget_interrupt(){
 	if(devmng_interrupt_can_enable_streamCMR_fget_interrupt()){
 		streamCMR_enable_fget_interrupt();
@@ -832,7 +832,7 @@ boolian devmng_interrupt_disable_streamCMR_fput_interrupt(){
 	}
 }
 
-// timer camera ‚ÌŠ„‚è‚İ‹–‰Â‹Ö~ŠÖ”
+// timer camera ã®å‰²ã‚Šè¾¼ã¿è¨±å¯ç¦æ­¢é–¢æ•°
 boolian devmng_interrupt_enable_timerCMR_interrupt(){
 	if(devmng_interrupt_can_enable_timerCMR_interrupt()){
 		timerCMR_enable_interrupt();
@@ -850,7 +850,7 @@ boolian devmng_interrupt_disable_timerCMR_interrupt(){
 	}
 }
 
-// timer Device manager ‚ÌŠ„‚è‚İ‹–‰Â‹Ö~ŠÖ”
+// timer Device manager ã®å‰²ã‚Šè¾¼ã¿è¨±å¯ç¦æ­¢é–¢æ•°
 boolian devmng_interrupt_enable_timerDevmng_interrupt(){
 	if(devmng_interrupt_can_enable_timerDevmng_interrupt()){
 		timerDevmng_enable_interrupt();

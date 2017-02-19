@@ -2,10 +2,10 @@
 #define HMR_MACHINE_MIHARA_SYSTEMBASE_INC 100
 #
 /*!
-@brief cSystem�𗘗p�����ł̋��ʋK��̒�`�B
+@brief cSystemを利用する上での共通規約の定義。
 
-cSystem�́A���W���[���̓d���⃂�[�h�Ǘ��p�N���X�ł��B�X���[�v���[�h�����ɓd���̐ߖ񂪕K�v�ȃ��W���[���́A�K��cSystem�ɑ΂��ăN���C�A���g�𑗂肱�݁A���[�h�ɂ��Ă̒ʒm���󂯂���悤�ɂ���K�v������܂��B
-���̃t�@�C���ł́AcSystem�𗘗p���邤���Ŋe���W���[���ɋ��ʂ̃��[�h��C���^�[�t�F�[�X������`����Ă��܂��B
+cSystemは、モジュールの電源やモード管理用クラスです。スリープモード時等に電源の節約が必要なモジュールは、必ずcSystemに対してクライアントを送りこみ、モードについての通知を受けられるようにする必要があります。
+このファイルでは、cSystemを利用するうえで各モジュールに共通のモードやインターフェース等が定義されています。
 */
 #include<XCBase/chain.hpp>
 namespace hmr {
@@ -14,20 +14,24 @@ namespace hmr {
 			namespace systems{
 				namespace mode{
 					/*!
-					@brief �قނ�̃��W���[���ނ̃��[�h���ނł��B
-					@detail �N���C�A���g�́A�z�X�g����ȉ��̃��[�h��ʒm�����\��������܂��B*/
+					@brief ほむらのモジュール類のモード分類です。
+					@detail クライアントは、ホストから以下のモードを通知される可能性があります。*/
 					enum type{
-						/*! �Z���T�[��ON�ŁA�����I�Ɋϑ��������s���B*/
+						/*! センサーはONで、自動的に観測処理を行う。*/
 						observe, 
-						/*! �Z���T�[��ON�����A�ϑ������͒ʐM�Ŏ󂯎�閽�߂�҂B*/
+						/*! センサーはONだが、観測処理は通信で受け取る命令を待つ。*/
 						passive, 
-						/*! �Z���T�[��OFF�B*/
+						/*! センサーはOFF。*/
 						sleep 
 					};
 				}
+
+				struct io_agent_interface{
+					virtual void timeout() = 0;
+				};
 			}
 			/*!
-			@brief �V�X�e���z�X�g���烂�[�h���󂯎�邽�߂Ɋe���W���[�������荞�ށA�N���C�A���g�̃C���^�[�t�F�[�X�ł��B*/
+			@brief システムホストからモードを受け取るために各モジュールが送り込む、クライアントのインターフェースです。*/
 			struct system_client_interface: public ::xc::chain_element{
 				virtual void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_) = 0;
 			};
@@ -37,7 +41,7 @@ namespace hmr {
 			}
 
 			/*!
-			@brief �N���C�A���g�Ƀ��[�h��ʒm����A�V�X�e���z�X�g����̃C���^�[�t�F�[�X�ł��B*/
+			@brief クライアントにモードを通知する、システムホストからのインターフェースです。*/
 			struct system_interface{
 				virtual void regist(system_client_interface& rElement_) = 0;
 			};

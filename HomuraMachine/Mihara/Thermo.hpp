@@ -2,17 +2,17 @@
 #define HMR_MACHINE_MIHARA_THERMO_INC 100
 #
 /*
-ƒoƒbƒeƒŠ[ŠÇ——pƒRƒ}ƒ“ƒh
+ãƒãƒƒãƒ†ãƒªãƒ¼ç®¡ç†ç”¨ã‚³ãƒãƒ³ãƒ‰
 === hmr::machine::mihara::thermo ===
 v1_00/141121 hmIto
-	cpp‰»
+	cppåŒ–
 === hmrThermo ===
 v0_02/131019 iwahori
-	ƒ^ƒXƒNƒVƒXƒeƒ€—p‚Étask_setup_talk‚Ætask_interrupt‚ğì¬
+	ã‚¿ã‚¹ã‚¯ã‚·ã‚¹ãƒ†ãƒ ç”¨ã«task_setup_talkã¨task_interruptã‚’ä½œæˆ
 v0_01/130112 iwahori
-	workŠÖ”‚ğsetup_listen‚Æsetup_talk‚É•ª—£
+	worké–¢æ•°ã‚’setup_listenã¨setup_talkã«åˆ†é›¢
 v0_00/121208 hmIto
-	Šî–{ŠÖ”ì¬
+	åŸºæœ¬é–¢æ•°ä½œæˆ
 */
 #include<hmLib/cstring.h>
 #include<XCBase/future.hpp>
@@ -55,7 +55,7 @@ namespace hmr {
 				}DataTask;
 				task::handler DataTaskHandler;
 			private:
-				//ƒ‚[ƒh’Ê’mó—ÌƒNƒ‰ƒX
+				//ãƒ¢ãƒ¼ãƒ‰é€šçŸ¥å—é ˜ã‚¯ãƒ©ã‚¹
 				struct system_client :public system_client_interface{
 				private:
 					this_type& Ref;
@@ -75,7 +75,7 @@ namespace hmr {
 					systems::mode::type mode()const{ return CurrentMode; }
 				}SystemClient;
 			private:
-				//’ÊMó—ÌƒNƒ‰ƒX
+				//é€šä¿¡å—é ˜ã‚¯ãƒ©ã‚¹
 				struct message_client :public message_client_interface{
 				private:
 					this_type& Ref;
@@ -126,7 +126,7 @@ namespace hmr {
 							service::cstring_construct_safe(pStr, 3);
 							hmLib::cstring_putc(pStr, 0, 0x00);
 
-							//‰·“xƒf[ƒ^æ“¾
+							//æ¸©åº¦ãƒ‡ãƒ¼ã‚¿å–å¾—
 							hmLib::cstring_putc(pStr, 1, (unsigned char)(SendData % 256));
 							hmLib::cstring_putc(pStr, 2, (unsigned char)((SendData >> 8) % 256));
 							return false;
@@ -136,10 +136,10 @@ namespace hmr {
 					}
 					bool listen(hmLib::cstring Str){
 
-						//ƒf[ƒ^ƒTƒCƒYŠm”F
+						//ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºç¢ºèª
 						if(hmLib::cstring_size(&Str) == 0)return true;
 
-						//1byte–Ú‚Åƒ‚[ƒh‚ğ•ª‚¯‚é
+						//1byteç›®ã§ãƒ¢ãƒ¼ãƒ‰ã‚’åˆ†ã‘ã‚‹
 						switch(hmLib::cstring_getc(&Str, 0)){
 						case 0x10:
 							DataMode_i = true;

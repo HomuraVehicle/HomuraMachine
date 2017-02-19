@@ -5,80 +5,80 @@
 ===hmrDeviceManage===
 
 v1_02/131019 amby
-	ƒƒbƒZ[ƒWŠÖ”»ìA‚»‚Ì‘¼‚Ì‹@”\‚ÍƒCƒ“ƒ^[ƒtƒF[ƒX‚Öc
+	ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é–¢æ•°è£½ä½œã€ãã®ä»–ã®æ©Ÿèƒ½ã¯ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸â€¦
 
 v1_01/131013 hmIto
-	ƒCƒ“ƒ^[ƒtƒF[ƒX‚ğ‘å•‚É•ÏX•®—
-		ƒ‚[ƒh‚©‚çƒNƒƒbƒN‘¬“xw’è‚ğœŠO
+	ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’å¤§å¹…ã«å¤‰æ›´ï¼†æ•´ç†
+		ãƒ¢ãƒ¼ãƒ‰ã‹ã‚‰ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦æŒ‡å®šã‚’é™¤å¤–
 */
 
 /*===hmrDeviceManage===
 'D'
-ƒ‚[ƒhæ“¾ƒRƒ}ƒ“ƒh
+ãƒ¢ãƒ¼ãƒ‰å–å¾—ã‚³ãƒãƒ³ãƒ‰
 >> 0xA0 
 << 0xA0, DeviceManageMode, ClockModeSpeed  
 	DeviceManageMode : 0x00:normal, 0x10:sleep, 0x20:roaming  
 	ClockModeSpeed   : 0x00:normal, 0x01:low, 0x02:high  
 
-Device Manage Mode İ’è 
+Device Manage Mode è¨­å®š 
 
-ƒXƒŠ[ƒvİ’èƒRƒ}ƒ“ƒhiÀs‚Í‚³‚ê‚È‚¢j
+ã‚¹ãƒªãƒ¼ãƒ—è¨­å®šã‚³ãƒãƒ³ãƒ‰ï¼ˆå®Ÿè¡Œã¯ã•ã‚Œãªã„ï¼‰
 >> 0x10, 0x10, secSleepLength[2],secRemLength[2]
-	secSleepLength•b‚Å‡–°ƒTƒCƒNƒ‹B‚¤‚¿AsecSleepLength•b‚¾‚¯ƒŒƒ€ó‘ÔB
-	secSleepLength‚Ísint16‚Ì³”A‚Â‚Ü‚è1`32767•bà9ŠÔ‹­‚ª“ü‚é
+	secSleepLengthç§’ã§ç¡çœ ã‚µã‚¤ã‚¯ãƒ«ã€‚ã†ã¡ã€secSleepLengthç§’ã ã‘ãƒ¬ãƒ çŠ¶æ…‹ã€‚
+	secSleepLengthã¯sint16ã®æ­£æ•°ã€ã¤ã¾ã‚Š1ï½32767ç§’â‰’9æ™‚é–“å¼·ãŒå…¥ã‚‹
 << 0x10, 0x10, secSleepLength[2],secRemLength[2],Code
-	İ’è’l‚ÆÀs—pƒR[ƒh‚ª•Ô‚Á‚Ä‚­‚é
+	è¨­å®šå€¤ã¨å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ãŒè¿”ã£ã¦ãã‚‹
 << 0x10, 0xF1
-	İ’è’l‚ªˆÙí‚Èê‡‚ÍA0xF1‚ª–ß‚é
+	è¨­å®šå€¤ãŒç•°å¸¸ãªå ´åˆã¯ã€0xF1ãŒæˆ»ã‚‹
 
-ƒXƒŠ[ƒvÀsƒRƒ}ƒ“ƒh
+ã‚¹ãƒªãƒ¼ãƒ—å®Ÿè¡Œã‚³ãƒãƒ³ãƒ‰
 >> 0x10, 0x11, Code
-	Às—pƒR[ƒh‚ğ‘—M‚µ‚ÄAÀs‚ğŠm”F
-		’¼‘O‚ÌƒXƒŠ[ƒvİ’èƒRƒ}ƒ“ƒh‚Åæ“¾‚µ‚½Às—pƒR[ƒh‚Ì‚İ—LŒø
-<< ‚È‚µi“ü–°j
+	å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã‚’é€ä¿¡ã—ã¦ã€å®Ÿè¡Œã‚’ç¢ºèª
+		ç›´å‰ã®ã‚¹ãƒªãƒ¼ãƒ—è¨­å®šã‚³ãƒãƒ³ãƒ‰ã§å–å¾—ã—ãŸå®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã®ã¿æœ‰åŠ¹
+<< ãªã—ï¼ˆå…¥çœ ï¼‰
 
 
-ƒ[ƒ~ƒ“ƒOİ’èƒRƒ}ƒ“ƒhiÀs‚Í‚³‚ê‚È‚¢j
+ãƒ­ãƒ¼ãƒŸãƒ³ã‚°è¨­å®šã‚³ãƒãƒ³ãƒ‰ï¼ˆå®Ÿè¡Œã¯ã•ã‚Œãªã„ï¼‰
 >> 0x10, 0x20, ModuleID[1],secRoamLength[1]
-	ModuleID‚Ì’ÊMƒ‚ƒWƒ…[ƒ‹‚ğ—LŒø‚É‚·‚é
+	ModuleIDã®é€šä¿¡ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’æœ‰åŠ¹ã«ã™ã‚‹
 		ModuleID 0:RF, 1:MP
-	secRoamLength•b‘Ò‹@‚µ‚½ŒãAŒ³‚Ìƒ‚ƒWƒ…[ƒ‹‚É–ß‚é(³Šm‚É‚ÍsecRoamLength•b‚²‚Æ‚É’T‚·‘Šè‚ğ•Ï‚¦‚é)
-	secRoamLength‚É‚Íuint8‚Ì³”A‚Â‚Ü‚è1`255•b‚ª“ü‚é
+	secRoamLengthç§’å¾…æ©Ÿã—ãŸå¾Œã€å…ƒã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã«æˆ»ã‚‹(æ­£ç¢ºã«ã¯secRoamLengthç§’ã”ã¨ã«æ¢ã™ç›¸æ‰‹ã‚’å¤‰ãˆã‚‹)
+	secRoamLengthã«ã¯uint8ã®æ­£æ•°ã€ã¤ã¾ã‚Š1ï½255ç§’ãŒå…¥ã‚‹
 << 0x10, 0x20,ModuleID,Code
-	İ’è’l‚ÆÀs—pƒR[ƒh‚ª•Ô‚Á‚Ä‚­‚é
+	è¨­å®šå€¤ã¨å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ãŒè¿”ã£ã¦ãã‚‹
 << 0x10, 0xF2
-	İ’è’l‚ªˆÙí‚Èê‡‚ÍA0xF2‚ª–ß‚é
-ƒ[ƒ~ƒ“ƒOÀsƒRƒ}ƒ“ƒh
+	è¨­å®šå€¤ãŒç•°å¸¸ãªå ´åˆã¯ã€0xF2ãŒæˆ»ã‚‹
+ãƒ­ãƒ¼ãƒŸãƒ³ã‚°å®Ÿè¡Œã‚³ãƒãƒ³ãƒ‰
 >> 0x10, 0x21,Code
-	Às—pƒR[ƒh‚ğ‘—M‚µ‚ÄAÀs‚ğŠm”F
-		’¼‘O‚ÌƒXƒŠ[ƒvİ’èƒRƒ}ƒ“ƒh‚Åæ“¾‚µ‚½Às—pƒR[ƒh‚Ì‚İ—LŒø
-<< ‚È‚µiƒ[ƒ~ƒ“ƒOj
+	å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã‚’é€ä¿¡ã—ã¦ã€å®Ÿè¡Œã‚’ç¢ºèª
+		ç›´å‰ã®ã‚¹ãƒªãƒ¼ãƒ—è¨­å®šã‚³ãƒãƒ³ãƒ‰ã§å–å¾—ã—ãŸå®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã®ã¿æœ‰åŠ¹
+<< ãªã—ï¼ˆãƒ­ãƒ¼ãƒŸãƒ³ã‚°ï¼‰
 
-ƒ‚[ƒhƒŠƒZƒbƒgiƒm[ƒ}ƒ‹ƒ‚[ƒhÀsjƒRƒ}ƒ“ƒh
+ãƒ¢ãƒ¼ãƒ‰ãƒªã‚»ãƒƒãƒˆï¼ˆãƒãƒ¼ãƒãƒ«ãƒ¢ãƒ¼ãƒ‰å®Ÿè¡Œï¼‰ã‚³ãƒãƒ³ãƒ‰
 >> 0x10, 0x00
-	ƒm[ƒ}ƒ‹ƒ‚[ƒh
+	ãƒãƒ¼ãƒãƒ«ãƒ¢ãƒ¼ãƒ‰
 << 0x10, 0x00
 
 
-KILLİ’èƒRƒ}ƒ“ƒhiÀs‚Í‚³‚ê‚È‚¢j
+KILLè¨­å®šã‚³ãƒãƒ³ãƒ‰ï¼ˆå®Ÿè¡Œã¯ã•ã‚Œãªã„ï¼‰
 >> 0x20
 << 0x20,Code
-	İ’è’l‚ÆÀs—pƒR[ƒh‚ª•Ô‚Á‚Ä‚­‚é
+	è¨­å®šå€¤ã¨å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ãŒè¿”ã£ã¦ãã‚‹
 << 0xF2
-	İ’è’l‚ªˆÙí‚Èê‡‚ÍA0xF1‚ª–ß‚é
-KILLÀsƒRƒ}ƒ“ƒh
+	è¨­å®šå€¤ãŒç•°å¸¸ãªå ´åˆã¯ã€0xF1ãŒæˆ»ã‚‹
+KILLå®Ÿè¡Œã‚³ãƒãƒ³ãƒ‰
 >> 0x21,Code
-	Às—pƒR[ƒh‚ğ‘—M‚µ‚ÄAÀs‚ğŠm”F
-		’¼‘O‚ÌKILLİ’èƒRƒ}ƒ“ƒh‚Åæ“¾‚µ‚½Às—pƒR[ƒh‚Ì‚İ—LŒø
-<< ‚È‚µi‰i–°j
+	å®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã‚’é€ä¿¡ã—ã¦ã€å®Ÿè¡Œã‚’ç¢ºèª
+		ç›´å‰ã®KILLè¨­å®šã‚³ãƒãƒ³ãƒ‰ã§å–å¾—ã—ãŸå®Ÿè¡Œç”¨ã‚³ãƒ¼ãƒ‰ã®ã¿æœ‰åŠ¹
+<< ãªã—ï¼ˆæ°¸çœ ï¼‰
 
 
-ƒNƒƒbƒNİ’è—pƒRƒ}ƒ“ƒh
+ã‚¯ãƒ­ãƒƒã‚¯è¨­å®šç”¨ã‚³ãƒãƒ³ãƒ‰
 >> 0x30, Speed
 	Speed : 0:normal, 1:low, 2:high 	
 << 0x30, Speed 
 
-initialize , sleep ‚Æ‚©‚ÌƒCƒ“ƒtƒH[ƒ€‚ğl‚¦‚é
+initialize , sleep ã¨ã‹ã®ã‚¤ãƒ³ãƒ•ã‚©ãƒ¼ãƒ ã‚’è€ƒãˆã‚‹
 
 */
 
@@ -93,29 +93,29 @@ initialize , sleep ‚Æ‚©‚ÌƒCƒ“ƒtƒH[ƒ€‚ğl‚¦‚é
 
 // mode flag
 struct{
-	unsigned Info_i:1;	     // î•ñ‘—Mƒ‚[ƒhó—
+	unsigned Info_i:1;	     // æƒ…å ±é€ä¿¡ãƒ¢ãƒ¼ãƒ‰å—ç†
 	
-	unsigned SleepMode_i:1;  // sleep mode ó—
-	//unsigned SleepModeFail:1; // sleep mode ó—¸”s(“ü—Í‚ª‚¨‚©‚µ‚©‚Á‚½)
+	unsigned SleepMode_i:1;  // sleep mode å—ç†
+	//unsigned SleepModeFail:1; // sleep mode å—ç†å¤±æ•—(å…¥åŠ›ãŒãŠã‹ã—ã‹ã£ãŸ)
 	
-	unsigned RoamingMode_i:1;// roaming mode ó—
-	//unsigned RoamingModeFail:1; // roaming mode ó—¸”s
+	unsigned RoamingMode_i:1;// roaming mode å—ç†
+	//unsigned RoamingModeFail:1; // roaming mode å—ç†å¤±æ•—
 
-	unsigned NormalMode_i:1; // normal mode ó—
-	unsigned KillCom_i:1;    // kill command ó— 
+	unsigned NormalMode_i:1; // normal mode å—ç†
+	unsigned KillCom_i:1;    // kill command å—ç† 
 	
-	unsigned ClockMode_i:1;  // clock •ÏXƒRƒ}ƒ“ƒhó—
+	unsigned ClockMode_i:1;  // clock å¤‰æ›´ã‚³ãƒãƒ³ãƒ‰å—ç†
 	unsigned ClockModeFail:1;
 	
-	unsigned SleepModeCodeFail:1;   // sleep mode exe ó—‚µ‚½‚ªCode”F¯¸”s
-	unsigned RoamingModeCodeFail:1; // roaming mode exe ó—‚µ‚½‚ª¸”s
-	unsigned KillCodeFail:1;		  // normal mode exe ó—‚µ‚½‚ª¸”s
+	unsigned SleepModeCodeFail:1;   // sleep mode exe å—ç†ã—ãŸãŒCodeèªè­˜å¤±æ•—
+	unsigned RoamingModeCodeFail:1; // roaming mode exe å—ç†ã—ãŸãŒå¤±æ•—
+	unsigned KillCodeFail:1;		  // normal mode exe å—ç†ã—ãŸãŒå¤±æ•—
 }_devmngmsg_Mode={0,0,0,0,0,0,0,0,0,0};
 
-// ƒƒbƒN—p‚ÌƒR[ƒh
-unsigned char _devmngmsg_sleep_Code=0;	//ƒƒbƒN‰ğœ—p‚ÌƒR[ƒh
-unsigned char _devmngmsg_roaming_Code=0;	//ƒƒbƒN‰ğœ—p‚ÌƒR[ƒh
-unsigned char _devmngmsg_kill_Code=0;	//ƒƒbƒN‰ğœ—p‚ÌƒR[ƒh
+// ãƒ­ãƒƒã‚¯ç”¨ã®ã‚³ãƒ¼ãƒ‰
+unsigned char _devmngmsg_sleep_Code=0;	//ãƒ­ãƒƒã‚¯è§£é™¤ç”¨ã®ã‚³ãƒ¼ãƒ‰
+unsigned char _devmngmsg_roaming_Code=0;	//ãƒ­ãƒƒã‚¯è§£é™¤ç”¨ã®ã‚³ãƒ¼ãƒ‰
+unsigned char _devmngmsg_kill_Code=0;	//ãƒ­ãƒƒã‚¯è§£é™¤ç”¨ã®ã‚³ãƒ¼ãƒ‰
 
 uint16 _devmngmsg_sleep_sec_rem;
 uint16 _devmngmsg_sleep_sec_nonRem;
@@ -124,7 +124,7 @@ uint16 _devmngmsg_roaming_sec_interval;
 //unsigned char _devmngmsg_roaming_ID;
 
 /*
-// initialize ŠÖ”
+// initialize é–¢æ•°
 void devmngmsg_initialize(){
 	_devmngmsg_Mode.Info_i = hmLib_false;
 	_devmngmsg_Mode.SleepMode_i = hmLib_false;
@@ -139,7 +139,7 @@ void devmngmsg_initialize(){
 
 	//devmng_initialize();
 }
-// finalize ŠÖ”
+// finalize é–¢æ•°
 void devmngmsg_finalize(){
 	//devmng_finalize();
 }
@@ -147,10 +147,10 @@ void devmngmsg_finalize(){
 
 hmLib_boolian devmngmsg_listen(cstring Str){
 
-	//ƒf[ƒ^ƒTƒCƒYŠm”F
+	//ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºç¢ºèª
 	if(cstring_size(&Str)==0)return hmLib_true;
 
-	//1byte–Ú‚Åƒ‚[ƒh‚ğ•ª‚¯‚é
+	//1byteç›®ã§ãƒ¢ãƒ¼ãƒ‰ã‚’åˆ†ã‘ã‚‹
 	switch(cstring_getc(&Str,0)){
 
 	// Infomation mode
@@ -158,7 +158,7 @@ hmLib_boolian devmngmsg_listen(cstring Str){
 		_devmngmsg_Mode.Info_i = hmLib_true;
 		return hmLib_false;
 
-    // Šeí‘Ò‹@ƒ‚[ƒhİ’è
+    // å„ç¨®å¾…æ©Ÿãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	case 0x10:
 		if(cstring_size(&Str)==1)return hmLib_true;
 		switch(cstring_getc(&Str,1)){
@@ -172,10 +172,10 @@ hmLib_boolian devmngmsg_listen(cstring Str){
 			if(cstring_size(&Str)!=6)return hmLib_true;
 			_devmngmsg_sleep_sec_nonRem = ((uint16)cstring_getc(&Str,2) & 0x00FF) + (uint16)cstring_getc(&Str,3) * 256;
 			_devmngmsg_sleep_sec_rem = ((uint16)cstring_getc(&Str,4) &0x00FF) + (uint16)cstring_getc(&Str,5) * 256;
-			// sleep mode@İ’è€”õ
+			// sleep modeã€€è¨­å®šæº–å‚™
 			devmng_sleep_setInterval(_devmngmsg_sleep_sec_nonRem, _devmngmsg_sleep_sec_rem); 
 			//devmng_sleep_getInterval(&_devmngmsg_sleep_sec_nonRem, &_devmngmsg_sleep_sec_rem); 
-			// code æ“¾
+			// code å–å¾—
 			_devmngmsg_sleep_Code = lockcode();
 
 			_devmngmsg_Mode.SleepMode_i = hmLib_true;
@@ -183,14 +183,14 @@ hmLib_boolian devmngmsg_listen(cstring Str){
 
 		case 0x11:// sleep execute mode
 			if(cstring_size(&Str)!=3)return hmLib_true;
-			// code ‚Ìƒ`ƒFƒbƒN
-			if(cstring_getc(&Str,2) ==  _devmngmsg_sleep_Code){// ˆê’v
-				// inform ŠÖ”‚ÌƒZƒbƒg
+			// code ã®ãƒã‚§ãƒƒã‚¯
+			if(cstring_getc(&Str,2) ==  _devmngmsg_sleep_Code){// ä¸€è‡´
+				// inform é–¢æ•°ã®ã‚»ãƒƒãƒˆ
 
-				// sleep ‚ÌÀs
+				// sleep ã®å®Ÿè¡Œ
 				devmng_mode_set(SleepMode);
 			}else{
-				// ¸”s’Ê’m
+				// å¤±æ•—é€šçŸ¥
 				_devmngmsg_Mode.SleepModeCodeFail = hmLib_true;
 			}
 			return hmLib_false;
@@ -198,24 +198,24 @@ hmLib_boolian devmngmsg_listen(cstring Str){
 		case 0x20:// roaming mode 
 			if(cstring_size(&Str)!=4)return hmLib_true;
 			_devmngmsg_roaming_sec_interval =  ((uint16)cstring_getc(&Str,2) & 0x00FF) + (uint16)cstring_getc(&Str,3) * 256;
-			// sleep mode@İ’è€”õ
+			// sleep modeã€€è¨­å®šæº–å‚™
 			devmng_roaming_setInterval(_devmngmsg_roaming_sec_interval); 
 			//devmng_roaming_getInterval(&_devmngmsg_roaming_sec_interval); 
-			// code æ“¾
+			// code å–å¾—
 			_devmngmsg_roaming_Code = lockcode();
 			_devmngmsg_Mode.RoamingMode_i = hmLib_true;
 			return hmLib_false;
 
 		case 0x21:// roaming execute mode
 			if(cstring_size(&Str)!=3)return hmLib_true;
-			// code ‚Ìƒ`ƒFƒbƒN
-			if(cstring_getc(&Str,2) ==  _devmngmsg_roaming_Code){// ˆê’v
-				// inform ŠÖ”‚ÌƒZƒbƒg
+			// code ã®ãƒã‚§ãƒƒã‚¯
+			if(cstring_getc(&Str,2) ==  _devmngmsg_roaming_Code){// ä¸€è‡´
+				// inform é–¢æ•°ã®ã‚»ãƒƒãƒˆ
 
-				// roaming ‚ÌÀs
+				// roaming ã®å®Ÿè¡Œ
 				devmng_mode_set(RoamingMode);
 			}else{
-				// ¸”s’Ê’m
+				// å¤±æ•—é€šçŸ¥
 				_devmngmsg_Mode.RoamingModeCodeFail = hmLib_true;
 			}
 			return hmLib_false;
@@ -228,19 +228,19 @@ hmLib_boolian devmngmsg_listen(cstring Str){
 
 	case 0x21:
 		if(cstring_size(&Str)!=2)return hmLib_true;
-		// code ‚Ìƒ`ƒFƒbƒN
-		if(cstring_getc(&Str,1) ==  _devmngmsg_kill_Code){// ˆê’v
-			// kill ‚ÌÀs
+		// code ã®ãƒã‚§ãƒƒã‚¯
+		if(cstring_getc(&Str,1) ==  _devmngmsg_kill_Code){// ä¸€è‡´
+			// kill ã®å®Ÿè¡Œ
 			devmng_kill();
 		}else{
-			// ¸”s’Ê’m
+			// å¤±æ•—é€šçŸ¥
 			_devmngmsg_Mode.KillCodeFail = hmLib_true;
 		}
 		return hmLib_false;
 
 	case 0x30:
 		if(cstring_size(&Str)!=2)return hmLib_true;
-		// mode ‚Ìƒ`ƒFƒbƒN
+		// mode ã®ãƒã‚§ãƒƒã‚¯
 		_devmngmsg_clockMode = cstring_getc(&Str,1); 
 		if(_devmngmsg_clockMode == 0){
 			devmng_clock_set(NormalClock);
@@ -252,7 +252,7 @@ hmLib_boolian devmngmsg_listen(cstring Str){
 			_devmngmsg_Mode.ClockModeFail = hmLib_true;
 			return hmLib_false;
 		}
-		// clock mode ó—
+		// clock mode å—ç†
 		_devmngmsg_Mode.ClockMode_i = hmLib_true;
 		return hmLib_false;
 	default:
@@ -332,11 +332,11 @@ hmLib_boolian devmngmsg_talk(cstring* pStr){
 		cstring_putc(pStr,3,(unsigned char)((_devmngmsg_roaming_sec_interval>>8)&0x00FF));
 		cstring_putc(pStr,4,_devmngmsg_roaming_Code);
 
-		//•ÏXæ‚Ì’ÊMè’i‚ğ•Ô‚·
+		//å¤‰æ›´å…ˆã®é€šä¿¡æ‰‹æ®µã‚’è¿”ã™
 		if(hmr_uart1_getModuleID()==UART1_MODULEID_RF){
-			cstring_putc(pStr,5,0x01); // Œ»ó‚ªRF‚È‚çŸ‚ÍMP
+			cstring_putc(pStr,5,0x01); // ç¾çŠ¶ãŒRFãªã‚‰æ¬¡ã¯MP
 		}else{
-			cstring_putc(pStr,5,0x00); // Œ»ó‚ªMP‚È‚çŸ‚ÍRF 
+			cstring_putc(pStr,5,0x00); // ç¾çŠ¶ãŒMPãªã‚‰æ¬¡ã¯RF 
 		}
 
 		_devmngmsg_Mode.RoamingMode_i=hmLib_false;
@@ -394,23 +394,23 @@ sint16 devmngmsg_task_inform(sint16 interval){
 }
 
 /*
-//=== ƒNƒƒbƒNƒ‚[ƒh§Œä‹@”\ ===
-//ƒNƒƒbƒN‚ğw’èƒ‚[ƒh‚ÅÄƒXƒ^[ƒg‚·‚é
+//=== ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½ ===
+//ã‚¯ãƒ­ãƒƒã‚¯ã‚’æŒ‡å®šãƒ¢ãƒ¼ãƒ‰ã§å†ã‚¹ã‚¿ãƒ¼ãƒˆã™ã‚‹
 void _devmngmsg_clockmode_restartClock(devmngmsg_clockmode Mode_);
-//ƒNƒƒbƒN‚ğƒNƒƒbƒNƒ‚[ƒh‚ÅÄƒXƒ^[ƒg‚·‚é
+//ã‚¯ãƒ­ãƒƒã‚¯ã‚’ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã§å†ã‚¹ã‚¿ãƒ¼ãƒˆã™ã‚‹
 void _devmngmsg_clockmode_restartClockDefault();
-//ƒNƒƒbƒNƒ‚[ƒh‚ğİ’è‚·‚é
+//ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šã™ã‚‹
 void devmngmsg_clockmode_set(devmngmsg_clockmode ClockMode_);
-//ƒNƒƒbƒNƒ‚[ƒh‚ğæ“¾‚·‚é
+//ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 devmngmsg_clockmode devmngmsg_clockmode_get(void);
 
 
-//=== ƒNƒƒbƒNƒ‚[ƒh§Œä‹@”\ ===
-//ƒfƒtƒHƒ‹ƒgƒNƒƒbƒN
+//=== ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½ ===
+//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚¯ãƒ­ãƒƒã‚¯
 devmngmsg_clockmode x_devmngmsg_clockmode_Mode;
-//ƒNƒƒbƒN‚ğw’èƒ‚[ƒh‚ÅÄƒXƒ^[ƒg‚·‚é
+//ã‚¯ãƒ­ãƒƒã‚¯ã‚’æŒ‡å®šãƒ¢ãƒ¼ãƒ‰ã§å†ã‚¹ã‚¿ãƒ¼ãƒˆã™ã‚‹
 void _devmngmsg_clockmode_restartClock(devmngmsg_clockmode Mode_){
-	//ƒNƒƒbƒNƒ‚[ƒhİ’èˆ—
+	//ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰è¨­å®šå‡¦ç†
 	hmr_clock_finalize();
 
 	switch(Mode_){
@@ -425,47 +425,47 @@ void _devmngmsg_clockmode_restartClock(devmngmsg_clockmode Mode_){
 		break;
 	}
 
-	//ƒNƒƒbƒNİ’èŒã‚Ì‚½‚ß
+	//ã‚¯ãƒ­ãƒƒã‚¯è¨­å®šå¾Œã®ãŸã‚
 	hmr_uart1_initialize(hmr_uart1_getModuleID());
 	hmr_uart2_initialize();
 	hmr_adc_initialize();
 }
-//ƒNƒƒbƒN‚ğƒNƒƒbƒNƒ‚[ƒh‚ÅÄƒXƒ^[ƒg‚·‚é
+//ã‚¯ãƒ­ãƒƒã‚¯ã‚’ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã§å†ã‚¹ã‚¿ãƒ¼ãƒˆã™ã‚‹
 void _devmngmsg_clockmode_restartClockDefault(){
 	_devmngmsg_clockmode_restartClock(x_devmngmsg_clockmode_Mode);
 }
-//ƒNƒƒbƒNƒ‚[ƒh‚ğİ’è‚·‚é
+//ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®šã™ã‚‹
 void devmngmsg_clockmode_set(devmngmsg_clockmode ClockMode_){
-	//“¯‚¶ƒNƒƒbƒNƒ‚[ƒh‚ğw’è‚³‚ê‚½‚ç–³‹
+	//åŒã˜ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã‚’æŒ‡å®šã•ã‚ŒãŸã‚‰ç„¡è¦–
 	if(x_devmngmsg_clockmode_Mode==ClockMode_)return;
 
-	//ƒNƒƒbƒNƒ‚[ƒh‚ğ•ÏX
+	//ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã‚’å¤‰æ›´
 	x_devmngmsg_clockmode_Mode=ClockMode_;
 
-	//ƒNƒƒbƒNƒ‚[ƒh•ÏX‚ğƒ‚[ƒh§Œä•”‚É’Ê’m
+	//ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´ã‚’ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡éƒ¨ã«é€šçŸ¥
 	_devmngmsg_mode_informClockMode();
 }
-//ƒNƒƒbƒNƒ‚[ƒh‚ğæ“¾‚·‚é
+//ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 devmngmsg_clockmode devmngmsg_clockmode_get(void){return x_devmngmsg_clockmode_Mode;}
 
-//=== ƒXƒŠ[ƒvƒ‚[ƒh§Œä ===
-//“ü–°•‹N°‚ÉŒÄ‚Ño‚³‚ê‚éŠÖ”ƒ|ƒCƒ“ƒ^
+//=== ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ ===
+//å…¥çœ æ™‚ï¼†èµ·åºŠæ™‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹é–¢æ•°ãƒã‚¤ãƒ³ã‚¿
 devmngmsg_vFp_v x_devmngmsg_sleep_InformSleep;
 devmngmsg_vFp_v x_devmngmsg_sleep_InformWakeup;
-//ƒŒƒ€•ƒmƒ“ƒŒƒ€‚ÌØ‚è‘Ö‚¦‚ÉŒÄ‚Ño‚³‚ê‚éŠÖ”ƒ|ƒCƒ“ƒ^
+//ãƒ¬ãƒ ï¼†ãƒãƒ³ãƒ¬ãƒ ã®åˆ‡ã‚Šæ›¿ãˆæ™‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹é–¢æ•°ãƒã‚¤ãƒ³ã‚¿
 devmngmsg_vFp_v x_devmngmsg_sleep_InformRem;
 devmngmsg_vFp_v x_devmngmsg_sleep_InformNonRem;
-//‡–°‚ÌƒCƒ“ƒ^[ƒoƒ‹§Œä•Ï”
+//ç¡çœ æ™‚ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«åˆ¶å¾¡å¤‰æ•°
 sint16 x_devmngmsg_sleep_secNonRem=540;
 sint16 x_devmngmsg_sleep_secRem=60;
 sint16 x_devmngmsg_sleep_secCnt=0;
 boolian x_devmngmsg_sleep_IsRem;
-//ƒXƒŠ[ƒvƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğæ“¾‚·‚é
+//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 void devmngmsg_sleep_getInterval(sint16& secNonRem,sint16& secRem){
 	secNonRem=x_devmngmsg_sleep_secNonRem;
 	secRem=x_devmngmsg_sleep_secRem;
 }
-//ƒXƒŠ[ƒvƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğ•ÏX‚·‚é
+//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å¤‰æ›´ã™ã‚‹
 void devmngmsg_sleep_setInterval(sint16 secNonRem, sint16 secRem){
 	if(secNonRem<0)secNonRem=0;
 	if(secRem<1)secRem=1;
@@ -473,44 +473,44 @@ void devmngmsg_sleep_setInterval(sint16 secNonRem, sint16 secRem){
 	x_devmngmsg_sleep_secNonRem=secNonRem;
 	x_devmngmsg_sleep_secRem=secRem;
 }
-//ƒXƒŠ[ƒvƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğæ“¾‚·‚é
+//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 void devmngmsg_sleep_registSleepInformFunction(devmngmsg_vFp_v InformSleep,devmngmsg_vFp_v InformWakeUp){
 	x_devmngmsg_sleep_InformSleep=InformSleep;
 	x_devmngmsg_sleep_InformWakeup=InformWakeUp;
 }
-//ƒŒƒ€ƒXƒŠ[ƒv‚É“ü‚é/o‚éÛ‚Ì’Ê’mŠÖ”‚ğ“o˜^‚·‚é
+//ãƒ¬ãƒ ã‚¹ãƒªãƒ¼ãƒ—ã«å…¥ã‚‹/å‡ºã‚‹éš›ã®é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã™ã‚‹
 void devmngmsg_sleep_registRemInformFunction(devmngmsg_vFp_v InformRem,devmngmsg_vFp_v InformNonRem){
 	x_devmngmsg_sleep_InformRem=InformRem;
 	x_devmngmsg_sleep_InformNonRem=InformNonRem;
 }
-//sleepó‘Ô‚É‚Ù‚Ş‚ç‚ğ•Ï‚¦‚éŠÖ”
+//sleepçŠ¶æ…‹ã«ã»ã‚€ã‚‰ã‚’å¤‰ãˆã‚‹é–¢æ•°
 void _devmngmsg_sleep_start(){	
-	//ƒXƒŠ[ƒvŠJn‚ğ’Ê’m‚·‚é
+	//ã‚¹ãƒªãƒ¼ãƒ—é–‹å§‹ã‚’é€šçŸ¥ã™ã‚‹
 	if(x_devmngmsg_sleep_InformSleep)x_devmngmsg_sleep_InformSleep();
 
-	// ƒ‚ƒWƒ…[ƒ‹“dŒ¹—‚Æ‚·
+	// ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«é›»æºè½ã¨ã™
 	_devmngmsg_module_power_off();
 
-	// ƒNƒƒbƒNƒXƒs[ƒh—‚Æ‚·
+	// ã‚¯ãƒ­ãƒƒã‚¯ã‚¹ãƒ”ãƒ¼ãƒ‰è½ã¨ã™
 	_devmngmsg_clockmode_restartClock(LowClockMode);
 }
-//sleepó‘Ô‚Ì‚Ù‚Ş‚ç‚ğ‹N‚±‚·ŠÖ”
+//sleepçŠ¶æ…‹ã®ã»ã‚€ã‚‰ã‚’èµ·ã“ã™é–¢æ•°
 void _devmngmsg_sleep_stop(void){
-	// ƒNƒƒbƒNƒXƒs[ƒhNORMAL‚É
+	// ã‚¯ãƒ­ãƒƒã‚¯ã‚¹ãƒ”ãƒ¼ãƒ‰NORMALã«
 	_devmngmsg_clockmode_restartClockDefault();
 
-	// ƒ‚ƒWƒ…[ƒ‹“dŒ¹•œ‹A
+	// ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«é›»æºå¾©å¸°
 	_devmngmsg_module_power_on();
 
-	//ƒXƒŠ[ƒvI—¹‚ğ’Ê’m‚·‚é
+	//ã‚¹ãƒªãƒ¼ãƒ—çµ‚äº†ã‚’é€šçŸ¥ã™ã‚‹
 	if(x_devmngmsg_sleep_InformWakeup)x_devmngmsg_sleep_InformWakeup();
 
-	//Š„‚è‚İ‹–‰Â
+	//å‰²ã‚Šè¾¼ã¿è¨±å¯
 	uart1_enable_fget_interrupt();
 }
-//ƒŒƒ€ó‘Ô‚©‚Ìæ“¾ŠÖ”
+//ãƒ¬ãƒ çŠ¶æ…‹ã‹ã®å–å¾—é–¢æ•°
 boolian _devmngmsg_sleep_isRem(void){return x_devmngmsg_sleep_IsRem;}
-//ƒXƒŠ[ƒv‚Ìƒ^ƒXƒNŠÖ”
+//ã‚¹ãƒªãƒ¼ãƒ—æ™‚ã®ã‚¿ã‚¹ã‚¯é–¢æ•°
 void _devmngmsg_sleep_interrupt_function(sint16 Interval_){
 	x_devmngmsg_sleep_secCnt+=Interval_;
 
@@ -530,15 +530,15 @@ void _devmngmsg_sleep_interrupt_function(sint16 Interval_){
 }
 
 //==================== Roaming ===================
-unsigned char x_devmngmsg_roaming_Code=0;	//ƒƒbƒN‰ğœ—p‚ÌƒR[ƒh
-boolian x_devmngmsg_roaming_IsRoaming=0;	//ƒ[ƒ~ƒ“ƒO’†‚Å‚ ‚é‚±‚Æ‚ğ¦‚·ƒtƒ‰ƒO
-sint16 x_devmngmsg_roaming_secInterval=0;		//RoamingØ‚è‘Ö‚¦‚Ì’·‚³
-sint16 x_devmngmsg_roaming_secCnt=0;		//Roamingó‘Ô‚ÌƒJƒEƒ“ƒ^
+unsigned char x_devmngmsg_roaming_Code=0;	//ãƒ­ãƒƒã‚¯è§£é™¤ç”¨ã®ã‚³ãƒ¼ãƒ‰
+boolian x_devmngmsg_roaming_IsRoaming=0;	//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ä¸­ã§ã‚ã‚‹ã“ã¨ã‚’ç¤ºã™ãƒ•ãƒ©ã‚°
+sint16 x_devmngmsg_roaming_secInterval=0;		//Roamingåˆ‡ã‚Šæ›¿ãˆã®é•·ã•
+sint16 x_devmngmsg_roaming_secCnt=0;		//RoamingçŠ¶æ…‹ã®ã‚«ã‚¦ãƒ³ã‚¿
 sint16 _devmngmsg_roaming_task(sint16 Sec_){
-	//ƒJƒEƒ“ƒ^‚ği‚ß‚é
+	//ã‚«ã‚¦ãƒ³ã‚¿ã‚’é€²ã‚ã‚‹
 	++_devmngmsg_roaming_Cnt;
 
-	//ƒ[ƒ~ƒ“ƒOØŠ·‚¦
+	//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°åˆ‡æ›ãˆæ™‚
 	if(_devmngmsg_roaming_Cnt>HMR_DEVCTR_ROAMING_LENGTH){
 		if(uart1_getModuleID()==UART1_MODULEID_RF){
 			HMR_PIN_RedLED_set(1);
@@ -550,8 +550,8 @@ sint16 _devmngmsg_roaming_task(sint16 Sec_){
 		_devmngmsg_roaming_Cnt=0;
 	}
 }
-//ƒ[ƒ~ƒ“ƒOÀs—pŠÖ”
-//	wdt‚ğ–³Œø‚É‚µ‚ÄA•Ê‚Ì’ÊMƒ‚ƒWƒ…[ƒ‹‚Å‚Ì’ÊM‚ğ‚İ‚é
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°å®Ÿè¡Œç”¨é–¢æ•°
+//	wdtã‚’ç„¡åŠ¹ã«ã—ã¦ã€åˆ¥ã®é€šä¿¡ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã§ã®é€šä¿¡ã‚’è©¦ã¿ã‚‹
 void _devmngmsg_roaming_start(void){
 	x_devmngmsg_roaming_IsRoaming=0;
 	x_devmngmsg_roaming_secCnt=0;
@@ -565,51 +565,51 @@ void _devmngmsg_roaming_start(void){
 		hmr_uart1_initialize(UART1_MODULEID_RF);
 	}
 
-	//timer4_5‚ÌŠ„‚è‚İ—LŒø‰»
+	//timer4_5ã®å‰²ã‚Šè¾¼ã¿æœ‰åŠ¹åŒ–
 	timer4_5_finalize();
-	timer4_5_initialize(10000);		//10•b‚²‚Æ‚ÌŠ„‚è‚İ
-	timer4_5_enable_interrupt();	//Š„‚è‚İ—LŒø‰»
+	timer4_5_initialize(10000);		//10ç§’ã”ã¨ã®å‰²ã‚Šè¾¼ã¿
+	timer4_5_enable_interrupt();	//å‰²ã‚Šè¾¼ã¿æœ‰åŠ¹åŒ–
 }
-//ƒ[ƒ~ƒ“ƒOI—¹—pŠÖ”
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çµ‚äº†ç”¨é–¢æ•°
 void _devmngmsg_roaming_stop(void){
 	timer4_5_disable_interrupt();
 
 	restart_wdt();
-	//Config‚É‡‚í‚¹‚ÄAWDTƒZƒbƒg
+	//Configã«åˆã‚ã›ã¦ã€WDTã‚»ãƒƒãƒˆ
 	if(Config_DisableWatchDogTimer)enable_wdt();
 
-	//timer4_5‚ÌŠ„‚è‚İ—LŒø‰»
+	//timer4_5ã®å‰²ã‚Šè¾¼ã¿æœ‰åŠ¹åŒ–
 	timer4_5_finalize();
-	timer4_5_initialize(1000);		//1•b‚²‚Æ‚ÌŠ„‚è‚İ
-	timer4_5_enable_interrupt();	//Š„‚è‚İ—LŒø‰»
+	timer4_5_initialize(1000);		//1ç§’ã”ã¨ã®å‰²ã‚Šè¾¼ã¿
+	timer4_5_enable_interrupt();	//å‰²ã‚Šè¾¼ã¿æœ‰åŠ¹åŒ–
 }
-//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğæ“¾‚·‚é
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 void devmngmsg_roaming_getInterval(sint16& secInterval){
 	secInterval=x_devmngmsg_roaming_secInterval;
 }
-//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğİ’è‚·‚é
+//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹
 void devmngmsg_roaming_setInterval(sint16 secInterval){
 	if(secInterval<=10)secInterval=10;
 	x_devmngmsg_roaming_secInterval=secInterval;
 }
 
-//=== Šî–{‘€ìŠÖ” ===
-//ƒfƒoƒCƒX‰Šú‰»ŠÖ”
+//=== åŸºæœ¬æ“ä½œé–¢æ•° ===
+//ãƒ‡ãƒã‚¤ã‚¹åˆæœŸåŒ–é–¢æ•°
 void devmngmsg_initialize(void){
-	//“dŒ¹‚ğˆê“xØ‚é
+	//é›»æºã‚’ä¸€åº¦åˆ‡ã‚‹
 	_devmngmsg_power(0);
 
-	//ƒfƒoƒCƒX‰Šú‰»
+	//ãƒ‡ãƒã‚¤ã‚¹åˆæœŸåŒ–
 	hmr_device_initialize();
 
-	//ƒNƒƒbƒN‰Šú‰»
+	//ã‚¯ãƒ­ãƒƒã‚¯åˆæœŸåŒ–
 	if(Config_DefaultHighClock)hmr_clock_smart_initialize(CLOCK_HIGH);
 	else hmr_clock_smart_initialize(CLOCK_NORMAL);	
 
-	//Š„‚è‚İİ’è‰Šú‰»
+	//å‰²ã‚Šè¾¼ã¿è¨­å®šåˆæœŸåŒ–
 	hmr_interrupt_initalize();
 
-	//’ÊMƒfƒoƒCƒX‚Ì‰Šú‰»
+	//é€šä¿¡ãƒ‡ãƒã‚¤ã‚¹ã®åˆæœŸåŒ–
 	if(Config_DefaultMobilePhone)hmr_uart1_smart_initialize(UART1_MODULEID_MP);
 	else hmr_uart1_smart_initialize(UART1_MODULEID_RF);
 
@@ -642,48 +642,48 @@ void devmngmsg_initialize(void){
 	if(Config_DisableWatchDogTimer)disable_wdt();
 	else enable_wdt();
 
-	//taskƒVƒXƒeƒ€‚ğ‹N“®‚·‚é
+	//taskã‚·ã‚¹ãƒ†ãƒ ã‚’èµ·å‹•ã™ã‚‹
 	task_initialize();
 }
-//ƒfƒoƒCƒXI’[‰»ŠÖ”
+//ãƒ‡ãƒã‚¤ã‚¹çµ‚ç«¯åŒ–é–¢æ•°
 void devmngmsg_finalize(void){
-	//taskƒVƒXƒeƒ€‚ğI—¹‚·‚é
+	//taskã‚·ã‚¹ãƒ†ãƒ ã‚’çµ‚äº†ã™ã‚‹
 	task_finalize();
 
-	//uart1_fget/fput’â~
+	//uart1_fget/fputåœæ­¢
 	uart1_disable_fget_interrupt();
 	uart1_disable_fput_interrupt();
 	uart2_disable_fget_interrupt();
 	uart2_disable_fput_interrupt();
 
-	//’ÊMƒfƒoƒCƒX‚ÌI’[‰»
+	//é€šä¿¡ãƒ‡ãƒã‚¤ã‚¹ã®çµ‚ç«¯åŒ–
 	hmr_uart1_finalize();
 	hmr_uart2_finalize();
 	hmr_spi2_finalize();
 	hmr_i2c_finalize();
 	hmr_adc_finalize();
 
-	//devmngmsgƒpƒ[
+	//devmngmsgãƒ‘ãƒ¯ãƒ¼
 	_devmngmsg_power(0);
 
-	//ƒfƒoƒCƒX‚ÌI’[‰»ˆ—
+	//ãƒ‡ãƒã‚¤ã‚¹ã®çµ‚ç«¯åŒ–å‡¦ç†
 	hmr_clock_finalize();
 	hmr_interrupt_finalize();
 	hmr_device_finalize();
 }
-//ƒfƒoƒCƒX‹­§I—¹
+//ãƒ‡ãƒã‚¤ã‚¹å¼·åˆ¶çµ‚äº†
 void devmngmsg_kill(void){
-	// I’[‰»
+	// çµ‚ç«¯åŒ–
 	devmngmsg_finalize();
-	// ©•ª©g‚àØ‚é
+	// è‡ªåˆ†è‡ªèº«ã‚‚åˆ‡ã‚‹
 	_devmngmsg_pic_power_off();
 }
 void _devmngmsg_module_power_off(){
-	//spriteƒJƒƒ‰’â~
-	sprite_finalize();	//timer1,uart2_fget/fput‚ğ’â~
+	//spriteã‚«ãƒ¡ãƒ©åœæ­¢
+	sprite_finalize();	//timer1,uart2_fget/fputã‚’åœæ­¢
 	sprite_power(0);
 
-	//‘S“dŒ¹off
+	//å…¨é›»æºoff
 //	spi_selectGPS(0);
 //	spi_selectDrive(0);
 //	rf_power(0);
@@ -697,13 +697,13 @@ void _devmngmsg_module_power_off(){
 //	servo_power(0);
 }
 void _devmngmsg_module_power_on(){
-	//@‚±‚±‚Í•Û—¯’†
+	//ã€€ã“ã“ã¯ä¿ç•™ä¸­
 
-	//spriteƒJƒƒ‰‹N“®
+	//spriteã‚«ãƒ¡ãƒ©èµ·å‹•
 	sprite_power(1);
 
 
-	//‘S“dŒ¹off
+	//å…¨é›»æºoff
 //	spi_selectGPS(0);
 //	spi_selectDrive(0);
 //	rf_power(0);
@@ -716,7 +716,7 @@ void _devmngmsg_module_power_on(){
 	co2_powerSensor(0);
 //	servo_power(0);
 }
-//’ÊMŒn‚Ìƒpƒ[ˆêŠ‡§ŒäŠÖ”
+//é€šä¿¡ç³»ã®ãƒ‘ãƒ¯ãƒ¼ä¸€æ‹¬åˆ¶å¾¡é–¢æ•°
 void _devmngmsg_power(boolian onoff){
 	spi_selectGPS(0);
 	spi_selectDrive(0);
@@ -729,9 +729,9 @@ void _devmngmsg_power(boolian onoff){
 }
 
 
-//=== ƒ‚[ƒh§Œä‹@”\ ===
+//=== ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½ ===
 devmngmsg_mode x_devmngmsg_mode_Mode;
-//ƒfƒoƒCƒXƒ‚[ƒh‚ğ•ÏX‚·‚é
+//ãƒ‡ãƒã‚¤ã‚¹ãƒ¢ãƒ¼ãƒ‰ã‚’å¤‰æ›´ã™ã‚‹
 void devmngmsg_mode_set(devmngmsg_mode Mode_){
 	switch(Mode_){
 	case SleepMode:
@@ -741,7 +741,7 @@ void devmngmsg_mode_set(devmngmsg_mode Mode_){
 			break;
 		}
 
-		//ƒ‚[ƒh•ÏX
+		//ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´
 		_devmngmsg_Mode=SleepMode;
 		_devmngmsg_sleep_start();
 
@@ -753,7 +753,7 @@ void devmngmsg_mode_set(devmngmsg_mode Mode_){
 			break;
 		}
 
-		//ƒ‚[ƒh•ÏX
+		//ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´
 		_devmngmsg_Mode=RoamingMode;
 		_devmngmsg_roaming_start();
 
@@ -768,38 +768,38 @@ void devmngmsg_mode_set(devmngmsg_mode Mode_){
 			break;
 		}
 
-		//ƒ‚[ƒh•ÏX
+		//ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´
 		_devmngmsg_Mode=NormalMode;
 
 		return;
 	}
 
 }
-//ƒfƒoƒCƒXƒ‚[ƒh‚ğæ“¾‚·‚é
+//ãƒ‡ãƒã‚¤ã‚¹ãƒ¢ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 devmngmsg_mode devmngmsg_mode_get(void){return x_devmngmsg_mode_Mode;}
-//ƒNƒƒbƒNƒ‚[ƒh•ÏX‚É‘Î‰‚·‚é
+//ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´ã«å¯¾å¿œã™ã‚‹
 void _devmngmsg_mode_informClockMode(void){
-	//ƒXƒŠ[ƒv’†‚Ì‚İ–³‹
+	//ã‚¹ãƒªãƒ¼ãƒ—ä¸­ã®ã¿ç„¡è¦–
 	if(x_devmngmsg_mode_Mode==SleepMode && !_devmngmsg_sleep_isRem())return;
 
 	_devmngmsg_clockmode_restartClockDefault();
 }
 
-//==================== Š„‚è‚İŠÖ” ====================
+//==================== å‰²ã‚Šè¾¼ã¿é–¢æ•° ====================
 /*
-//ƒXƒŠ[ƒvA‚¨‚æ‚Ñƒ[ƒ~ƒ“ƒOÀs—pŠÖ”
+//ã‚¹ãƒªãƒ¼ãƒ—ã€ãŠã‚ˆã³ãƒ­ãƒ¼ãƒŸãƒ³ã‚°å®Ÿè¡Œç”¨é–¢æ•°
 void timer4_5_interrupt(void){
-	//ƒtƒ‰ƒOƒNƒŠƒA‚Æ‚ÌƒŠƒZƒbƒg
+	//ãƒ•ãƒ©ã‚°ã‚¯ãƒªã‚¢ã¨æ™‚åˆ»ã®ãƒªã‚»ãƒƒãƒˆ
 	timer4_5_clear_interrupt_flag();
 	timer4_5_reset();
 
-	//ƒXƒŠ[ƒvƒ‚[ƒh‚ÌŠ„‚è‚İ§Œä
+	//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®å‰²ã‚Šè¾¼ã¿åˆ¶å¾¡
 	if(devmng_is_sleep()){
 
-	}//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh‚ÌŠ„‚è‚İ§Œä
+	}//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã®å‰²ã‚Šè¾¼ã¿åˆ¶å¾¡
 	else if(devmng_is_roaming()){
 		_devmng_sleep_isRem();
-	}//’Êí‚Ìƒ^ƒXƒNˆ—‚Ìê‡
+	}//é€šå¸¸ã®ã‚¿ã‚¹ã‚¯å‡¦ç†ã®å ´åˆ
 	else{
 		task_interrupt_function();
 	}

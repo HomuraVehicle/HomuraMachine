@@ -2,26 +2,26 @@
 #define HMR_MACHINE_MIHARA_INERTIAL_INC 200
 #
 /*
-Šµ«q–@ƒ‚ƒWƒ…[ƒ‹§Œä—p
+æ…£æ€§èˆªæ³•ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åˆ¶å¾¡ç”¨
 === hmr::machine::mihara::inertial ===
 v2_00/141122 hmito
-	cpp‰»
+	cppåŒ–
 === hmrInertial ===
 v0_03/131026 amby
-	‚±‚Ìê‡‚Í“dŒ¹ON,OFF‚·‚é‚½‚Ñ‚ÉI‚QC‚ÅƒfƒoƒCƒX‚ğ‰Šú‰»‚·‚é•K—v‚ª‚ ‚é‚Ì‚ÅA
-	‚»‚Ì‚½‚ß‚ÌŠÖ”device_initialize ‚ğ’Ç‰Á‚µ‚½B
+	ã“ã®å ´åˆã¯é›»æºON,OFFã™ã‚‹ãŸã³ã«Iï¼’Cã§ãƒ‡ãƒã‚¤ã‚¹ã‚’åˆæœŸåŒ–ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ã®ã§ã€
+	ãã®ãŸã‚ã®é–¢æ•°device_initialize ã‚’è¿½åŠ ã—ãŸã€‚
 v0_02/131019 iwahori
-	ƒ^ƒXƒNƒVƒXƒeƒ€—p‚Étask_setup_talk‚Ætask_interrupt‚ğì¬
+	ã‚¿ã‚¹ã‚¯ã‚·ã‚¹ãƒ†ãƒ ç”¨ã«task_setup_talkã¨task_interruptã‚’ä½œæˆ
 v1_00/130907 iwahori
-	kk08ˆÚs‚É”º‚¢Cg—p‚·‚éI2C‚ª•Ï‚í‚Á‚½‚½‚ßi2c1,i2c2‚ğ•ÏXDinitialize‚ÍŠ®—¹Ctalk‚Í‚Ü‚¾
+	kk08ç§»è¡Œã«ä¼´ã„ï¼Œä½¿ç”¨ã™ã‚‹I2CãŒå¤‰ã‚ã£ãŸãŸã‚i2c1,i2c2ã‚’å¤‰æ›´ï¼initializeã¯å®Œäº†ï¼Œtalkã¯ã¾ã 
 v1_00/130622 hmIto
-	‚Ù‚Ş‚ç‚Ìİ’uˆÊ’u‚É‘Î‰‚·‚é‚æ‚¤‚É²‚ğ•ÏX
+	ã»ã‚€ã‚‰ã®è¨­ç½®ä½ç½®ã«å¯¾å¿œã™ã‚‹ã‚ˆã†ã«è»¸ã‚’å¤‰æ›´
 v0_01/130105 iwahori
-	workŠÖ”‚ğsetup_lisen‚Æsetup_talk‚É•ª—£
-	Gyro‚ÌtalkŠÖ”‚ğÀ‘•
-	KK07‚Å‚ÌƒZƒ“ƒT[•ÏX‚É”º‚¢initialzeŠÖ”‚ÆƒAƒhƒŒƒX‚ğ•ÏX
+	worké–¢æ•°ã‚’setup_lisenã¨setup_talkã«åˆ†é›¢
+	Gyroã®talké–¢æ•°ã‚’å®Ÿè£…
+	KK07ã§ã®ã‚»ãƒ³ã‚µãƒ¼å¤‰æ›´ã«ä¼´ã„initialzeé–¢æ•°ã¨ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å¤‰æ›´
 v0_00/121208 hmIto
-	Šî–{ŠÖ”ì¬
+	åŸºæœ¬é–¢æ•°ä½œæˆ
 */
 #include<hmLib/cstring.h>
 #include<homuraLib_v2/type.hpp>
@@ -63,7 +63,7 @@ namespace hmr {
 						hmLib::coordinates3D::position get(){
 							IsData = false;
 
-							//Š„‚è‚İ‹Ö~
+							//å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 							xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
 							return Data;
 						}
@@ -80,7 +80,7 @@ namespace hmr {
 						}
 						bool can_get()const{ return Cnt>0; }
 						hmLib::coordinates3D::angle get(){
-							//Š„‚è‚İ‹Ö~
+							//å‰²ã‚Šè¾¼ã¿ç¦æ­¢
 							xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
 							hmLib::coordinates3D::angle AnsData(0, 0, 0);
 							std::swap(Data, AnsData);
@@ -206,11 +206,11 @@ namespace hmr {
 					bool can_get_gyro_data()const{ return Sensor.GyroObserver.can_get(); }
 					hmLib::coordinates3D::position get_axel_data(){
 						if(Sensor.AxelObserver.can_get())return Sensor.AxelObserver.get();
-						else hmLib::coordinates3D::position();
+						else return hmLib::coordinates3D::position();
 					}
 					hmLib::coordinates3D::position get_compass_data(){
 						if(Sensor.CompassObserver.can_get())return Sensor.CompassObserver.get();
-						else hmLib::coordinates3D::position();
+						else return hmLib::coordinates3D::position();
 					}
 					std::pair<uint16, hmLib::coordinates3D::position> get_gyro_data(){
 						if(Sensor.GyroObserver.can_get())return Sensor.GyroObserver.get();
@@ -302,7 +302,7 @@ namespace hmr {
 							uint16 Data;
 							uint8 LowData, HighData;
 
-							//homura-y²‘‚«‚İ
+							//homura-yè»¸æ›¸ãè¾¼ã¿
 							Data = static_cast<xc::uint16>(SendData.x);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
@@ -311,7 +311,7 @@ namespace hmr {
 							hmLib::cstring_putc(pStr, 3, LowData);
 							hmLib::cstring_putc(pStr, 4, HighData);
 
-							//homura-x²‘‚«‚İi³•‰”½“]j
+							//homura-xè»¸æ›¸ãè¾¼ã¿ï¼ˆæ­£è² åè»¢ï¼‰
 							Data = static_cast<xc::uint16>(-SendData.y);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
@@ -320,7 +320,7 @@ namespace hmr {
 							hmLib::cstring_putc(pStr, 1, LowData);
 							hmLib::cstring_putc(pStr, 2, HighData);
 
-							//homura-z²‘‚«‚İi³•‰”½“]j
+							//homura-zè»¸æ›¸ãè¾¼ã¿ï¼ˆæ­£è² åè»¢ï¼‰
 							Data = static_cast<xc::uint16>(-SendData.z);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
@@ -404,7 +404,7 @@ namespace hmr {
 							uint8 LowData, HighData;
 							uint16 Data;
 
-							//homura-x²‘‚«‚İi³•‰”½“]j
+							//homura-xè»¸æ›¸ãè¾¼ã¿ï¼ˆæ­£è² åè»¢ï¼‰
 							Data = static_cast<xc::uint16>(-SendData.y);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
@@ -413,7 +413,7 @@ namespace hmr {
 							hmLib::cstring_putc(pStr, 1, LowData);
 							hmLib::cstring_putc(pStr, 2, HighData);
 
-							//homura-y²‘‚«‚İ
+							//homura-yè»¸æ›¸ãè¾¼ã¿
 							Data = static_cast<xc::uint16>(SendData.x);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
@@ -422,7 +422,7 @@ namespace hmr {
 							hmLib::cstring_putc(pStr, 3, LowData);
 							hmLib::cstring_putc(pStr, 4, HighData);
 
-							//homura-z²‘‚«‚İi³•‰”½“]j
+							//homura-zè»¸æ›¸ãè¾¼ã¿ï¼ˆæ­£è² åè»¢ï¼‰
 							Data = static_cast<xc::uint16>(-SendData.z);
 							LowData = Data & 0x00FF;
 							Data >>= 8;
@@ -522,10 +522,10 @@ namespace hmr {
 
 							service::cstring_construct_safe(pStr, 16);
 							hmLib::cstring_putc(pStr, 0, 0x00);
-							hmLib::cstring_putc(pStr, 1, 0x00);	//Default‚Å‚Í0‚É‚µ‚Ä‚¨‚­
+							hmLib::cstring_putc(pStr, 1, 0x00);	//Defaultã§ã¯0ã«ã—ã¦ãŠã
 
-																//1•bŠÔ10‰ñ•ª‚Ìƒf[ƒ^A‚Æ‚¢‚¤‚±‚Æ‚É‚µ‚Ä‚¨‚­
-																//	‚±‚¤‚·‚ê‚ÎA³‚µ‚­Šp“xŒvZ‚µ‚Ä‚­‚ê‚éH
+																//1ç§’é–“10å›åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã€ã¨ã„ã†ã“ã¨ã«ã—ã¦ãŠã
+																//	ã“ã†ã™ã‚Œã°ã€æ­£ã—ãè§’åº¦è¨ˆç®—ã—ã¦ãã‚Œã‚‹ï¼Ÿ
 																//hmLib::cstring_putc(pStr, 2,(uint8)(10&0x00FF));
 																//hmLib::cstring_putc(pStr, 3,(uint8)((10>>8)&0x00FF));
 							hmLib::cstring_putc(pStr, 2, (uint8)Cnt);

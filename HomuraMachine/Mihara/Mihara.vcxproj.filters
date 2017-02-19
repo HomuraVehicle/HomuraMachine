@@ -190,14 +190,17 @@
     <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.c">
       <Filter>Common\homuraLib_v2\machine\device</Filter>
     </ClCompile>
-    <ClCompile Include="Com.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Data.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
     <ClCompile Include="HomuraMachine.cpp">
       <Filter>HomuraMachine\Mihara</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\Com.cpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\Data.cpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XC32\sfr\adc1.cpp">
+      <Filter>Common\XC32\sfr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -690,12 +693,6 @@
     <ClInclude Include="CO2.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
-    <ClInclude Include="Com.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="Data.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
     <ClInclude Include="Device.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
@@ -725,6 +722,21 @@
     </ClInclude>
     <ClInclude Include="System.hpp">
       <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Com.hpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Message.hpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\ComClient.hpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\MessageClient.hpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Data.hpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

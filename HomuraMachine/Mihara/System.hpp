@@ -26,9 +26,9 @@ namespace hmr{
 				private:
 					struct io_mode_holder{
 					private:
-						//!Œ»İ’ÊM‰Â”\‚ÈIO
+						//!ç¾åœ¨é€šä¿¡å¯èƒ½ãªIO
 						io_mode CurIO;
-						//!Œ»İ‚Ì’ÊMƒ‚[ƒh OFF‚Ì‚âƒXƒCƒbƒ`ƒ“ƒO’†‚ÍCurIO‚Æ‚ÍˆÙ‚È‚é
+						//!ç¾åœ¨ã®é€šä¿¡ãƒ¢ãƒ¼ãƒ‰ OFFã®æ™‚ã‚„ã‚¹ã‚¤ãƒƒãƒãƒ³ã‚°ä¸­ã¯CurIOã¨ã¯ç•°ãªã‚‹
 						io_mode IOMode;
 						io::mode_selector_interface* pIOModeSelector;
 					public:
@@ -88,22 +88,22 @@ namespace hmr{
 				}Status;
 				struct mode_interface{
 				public:
-					//!@brief ƒ‚[ƒh‘JˆÚŒãAÅ‰‚Ìˆ—
+					//!@brief ãƒ¢ãƒ¼ãƒ‰é·ç§»å¾Œã€æœ€åˆã®å‡¦ç†
 					virtual void start(status& Status) = 0;
-					//!@brief ƒ‚[ƒh’†‚Ìƒ^ƒXƒNŒÄ‚Ño‚µ‚Ìˆ—
+					//!@brief ãƒ¢ãƒ¼ãƒ‰ä¸­ã®ã‚¿ã‚¹ã‚¯å‘¼ã³å‡ºã—æ™‚ã®å‡¦ç†
 					virtual void task(hmr::task::duration Duration, status& Status) = 0;
-					//!@brief ƒ‚[ƒh’†‚ÌƒƒCƒ“ƒ‹[ƒvŒÄ‚Ño‚µ‚Ìˆ—
+					//!@brief ãƒ¢ãƒ¼ãƒ‰ä¸­ã®ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—å‘¼ã³å‡ºã—æ™‚ã®å‡¦ç†
 					virtual void work(status& Status) = 0;
 				};
 				struct normal_mode : public mode_interface{
 				private:
 					unsigned int Cnt = 0;
 				public:
-					//!@brief ƒ‚[ƒh‘JˆÚŒãAÅ‰‚Ìˆ—
+					//!@brief ãƒ¢ãƒ¼ãƒ‰é·ç§»å¾Œã€æœ€åˆã®å‡¦ç†
 					virtual void start(status& Status){
 						Status.WDT.enable();
 					}
-					//!@brief ƒ‚[ƒh’†‚Ìƒ^ƒXƒNŒÄ‚Ño‚µ‚Ìˆ—
+					//!@brief ãƒ¢ãƒ¼ãƒ‰ä¸­ã®ã‚¿ã‚¹ã‚¯å‘¼ã³å‡ºã—æ™‚ã®å‡¦ç†
 					virtual void task(hmr::task::duration Duration, status& Status){
 						if(Cnt == 0 || (Cnt == 2 && Status.IOMode.getSelectIO() == io::mode::module_phone)){
 							Status.PinRedLED(true);
@@ -112,7 +112,7 @@ namespace hmr{
 						}
 						Cnt = (Cnt + 1)%4;
 					}
-					//!@brief ƒ‚[ƒh’†‚ÌƒƒCƒ“ƒ‹[ƒvŒÄ‚Ño‚µ‚Ìˆ—
+					//!@brief ãƒ¢ãƒ¼ãƒ‰ä¸­ã®ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—å‘¼ã³å‡ºã—æ™‚ã®å‡¦ç†
 					virtual void work(status& Status){
 						Status.WDT.clear();
 					}
@@ -122,11 +122,11 @@ namespace hmr{
 				struct sleep_mode : public mode_interface{
 				private:
 					unsigned int Cnt;
-					//!@brief ‘S‘Ì‚Ìƒ‚[ƒh‘JˆÚ‚ÌŠî€‚Æ‚È‚éƒCƒ“ƒ^[ƒoƒ‹
+					//!@brief å…¨ä½“ã®ãƒ¢ãƒ¼ãƒ‰é·ç§»ã®åŸºæº–ã¨ãªã‚‹ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«
 					unsigned int Interval;
-					//!@brief Remi’ÊM‹N“®ŠÔj‚Ì’·‚³ Interval‚Æˆê’v‚·‚é‚ÆASleep‚¹‚¸Roaming‚Ì‚İ
+					//!@brief Remï¼ˆé€šä¿¡èµ·å‹•æ™‚é–“ï¼‰ã®é•·ã• Intervalã¨ä¸€è‡´ã™ã‚‹ã¨ã€Sleepã›ãšRoamingã®ã¿
 					unsigned int RemPhaseLength;
-					//!@brief ’ÊM‹@©“®Ø‚è‘Ö‚¦’Tõ‚ÌŠÔŠu 0,‚¾‚ÆØ‚è‘Ö‚¦‚È‚¢
+					//!@brief é€šä¿¡æ©Ÿè‡ªå‹•åˆ‡ã‚Šæ›¿ãˆæ¢ç´¢ã®é–“éš” 0,ã ã¨åˆ‡ã‚Šæ›¿ãˆãªã„
 					unsigned int RoamingInterval;
 				public:
 					sleep_mode() :Cnt(0), RemPhaseLength(60), Interval(120), RoamingInterval(30){}
@@ -191,11 +191,23 @@ namespace hmr{
 				normal_mode NormalMode;
 				sleep_mode RoamingMode;
 				sleep_mode SleepMode;
-				sleep_mode RoamingSleepMode;
 			private:
 				void kill(){
 					PinDevicePower(false);
 				}
+			private:
+				struct io_agent : systems::io_agent_interface{
+				private:
+					this_type& Ref;
+				public:
+					io_agent(this_type& Ref_):Ref(Ref_){}
+				public:
+					virtual void timeout(){ Ref.kill(); }
+				};
+				io_agent IOAgent;
+			public:
+				systems::io_agent_interface& getIOAgent(){ return IOAgent; }
+			public:
 			private:
 				class system_task :public hmr::task::client_interface{
 				private:
@@ -214,7 +226,7 @@ namespace hmr{
 					pMode->work(Status);
 				}
 			private:
-				//’ÊMó—ÌƒNƒ‰ƒX
+				//é€šä¿¡å—é ˜ã‚¯ãƒ©ã‚¹
 				struct message_client : public message_client_interface{
 				private:
 					this_type& Ref;
@@ -232,18 +244,18 @@ namespace hmr{
 					task::handler InformTaskHandler;
 				private:
 					//Message Mode
-					bool Info_i;				// î•ñ‘—Mƒ‚[ƒhó—
-					bool SleepMode_i;			// sleep mode ó—
+					bool Info_i;				// æƒ…å ±é€ä¿¡ãƒ¢ãƒ¼ãƒ‰å—ç†
+					bool SleepMode_i;			// sleep mode å—ç†
 					bool RoamingMode_i;
 					bool NormalMode_i;
-					bool KillCom_i;				// kill command ó— 
-					bool SleepModeCodeFail;		// sleep mode exe ó—‚µ‚½‚ªCode”F¯¸”s
-					bool RoamingModeCodeFail;	// roaming mode exe ó—‚µ‚½‚ª¸”s
-					bool KillCodeFail;			// normal mode exe ó—‚µ‚½‚ª¸”s
-					// ƒƒbƒN—p‚ÌƒR[ƒh
-					unsigned char SleepCode = 0;	//ƒƒbƒN‰ğœ—p‚ÌƒR[ƒh
-					unsigned char RoamingCode = 0;	//ƒƒbƒN‰ğœ—p‚ÌƒR[ƒh
-					unsigned char KillCode = 0;	//ƒƒbƒN‰ğœ—p‚ÌƒR[ƒh
+					bool KillCom_i;				// kill command å—ç† 
+					bool SleepModeCodeFail;		// sleep mode exe å—ç†ã—ãŸãŒCodeèªè­˜å¤±æ•—
+					bool RoamingModeCodeFail;	// roaming mode exe å—ç†ã—ãŸãŒå¤±æ•—
+					bool KillCodeFail;			// normal mode exe å—ç†ã—ãŸãŒå¤±æ•—
+					// ãƒ­ãƒƒã‚¯ç”¨ã®ã‚³ãƒ¼ãƒ‰
+					unsigned char SleepCode = 0;	//ãƒ­ãƒƒã‚¯è§£é™¤ç”¨ã®ã‚³ãƒ¼ãƒ‰
+					unsigned char RoamingCode = 0;	//ãƒ­ãƒƒã‚¯è§£é™¤ç”¨ã®ã‚³ãƒ¼ãƒ‰
+					unsigned char KillCode = 0;	//ãƒ­ãƒƒã‚¯è§£é™¤ç”¨ã®ã‚³ãƒ¼ãƒ‰
 					//
 					unsigned int SleepSecNonRem = 0;
 					unsigned int SleepSecRem = 0;
@@ -265,7 +277,7 @@ namespace hmr{
 						RoamingModeCodeFail = false;
 						KillCodeFail = false;
 
-						//ƒ^ƒXƒN“o˜^
+						//ã‚¿ã‚¹ã‚¯ç™»éŒ²
 						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
 					~message_client(){
@@ -274,10 +286,10 @@ namespace hmr{
 				public:
 					bool listen(hmLib::cstring Str){
 
-						//ƒf[ƒ^ƒTƒCƒYŠm”F
+						//ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºç¢ºèª
 						if(hmLib::cstring_size(&Str) == 0)return true;
 
-						//1byte–Ú‚Åƒ‚[ƒh‚ğ•ª‚¯‚é
+						//1byteç›®ã§ãƒ¢ãƒ¼ãƒ‰ã‚’åˆ†ã‘ã‚‹
 						switch(hmLib::cstring_getc(&Str, 0)){
 
 							// Infomation mode
@@ -285,7 +297,7 @@ namespace hmr{
 							Info_i = true;
 							return false;
 
-							// Šeí‘Ò‹@ƒ‚[ƒhİ’è
+							// å„ç¨®å¾…æ©Ÿãƒ¢ãƒ¼ãƒ‰è¨­å®š
 						case 0x10:
 							if(hmLib::cstring_size(&Str) == 1)return true;
 							switch(hmLib::cstring_getc(&Str, 1)){
@@ -300,10 +312,10 @@ namespace hmr{
 								if(hmLib::cstring_size(&Str) != 6)return true;
 								SleepSecNonRem = ((uint16)hmLib::cstring_getc(&Str, 2) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 3) * 256;
 								SleepSecRem = ((uint16)hmLib::cstring_getc(&Str, 4) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 5) * 256;
-								// sleep mode@İ’è€”õ
+								// sleep modeã€€è¨­å®šæº–å‚™
 								Ref.SleepMode.set(SleepSecRem, SleepSecRem+ SleepSecNonRem, SleepSecRem, 0);
 								//devmng::sleep_getInterval(&SleepSecNonRem, &SleepSecRem); 
-								// code æ“¾
+								// code å–å¾—
 								SleepCode = hmr::lockcode();
 
 								SleepMode_i = true;
@@ -311,12 +323,12 @@ namespace hmr{
 
 							case 0x11:// sleep execute mode
 								if(hmLib::cstring_size(&Str) != 3)return true;
-								// code ‚Ìƒ`ƒFƒbƒN
-								if(hmLib::cstring_getc(&Str, 2) == SleepCode){// ˆê’v
+								// code ã®ãƒã‚§ãƒƒã‚¯
+								if(hmLib::cstring_getc(&Str, 2) == SleepCode){// ä¸€è‡´
 									Ref.pMode = &Ref.SleepMode;
 									Ref.pMode->start(Ref.Status);
 								} else{
-									// ¸”s’Ê’m
+									// å¤±æ•—é€šçŸ¥
 									SleepModeCodeFail = true;
 								}
 								return false;
@@ -324,22 +336,22 @@ namespace hmr{
 							case 0x20:// roaming mode 
 								if(hmLib::cstring_size(&Str) != 4)return true;
 								RoamingSecInterval = ((uint16)hmLib::cstring_getc(&Str, 2) & 0x00FF) + (uint16)hmLib::cstring_getc(&Str, 3) * 256;
-								// sleep mode@İ’è€”õ
+								// sleep modeã€€è¨­å®šæº–å‚™
 								Ref.RoamingMode.set(0, RoamingSecInterval*2, RoamingSecInterval*2, RoamingSecInterval);
 								//devmng::roaming_getInterval(&RoamingSecInterval); 
-								// code æ“¾
+								// code å–å¾—
 								RoamingCode = hmr::lockcode();
 								RoamingMode_i = true;
 								return false;
 
 							case 0x21:// roaming execute mode
 								if(hmLib::cstring_size(&Str) != 3)return true;
-								// code ‚Ìƒ`ƒFƒbƒN
-								if(hmLib::cstring_getc(&Str, 2) == RoamingCode){// ˆê’v
+								// code ã®ãƒã‚§ãƒƒã‚¯
+								if(hmLib::cstring_getc(&Str, 2) == RoamingCode){// ä¸€è‡´
 									Ref.pMode = &Ref.RoamingMode;
 									Ref.pMode->start(Ref.Status);
 								} else{
-									// ¸”s’Ê’m
+									// å¤±æ•—é€šçŸ¥
 									RoamingModeCodeFail = true;
 								}
 								return false;
@@ -352,11 +364,11 @@ namespace hmr{
 
 						case 0x21:
 							if(hmLib::cstring_size(&Str) != 2)return true;
-							// code ‚Ìƒ`ƒFƒbƒN
-							if(hmLib::cstring_getc(&Str, 1) == KillCode){// ˆê’v
+							// code ã®ãƒã‚§ãƒƒã‚¯
+							if(hmLib::cstring_getc(&Str, 1) == KillCode){// ä¸€è‡´
 								Ref.kill();
 							} else{
-								// ¸”s’Ê’m
+								// å¤±æ•—é€šçŸ¥
 								KillCodeFail = true;
 							}
 							return false;
@@ -365,33 +377,26 @@ namespace hmr{
 						}
 					}
 					bool talk(hmLib::cstring* pStr){
-						devmng::mode mode;
-						devmng::clock clockMode;
 						//hmLib_uint16 sumadc;
 						if(Info_i){
 							service::cstring_construct_safe(pStr, 4);
 							hmLib::cstring_putc(pStr, 0, 0xA0);
 
-							mode = devmng::mode_get();
-							if(mode == devmng::NormalMode){
+							if(Ref.pMode == &(Ref.NormalMode)){
 								hmLib::cstring_putc(pStr, 1, 0x00);
-							} else if(mode == devmng::SleepMode){
+							} else if(Ref.pMode == &(Ref.SleepMode)){
 								hmLib::cstring_putc(pStr, 1, 0x10);
-							} else if(mode == devmng::RoamingMode){
+							} else if(Ref.pMode == &(Ref.RoamingMode)){
 								hmLib::cstring_putc(pStr, 1, 0x20);
+							} else {
+								hmLib::cstring_putc(pStr, 1, 0xFF);
 							}
 
-							clockMode = devmng::clock_get();
-							if(clockMode == devmng::NormalClock){
-								hmLib::cstring_putc(pStr, 2, 0x00);
-							} else if(clockMode == devmng::LowClock){
-								hmLib::cstring_putc(pStr, 2, 0x01);
-							} else if(clockMode == devmng::HighClock){
-								hmLib::cstring_putc(pStr, 2, 0x02);
-							}
+							//ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰ã€€å»ƒæ­¢ã—ãŸã®ã§ã€ç¾åœ¨æœªä½¿ç”¨
+							hmLib::cstring_putc(pStr, 2, 0x00);
 
 							// RF or MP 
-							if(devmng::rf_module_uart_getModuleID() == devmng::rf_module){
+							if(Ref.Status.IOMode.getSelectIO() == io::mode::module_rf){
 								hmLib::cstring_putc(pStr, 3, 0x00);
 							} else{
 								hmLib::cstring_putc(pStr, 3, 0x01);
@@ -437,11 +442,11 @@ namespace hmr{
 							hmLib::cstring_putc(pStr, 3, (unsigned char)((RoamingSecInterval >> 8) & 0x00FF));
 							hmLib::cstring_putc(pStr, 4, RoamingCode);
 
-							//•ÏXæ‚Ì’ÊMè’i‚ğ•Ô‚·
-							if(devmng::rf_module_uart_getModuleID() == devmng::rf_module){
-								hmLib::cstring_putc(pStr, 5, 0x01); // Œ»ó‚ªRF‚È‚çŸ‚ÍMP
+							//å¤‰æ›´å…ˆã®é€šä¿¡æ‰‹æ®µã‚’è¿”ã™
+							if(Ref.Status.IOMode.getSelectIO() == io::mode::module_rf){
+								hmLib::cstring_putc(pStr, 5, 0x01); // ç¾çŠ¶ãŒRFãªã‚‰æ¬¡ã¯MP
 							} else{
-								hmLib::cstring_putc(pStr, 5, 0x00); // Œ»ó‚ªMP‚È‚çŸ‚ÍRF 
+								hmLib::cstring_putc(pStr, 5, 0x00); // ç¾çŠ¶ãŒMPãªã‚‰æ¬¡ã¯RF 
 							}
 
 							RoamingMode_i = false;
@@ -488,8 +493,9 @@ namespace hmr{
 				cSystem(unsigned char ID_, io_interface& MessageHost_, service_interface& Service_)
 					: PinDevicePower()
 					, PinDevicePowerLock(PinDevicePower)
-					, MessageClient(*this, ID_, Service_)
+					, IOAgent(*this)
 					, SystemTask(*this)
+					, MessageClient(*this, ID_, Service_)
 					, pMode(&NormalMode){
 					SystemTaskHandler = Service_.system_task().quick_start(SystemTask, 1);
 					MessageHost_.regist(MessageClient);

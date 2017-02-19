@@ -74,9 +74,7 @@ v1_00/120921 hmIto
 #include "Device.hpp"
 #include "System.hpp"
 #include "Service.hpp"
-#include "Com.hpp"
 #include "IO.hpp"
-#include "Message.hpp"
 #include "CO2.hpp"
 #include "Battery.hpp"
 #include "GPS.hpp"
@@ -97,6 +95,8 @@ int main(void){
 	cIO<typename cDevice::io_device> IO(Service);
 	cSystem<typename cDevice::system_device> System('S',IO, Service);
 	System.regist(Service.getSystemClient());
+	System.regist(IO.getSystemClient());
+	IO.regis_system_agent(System.getIOAgent());
 	
 	//モジュール初期化
 	cThermo<typename cDevice::thermo_device> Thermo('t', System, IO, Service);
@@ -118,7 +118,7 @@ int main(void){
 		Inertial();
 
 		//早すぎるので待機
-		Service.delay.delay_ms(5);
+		Service.delay().delay_ms(5);
 	}
 
 	//終端化処理	

@@ -102,6 +102,7 @@
     <ClCompile Include="..\..\homuraLib_v2\old\hmrVMC2.c" />
     <ClCompile Include="..\..\XC32\clock.cpp" />
     <ClCompile Include="..\..\XC32\interrupt.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\adc1.cpp" />
     <ClCompile Include="..\..\XC32\sfr\i2c1.cpp" />
     <ClCompile Include="..\..\XC32\sfr\i2c2.cpp" />
     <ClCompile Include="..\..\XC32\sfr\i2c3.cpp" />
@@ -127,9 +128,9 @@
     <ClCompile Include="..\..\XC32\sfr\uart4.cpp" />
     <ClCompile Include="..\..\XC32\sfr\uart5.cpp" />
     <ClCompile Include="..\..\XC32\sfr\uart6.cpp" />
-    <ClCompile Include="Com.cpp" />
-    <ClCompile Include="Data.cpp" />
     <ClCompile Include="HomuraMachine.cpp" />
+    <ClCompile Include="IO\Com.cpp" />
+    <ClCompile Include="IO\Data.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\device_include.h" />
@@ -319,13 +320,16 @@
     <ClInclude Include="bitset.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CO2.hpp" />
-    <ClInclude Include="Com.hpp" />
-    <ClInclude Include="Data.hpp" />
     <ClInclude Include="Device.hpp" />
     <ClInclude Include="Drive.hpp" />
     <ClInclude Include="GPS.hpp" />
     <ClInclude Include="Inertial.hpp" />
     <ClInclude Include="IO.hpp" />
+    <ClInclude Include="IO\Com.hpp" />
+    <ClInclude Include="IO\ComClient.hpp" />
+    <ClInclude Include="IO\Data.hpp" />
+    <ClInclude Include="IO\Message.hpp" />
+    <ClInclude Include="IO\MessageClient.hpp" />
     <ClInclude Include="IO_base.hpp" />
     <ClInclude Include="Message.hpp" />
     <ClInclude Include="Service.hpp" />

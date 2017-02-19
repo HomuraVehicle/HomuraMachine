@@ -8,9 +8,9 @@
 #include<hmLib/type.h>
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
-#include"Service_base.hpp"
+#include"../Service_base.hpp"
 #include"Com.hpp"
-#include"DeviceManage.hpp"
+#include"ComClient.hpp"
 #define HMR_COM_BufqueSize 20
 
 namespace hmr {
@@ -18,33 +18,35 @@ namespace hmr {
 		namespace mihara {
 			namespace com {
 				namespace {
-					//**************com•Ï”ŒQ******************//
-					//TRMN‚ği‚ß‚¸‚É‚¨‚í‚Á‚½‚½‚ßC‘Ò‚½‚È‚¯‚ê‚Î‚¢‚¯‚È‚¢PACTRMNID”
-					//	finSendPac‚ÅTRMNID‚ªˆ—‚Å‚«‚È‚©‚Á‚½ê‡‚É++
-					//	oBuf_move_push‚ÅTRMNID‚ªŠm”F‚Å‚«‚½ê‡‚É--
+					//**************comå¤‰æ•°ç¾¤******************//
+					//TRMNã‚’çµã‚ãšã«ãŠã‚ã£ãŸãŸã‚ï¼Œå¾…ãŸãªã‘ã‚Œã°ã„ã‘ãªã„PACTRMNIDæ•°
+					//	finSendPacã§TRMNIDãŒå‡¦ç†ã§ããªã‹ã£ãŸå ´åˆã«++
+					//	oBuf_move_pushã§TRMNIDãŒç¢ºèªã§ããŸå ´åˆã«--
 					uint8			FailPac;
-					//‘—M‘Ò‚¿PAC”
-					//	oBuf_move_push‚ÅFailPac—p‚ÉTRMNID‚ªˆ—‚³‚ê‚È‚©‚Á‚½ê‡‚É++
-					//	finSendPac‚ÅTRMNID‚ªˆ—‚Å‚«‚½ê‡‚É--
-					uint8			WaitPacNum;			//óM‚µ‚Ä–¢‘—M‚ÌPacket‚Ì”
-					uint8			HoldPac;				//‘—MŠX‚ÌPacket‚Ì”
-					bool			RecvFailDat=0;			//óM’†‚ÌDat‚Ì•Û‘¶æ‚ğŠm•Û‚µ‚È‚©‚Á‚½/‚Å‚«‚È‚©‚Á‚½ê‡‚É—§‚¿AfinRecvDat‚Å—‚¿‚é
-					bool			RecvMode=0;			//óM’†(StrtóM‚©‚çTrmnóM‚Ü‚Å‚ÌŠÔj
+					//é€ä¿¡å¾…ã¡PACæ•°
+					//	oBuf_move_pushã§FailPacç”¨ã«TRMNIDãŒå‡¦ç†ã•ã‚Œãªã‹ã£ãŸå ´åˆã«++
+					//	finSendPacã§TRMNIDãŒå‡¦ç†ã§ããŸå ´åˆã«--
+					uint8			WaitPacNum;			//å—ä¿¡ã—ã¦æœªé€ä¿¡ã®Packetã®æ•°
+					uint8			HoldPac;				//é€ä¿¡è¡—ã®Packetã®æ•°
+					bool			RecvFailDat=0;			//å—ä¿¡ä¸­ã®Datã®ä¿å­˜å…ˆã‚’ç¢ºä¿ã—ãªã‹ã£ãŸ/ã§ããªã‹ã£ãŸå ´åˆã«ç«‹ã¡ã€finRecvDatã§è½ã¡ã‚‹
+					bool			RecvMode=0;			//å—ä¿¡ä¸­(Strtå—ä¿¡ã‹ã‚‰Trmnå—ä¿¡ã¾ã§ã®é–“ï¼‰
 					hmLib::cstring			RecvDatStr;
 					did_t		RecvDatID=0;
-					dsize_t		RecvDatCnt=0;			//óM’†‚ÌDat‚ÌƒJƒEƒ“ƒ^
-					vFp_v		FpInfromFinRecvPac=0;	//óM’†‚ÌPac‚ğ‘S‚ÄóMŠ®—¹‚ÉŒÄ‚Ño‚·ŠÖ”ƒ|ƒCƒ“ƒ^
-					bool			SendMode=0;			//‘—M’†(Strt‘—M‚©‚çTrmn‘—M‚Ü‚Å‚ÌŠÔj
-					odata			SendDat;				//‘—M’†‚ÌDat
-					dsize_t		SendDatCnt=0;			//‘—M’†‚ÌDat‚ÌƒJƒEƒ“ƒ^
-					vFp_v		FpInfromFinSendPac=0;	//‘—M’†‚ÌPac‚ğ‘S‚ÄóMŠ®—¹‚ÉŒÄ‚Ño‚·ŠÖ”ƒ|ƒCƒ“ƒ^
-					//**************com_iBufŠÖ˜A***************//
-					//óMƒoƒbƒtƒ@
+					dsize_t		RecvDatCnt=0;			//å—ä¿¡ä¸­ã®Datã®ã‚«ã‚¦ãƒ³ã‚¿
+					vFp_v		FpInfromFinRecvPac=0;	//å—ä¿¡ä¸­ã®Pacã‚’å…¨ã¦å—ä¿¡å®Œäº†æ™‚ã«å‘¼ã³å‡ºã™é–¢æ•°ãƒã‚¤ãƒ³ã‚¿
+					bool			SendMode=0;			//é€ä¿¡ä¸­(Strté€ä¿¡ã‹ã‚‰Trmné€ä¿¡ã¾ã§ã®é–“ï¼‰
+					odata			SendDat;				//é€ä¿¡ä¸­ã®Dat
+					dsize_t		SendDatCnt=0;			//é€ä¿¡ä¸­ã®Datã®ã‚«ã‚¦ãƒ³ã‚¿
+					vFp_v		FpInfromFinSendPac=0;	//é€ä¿¡ä¸­ã®Pacã‚’å…¨ã¦å—ä¿¡å®Œäº†æ™‚ã«å‘¼ã³å‡ºã™é–¢æ•°ãƒã‚¤ãƒ³ã‚¿
+					//**************com_iBufé–¢é€£***************//
+					//å—ä¿¡ãƒãƒƒãƒ•ã‚¡
 					hmLib::cqueue iBuf_Que;
 					idata iBuf_QueBuf[HMR_COM_BufqueSize];
+
+					io::com_client_interface* pComClient;
 				}
 
-				//óMƒoƒbƒtƒ@‚Ì‰Šú‰»
+				//å—ä¿¡ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–
 				void iBuf_initialize(void) {
 					hmLib::cqueue_placement_construct(
 						&iBuf_Que
@@ -53,21 +55,21 @@ namespace hmr {
 						, iBuf_QueBuf
 						, 0);
 				}
-				//óMƒoƒbƒtƒ@‚ÌI’[‰»
+				//å—ä¿¡ãƒãƒƒãƒ•ã‚¡ã®çµ‚ç«¯åŒ–
 				void iBuf_finalize(void) {
 					hmLib::cqueue_iterator itr;
 
-					//c‚Á‚Ä‚¢‚é‘Sƒf[ƒ^‚ğ”jŠü
+					//æ®‹ã£ã¦ã„ã‚‹å…¨ãƒ‡ãƒ¼ã‚¿ã‚’ç ´æ£„
 					for(itr=hmLib::cqueue_begin(&iBuf_Que); itr!=hmLib::cqueue_end(&iBuf_Que); itr=hmLib::cqueue_next(&iBuf_Que, itr)) {
 						service::cstring_destruct_safe(&((idata*)(itr))->Str);
 					}
 
-					//iQue,oQue‚ğ”jŠü
+					//iQue,oQueã‚’ç ´æ£„
 					hmLib::cqueue_destruct(&iBuf_Que);
 				}
-				//óM‰Â”\‚©‚ğŠm”F
+				//å—ä¿¡å¯èƒ½ã‹ã‚’ç¢ºèª
 				bool iBuf_empty(void) { return hmLib::cqueue_empty(&iBuf_Que) != 0; }
-				//óMÏ‚İƒf[ƒ^‚ğíœ‚·‚é
+				//å—ä¿¡æ¸ˆã¿ãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤ã™ã‚‹
 				void iBuf_move_pop(idata* pData_) {
 					if(iBuf_empty()) {
 						idata_format(pData_);
@@ -76,11 +78,11 @@ namespace hmr {
 					idata_move((idata*)hmLib::cqueue_getptr(&iBuf_Que), pData_);
 					hmLib::cqueue_pop(&iBuf_Que);
 				}
-				//iBuf‚Éƒf[ƒ^‚ğ‘}“ü‰Â”\‚©Šm”F
+				//iBufã«ãƒ‡ãƒ¼ã‚¿ã‚’æŒ¿å…¥å¯èƒ½ã‹ç¢ºèª
 				bool iBuf_full(void) { return hmLib::cqueue_full(&iBuf_Que) != 0; }
-				//iBuf‚ÌƒTƒCƒY‚ğæ“¾‚·‚é
+				//iBufã®ã‚µã‚¤ã‚ºã‚’å–å¾—ã™ã‚‹
 				hmLib::cqueue_size_t iBuf_size(void) { return hmLib::cqueue_size(&iBuf_Que); }
-				//iBuf‚Éƒf[ƒ^‚ğ‘}“ü‚·‚é
+				//iBufã«ãƒ‡ãƒ¼ã‚¿ã‚’æŒ¿å…¥ã™ã‚‹
 				void iBuf_move_push(idata* mData_) {
 					if(!idata_is_construct(mData_))return;
 
@@ -89,15 +91,15 @@ namespace hmr {
 						return;
 					}
 
-					//ÀÛã‚Ìmove
+					//å®Ÿéš›ä¸Šã®move
 					hmLib::cqueue_push(&iBuf_Que, (void*)(mData_));
 					idata_format(mData_);
 				}
-				//*****************oBufŠÖ˜A**************************//
-				//‘—Mƒoƒbƒtƒ@
+				//*****************oBufé–¢é€£**************************//
+				//é€ä¿¡ãƒãƒƒãƒ•ã‚¡
 				hmLib::cqueue oBuf_Que;
 				odata oBuf_QueBuf[HMR_COM_BufqueSize];
-				//‘—Mƒoƒbƒtƒ@‚Ì‰Šú‰»
+				//é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–
 				void oBuf_initialize(void) {
 					hmLib::cqueue_placement_construct(
 						&oBuf_Que
@@ -106,21 +108,21 @@ namespace hmr {
 						, oBuf_QueBuf
 						, 0);
 				}
-				//‘—Mƒoƒbƒtƒ@‚ÌI’[‰»
+				//é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã®çµ‚ç«¯åŒ–
 				void oBuf_finalize(void) {
 					hmLib::cqueue_iterator itr;
 
-					//c‚Á‚Ä‚¢‚é‘Sƒf[ƒ^‚ğ”jŠü
+					//æ®‹ã£ã¦ã„ã‚‹å…¨ãƒ‡ãƒ¼ã‚¿ã‚’ç ´æ£„
 					for(itr=hmLib::cqueue_begin(&oBuf_Que); itr!=hmLib::cqueue_end(&oBuf_Que); itr=hmLib::cqueue_next(&oBuf_Que, itr)) {
 						service::cstring_destruct_safe(&((odata*)(itr))->Str);
 					}
 
-					//oQue‚ğ”jŠü
+					//oQueã‚’ç ´æ£„
 					hmLib::cqueue_destruct(&oBuf_Que);
 				}
-				//‘—M‰Â”\‚©‚ğŠm”F
+				//é€ä¿¡å¯èƒ½ã‹ã‚’ç¢ºèª
 				bool oBuf_empty(void) { return hmLib::cqueue_empty(&oBuf_Que) != 0; }
-				//‘—MÏ‚İƒf[ƒ^‚ğíœ‚·‚é
+				//é€ä¿¡æ¸ˆã¿ãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤ã™ã‚‹
 				void oBuf_move_pop(odata* pData_) {
 					if(oBuf_empty()) {
 						odata_format(pData_);
@@ -129,13 +131,13 @@ namespace hmr {
 					odata_move((odata*)hmLib::cqueue_getptr(&oBuf_Que), pData_);
 					hmLib::cqueue_pop(&oBuf_Que);
 				}
-				//oBuf‚ÌƒTƒCƒY‚ğæ“¾‚·‚é
+				//oBufã®ã‚µã‚¤ã‚ºã‚’å–å¾—ã™ã‚‹
 				hmLib::cqueue_size_t oBuf_size(void) { return hmLib::cqueue_size(&oBuf_Que); }
-				//‘—M‰Â”\‚©‚ÌŠm”F
+				//é€ä¿¡å¯èƒ½ã‹ã®ç¢ºèª
 				bool oBuf_full(void) { return hmLib::cqueue_full(&oBuf_Que)!=0; }
-				//‘—Mƒoƒbƒtƒ@‚Ì––”ö‚ªƒpƒPƒbƒgI—¹ƒ^ƒO
+				//é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã®æœ«å°¾ãŒãƒ‘ã‚±ãƒƒãƒˆçµ‚äº†ã‚¿ã‚°
 				bool oBuf_isPacEnd(void) { return ((odata*)hmLib::cqueue_getptr(&oBuf_Que))->ID==HMR_COM_PACTRMNID; }
-				//‘—M—pŠÖ”(óMÏƒf[ƒ^—p)@‘—Mƒf[ƒ^‚Ìæ“ªƒAƒhƒŒƒX(Ptr)A‘—Mƒf[ƒ^’·(Size)‚ğˆø”‚É“ü‚ê‚ê‚ÎA‚»‚Ì‘—Mƒf[ƒ^‚ğ‘—M‘Ò‚¿ƒoƒbƒtƒ@‚É‘—‚ê‚éB
+				//é€ä¿¡ç”¨é–¢æ•°(å—ä¿¡æ¸ˆãƒ‡ãƒ¼ã‚¿ç”¨)ã€€é€ä¿¡ãƒ‡ãƒ¼ã‚¿ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹(Ptr)ã€é€ä¿¡ãƒ‡ãƒ¼ã‚¿é•·(Size)ã‚’å¼•æ•°ã«å…¥ã‚Œã‚Œã°ã€ãã®é€ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡å¾…ã¡ãƒãƒƒãƒ•ã‚¡ã«é€ã‚Œã‚‹ã€‚
 				void oBuf_move_push(odata* mData_) {
 					if(!odata_is_construct(mData_))return;
 
@@ -154,45 +156,45 @@ namespace hmr {
 						odata_format(mData_);
 					}
 				}
-				//****************wdtÀ‘•*********************//
-				uint8 xwdt_WdtCnt=0;	//WDT‚ÌƒJƒEƒ“ƒ^[
-				bool xwdt_WdtEn=0;	//WDT‚Ì—LŒø–³Œøƒtƒ‰ƒO
-				//comŠÄ‹—pWatchDogTimer‚ÌƒŠƒZƒbƒg
+				//****************wdtå®Ÿè£…*********************//
+				uint8 xwdt_WdtCnt=0;	//WDTã®ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
+				bool xwdt_WdtEn=0;	//WDTã®æœ‰åŠ¹ç„¡åŠ¹ãƒ•ãƒ©ã‚°
+				//comç›£è¦–ç”¨WatchDogTimerã®ãƒªã‚»ãƒƒãƒˆ
 				void wdt_restart() { xwdt_WdtCnt=0; }
-				//comŠÄ‹—pWatchDogTimer‚ğ’â~
+				//comç›£è¦–ç”¨WatchDogTimerã‚’åœæ­¢
 				void wdt_enable() { xwdt_WdtEn=true; }
-				//comŠÄ‹—pWatchDogTimer‚ğ’â~
+				//comç›£è¦–ç”¨WatchDogTimerã‚’åœæ­¢
 				void wdt_disable() { xwdt_WdtEn=false; }
-				//comŠÄ‹—pWatchDogTimer‚Ìƒ^ƒXƒNŠÖ”
+				//comç›£è¦–ç”¨WatchDogTimerã®ã‚¿ã‚¹ã‚¯é–¢æ•°
 				struct wdt_task :public hmr::task::client_interface{
 					duration operator()(duration dt){
-						//—LŒø‚Å‚È‚¢ê‡‚ÍA–³‹
+						//æœ‰åŠ¹ã§ãªã„å ´åˆã¯ã€ç„¡è¦–
 						if(!xwdt_WdtEn)return dt;
 
 						xwdt_WdtCnt += dt;
 
-						if(xwdt_WdtCnt>wdt_sec)devmng::kill();
+						if(xwdt_WdtCnt>wdt_sec)pComClient->inform_timeout();
 
 						return dt;
 					}
 				}WdtTask;
-				//****************VMCŠÖ˜AÀ‘•*********************//
+				//****************VMCé–¢é€£å®Ÿè£…*********************//
 				hmLib_boolian vmc_can_iniRecvPac(void) { return static_cast<hmLib_boolian>(true); }
-				//PacStrtóMŠ®—¹‚ÉŒÄ‚Î‚ê‚é
+				//PacStrtå—ä¿¡å®Œäº†æ™‚ã«å‘¼ã°ã‚Œã‚‹
 				void vmc_iniRecvPac(void) {
-					//óMƒ‚[ƒh‚ğON‚É‚·‚é
+					//å—ä¿¡ãƒ¢ãƒ¼ãƒ‰ã‚’ONã«ã™ã‚‹
 					RecvMode=1;
 
-					//WDT‘Îô
+					//WDTå¯¾ç­–
 					wdt_restart();
 				}
-				//iniRecvDat‚ğÀs‚µ‚Ä—Ç‚¢‚©‚ÌŠm”F‚ÉŒÄ‚Î‚ê‚é
+				//iniRecvDatã‚’å®Ÿè¡Œã—ã¦è‰¯ã„ã‹ã®ç¢ºèªã«å‘¼ã°ã‚Œã‚‹
 				hmLib_boolian vmc_can_iniRecvDat(void) { return static_cast<hmLib_boolian>(!iBuf_full()); }
-				//PacTrmnóMŠ®—¹‚ÉŒÄ‚Î‚ê‚é@ˆø”‚ÍƒGƒ‰[‚Ì—L–³
+				//PacTrmnå—ä¿¡å®Œäº†æ™‚ã«å‘¼ã°ã‚Œã‚‹ã€€å¼•æ•°ã¯ã‚¨ãƒ©ãƒ¼ã®æœ‰ç„¡
 				void vmc_finRecvPac(unsigned char Err) {
 					idata IData;
 					//	cstring Str;
-					//HMR_COM_PACTRMNIDƒRƒ}ƒ“ƒh‚ğì¬‚µAPac‚ğ•Â‚¶‚é
+					//HMR_COM_PACTRMNIDã‚³ãƒãƒ³ãƒ‰ã‚’ä½œæˆã—ã€Pacã‚’é–‰ã˜ã‚‹
 					//	service::cstring_construct_safe(&Str,1);
 					//	cstring_putc(&Str,0,Err);
 					//DEBUG	idata_format(&IData);
@@ -203,18 +205,18 @@ namespace hmr {
 					IData.ID=HMR_COM_PACTRMNID;
 					iBuf_move_push(&IData);
 
-					//óMƒ‚[ƒh‚ğOFF‚É‚·‚é
+					//å—ä¿¡ãƒ¢ãƒ¼ãƒ‰ã‚’OFFã«ã™ã‚‹
 					RecvMode=0;
-					//PacóM’Ê’mŠÖ”‚ğŒÄ‚Ño‚·
+					//Pacå—ä¿¡é€šçŸ¥é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 					if(FpInfromFinRecvPac)FpInfromFinRecvPac();
-					//óMÏ‚İA‘—M‘Ò‚¿‚Ìƒf[ƒ^”‚ğ‘‚â‚·
+					//å—ä¿¡æ¸ˆã¿ã€é€ä¿¡å¾…ã¡ã®ãƒ‡ãƒ¼ã‚¿æ•°ã‚’å¢—ã‚„ã™
 					++WaitPacNum;
 				}
-				//DatóMŠJn‚ÉŒÄ‚Î‚ê‚é ˆø”‚ÍóM‚·‚éƒf[ƒ^ƒTƒCƒY
+				//Datå—ä¿¡é–‹å§‹æ™‚ã«å‘¼ã°ã‚Œã‚‹ å¼•æ•°ã¯å—ä¿¡ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 				unsigned int DebugCnt;
 				unsigned char* Debug;
 				void vmc_iniRecvDat(did_t ID, dsize_t Size) {
-					//ID‚âSize‚ª‚¨‚©‚µê‡‚Íæ‚É”jŠü
+					//IDã‚„SizeãŒãŠã‹ã—å ´åˆã¯å…ˆã«ç ´æ£„
 					if(ID==0 || 64<Size) {
 						RecvFailDat=1;
 						return;
@@ -242,7 +244,7 @@ namespace hmr {
 					//Debug=(unsigned char*)malloc(DebugCnt);
 					//free(Debug);
 				}
-				//DatóMI—¹‚ÉŒÄ‚Î‚ê‚é ˆø”‚ÍƒGƒ‰[‚Ì—L–³
+				//Datå—ä¿¡çµ‚äº†æ™‚ã«å‘¼ã°ã‚Œã‚‹ å¼•æ•°ã¯ã‚¨ãƒ©ãƒ¼ã®æœ‰ç„¡
 				void vmc_finRecvDat(unsigned char Err) {
 					idata Data;
 					idata_format(&Data);
@@ -257,48 +259,48 @@ namespace hmr {
 						return;
 					}
 
-					//ƒGƒ‰[‚ª–³‚¯‚ê‚Îƒoƒbƒtƒ@‚Éƒf[ƒ^’Ç‰ÁA‚ ‚ê‚Î”jŠü
+					//ã‚¨ãƒ©ãƒ¼ãŒç„¡ã‘ã‚Œã°ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è¿½åŠ ã€ã‚ã‚Œã°ç ´æ£„
 					idata_construct(&Data, RecvDatID, &RecvDatStr);
 					iBuf_move_push(&Data);
 
 				}
-				//recv‚ğÀs‚µ‚Ä‚æ‚¢‚©‚ÌŠm”F‚ÉŒÄ‚Î‚ê‚é
+				//recvã‚’å®Ÿè¡Œã—ã¦ã‚ˆã„ã‹ã®ç¢ºèªã«å‘¼ã°ã‚Œã‚‹
 				hmLib_boolian vmc_can_recv(void) { return static_cast<hmLib_boolian>(true); }
-				//Dat‚Ì’†góM‚ÉŒÄ‚Î‚ê‚é@ˆø”‚ªóM‚µ‚½ƒf[ƒ^
+				//Datã®ä¸­èº«å—ä¿¡æ™‚ã«å‘¼ã°ã‚Œã‚‹ã€€å¼•æ•°ãŒå—ä¿¡ã—ãŸãƒ‡ãƒ¼ã‚¿
 				void vmc_recv(unsigned char c) {
 					if(RecvFailDat==0)hmLib::cstring_putc(&RecvDatStr, RecvDatCnt++, c);
 					//DEBUG	if(RecvFailDat==0)cstring_putc(&RecvDatStr,RecvDatCnt++,c);
 				}
 				hmLib_boolian vmc_can_iniSendPac(void) {
-					return static_cast<hmLib_boolian>(devmng::isFullDuplex() || (WaitPacNum>0));
+					return static_cast<hmLib_boolian>(pComClient->is_fullduplex() || (WaitPacNum>0));
 				}
-				//RacStrt‘—MŠ®—¹‚ÉŒÄ‚Î‚ê‚é
+				//RacStrté€ä¿¡å®Œäº†æ™‚ã«å‘¼ã°ã‚Œã‚‹
 				void vmc_iniSendPac(void) {
-					//‘—Mƒ‚[ƒh‚ğON‚É‚·‚é
+					//é€ä¿¡ãƒ¢ãƒ¼ãƒ‰ã‚’ONã«ã™ã‚‹
 					SendMode=1;
 
 					if(WaitPacNum)--WaitPacNum;
 
-					//WDT‘Îô
+					//WDTå¯¾ç­–
 					//	wdt_restart();
 				}
-				//PacTrmn‘—MŠ®—¹‚ÉŒÄ‚Î‚ê‚é@ˆø”‚ÍƒGƒ‰[‚Ì—L–³
+				//PacTrmné€ä¿¡å®Œäº†æ™‚ã«å‘¼ã°ã‚Œã‚‹ã€€å¼•æ•°ã¯ã‚¨ãƒ©ãƒ¼ã®æœ‰ç„¡
 				void vmc_finSendPac(unsigned char Err) {
 					odata Data;
 
 					odata_format(&Data);
 					while(1) {
-						//HMR_COM_PACTRMNIDƒRƒ}ƒ“ƒh‚ªo‚Ä‚±‚È‚©‚Á‚½ê‡AHMR_COM_PACTRMNIDƒRƒ}ƒ“ƒh‚ªˆê‚Âo‚Ä‚­‚é‚Ü‚Å‚Í–³Œø‚ÌPac‚Å‚ ‚é‚±‚Æ‚ğ’Ê’m
+						//HMR_COM_PACTRMNIDã‚³ãƒãƒ³ãƒ‰ãŒå‡ºã¦ã“ãªã‹ã£ãŸå ´åˆã€HMR_COM_PACTRMNIDã‚³ãƒãƒ³ãƒ‰ãŒä¸€ã¤å‡ºã¦ãã‚‹ã¾ã§ã¯ç„¡åŠ¹ã®Pacã§ã‚ã‚‹ã“ã¨ã‚’é€šçŸ¥
 						if(oBuf_empty()) {
 							++FailPac;
 							break;
 						}
 
-						//æ“ª‚©‚çmove&pop
+						//å…ˆé ­ã‹ã‚‰move&pop
 						oBuf_move_pop(&Data);
-						//HMR_COM_PACTRMNIDƒRƒ}ƒ“ƒh==Pac‚ÌI’[‚Ì‡}‚ªo‚Ä‚«‚½ê‡
+						//HMR_COM_PACTRMNIDã‚³ãƒãƒ³ãƒ‰==Pacã®çµ‚ç«¯ã®åˆå›³ãŒå‡ºã¦ããŸå ´åˆ
 						if(Data.ID==HMR_COM_PACTRMNID) {
-							//HMR_COM_PACTRMNIDƒRƒ}ƒ“ƒh‚ğˆ—‚µAPac‚ğ•Â‚¶‚é
+							//HMR_COM_PACTRMNIDã‚³ãƒãƒ³ãƒ‰ã‚’å‡¦ç†ã—ã€Pacã‚’é–‰ã˜ã‚‹
 							odata_destruct(&Data);
 							--HoldPac;
 							break;
@@ -306,30 +308,30 @@ namespace hmr {
 							odata_destruct(&Data);
 						}
 					}
-					//‘—Mƒ‚[ƒh‚ğOFF‚É‚·‚é
+					//é€ä¿¡ãƒ¢ãƒ¼ãƒ‰ã‚’OFFã«ã™ã‚‹
 					SendMode=0;
-					//PacóM’Ê’mŠÖ”‚ğŒÄ‚Ño‚·
+					//Pacå—ä¿¡é€šçŸ¥é–¢æ•°ã‚’å‘¼ã³å‡ºã™
 					if(FpInfromFinSendPac)FpInfromFinSendPac();
 				}
-				//ƒf[ƒ^‚Ì—L–³‚ÌŠm”F‚ª‰Â”\‚©‚Ç‚¤‚©
+				//ãƒ‡ãƒ¼ã‚¿ã®æœ‰ç„¡ã®ç¢ºèªãŒå¯èƒ½ã‹ã©ã†ã‹
 				hmLib_boolian vmc_can_existSendDat(void) { return static_cast<hmLib_boolian>(!oBuf_empty()); }
-				//‘—M‚ª•K—v‚Èƒf[ƒ^‚Ì—L–³‚ÌŠm”F
+				//é€ä¿¡ãŒå¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã®æœ‰ç„¡ã®ç¢ºèª
 				hmLib_boolian vmc_existSendDat(void) {
-					//ƒoƒbƒtƒ@––”öƒf[ƒ^‚ªPacketTrmn‚Ìê‡‚É‚Í‘¶İ‚µ‚È‚¢‚Ì‚Åfalse
+					//ãƒãƒƒãƒ•ã‚¡æœ«å°¾ãƒ‡ãƒ¼ã‚¿ãŒPacketTrmnã®å ´åˆã«ã¯å­˜åœ¨ã—ãªã„ã®ã§false
 					if(oBuf_isPacEnd())return static_cast<hmLib_boolian>(false);
-					//ã‹LˆÈŠO‚Ìê‡‚Íƒf[ƒ^‚ª‘¶İ‚·‚é‚Ì‚Åtrue
+					//ä¸Šè¨˜ä»¥å¤–ã®å ´åˆã¯ãƒ‡ãƒ¼ã‚¿ãŒå­˜åœ¨ã™ã‚‹ã®ã§true
 					return static_cast<hmLib_boolian>(true);
 				}
-				//iniSendDat‚ğÀs‚µ‚Ä—Ç‚¢‚©‚ÌŠm”F‚ÉŒÄ‚Î‚ê‚é
+				//iniSendDatã‚’å®Ÿè¡Œã—ã¦è‰¯ã„ã‹ã®ç¢ºèªã«å‘¼ã°ã‚Œã‚‹
 				hmLib_boolian vmc_can_iniSendDat(void) {
 					return static_cast<hmLib_boolian>(!oBuf_isPacEnd());
 				}
-				//Dat‘—MŠm’è‚ÉŒÄ‚Î‚ê‚é@ƒTƒCƒY‚ğ–ß‚·
+				//Daté€ä¿¡ç¢ºå®šæ™‚ã«å‘¼ã°ã‚Œã‚‹ã€€ã‚µã‚¤ã‚ºã‚’æˆ»ã™
 				void vmc_iniSendDat(did_t* pID, dsize_t* pSize) {
 					if(odata_is_construct(&SendDat)) {
 						odata_destruct(&SendDat);
 					}
-					//‘—Mƒf[ƒ^‚ğƒpƒPƒbƒg‚ÉˆÚ‚·
+					//é€ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ‘ã‚±ãƒƒãƒˆã«ç§»ã™
 					oBuf_move_pop(&SendDat);
 
 					if(!odata_is_construct(&SendDat)) {
@@ -338,36 +340,36 @@ namespace hmr {
 						return;
 					}
 
-					//ƒJƒEƒ“ƒ^ƒNƒŠƒA
+					//ã‚«ã‚¦ãƒ³ã‚¿ã‚¯ãƒªã‚¢
 					SendDatCnt=0;
-					//ˆø”‚Éî•ñ‚ğ–ß‚µ‚Ä‚â‚é
+					//å¼•æ•°ã«æƒ…å ±ã‚’æˆ»ã—ã¦ã‚„ã‚‹
 					*pID=SendDat.ID;
 					*pSize=hmLib::cstring_size(&(SendDat.Str));
 				}
-				//Dat‘—MI—¹‚ÉŒÄ‚Î‚ê‚é@ˆø”‚ÍƒGƒ‰[‚Ì—L–³
+				//Daté€ä¿¡çµ‚äº†æ™‚ã«å‘¼ã°ã‚Œã‚‹ã€€å¼•æ•°ã¯ã‚¨ãƒ©ãƒ¼ã®æœ‰ç„¡
 				void vmc_finSendDat(unsigned char Err) {
-					//Dat‘—MI—¹‚ğ’Ê’m‚·‚é
+					//Daté€ä¿¡çµ‚äº†ã‚’é€šçŸ¥ã™ã‚‹
 					if(odata_is_construct(&SendDat)) {
 						odata_destruct(&SendDat);
 					}
 				}
-				//send‚ğÀs‚µ‚Ä‚æ‚¢‚©‚ÌŠm”F‚ÉŒÄ‚Î‚ê‚é
+				//sendã‚’å®Ÿè¡Œã—ã¦ã‚ˆã„ã‹ã®ç¢ºèªã«å‘¼ã°ã‚Œã‚‹
 				hmLib_boolian vmc_can_send(void) {
-					//FpSendable‚ª‘¶İ‚µ‚Ä‚¢‚È‚¢‚©A‘¶İ‚·‚é‚ª‘—M‰Â”\SizeˆÈ“à‚Å‚ ‚éê‡Aí‚É^
+					//FpSendableãŒå­˜åœ¨ã—ã¦ã„ãªã„ã‹ã€å­˜åœ¨ã™ã‚‹ãŒé€ä¿¡å¯èƒ½Sizeä»¥å†…ã§ã‚ã‚‹å ´åˆã€å¸¸ã«çœŸ
 					return static_cast<hmLib_boolian>((SendDat.FpSendable==0)
 						|| (SendDatCnt<SendDat.FpSendable()));
 				}
-				//Dat‚Ì’†g‘—M‚ÉŒÄ‚Î‚ê‚é
+				//Datã®ä¸­èº«é€ä¿¡æ™‚ã«å‘¼ã°ã‚Œã‚‹
 				unsigned char vmc_send(void) {
 					//	int tmpPAG;
 					//	char c;
 					//	if(SendDat.DSRPAG==0){
-					//ƒf[ƒ^‘—M
+					//ãƒ‡ãƒ¼ã‚¿é€ä¿¡
 					return hmLib::cstring_getc(&(SendDat.Str), SendDatCnt++);
 					/*	}else{
 							tmpPAG=_DSRPAG;
 							_DSRPAG=__builtin_edspage(SendDat.DSRPAG);
-							//ƒf[ƒ^‘—M
+							//ãƒ‡ãƒ¼ã‚¿é€ä¿¡
 							c=cstring_getc(&(SendDat.Str),SendDatCnt++);
 							_DSRPAG=tmpPAG;
 							return c;
@@ -375,9 +377,9 @@ namespace hmr {
 							*/
 				}
 
-				//**************comŠÖ”ŒQ*************//
-				//‰Šú‰»ŠÖ”
-				void initialize(service_interface& Service) {
+				//**************comé–¢æ•°ç¾¤*************//
+				//åˆæœŸåŒ–é–¢æ•°
+				void initialize(service_interface& Service, io::com_client_interface& ComClient_) {
 					iBuf_initialize();
 					oBuf_initialize();
 
@@ -396,9 +398,12 @@ namespace hmr {
 
 					Service.task().quick_start(WdtTask, 1, 0);
 
+					pComClient = &ComClient_;
+
 					wdt_restart();
+					wdt_disable();
 				}
-				//I’[‰»ŠÖ”
+				//çµ‚ç«¯åŒ–é–¢æ•°
 				void finalize() {
 					wdt_disable();
 
@@ -408,11 +413,11 @@ namespace hmr {
 					iBuf_finalize();
 					oBuf_finalize();
 				}
-				//óMƒ‚[ƒh‚©Šm”F
+				//å—ä¿¡ãƒ¢ãƒ¼ãƒ‰ã‹ç¢ºèª
 				bool isRecvMode(void) { return RecvMode; }
-				//‘—Mƒ‚[ƒh‚©Šm”F
+				//é€ä¿¡ãƒ¢ãƒ¼ãƒ‰ã‹ç¢ºèª
 				bool isSendMode(void) { return SendMode; }
-				//VMC1‚ğì¬‚·‚é
+				//VMC1ã‚’ä½œæˆã™ã‚‹
 				VMC1* createVMC1() {
 					return vmc1_create(
 						vmc_can_iniRecvPac,
@@ -435,22 +440,22 @@ namespace hmr {
 						vmc_send
 						);
 				}
-				//VMC1‚ğ”jŠü‚·‚é
+				//VMC1ã‚’ç ´æ£„ã™ã‚‹
 				void releaseVMC1(VMC1* pVMC1) {
 					vmc1_release(pVMC1);
 				}
-				//****************IOŠÖ”ŒQ**************************//
-				//óM‰Â”\‚Å‚ ‚é‚©Šm”F
+				//****************IOé–¢æ•°ç¾¤**************************//
+				//å—ä¿¡å¯èƒ½ã§ã‚ã‚‹ã‹ç¢ºèª
 				bool in_empty(void) { return iBuf_empty(); }
-				//óMƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚Å‚ ‚é‚©‚ÌŠm”F
+				//å—ä¿¡ãƒãƒƒãƒ•ã‚¡ãŒã„ã£ã±ã„ã§ã‚ã‚‹ã‹ã®ç¢ºèª
 				bool in_full(void) { return iBuf_full(); }
-				//óMƒoƒbƒtƒ@‚Ìæ“ªƒf[ƒ^æ‚èo‚µ
+				//å—ä¿¡ãƒãƒƒãƒ•ã‚¡ã®å…ˆé ­ãƒ‡ãƒ¼ã‚¿å–ã‚Šå‡ºã—
 				void in_move_pop(idata* pData_) { iBuf_move_pop(pData_); }
-				//‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚Å‚ ‚é‚©‚ÌŠm”F
+				//é€ä¿¡ãƒãƒƒãƒ•ã‚¡ãŒã„ã£ã±ã„ã§ã‚ã‚‹ã‹ã®ç¢ºèª
 				bool out_full(void) { return oBuf_full(); }
-				//‘—Mƒoƒbƒtƒ@‚ª‹ó‚©‚Ç‚¤‚©‚ÌŠm”F
+				//é€ä¿¡ãƒãƒƒãƒ•ã‚¡ãŒç©ºã‹ã©ã†ã‹ã®ç¢ºèª
 				bool out_empty(void) { return oBuf_empty(); }
-				//‘—Mƒoƒbƒtƒ@‚Éƒf[ƒ^’Ç‰Á
+				//é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è¿½åŠ 
 				void out_move_push(odata* mData_) { oBuf_move_push(mData_); }
 				//****************** for Debug ***************************//
 				uint8 getFailPacNum(void) { return FailPac; }

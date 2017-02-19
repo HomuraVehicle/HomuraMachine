@@ -47,7 +47,8 @@ v1_00/121005 hmIto
 */
 #include<homuraLib_v2/type.hpp>
 #include<hmLib/cstring.h>
-#include"IO_base.hpp"
+#include<homuraLib_v2/machine/service/safe_cstring.hpp>
+#include"MessageClient.hpp"
 #include"Com.hpp"
 
 namespace hmr {

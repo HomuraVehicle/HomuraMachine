@@ -2,17 +2,17 @@
 #define HMR_MACHINE_MIHARA_BATTERY_INC 100
 #
 /*
-ƒoƒbƒeƒŠ[ŠÇ——pƒRƒ}ƒ“ƒh
+ãƒãƒƒãƒ†ãƒªãƒ¼ç®¡ç†ç”¨ã‚³ãƒãƒ³ãƒ‰
 
 === Battery ===
 
 === hmrBattery ===
 v0_02/131019 iwahori
-	ƒ^ƒXƒNƒVƒXƒeƒ€—p‚Étask_setup_talk‚Ætask_interrupt‚ğì¬
+	ã‚¿ã‚¹ã‚¯ã‚·ã‚¹ãƒ†ãƒ ç”¨ã«task_setup_talkã¨task_interruptã‚’ä½œæˆ
 v0_01/130105 iwahori
-	workŠÖ”‚ğsetup_lisen‚Æsetup_talk‚É•ª—£
+	worké–¢æ•°ã‚’setup_lisenã¨setup_talkã«åˆ†é›¢
 v0_00/121208 hmIto
-	Šî–{ŠÖ”ì¬
+	åŸºæœ¬é–¢æ•°ä½œæˆ
 */
 #include<hmLib/cstring.h>
 #include<XCBase/future.hpp>
@@ -41,7 +41,7 @@ namespace hmr {
 				void setDataMode(bool OnOff_){ DataMode = OnOff_; }
 				bool getDataMode()const{ return DataMode; }
 			private:
-				//ƒ^ƒXƒN
+				//ã‚¿ã‚¹ã‚¯
 				struct data_task :public hmr::task::client_interface{
 				private:
 					this_type& Ref;
@@ -58,7 +58,7 @@ namespace hmr {
 				}DataTask;
 				task::handler DataTaskHandler;
 			private:
-				//ƒ‚[ƒh’Ê’mó—ÌƒNƒ‰ƒX
+				//ãƒ¢ãƒ¼ãƒ‰é€šçŸ¥å—é ˜ã‚¯ãƒ©ã‚¹
 				struct system_client : public system_client_interface{
 				private:
 					this_type& Ref;
@@ -77,7 +77,7 @@ namespace hmr {
 				public:
 					systems::mode::type mode()const{ return CurrentMode; }
 				}SystemClient;
-				//’ÊMó—ÌƒNƒ‰ƒX
+				//é€šä¿¡å—é ˜ã‚¯ãƒ©ã‚¹
 				struct message_client : public message_client_interface{
 				private:
 					this_type& Ref;
@@ -109,7 +109,7 @@ namespace hmr {
 						, SendData2(0)
 						, SendData3(0)
 						, InformTask(*this){
-						//ƒ^ƒXƒN“o˜^
+						//ã‚¿ã‚¹ã‚¯ç™»éŒ²
 						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
 					~message_client(){
@@ -131,7 +131,7 @@ namespace hmr {
 							service::cstring_construct_safe(pStr, 1 + 2 * 3);
 							hmLib::cstring_putc(pStr, 0, 0x00);
 
-							//ƒf[ƒ^æ“¾
+							//ãƒ‡ãƒ¼ã‚¿å–å¾—
 							hmLib::cstring_putc(pStr, 1, (hmLib_uint8)(SendData1 & 0x00FF));		//Low
 							hmLib::cstring_putc(pStr, 2, (hmLib_uint8)((SendData1 >> 8) & 0x00FF));	//High
 
@@ -175,20 +175,20 @@ namespace hmr {
 					, SystemClient(*this)
 					, MessageClient(*this, ID_, Service_){
 
-					//pinİ’è
+					//pinè¨­å®š
 					ApinData1.lock();
 					ApinData2.lock();
 					ApinData3.lock();
 
-					//ƒ^ƒXƒN“o˜^
+					//ã‚¿ã‚¹ã‚¯ç™»éŒ²
 					DataTaskHandler = Service_.task().quick_start(DataTask, 5);
 
-					//Client“o˜^
+					//Clientç™»éŒ²
 					System_.regist(SystemClient);
 					IO_.regist(MessageClient);
 				}
 				~cBattery(){
-					//ƒ^ƒXƒN’â~
+					//ã‚¿ã‚¹ã‚¯åœæ­¢
 					DataTaskHandler.stop();
 					
 					ApinData1.unlock();

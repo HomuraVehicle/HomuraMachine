@@ -7,11 +7,11 @@
 #include<homuraLib_v2/type.hpp>
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
 #include<homuraLib_v2/gate.hpp>
-#include"Com.hpp"
 #include"System_base.hpp"
-#include"Message.hpp"
 #include"Device.hpp"
 #include"IO_base.hpp"
+#include"IO/Message.hpp"
+#include"IO/ComClient.hpp"
 namespace hmr{
 	namespace machine{
 		namespace mihara{
@@ -21,29 +21,29 @@ namespace hmr{
 			private:
 				struct cDualUart: public io_device_{
 				private:
-					//ƒŒƒWƒXƒ^Œn
+					//ãƒ¬ã‚¸ã‚¹ã‚¿ç³»
 					xc32::interrupt_uart<typename io_device_::RF0_uart_register> RFUart;
 					xc32::interrupt_uart<typename io_device_::RF1_uart_register> PhoneUart;
 					typename io_device_::RF0_power PinPowerRFUart;
 					typename io_device_::RF1_power PinPowerPhoneUart;
-					//Œ»İ‚Ìƒ‚[ƒh
+					//ç¾åœ¨ã®ãƒ¢ãƒ¼ãƒ‰
 					io::mode::type Mode;
-					//‘—MŠ„‚è‚İó‘Ô
+					//é€ä¿¡å‰²ã‚Šè¾¼ã¿çŠ¶æ…‹
 					bool IsTxInterruptEnable;
-					//•¶š—ñ•ÏŠ·ƒ‚ƒWƒ…[ƒ‹VMC1
+					//æ–‡å­—åˆ—å¤‰æ›ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«VMC1
 					VMC1* pVMC;
 				private:
-					//‘—óM—pƒ^ƒXƒN VMC‚ÆŠ„‚è‚İƒŒƒWƒXƒ^‚ğ‚Â‚È‚®
+					//é€å—ä¿¡ç”¨ã‚¿ã‚¹ã‚¯ VMCã¨å‰²ã‚Šè¾¼ã¿ãƒ¬ã‚¸ã‚¹ã‚¿ã‚’ã¤ãªã
 					struct tx_interrupt:public xc32::sfr::interrupt::function{
 					private:
 						cDualUart& Ref;
 					public:
 						tx_interrupt(cDualUart& Ref_) :Ref(Ref_){}
 						void operator()(void){
-							//‘—M‰Â”\‚È‚çA‘—M
+							//é€ä¿¡å¯èƒ½ãªã‚‰ã€é€ä¿¡
 							Ref.putc(vmc1_send(Ref.pVMC));
 
-							//‘—M‰Â”\‚Å‚È‚­‚È‚Á‚½ê‡‚ÍAŠ„‚è‚İ‚ğØ‚é
+							//é€ä¿¡å¯èƒ½ã§ãªããªã£ãŸå ´åˆã¯ã€å‰²ã‚Šè¾¼ã¿ã‚’åˆ‡ã‚‹
 							if(!vmc1_can_send(Ref.pVMC)){
 								Ref.disable_tx_interrupt();
 							}
@@ -55,7 +55,7 @@ namespace hmr{
 					public:
 						rx_interrupt(cDualUart& Ref_) :Ref(Ref_){}
 						void operator()(void){
-							//ƒf[ƒ^‚ğóM‚µACom‚Éˆ—‚³‚¹‚é
+							//ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã—ã€Comã«å‡¦ç†ã•ã›ã‚‹
 							vmc1_recv(Ref.pVMC, Ref.getc());
 						}
 					};
@@ -63,7 +63,7 @@ namespace hmr{
 					tx_interrupt TxInterrupt;
 					rx_interrupt RxInterrupt;
 				private:
-					//‘—M•¶š—ñ‚ğ1byteæ“¾‚·‚é
+					//é€ä¿¡æ–‡å­—åˆ—ã‚’1byteå–å¾—ã™ã‚‹
 					unsigned char getc(){
 						switch(Mode){
 						case io::mode::type::module_rf:
@@ -74,7 +74,7 @@ namespace hmr{
 							return 0;
 						}
 					}
-					//óM•¶š—ñ‚ğ1byte—^‚¦‚é
+					//å—ä¿¡æ–‡å­—åˆ—ã‚’1byteä¸ãˆã‚‹
 					void putc(unsigned char c){
 						switch(Mode){
 						case io::mode::type::module_rf:
@@ -117,9 +117,9 @@ namespace hmr{
 							return;
 						}
 					}
-					//interruptÄŠJ‚ğ‚İ‚é
+					//interruptå†é–‹ã‚’è©¦ã¿ã‚‹
 					void check_tx_interrupt(){
-						//‘—MŠ„‚è‚İ‚ªØ‚ç‚ê‚Ä‚¢‚ÄA‚©‚Â‘—M‰Â”\ó‘Ô‚Ì‚Æ‚«‚É‚ÍA‘—MŠ„‚è‚İ‚ğƒIƒ“‚É‚·‚é
+						//é€ä¿¡å‰²ã‚Šè¾¼ã¿ãŒåˆ‡ã‚‰ã‚Œã¦ã„ã¦ã€ã‹ã¤é€ä¿¡å¯èƒ½çŠ¶æ…‹ã®ã¨ãã«ã¯ã€é€ä¿¡å‰²ã‚Šè¾¼ã¿ã‚’ã‚ªãƒ³ã«ã™ã‚‹
 						if(Mode != io::mode::type::module_null && !IsTxInterruptEnable && vmc1_can_send(pVMC)){
 							enable_tx_interrupt();
 						}
@@ -132,12 +132,12 @@ namespace hmr{
 						PinPowerRFUart.lock();
 						PinPowerPhoneUart.lock();
 
-						//’ÊMŠÖ˜A‹@”\‚Ì‰Šú‰»
+						//é€šä¿¡é–¢é€£æ©Ÿèƒ½ã®åˆæœŸåŒ–
 						pVMC = com::createVMC1();
 						vmc1_initialize(pVMC, (const unsigned char*)("hmr"), (const unsigned char*)("ctr"));
 					}
 					~cDualUart(){
-						//VMC‰ğ•ú
+						//VMCè§£æ”¾
 						vmc1_finalize(pVMC);
 						com::releaseVMC1(pVMC);
 
@@ -146,9 +146,9 @@ namespace hmr{
 						PinPowerPhoneUart.unlock();
 					}
 				public:
-					//ƒ‚ƒWƒ…[ƒ‹‘I‘ğ
+					//ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«é¸æŠ
 					void setMode(io::mode::type ModuleMode_){
-						//“¯‚¶ƒ‚[ƒh‚È‚çA–³‹
+						//åŒã˜ãƒ¢ãƒ¼ãƒ‰ãªã‚‰ã€ç„¡è¦–
 						if(ModuleMode_ == Mode)return;
 
 						Mode = ModuleMode_;
@@ -174,37 +174,70 @@ namespace hmr{
 							PinPowerPhoneUart(false);
 						}
 					}
-					//Œ»ƒ‚ƒWƒ…[ƒ‹æ“¾
+					//ç¾ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«å–å¾—
 					io::mode::type getMode()const{ return Mode; }
-					//‚Ç‚±‚àg‚Á‚Ä‚È‚¯‚ê‚ÎAfalse‚ğ•Ô‚·
+					//ã©ã“ã‚‚ä½¿ã£ã¦ãªã‘ã‚Œã°ã€falseã‚’è¿”ã™
 					operator bool()const{ return Mode != io::mode::type::module_null; }
-					//Uart‹ì“®ŠÖ”
+					//Uarté§†å‹•é–¢æ•°
 					void operator()(void){
 						check_tx_interrupt();
 					}
 				};
 			private:
+				systems::io_agent_interface* pSystemAgent;
+				struct com_client : public io::com_client_interface{
+				private:
+					this_type& Ref;
+				public:
+					com_client(this_type& Ref_):Ref(Ref_){}
+				public://io_com_client_interface
+					virtual void inform_timeout(){
+						Ref.pSystemAgent->timeout();
+					}
+					virtual bool is_fullduplex()const{
+						return io::mode::module_phone == Ref.Uart.getMode();
+					}
+				}ComClient;
+			private:
+				struct system_client : public system_client_interface{
+				private:
+					this_type& Ref;
+				public:
+					system_client(this_type& Ref_) :Ref(Ref_){}
+				public://system_clien_interface
+					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
+						if(NewMode_ == systems::mode::sleep)com::wdt_disable();
+						else{
+							com::wdt_restart();
+							com::wdt_enable();
+						}
+					}
+				}SystemClient;
+			private:
 				//Uart
 				cDualUart Uart;
-				//ó‚¯æ‚è—pƒf[ƒ^
+				//å—ã‘å–ã‚Šç”¨ãƒ‡ãƒ¼ã‚¿
 				idata IData;
 				bool IPacketMode;
 				odata OData;
 				bool OPacketMode;
-				//ƒƒbƒZ[ƒWƒzƒ‹ƒ_[
+				//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ›ãƒ«ãƒ€ãƒ¼
 				cMessage Message;
 			public:
 				cIO(service_interface& Service)
-					: Uart()
+					: pSystemAgent(0)
+					, ComClient(*this)
+					, SystemClient(*this)
+					, Uart()
 					, IData()
 					, IPacketMode(false)
 					, OData()
 					, OPacketMode(false)
 					, Message(){
-					com::initialize(Service);
+					com::initialize(Service, ComClient);
 				}
-				~cIO{
-					//’ÊMŠÖ˜A‚ÌI’[‰»ˆ—
+				~cIO(){
+					//é€šä¿¡é–¢é€£ã®çµ‚ç«¯åŒ–å‡¦ç†
 					com::finalize();
 				}
 			public:
@@ -222,71 +255,75 @@ namespace hmr{
 					return Uart.getMode();
 				}
 			public:
+				system_client_interface& getSystemClient(){ return SystemClient; }
 				void operator()(void){
-					//ƒXƒŠ[ƒv‚È‚çI—¹
+					//ã‚¹ãƒªãƒ¼ãƒ—ãªã‚‰çµ‚äº†
 					if(Uart.getMode() == io::mode::module_null)return;
 
-					//óM‰Â”\‚Èƒf[ƒ^‚ª‚ ‚éê‡
+					//å—ä¿¡å¯èƒ½ãªãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹å ´åˆ
 					if(!com::in_empty()){
-						//óMƒf[ƒ^‚ğæ“¾
+						//å—ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 						com::in_move_pop(&IData);
 
-						//’†g‚ª“ü‚Á‚Ä‚¢‚éê‡
+						//ä¸­èº«ãŒå…¥ã£ã¦ã„ã‚‹å ´åˆ
 						if(idata_is_construct(&IData)){
-							//Packet‚ğ‚Ü‚¾ŠJ‚¢‚Ä‚¢‚È‚¢ê‡
+							//Packetã‚’ã¾ã é–‹ã„ã¦ã„ãªã„å ´åˆ
 							if(!IPacketMode){
-								//Packet‚ğ‚±‚±‚ÅŠJ‚­
+								//Packetã‚’ã“ã“ã§é–‹ã
 								IPacketMode = true;
 
-								//óM—pƒƒbƒZ[ƒWƒ‚ƒWƒ…[ƒ‹€”õ
+								//å—ä¿¡ç”¨ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æº–å‚™
 								Message.setup_listen();
 							}
 
-							//PacketI—¹ID‚¾‚Á‚½ê‡
+							//Packetçµ‚äº†IDã ã£ãŸå ´åˆ
 							if(IData.ID == HMR_COM_PACTRMNID){
-								//Packet‚ğ‚±‚±‚Å•Â‚¶‚é
+								//Packetã‚’ã“ã“ã§é–‰ã˜ã‚‹
 								IPacketMode = false;
 
-								//ƒƒbƒZ[ƒW”jŠü
+								//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ç ´æ£„
 								idata_destruct(&IData);
 							} else{
-								//ƒƒbƒZ[ƒWˆ—;
+								//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†;
 								Message.listen(&IData);
 							}
 						}
 					}
 
-					//‘‚·‚¬‚é‚Ì‚Å‘Ò‹@
+					//æ—©ã™ãã‚‹ã®ã§å¾…æ©Ÿ
 					//delay_ms(5);
 
-					//‘—M‘Ò‚¿‚ÌPacket‚ª‚È‚­Acom‚Ì‘—Mƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚Å‚à‚È‚¢‚Æ‚«
+					//é€ä¿¡å¾…ã¡ã®PacketãŒãªãã€comã®é€ä¿¡ãƒãƒƒãƒ•ã‚¡ãŒã„ã£ã±ã„ã§ã‚‚ãªã„ã¨ã
 					if(!com::isWaitSendPacket() && !com::out_full()){
-						//Packet‚ğ‚Ü‚¾ŠJ‚¢‚Ä‚¢‚È‚¢ê‡
+						//Packetã‚’ã¾ã é–‹ã„ã¦ã„ãªã„å ´åˆ
 						if(!OPacketMode){
-							//Packet‚ğ‚±‚±‚ÅŠJ‚­
+							//Packetã‚’ã“ã“ã§é–‹ã
 							OPacketMode = true;
-							//‘—M—pƒƒbƒZ[ƒWƒ‚ƒWƒ…[ƒ‹€”õ
+							//é€ä¿¡ç”¨ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«æº–å‚™
 							Message.setup_talk();
 						}
 
-						//‘—M—pƒf[ƒ^‚ğ€”õ‚·‚é
+						//é€ä¿¡ç”¨ãƒ‡ãƒ¼ã‚¿ã‚’æº–å‚™ã™ã‚‹
 						odata_format(&OData);
 
-						//‘—Mƒf[ƒ^‚Ìæ“¾‚É¸”s‚µ‚½ê‡
+						//é€ä¿¡ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã«å¤±æ•—ã—ãŸå ´åˆ
 						if(Message.talk(&OData)){
-							//’†g‚ªì¬‚³‚ê‚Ä‚¢‚ê‚Î”jŠü
+							//ä¸­èº«ãŒä½œæˆã•ã‚Œã¦ã„ã‚Œã°ç ´æ£„
 							if(odata_is_construct(&OData))odata_destruct(&OData);
-							//Packet‚ğ‚±‚±‚Å•Â‚¶‚é
+							//Packetã‚’ã“ã“ã§é–‰ã˜ã‚‹
 							OPacketMode = false;
 							OData.ID = HMR_COM_PACTRMNID;
 						}
 
-						//‘—Mƒf[ƒ^‚ğ‘—‚èo‚·
+						//é€ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚’é€ã‚Šå‡ºã™
 						com::out_move_push(&OData);
 					}
 
-					//Uart‹ì“®
+					//Uarté§†å‹•
 					Uart();
+				}
+				void regis_system_agent(systems::io_agent_interface& IOAgent_){
+					pSystemAgent = &IOAgent_;
 				}
 			};
 		}

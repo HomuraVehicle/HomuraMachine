@@ -2,34 +2,17 @@
 #define HMR_MACHINE_MIHARA_IOBASE_INC 100
 #
 /*!
-@brief cUI‚ğ—˜—p‚·‚éã‚Å‚Ì‹¤’Ê‹K–ñ‚Ì’è‹`B
+@brief cUIã‚’åˆ©ç”¨ã™ã‚‹ä¸Šã§ã®å…±é€šè¦ç´„ã®å®šç¾©ã€‚
 
-cIO‚ÍA‚Ù‚Ş‚ç‚Ì’ÊMŠÇ——pƒNƒ‰ƒX‚Å‚·BcIO©‘Ì‚ÍAcSystem‚È‚Ç‚Ì§ŒäƒNƒ‰ƒX‚©‚çƒ‚[ƒh’Ê’m‚ğó‚¯‚é‚±‚Æ‚Å©M‚Ì’ÊMƒ‚[ƒh‚ğ•ÏX‚µ‚Ü‚·B
-‚±‚Ìƒtƒ@ƒCƒ‹‚Å‚ÍAcIO‚Æ‘¼‚Ì§ŒäƒNƒ‰ƒX‚©‚ç‚Ì’Ê’m‚·‚é‚¤‚¦‚Å‚Ìƒ‚[ƒh‚â’Ê’mè’i“™‚ª’è‹`‚³‚ê‚Ä‚¢‚Ü‚·B
+cIOã¯ã€ã»ã‚€ã‚‰ã®é€šä¿¡ç®¡ç†ç”¨ã‚¯ãƒ©ã‚¹ã§ã™ã€‚cIOè‡ªä½“ã¯ã€cSystemãªã©ã®åˆ¶å¾¡ã‚¯ãƒ©ã‚¹ã‹ã‚‰ãƒ¢ãƒ¼ãƒ‰é€šçŸ¥ã‚’å—ã‘ã‚‹ã“ã¨ã§è‡ªä¿¡ã®é€šä¿¡ãƒ¢ãƒ¼ãƒ‰ã‚’å¤‰æ›´ã—ã¾ã™ã€‚
+ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã§ã¯ã€cIOã¨ä»–ã®åˆ¶å¾¡ã‚¯ãƒ©ã‚¹ã‹ã‚‰ã®é€šçŸ¥ã™ã‚‹ã†ãˆã§ã®ãƒ¢ãƒ¼ãƒ‰ã‚„é€šçŸ¥æ‰‹æ®µç­‰ãŒå®šç¾©ã•ã‚Œã¦ã„ã¾ã™ã€‚
 */
 #include<hmLib/cstring.h>
 #include<XCBase/chain.hpp>
-#include"Com.hpp"
+#include"IO/MessageClient.hpp"
 namespace hmr{
 	namespace machine{
 		namespace mihara{
-			struct message_client_interface : public ::xc::chain_element{
-			public:
-				typedef hmLib::cstring cstring;
-				typedef com::did_t did_t;
-			private:
-				did_t ID;
-			public:
-				message_client_interface(com::did_t ID_) :ID(ID_){}
-			public:
-				did_t id()const{ return ID; }
-			public:
-				virtual void setup_talk(void) = 0;
-				virtual bool talk(cstring* pStr) = 0;
-				virtual void setup_listen(void) = 0;
-				virtual bool listen(cstring Str) = 0;
-			};
-
 			struct io_interface{
 				virtual void regist(message_client_interface& Client_) = 0;
 			};
@@ -37,7 +20,7 @@ namespace hmr{
 			namespace io{
 				namespace mode{
 					/*!
-					@brief ‚Ù‚Ş‚ç‚Ì’ÊMƒ‚[ƒh•ª—ŞB*/
+					@brief ã»ã‚€ã‚‰ã®é€šä¿¡ãƒ¢ãƒ¼ãƒ‰åˆ†é¡ã€‚*/
 					enum type{
 						module_null = 0x00,
 						module_phone = 0x01,
