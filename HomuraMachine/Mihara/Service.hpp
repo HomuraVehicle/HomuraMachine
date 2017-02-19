@@ -96,9 +96,7 @@ namespace hmr{
 					TaskTimer.config(1000, TaskInterrupt, service_device_::task_timer_ipl());
 					//TaskTimerLock.lock();
 				}
-				void connect(system_interface& SystemHost_){
-					SystemHost_.regist(SystemClient);
-				}
+				system_client_interface& getSystemClient(){return SystemClient;}
 			};
 		}
 	}

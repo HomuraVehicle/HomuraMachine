@@ -141,14 +141,14 @@ namespace hmr{
 
 						if(Cnt<RemPhaseLength){
 							if(RoamingInterval== 0 || (Cnt%RoamingInterval) % 2 == 0){
-								Status.IOMode.set(Status.getSelectIO());
+								Status.IOMode.setSelectIO();
 							} else{
-								Status.IOMode.set(Status.getSelectIO() == io::mode::module_phone ? io::mode::module_rf : io::mode::module_phone);
+								Status.IOMode.setSelectIO(true);
 							}
-							Status.setSystemMode(systems::mode::passive);
+							Status.SystemMode.set(systems::mode::passive);
 						} else{
-							Status.setIOMode(io::mode::module_null);
-							Status.setSystemMode(systems::mode::sleep);
+							Status.IOMode.set(io::mode::module_null);
+							Status.SystemMode.set(systems::mode::sleep);
 						}
 					}
 					void task(hmr::task::duration Duration, status& Status){
@@ -491,8 +491,7 @@ namespace hmr{
 					, MessageClient(*this, ID_, Service_)
 					, SystemTask(*this)
 					, pMode(&NormalMode){
-
-					SystemTaskHandler = Service_.task().quick_start(SystemTask, 5);
+					SystemTaskHandler = Service_.system_task().quick_start(SystemTask, 1);
 					MessageHost_.regist(MessageClient);
 					PinDevicePower(true);
 					pMode->start(Status);

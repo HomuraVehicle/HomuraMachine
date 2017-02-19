@@ -9,6 +9,7 @@ namespace hmr{
 			struct service_interface{
 				virtual hmr::delay_interface& delay() = 0;
 				virtual hmr::task::host_interface& task() = 0;
+				virtual hmr::task::host_interface& system_task() = 0;
 			};
 		}
 	}

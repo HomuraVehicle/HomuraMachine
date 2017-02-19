@@ -96,8 +96,7 @@ int main(void){
 	cService<typename cDevice::service_device> Service;
 	cIO<typename cDevice::io_device> IO(Service);
 	cSystem<typename cDevice::system_device> System('S',IO, Service);
-	Service.connect(System);
-	System.regist_task(Service.system_task());
+	System.regist(Service.getSystemClient());
 	
 	//モジュール初期化
 	cThermo<typename cDevice::thermo_device> Thermo('t', System, IO, Service);
