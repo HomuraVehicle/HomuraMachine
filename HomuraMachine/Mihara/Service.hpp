@@ -46,7 +46,7 @@ namespace hmr{
 				typedef xc32::interrupt_timer<typename my_device::task_timer_register> task_timer;
 				/*!タスク駆動用タイマー*/
 				task_timer TaskTimer;
-				xc::lock_guard<task_timer> TaskTimerLock;
+				xc::unique_lock<task_timer> TaskTimerLock;
 			private:
 				bool TaskSleep;
 				/*!タスクホスト Sleep時は停止する。*/
@@ -89,12 +89,16 @@ namespace hmr{
 				}SystemClient;
 			public:
 				cService()
-					: TaskTimerLock(TaskTimer)
+					: TaskTimerLock(TaskTimer, true)
 					, TaskInterrupt(*this)
 					, SystemClient(*this){
 					//1000ms = 1秒おきに駆動するようセット
 					TaskTimer.config(1000, TaskInterrupt, service_device_::task_timer_ipl());
-					//TaskTimerLock.lock();
+					TaskTimerLock.lock();
+					TaskTimer.start();
+				}
+				~cService(){
+					TaskTimer.stop();
 				}
 				system_client_interface& getSystemClient(){return SystemClient;}
 				void operator()(void){}
