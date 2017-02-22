@@ -51,6 +51,11 @@ namespace hmr{
 								}
 							}
 						}
+					public:
+						io_mode_holder(io::mode_selector_interface& IOModeSelector_, io_mode IOMode = io_mode::module_null)
+							: pIOModeSelector(&IOModeSelector_){
+							set(IOMode);
+						}
 					};
 					struct system_mode_holder{
 					private:
@@ -69,6 +74,10 @@ namespace hmr{
 						void regist(system_client_interface& rElement_){
 							Chain.push_back(rElement_);
 						}
+					public:
+						system_mode_holder(system_mode Mode_ = system_mode::sleep){
+							set(Mode_);
+						}
 					};
 				public:
 					typename my_device::pinRedLED PinRedLED;
@@ -79,8 +88,10 @@ namespace hmr{
 					xc::lock_guard<typename my_device::pinRedLED> PinRedLEDLock;
 					xc::lock_guard<xc32::wdt> WDTLock;
 				public:
-					status()
+					status(io::mode_selector_interface& IOModeSelector_, io_mode IOMode_ = io_mode::module_null, system_mode SystemMode_ = system_mode::sleep)
 						: PinRedLEDLock(PinRedLED)
+						, IOMode(IOModeSelector_, IOMode_)
+						, SystemMode(SystemMode_)
 						, WDTLock(WDT){
 						PinRedLED(false);
 						WDT.disable();
@@ -490,13 +501,16 @@ namespace hmr{
 					Status.SystemMode.regist(rElement_);
 				}
 			public:
-				cSystem(unsigned char ID_, io_interface& MessageHost_, service_interface& Service_)
+				cSystem(unsigned char ID_, io_interface& MessageHost_, service_interface& Service_, io::mode_selector_interface& IOModeSelectorInterface)
 					: PinDevicePower()
 					, PinDevicePowerLock(PinDevicePower)
+					, Status(IOModeSelectorInterface)
 					, IOAgent(*this)
 					, SystemTask(*this)
 					, MessageClient(*this, ID_, Service_)
 					, pMode(&NormalMode){
+					Status.IOMode.set(io::mode::module_phone);
+					Status.SystemMode.set(systems::mode::observe);
 					SystemTaskHandler = Service_.system_task().quick_start(SystemTask, 1);
 					MessageHost_.regist(MessageClient);
 					PinDevicePower(true);
