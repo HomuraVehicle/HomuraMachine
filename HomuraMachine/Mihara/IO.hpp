@@ -161,17 +161,20 @@ namespace hmr{
 							PinPowerRFUart(false);
 							PinPowerPhoneUart(true);
 							check_tx_interrupt();
+							return;
 						case io::mode::type::module_rf:
 							PhoneUart.unlock();
 							RFUart.lock(9600, xc32::uart::flowcontrol::rts_cts_control, TxInterrupt, RxInterrupt);
 							PinPowerRFUart(true);
 							PinPowerPhoneUart(false);
 							check_tx_interrupt();
+							return;
 						default:
 							RFUart.unlock();
 							PhoneUart.unlock();
 							PinPowerRFUart(false);
 							PinPowerPhoneUart(false);
+							return;
 						}
 					}
 					//現モジュール取得
