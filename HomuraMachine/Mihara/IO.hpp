@@ -117,18 +117,12 @@ namespace hmr{
 							return;
 						}
 					}
-					//interrupt再開を試みる
-					void check_tx_interrupt(){
-						//送信割り込みが切られていて、かつ送信可能状態のときには、送信割り込みをオンにする
-						if(Mode != io::mode::type::module_null && !IsTxInterruptEnable && vmc1_can_send(pVMC)){
-							enable_tx_interrupt();
-						}
-					}
 				public:
 					cDualUart()
 						: TxInterrupt(*this)
 						, RxInterrupt(*this)
-						, Mode(io::mode::type::module_null){
+						, Mode(io::mode::type::module_null)
+						, IsTxInterruptEnable(false){
 						PinPowerRFUart.lock();
 						PinPowerPhoneUart.lock();
 
@@ -153,27 +147,27 @@ namespace hmr{
 
 						Mode = ModuleMode_;
 
-						IsTxInterruptEnable = false;
 						switch(Mode){
 						case io::mode::type::module_phone:
-							RFUart.unlock();
-							PhoneUart.lock(38400, xc32::uart::flowcontrol::rts_cts_control, TxInterrupt, RxInterrupt);
+							IsTxInterruptEnable = true;
 							PinPowerRFUart(false);
+							RFUart.unlock();
 							PinPowerPhoneUart(true);
-							check_tx_interrupt();
+							PhoneUart.lock(38400, xc32::uart::flowcontrol::rts_cts_control, TxInterrupt, RxInterrupt);
 							return;
 						case io::mode::type::module_rf:
-							PhoneUart.unlock();
-							RFUart.lock(9600, xc32::uart::flowcontrol::rts_cts_control, TxInterrupt, RxInterrupt);
-							PinPowerRFUart(true);
+							IsTxInterruptEnable = true;
 							PinPowerPhoneUart(false);
-							check_tx_interrupt();
+							PhoneUart.unlock();
+							PinPowerRFUart(true);
+							RFUart.lock(9600, xc32::uart::flowcontrol::rts_cts_control, TxInterrupt, RxInterrupt);
 							return;
 						default:
-							RFUart.unlock();
-							PhoneUart.unlock();
+							IsTxInterruptEnable = false;
 							PinPowerRFUart(false);
+							RFUart.unlock();
 							PinPowerPhoneUart(false);
+							PhoneUart.unlock();
 							return;
 						}
 					}
@@ -183,7 +177,11 @@ namespace hmr{
 					operator bool()const{ return Mode != io::mode::type::module_null; }
 					//Uart駆動関数
 					void operator()(void){
-						check_tx_interrupt();
+						//送信割り込みが切られていて、かつ送信可能状態のときには、送信割り込みをオンにする
+						if (Mode != io::mode::type::module_null && !IsTxInterruptEnable && vmc1_can_send(pVMC)) {
+							enable_tx_interrupt();
+							Ref.putc(vmc1_send(Ref.pVMC));
+						}
 					}
 				};
 			private:
