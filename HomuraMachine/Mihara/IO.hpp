@@ -12,14 +12,14 @@
 #include"IO_base.hpp"
 #include"IO/Message.hpp"
 #include"IO/ComClient.hpp"
-namespace hmr{
-	namespace machine{
-		namespace mihara{
+namespace hmr {
+	namespace machine {
+		namespace mihara {
 			template<typename io_device_>
-			struct cIO :public io_interface, public io::mode_selector_interface, public io_device_{
+			struct cIO :public io_interface, public io::mode_selector_interface, public io_device_ {
 				typedef cIO<io_device_> this_type;
 			private:
-				struct cDualUart: public io_device_{
+				struct cDualUart : public io_device_ {
 				private:
 					//レジスタ系
 					xc32::interrupt_uart<typename io_device_::RF0_uart_register> RFUart;
@@ -32,90 +32,54 @@ namespace hmr{
 					VMC1* pVMC;
 				private:
 					//送受信用タスク VMCと割り込みレジスタをつなぐ
-					struct tx_interrupt:public xc32::sfr::interrupt::function{
+					struct tx_interrupt :public xc32::sfr::interrupt::function {
 					private:
 						cDualUart& Ref;
 					public:
-						tx_interrupt(cDualUart& Ref_) :Ref(Ref_){}
-						void operator()(void){
-							//送信可能なら、送信
-							Ref.putc(vmc1_send(Ref.pVMC));
+						tx_interrupt(cDualUart& Ref_) :Ref(Ref_) {}
+						void operator()(void) {
+							if (Ref.getMode() == io::mode::module_rf) {
+								//送信可能なら、送信
+								Ref.RFUart.send_data(vmc1_send(Ref.pVMC));
 
-							//送信可能でなくなった場合は、割り込みを切る
-							if(!vmc1_can_send(Ref.pVMC)){
-								Ref.disable_tx_interrupt();
+								//送信可能でなくなった場合は、割り込みを切る
+								if (!vmc1_can_send(Ref.pVMC)) {
+									Ref.RFUart.send_disable();
+								}
+							} else if (Ref.getMode() == io::mode::module_phone) {
+								//送信可能なら、送信
+								Ref.PhoneUart.send_data(vmc1_send(Ref.pVMC));
+
+								//送信可能でなくなった場合は、割り込みを切る
+								if (!vmc1_can_send(Ref.pVMC)) {
+									Ref.PhoneUart.send_disable();
+								}
 							}
 						}
 					};
-					struct rx_interrupt:public xc32::sfr::interrupt::function{
+					struct rx_interrupt :public xc32::sfr::interrupt::function {
 					private:
 						cDualUart& Ref;
 					public:
-						rx_interrupt(cDualUart& Ref_) :Ref(Ref_){}
-						void operator()(void){
-							//データを受信し、Comに処理させる
-							vmc1_recv(Ref.pVMC, Ref.getc());
+						rx_interrupt(cDualUart& Ref_) :Ref(Ref_) {}
+						void operator()(void) {
+							if (Ref.getMode() == io::mode::module_rf) {
+								//データを受信し、Comに処理させる
+								vmc1_recv(Ref.pVMC, Ref.RFUart.recv_data());
+							} else if (Ref.getMode() == io::mode::module_phone) {
+								//データを受信し、Comに処理させる
+								vmc1_recv(Ref.pVMC, Ref.PhoneUart.recv_data());
+							}
 						}
 					};
 				private:
 					tx_interrupt TxInterrupt;
 					rx_interrupt RxInterrupt;
-				private:
-					//送信文字列を1byte取得する
-					unsigned char getc(){
-						switch(Mode){
-						case io::mode::type::module_rf:
-							return RFUart.recv_data();
-						case io::mode::type::module_phone:
-							return PhoneUart.recv_data();
-						default:
-							return 0;
-						}
-					}
-					//受信文字列を1byte与える
-					void putc(unsigned char c){
-						switch(Mode){
-						case io::mode::type::module_rf:
-							RFUart.send_data(c);
-							return;
-						case io::mode::type::module_phone:
-							PhoneUart.send_data(c);
-							return;
-						default:
-							return;
-						}
-					}
-					//tx interrupt enable
-					void enable_tx_interrupt(){
-						switch(Mode){
-						case io::mode::type::module_rf:
-							RFUart.send_enable();
-							return;
-						case io::mode::type::module_phone:
-							PhoneUart.send_enable();
-							return;
-						default:
-							return;
-						}
-					}
-					//tx interrupt disable
-					void disable_tx_interrupt(){
-						switch(Mode){
-						case io::mode::type::module_rf:
-							RFUart.send_disable();
-							return;
-						case io::mode::type::module_phone:
-							PhoneUart.send_disable();
-							return;
-						default:
-							return;
-						}
-					}
 				public:
 					cDualUart()
 						: TxInterrupt(*this)
 						, RxInterrupt(*this)
-						, Mode(io::mode::type::module_null){
+						, Mode(io::mode::type::module_null) {
 						PinPowerRFUart.lock();
 						PinPowerPhoneUart.lock();
 
@@ -123,7 +87,7 @@ namespace hmr{
 						pVMC = com::createVMC1();
 						vmc1_initialize(pVMC, (const unsigned char*)("hmr"), (const unsigned char*)("ctr"));
 					}
-					~cDualUart(){
+					~cDualUart() {
 						//VMC解放
 						vmc1_finalize(pVMC);
 						com::releaseVMC1(pVMC);
@@ -134,24 +98,26 @@ namespace hmr{
 					}
 				public:
 					//モジュール選択
-					void setMode(io::mode::type ModuleMode_){
+					void setMode(io::mode::type ModuleMode_) {
 						//同じモードなら、無視
-						if(ModuleMode_ == Mode)return;
+						if (ModuleMode_ == Mode)return;
 
 						Mode = ModuleMode_;
 
-						switch(Mode){
+						switch (Mode) {
 						case io::mode::type::module_phone:
 							PinPowerRFUart(false);
 							RFUart.unlock();
 							PinPowerPhoneUart(true);
 							PhoneUart.lock(38400, xc32::uart::flowcontrol::rts_cts_control, TxInterrupt, RxInterrupt);
+							PhoneUart.send_disable();
 							return;
 						case io::mode::type::module_rf:
 							PinPowerPhoneUart(false);
 							PhoneUart.unlock();
 							PinPowerRFUart(true);
 							RFUart.lock(9600, xc32::uart::flowcontrol::rts_cts_control, TxInterrupt, RxInterrupt);
+							RFUart.send_disable();
 							return;
 						default:
 							PinPowerRFUart(false);
@@ -162,43 +128,56 @@ namespace hmr{
 						}
 					}
 					//現モジュール取得
-					io::mode::type getMode()const{ return Mode; }
+					io::mode::type getMode()const { return Mode; }
 					//どこも使ってなければ、falseを返す
-					operator bool()const{ return Mode != io::mode::type::module_null; }
+					operator bool()const { return Mode != io::mode::type::module_null; }
 					//Uart駆動関数
-					void operator()(void){
+					void operator()(void) {
 						//送信割り込みが切られていて、かつ送信可能状態のときには、送信割り込みをオンにする
-						if (Mode != io::mode::type::module_null && vmc1_can_send(pVMC)) {
-							enable_tx_interrupt();
-							Ref.putc(vmc1_send(Ref.pVMC));
+						if (vmc1_can_send(pVMC)) {
+							if (Mode == io::mode::module_rf && !RFUart.send_is_enable()) {
+								//enableにした瞬間割り込みが入るのを防ぐため、一度クリア
+								RFUart.send_clear_flag();
+								RFUart.send_enable();
+
+								//改めて割り込みフラグONして、割り込み処理
+								RFUart.send_set_flag();
+							} else if (Mode == io::mode::module_phone && !PhoneUart.send_is_enable()) {
+								//enableにした瞬間割り込みが入るのを防ぐため、一度クリア
+								PhoneUart.send_clear_flag();
+								PhoneUart.send_enable();
+
+								//改めて割り込みフラグONして、割り込み処理
+								PhoneUart.send_set_flag();
+							}
 						}
 					}
 				};
 			private:
 				systems::io_agent_interface* pSystemAgent;
-				struct com_client : public io::com_client_interface{
+				struct com_client : public io::com_client_interface {
 				private:
 					this_type& Ref;
 				public:
-					com_client(this_type& Ref_):Ref(Ref_){}
+					com_client(this_type& Ref_) :Ref(Ref_) {}
 				public://io_com_client_interface
-					virtual void inform_timeout(){
+					virtual void inform_timeout() {
 						Ref.pSystemAgent->timeout();
 					}
-					virtual bool is_fullduplex()const{
+					virtual bool is_fullduplex()const {
 						return io::mode::module_phone == Ref.Uart.getMode();
 					}
 				}ComClient;
 			private:
-				struct system_client : public system_client_interface{
+				struct system_client : public system_client_interface {
 				private:
 					this_type& Ref;
 				public:
-					system_client(this_type& Ref_) :Ref(Ref_){}
+					system_client(this_type& Ref_) :Ref(Ref_) {}
 				public://system_clien_interface
-					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
-						if(NewMode_ == systems::mode::sleep)com::wdt_disable();
-						else{
+					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_) {
+						if (NewMode_ == systems::mode::sleep)com::wdt_disable();
+						else {
 							com::wdt_restart();
 							com::wdt_enable();
 						}
@@ -224,42 +203,42 @@ namespace hmr{
 					, IPacketMode(false)
 					, OData()
 					, OPacketMode(false)
-					, Message(){
+					, Message() {
 					com::initialize(Service, ComClient);
 				}
-				~cIO(){
+				~cIO() {
 					//通信関連の終端化処理
 					com::finalize();
 				}
 			public:
 				//message_host_interface
-				virtual void regist(message_client_interface& Client_){
+				virtual void regist(message_client_interface& Client_) {
 					Message.regist(Client_);
 				}
 			public:
 				//module_selector_interface
-				virtual bool setModuleMode(io::mode::type Mode_){
+				virtual bool setModuleMode(io::mode::type Mode_) {
 					Uart.setMode(Mode_);
 					return false;
 				}
-				virtual io::mode::type getModuleMode()const{
+				virtual io::mode::type getModuleMode()const {
 					return Uart.getMode();
 				}
 			public:
-				system_client_interface& getSystemClient(){ return SystemClient; }
-				void operator()(void){
+				system_client_interface& getSystemClient() { return SystemClient; }
+				void operator()(void) {
 					//スリープなら終了
-					if(Uart.getMode() == io::mode::module_null)return;
+					if (Uart.getMode() == io::mode::module_null)return;
 
 					//受信可能なデータがある場合
-					if(!com::in_empty()){
+					if (!com::in_empty()) {
 						//受信データを取得
 						com::in_move_pop(&IData);
 
 						//中身が入っている場合
-						if(idata_is_construct(&IData)){
+						if (idata_is_construct(&IData)) {
 							//Packetをまだ開いていない場合
-							if(!IPacketMode){
+							if (!IPacketMode) {
 								//Packetをここで開く
 								IPacketMode = true;
 
@@ -268,13 +247,13 @@ namespace hmr{
 							}
 
 							//Packet終了IDだった場合
-							if(IData.ID == HMR_COM_PACTRMNID){
+							if (IData.ID == HMR_COM_PACTRMNID) {
 								//Packetをここで閉じる
 								IPacketMode = false;
 
 								//メッセージ破棄
 								idata_destruct(&IData);
-							} else{
+							} else {
 								//メッセージ処理;
 								Message.listen(&IData);
 							}
@@ -285,9 +264,9 @@ namespace hmr{
 					//delay_ms(5);
 
 					//送信待ちのPacketがなく、comの送信バッファがいっぱいでもないとき
-					if(!com::isWaitSendPacket() && !com::out_full()){
+					if (!com::isWaitSendPacket() && !com::out_full()) {
 						//Packetをまだ開いていない場合
-						if(!OPacketMode){
+						if (!OPacketMode) {
 							//Packetをここで開く
 							OPacketMode = true;
 							//送信用メッセージモジュール準備
@@ -298,9 +277,9 @@ namespace hmr{
 						odata_format(&OData);
 
 						//送信データの取得に失敗した場合
-						if(Message.talk(&OData)){
+						if (Message.talk(&OData)) {
 							//中身が作成されていれば破棄
-							if(odata_is_construct(&OData))odata_destruct(&OData);
+							if (odata_is_construct(&OData))odata_destruct(&OData);
 							//Packetをここで閉じる
 							OPacketMode = false;
 							OData.ID = HMR_COM_PACTRMNID;
@@ -313,7 +292,7 @@ namespace hmr{
 					//Uart駆動
 					Uart();
 				}
-				void regis_system_agent(systems::io_agent_interface& IOAgent_){
+				void regis_system_agent(systems::io_agent_interface& IOAgent_) {
 					pSystemAgent = &IOAgent_;
 				}
 			};
