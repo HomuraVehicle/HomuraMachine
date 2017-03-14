@@ -111,6 +111,7 @@ namespace hmr {
 							PinPowerPhoneUart(true);
 							PhoneUart.lock(38400, xc32::uart::flowcontrol::rts_cts_control, TxInterrupt, RxInterrupt);
 							PhoneUart.send_disable();
+							PhoneUart.recv_enable();
 							return;
 						case io::mode::type::module_rf:
 							PinPowerPhoneUart(false);
@@ -118,6 +119,7 @@ namespace hmr {
 							PinPowerRFUart(true);
 							RFUart.lock(9600, xc32::uart::flowcontrol::rts_cts_control, TxInterrupt, RxInterrupt);
 							RFUart.send_disable();
+							RFUart.recv_enable();
 							return;
 						default:
 							PinPowerRFUart(false);

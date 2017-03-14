@@ -90,9 +90,6 @@ v1_00/120921 hmIto
 //====== main 関数 ======
 using namespace hmr::machine::mihara;
 int main(void){
-	xc32::output_pin<xc32::sfr::portC::pin15, true> GreenLED;
-	GreenLED.lock();
-	GreenLED(1);
 	cDevice Device;
 	cService<typename cDevice::service_device> Service;
 	cIO<typename cDevice::io_device> IO(Service);
@@ -122,7 +119,6 @@ int main(void){
 
 		//早すぎるので待機
 		Service.delay().delay_ms(5);
-		GreenLED(0);
 	}
 
 	//終端化処理	
