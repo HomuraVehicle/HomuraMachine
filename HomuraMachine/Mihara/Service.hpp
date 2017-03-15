@@ -157,6 +157,9 @@ namespace hmr{
 				}
 				~cService(){
 					TaskTimer.stop();
+					ADC0Power.unlock();
+					ADC1to4Power.unlock();
+					DCDCPower.unlock();
 				}
 				system_client_interface& getSystemClient(){return SystemClient;}
 				void operator()(void){}
