@@ -146,7 +146,7 @@ namespace hmr {
 							Ref.setDataMode(true);
 							return false;
 						case 0x11:
-							DataMode_i = false;
+							DataMode_i = true;
 							Ref.setDataMode(false);
 							return false;
 						default:
@@ -165,7 +165,6 @@ namespace hmr {
 					, DataTask(*this)
 					, SystemClient(*this)
 					, MessageClient(*this, ID_, Service_){
-
 					ApinData.lock();
 					DataTaskHandler = Service_.task().quick_start(DataTask, 5);
 					System_.regist(SystemClient);
