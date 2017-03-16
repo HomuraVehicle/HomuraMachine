@@ -112,7 +112,7 @@ namespace hmr {
 					cPositionObserver CompassObserver;
 					//cAngleObserver GyroObserver;
 					cGyroRawDataObserver GyroObserver;
-
+				private:
 					cAcceleCompass AcceleCompass;
 					cGyro Gyro;
 					hmr::delay_interface* pDelay;
@@ -171,10 +171,12 @@ namespace hmr {
 					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_)override{
 						switch(NewMode_){
 						case systems::mode::observe:
-							Sensor.PowerInertial(SensorPower);
+							if(SensorPower){
+								if(!Sensor.is_lock())Sensor.lock();
+							}else Sensor.unlock();
 							break;
 						default:
-							Sensor.PowerInertial(false);
+							Sensor.unlock();
 							break;
 						}
 						CurrentMode = NewMode_;
@@ -183,7 +185,11 @@ namespace hmr {
 					systems::mode::type mode()const{ return CurrentMode; }
 					void setSensorPower(bool OnOff_){
 						SensorPower = OnOff_;
-						if(CurrentMode = systems::mode::observe)Sensor.InertialPower(SensorPower);
+						if(CurrentMode == systems::mode::observe){
+							if(SensorPower){
+								if(!Sensor.is_lock())Sensor.lock();
+							} else Sensor.unlock();
+						}
 					}
 					bool getSensorPower()const{ return SensorPower; }
 					void setAxelDataMode(bool OnOff_){ 
