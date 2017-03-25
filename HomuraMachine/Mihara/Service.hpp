@@ -107,7 +107,10 @@ namespace hmr{
 					ADC1to4Power(1);
 					DCDCPower.lock();
 					DCDCPower(1);
-					
+
+					I2C.lock(xc32::i2c::clockmode::type::_400kHz, 0);
+					SPI.lock(true, true, 1);
+
 					//1000ms = 1秒おきに駆動するようセット
 					TaskTimer.config(1000, TaskInterrupt, service_device_::task_timer_ipl());
 					TaskTimerLock.lock();
