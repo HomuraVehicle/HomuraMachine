@@ -67,11 +67,12 @@ namespace hmr{
 							if(SensorMode != SystemMode_){
 								for(systems::chain::iterator Itr = Chain.begin(); Itr != Chain.end(); ++Itr){
 									(*Itr)(SystemMode_, SensorMode);
-									SensorMode = SystemMode_;
 								}
+								SensorMode = SystemMode_;
 							}
 						}
 						void regist(system_client_interface& rElement_){
+							rElement_(SensorMode, SensorMode);
 							Chain.push_back(rElement_);
 						}
 					public:
@@ -112,6 +113,8 @@ namespace hmr{
 				public:
 					//!@brief モード遷移後、最初の処理
 					virtual void start(status& Status){
+						Status.IOMode.setSelectIO();
+						Status.SystemMode.set(systems::mode::observe);
 						Status.WDT.enable();
 					}
 					//!@brief モード中のタスク呼び出し時の処理
