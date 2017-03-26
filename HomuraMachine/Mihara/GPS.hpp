@@ -268,8 +268,10 @@ namespace hmr {
 					IO_.regist(MessageClient);
 
 					DataTaskHandler = Service_.task().quick_start(DataTask, 3);
+					GPSManager.setGPSPower(true);
 				}
 				~cGPS(){
+                    GPSManager.setGPSPower(false);
 					DataTaskHandler.stop();
 				}
 			};
