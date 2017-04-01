@@ -275,11 +275,6 @@ namespace hmr {
 					~axel_message_client(){
 						InformTaskHandler.stop();
 					}
-				public:
-					void setSendData(const hmLib::coordinates3D::position& SendData_){
-						SendData = SendData_;
-						SendData_i = true;
-					}
 				public://override function of messge_client_interface
 					bool listen(hmLib::cstring Str){
 						switch(hmLib::cstring_getc(&Str, 0)){
@@ -341,7 +336,12 @@ namespace hmr {
 						return true;
 					}
 					void setup_listen(void){ return; }
-					void setup_talk(void){ return; }
+					void setup_talk(void){
+						if(Ref.getAxelDataMode() && Ref.can_get_axel_data()){
+							SendData_i = true;
+							SendData = Ref.get_axel_data();
+						}
+					}
 				};
 				axel_message_client AxelMessageClient;
 			private:
@@ -376,11 +376,6 @@ namespace hmr {
 					}
 					~compass_message_client(){
 						InformTaskHandler.stop();
-					}
-				public:
-					void setSendData(const hmLib::coordinates3D::position& SendData_){
-						SendData = SendData_;
-						SendData_i = true;
 					}
 				public://override function of messge_client_interface
 					bool listen(hmLib::cstring Str){
@@ -443,7 +438,12 @@ namespace hmr {
 						return true;
 					}
 					void setup_listen(void){ return; }
-					void setup_talk(void){ return; }
+					void setup_talk(void){
+						if(Ref.getCompassDataMode() && Ref.can_get_compass_data()){
+							SendData_i = true;
+							SendData = Ref.get_compass_data();
+						}
+					}
 				};
 				compass_message_client CompassMessageClient;
 			private:
@@ -478,11 +478,6 @@ namespace hmr {
 					}
 					~gyro_message_client(){
 						InformTaskHandler.stop();
-					}
-				public:
-					void setSendData(const std::pair<uint16, hmLib::coordinates3D::position>& SendData_){
-						SendData = SendData_;
-						SendData_i = true;
 					}
 				public://override function of messge_client_interface
 					bool listen(hmLib::cstring Str){
@@ -559,7 +554,12 @@ namespace hmr {
 						return true;
 					}
 					void setup_listen(void){ return; }
-					void setup_talk(void){ return; }
+					void setup_talk(void){
+						if(Ref.getGyroDataMode() && Ref.can_get_gyro_data()){
+							SendData_i = true;
+							SendData = Ref.get_gyro_data();
+						}
+					}
 				};
 				gyro_message_client GyroMessageClient;
 			public:
@@ -577,15 +577,6 @@ namespace hmr {
 			public:
 				void operator()(){
 					SensorManager();
-					if(SensorManager.getAxelDataMode() && SensorManager.can_get_axel_data()){
-						AxelMessageClient.setSendData(SensorManager.get_axel_data());
-					}
-					if(SensorManager.getCompassDataMode() && SensorManager.can_get_compass_data()){
-						CompassMessageClient.setSendData(SensorManager.get_compass_data());
-					}
-					if(SensorManager.getGyroDataMode() && SensorManager.can_get_gyro_data()){
-						GyroMessageClient.setSendData(SensorManager.get_gyro_data());
-					}
 				}
 			};
 		}
