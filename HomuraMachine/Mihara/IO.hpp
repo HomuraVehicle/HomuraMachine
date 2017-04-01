@@ -141,16 +141,10 @@ namespace hmr {
 								//enableにした瞬間割り込みが入るのを防ぐため、一度クリア
 								RFUart.send_clear_flag();
 								RFUart.send_enable();
-
-								//改めて割り込みフラグONして、割り込み処理
-								RFUart.send_set_flag();
 							} else if (Mode == io::mode::module_phone && !PhoneUart.send_is_enable()) {
 								//enableにした瞬間割り込みが入るのを防ぐため、一度クリア
 								PhoneUart.send_clear_flag();
 								PhoneUart.send_enable();
-
-								//改めて割り込みフラグONして、割り込み処理
-								PhoneUart.send_set_flag();
 							}
 						}
 					}
