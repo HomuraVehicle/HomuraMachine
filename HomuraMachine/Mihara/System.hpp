@@ -512,6 +512,7 @@ namespace hmr{
 					, SystemTask(*this)
 					, MessageClient(*this, ID_, Service_)
 					, pMode(&NormalMode){
+                    xc32::sfr::interrupt::cpu_priority(1);
 					Status.IOMode.set(io::mode::module_phone);
 					Status.SystemMode.set(systems::mode::observe);
 					SystemTaskHandler = Service_.system_task().quick_start(SystemTask, 1);
