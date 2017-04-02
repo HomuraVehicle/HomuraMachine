@@ -52,8 +52,8 @@ namespace hmr {
 					if(SystemClient.mode() == systems::mode::observe)PinPowerPump(OnOff);
 				}
 				bool getDataMode()const{ return DataMode; }
-				bool getPowerSensor()const{ return PowerPumpMode; }
-				bool getPowerPump()const{ return PowerSensorMode; }
+				bool getPowerSensorMode()const{ return PowerSensorMode; }
+				bool getPowerPumpMode()const{ return PowerPumpMode; }
 			private:
 				//タスク
 				struct data_task :public hmr::task::client_interface{
@@ -148,14 +148,14 @@ namespace hmr {
 							PowerSensorMode_i = false;
 
 							service::cstring_construct_safe(pStr, 1);
-							if(Ref.getPowerSensor())hmLib::cstring_putc(pStr, 0, 0x20);
+							if(Ref.getPowerSensorMode())hmLib::cstring_putc(pStr, 0, 0x20);
 							else hmLib::cstring_putc(pStr, 0, 0x21);
 							return false;
 						} else if(PowerPumpMode_i){
 							PowerPumpMode_i = false;
 
 							service::cstring_construct_safe(pStr, 1);
-							if(Ref.getPowerPump())hmLib::cstring_putc(pStr, 0, 0x30);
+							if(Ref.getPowerPumpMode())hmLib::cstring_putc(pStr, 0, 0x30);
 							else hmLib::cstring_putc(pStr, 0, 0x31);
 							return false;
 						} else if(SendData_i){

@@ -112,7 +112,7 @@ namespace hmr {
 						, InformTask(*this)
 						, Ref(Ref_)
 						, DataMode_i(true)
-						, Swap_i(false)
+						, Swap_i(true)
 						, PowerGPS_i(false)
 						, SendData(false){
 						
@@ -140,8 +140,9 @@ namespace hmr {
 							//データサイズ確認
 							if(hmLib::cstring_size(&Str)!=2)return true;
 							if(hmLib::cstring_getc(&Str,1)!=Ref.GPSManager.getChannelNo()-1) {
-								Swap_i=true;
+								Ref.GPSManager.swapChannel();
 							}
+							Swap_i=true;
 							return false;
 						case 0x30:
 							Ref.GPSManager.setGPSPower(true);
@@ -167,8 +168,6 @@ namespace hmr {
 						else if(Swap_i) {
 							service::cstring_construct_safe(pStr,1+1);
 							hmLib::cstring_putc(pStr,0,0x20);
-
-							Ref.GPSManager.swapChannel();
 							hmLib::cstring_putc(pStr,1,Ref.GPSManager.getChannelNo()-1);
 
 							//送信後自動的にフラグを落とす
