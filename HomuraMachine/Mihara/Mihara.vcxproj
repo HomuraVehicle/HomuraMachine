@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>LLVM-vs2014</PlatformToolset>
+    <PlatformToolset>LLVM-vs2014_xp</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>LLVM-vs2014</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -40,11 +40,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(USERPROFILE)\Documents\GIt\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(IncludePath);C:\Users\homura\Documents\Git\HomuraMachine;C:\Users\homura\Documents\Git\HomuraMachine\hmLib;$(USERPROFILE)\Documents\Projects\HomuraMachine;$(USERPROFILE)\Documents\Projects\HomuraMachine\hmLib</IncludePath>
+    <IncludePath>$(USERPROFILE)\Documents\GIt\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(USERPROFILE)\Documents\Projects\HomuraMachine;$(USERPROFILE)\Documents\Projects\HomuraMachine\hmLib;$(IncludePath)</IncludePath>
     <SourcePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(USERPROFILE)\Documents\Git\HomuraMachine\hmLib;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(USERPROFILE)\Documents\Projects\HomuraMachine;$(USERPROFILE)\Documents\Projects\HomuraMachine\hmLib;$(IncludePath);C:\Users\homura\Documents\Projects\HomuraMachine;C:\Users\homura\Documents\Git\HomuraMachine\hmLib</IncludePath>
+    <IncludePath>$(USERPROFILE)\Documents\Projects\HomuraMachine;$(USERPROFILE)\Documents\Projects\HomuraMachine\hmLib;$(IncludePath)</IncludePath>
     <SourcePath>$(USERPROFILE)\Documents\Git\HomuraMachine;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -94,7 +94,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.c" />
-    <ClCompile Include="..\..\homuraLib_v2\machine\service\functional_task.cpp" />
     <ClCompile Include="..\..\homuraLib_v2\old\hmrVCom1.c" />
     <ClCompile Include="..\..\homuraLib_v2\old\hmrVComData.c" />
     <ClCompile Include="..\..\homuraLib_v2\old\hmrVIC1.c" />
@@ -103,6 +102,7 @@
     <ClCompile Include="..\..\homuraLib_v2\old\hmrVMC2.c" />
     <ClCompile Include="..\..\XC32\clock.cpp" />
     <ClCompile Include="..\..\XC32\interrupt.cpp" />
+    <ClCompile Include="..\..\XC32\sfr\adc1.cpp" />
     <ClCompile Include="..\..\XC32\sfr\i2c1.cpp" />
     <ClCompile Include="..\..\XC32\sfr\i2c2.cpp" />
     <ClCompile Include="..\..\XC32\sfr\i2c3.cpp" />
@@ -128,20 +128,9 @@
     <ClCompile Include="..\..\XC32\sfr\uart4.cpp" />
     <ClCompile Include="..\..\XC32\sfr\uart5.cpp" />
     <ClCompile Include="..\..\XC32\sfr\uart6.cpp" />
-    <ClCompile Include="Battery.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CO2.cpp" />
-    <ClCompile Include="Com.cpp" />
-    <ClCompile Include="Data.cpp" />
-    <ClCompile Include="DeviceManage.cpp" />
-    <ClCompile Include="DeviceManageMessage.cpp" />
-    <ClCompile Include="Drive.cpp" />
-    <ClCompile Include="GPS.cpp" />
-    <ClCompile Include="Inertial.cpp" />
-    <ClCompile Include="Message.cpp" />
-    <ClCompile Include="Mihara.cpp" />
-    <ClCompile Include="Service.cpp" />
-    <ClCompile Include="Thermo.cpp" />
+    <ClCompile Include="HomuraMachine.cpp" />
+    <ClCompile Include="IO\Com.cpp" />
+    <ClCompile Include="IO\Data.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\device_include.h" />
@@ -181,6 +170,7 @@
     <ClInclude Include="..\..\homuraLib_v2\chrono.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\code.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\crc8.h" />
+    <ClInclude Include="..\..\homuraLib_v2\delay.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\exceptions.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\gate.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\gate_adaptor.hpp" />
@@ -231,13 +221,6 @@
     <ClInclude Include="..\..\homuraLib_v2\machine\module\Sprite.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\machine\module\Sprite\command.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\machine\module\Sprite\command_uart.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\chrono.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\delay.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\exclusive_delay.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\functional_task.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\lock_code.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\safe_cstring.hpp" />
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\task.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\message.hpp" />
     <ClInclude Include="..\..\homuraLib_v2\old\crc7_sd.h" />
     <ClInclude Include="..\..\homuraLib_v2\old\hmrVCom1.h" />
@@ -322,6 +305,7 @@
     <ClInclude Include="..\..\XCBase\allocator.hpp" />
     <ClInclude Include="..\..\XCBase\array_queue.hpp" />
     <ClInclude Include="..\..\XCBase\bytes.hpp" />
+    <ClInclude Include="..\..\XCBase\chain.hpp" />
     <ClInclude Include="..\..\XCBase\constexpr_no.hpp" />
     <ClInclude Include="..\..\XCBase\either.hpp" />
     <ClInclude Include="..\..\XCBase\exceptions.hpp" />
@@ -337,23 +321,21 @@
     <ClInclude Include="bitset.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CO2.hpp" />
-    <ClInclude Include="Com.hpp" />
-    <ClInclude Include="Data.hpp" />
     <ClInclude Include="Device.hpp" />
-    <ClInclude Include="DeviceManage.hpp" />
-    <ClInclude Include="DeviceManageFunc_Courier.hpp" />
-    <ClInclude Include="DeviceManageFunc_Sprite.hpp" />
-    <ClInclude Include="DeviceManageMessage.hpp" />
-    <ClInclude Include="DeviceManage_forCamera.hpp" />
-    <ClInclude Include="DeviceManage_forCO2.hpp" />
-    <ClInclude Include="DeviceManage_forCourier.hpp" />
-    <ClInclude Include="DeviceManage_forInertial.hpp" />
-    <ClInclude Include="DeviceManage_forSDcard.hpp" />
     <ClInclude Include="Drive.hpp" />
     <ClInclude Include="GPS.hpp" />
     <ClInclude Include="Inertial.hpp" />
+    <ClInclude Include="IO.hpp" />
+    <ClInclude Include="IO\Com.hpp" />
+    <ClInclude Include="IO\ComClient.hpp" />
+    <ClInclude Include="IO\Data.hpp" />
+    <ClInclude Include="IO\Message.hpp" />
+    <ClInclude Include="IO\MessageClient.hpp" />
+    <ClInclude Include="IO_base.hpp" />
     <ClInclude Include="Message.hpp" />
     <ClInclude Include="Service.hpp" />
+    <ClInclude Include="Service_base.hpp" />
+    <ClInclude Include="System.hpp" />
     <ClInclude Include="System_base.hpp" />
     <ClInclude Include="Thermo.hpp" />
   </ItemGroup>

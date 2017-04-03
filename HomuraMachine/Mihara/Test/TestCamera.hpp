@@ -2,60 +2,60 @@
 #define HMR_MACHINE_MIHARA_CAMERA_INC 100
 #
 /*
-ƒJƒƒ‰ŠÖ˜Aƒ‚ƒWƒ…[ƒ‹
-ToDo:talk1,talk2,c(—­‚Ü‚Á‚Ä‚¢‚éƒf[ƒ^”‚¾‚¯ˆê‹C‚Étalk)
+ã‚«ãƒ¡ãƒ©é–¢é€£ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
+ToDo:talk1,talk2,â€¦(æºœã¾ã£ã¦ã„ã‚‹ãƒ‡ãƒ¼ã‚¿æ•°ã ã‘ä¸€æ°—ã«talk)
 === hmr::machine::mihara::sprite ===
 v1_00/141121 hmIto
-	cpp‰»
+	cppåŒ–
 === hmrSprite ===
 v0_15/130727 iwahori
-	Šeƒf[ƒ^ƒoƒbƒtƒ@‚Étalk—p‚Éƒtƒ‰ƒO‚ğ‚Â‚¯‚éD˜A‘±B‰e‚ğminipacket‚¾‚Æ‚»‚ê‚È‚è‚Ì•p“x‚Åƒƒ‚ƒŠƒŠ[ƒN‚ª‚¨‚«‚éƒoƒO‚Í•Ï‚í‚ç‚¸B’ÊíƒpƒPƒbƒg‚Å‚à‚©‚È‚è‘Ò‚Â‚Æƒƒ‚ƒŠƒŠ[ƒN‚ª‚¨‚«‚é
+	å„ãƒ‡ãƒ¼ã‚¿ãƒãƒƒãƒ•ã‚¡ã«talkç”¨ã«ãƒ•ãƒ©ã‚°ã‚’ã¤ã‘ã‚‹ï¼é€£ç¶šæ’®å½±ã‚’minipacketã ã¨ãã‚Œãªã‚Šã®é »åº¦ã§ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ãŒãŠãã‚‹ãƒã‚°ã¯å¤‰ã‚ã‚‰ãšã€‚é€šå¸¸ãƒ‘ã‚±ãƒƒãƒˆã§ã‚‚ã‹ãªã‚Šå¾…ã¤ã¨ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ãŒãŠãã‚‹
 v0_15/130713 iwahori
-	˜A‘±B‰e‚Í‚Å‚«‚é‚ªA•’Ê‚ÌTake‚ª‚Å‚«‚È‚¢D•’Ê‚ÌTake‚Ì‚Æ‚«‚Ílisten“à‚Å_sprite_buf_empty()‚ğ‰Û‚µ‚Ä‚¢‚é‚Ì‚É‘Î‚µ‚ÄA
-AutoTakePic‚Å‚Ísetup_talk‚Å!_sprite_buf_full()‚ğ‰Û‚µ‚Ä‚¢‚é‚ ‚½‚è‚ª‰ö‚µ‚¢‚©H
+	é€£ç¶šæ’®å½±ã¯ã§ãã‚‹ãŒã€æ™®é€šã®TakeãŒã§ããªã„ï¼æ™®é€šã®Takeã®ã¨ãã¯listenå†…ã§_sprite_buf_empty()ã‚’èª²ã—ã¦ã„ã‚‹ã®ã«å¯¾ã—ã¦ã€
+AutoTakePicã§ã¯setup_talkã§!_sprite_buf_full()ã‚’èª²ã—ã¦ã„ã‚‹ã‚ãŸã‚ŠãŒæ€ªã—ã„ã‹ï¼Ÿ
 v0_15/130712 iwahori
-	end_TakePic‚ª‚Å‚«‚È‚¢ƒoƒO‚ğC³Aend_TakePic‚Ì‘O‚Éspriteitf_clear_ReadPicDatFlag‚ğ‚µ‚Ä‚¢‚È‚©‚Á‚½‚Ì‚ªŒ´ˆö
+	end_TakePicãŒã§ããªã„ãƒã‚°ã‚’ä¿®æ­£ã€end_TakePicã®å‰ã«spriteitf_clear_ReadPicDatFlagã‚’ã—ã¦ã„ãªã‹ã£ãŸã®ãŒåŸå› 
 v0_14/130706 iwahori
-	ƒJƒƒ‰‚©‚çƒf[ƒ^‚ğóM‚µ‚È‚ª‚çCTR‚É‘—M‚Å‚«‚é‚æ‚¤‚É•ÏXD2‰ñ–ÚˆÈ~‚ÌB‰e‚ª‚¤‚Ü‚­‚¢‚©‚È‚¢Dend_TakePic‚Å‚«‚Ä‚¢‚È‚¢H
-	TalkNo‚ÌˆÀ‘S‘•’u‚ª_sprite_fnFinReadPicData‚É—v‚é
+	ã‚«ãƒ¡ãƒ©ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã—ãªãŒã‚‰CTRã«é€ä¿¡ã§ãã‚‹ã‚ˆã†ã«å¤‰æ›´ï¼2å›ç›®ä»¥é™ã®æ’®å½±ãŒã†ã¾ãã„ã‹ãªã„ï¼end_TakePicã§ãã¦ã„ãªã„ï¼Ÿ
+	TalkNoã®å®‰å…¨è£…ç½®ãŒ_sprite_fnFinReadPicDataã«è¦ã‚‹
 v0_13/130706 hmIto
-	PicInfo‚Ìƒf[ƒ^‚ğ‘—‚éÛ‚ÉAwhile‚Å‘—M‰Â”\‚Æ‚È‚é‚Ü‚Å‘Ò‚Á‚Ä‚¢‚½–â‘è‚ğC³
-		‚ ‚ç‚½‚É‘—M‰Â”\‚É‚È‚Á‚½‚±‚Æ‚ğ’Ê’m‚·‚é•Ï”‚ğ—pˆÓ‚µAtalk_setup‚Å—§‚¿ã‚°‚é‚æ‚¤‚É‚µ‚½
+	PicInfoã®ãƒ‡ãƒ¼ã‚¿ã‚’é€ã‚‹éš›ã«ã€whileã§é€ä¿¡å¯èƒ½ã¨ãªã‚‹ã¾ã§å¾…ã£ã¦ã„ãŸå•é¡Œã‚’ä¿®æ­£
+		ã‚ã‚‰ãŸã«é€ä¿¡å¯èƒ½ã«ãªã£ãŸã“ã¨ã‚’é€šçŸ¥ã™ã‚‹å¤‰æ•°ã‚’ç”¨æ„ã—ã€talk_setupã§ç«‹ã¡ä¸Šã’ã‚‹ã‚ˆã†ã«ã—ãŸ
 hmrSprite v0_12/130622 iwahori
-	ƒoƒO‚ğC³B³í‚É“®‚­‚æ‚¤‚É‚È‚Á‚½
+	ãƒã‚°ã‚’ä¿®æ­£ã€‚æ­£å¸¸ã«å‹•ãã‚ˆã†ã«ãªã£ãŸ
 hmrSprite v0_11/130615 iwahori
-	ReadPicŒã‚ÌinformŠÖ”‚ğg—p‚·‚é‚æ‚¤‚É•ÏXD
-	2‰ñ–ÚˆÈ~‚ÌÊ^æ“¾‚ª¸”s‚·‚éD”½‰‚ª•Ô‚Á‚Ä‚±‚È‚¢
+	ReadPicå¾Œã®informé–¢æ•°ã‚’ä½¿ç”¨ã™ã‚‹ã‚ˆã†ã«å¤‰æ›´ï¼
+	2å›ç›®ä»¥é™ã®å†™çœŸå–å¾—ãŒå¤±æ•—ã™ã‚‹ï¼åå¿œãŒè¿”ã£ã¦ã“ãªã„
 v0_06/130427 iwahori
-	V’ÊMŒ`®‚É‘Î‰
+	æ–°é€šä¿¡å½¢å¼ã«å¯¾å¿œ
 v0_06/130406 iwahori
-	‚‰æ¿‚Ì2‚Â‚àæ“¾¬Œ÷Dƒ~ƒjƒpƒPƒbƒgƒ‚[ƒh‚Å‚àÊ^æ“¾‚Æ˜A‘±B‰e‚ğƒ`ƒFƒbƒNŠ®—¹
+	é«˜ç”»è³ªã®2ã¤ã‚‚å–å¾—æˆåŠŸï¼ãƒŸãƒ‹ãƒ‘ã‚±ãƒƒãƒˆãƒ¢ãƒ¼ãƒ‰ã§ã‚‚å†™çœŸå–å¾—ã¨é€£ç¶šæ’®å½±ã‚’ãƒã‚§ãƒƒã‚¯å®Œäº†
 v0_06/130406 iwahori
-	Å¬ƒTƒCƒY‚ÌÊ^æ“¾/˜A‘±æ“¾‚É¬Œ÷D
-	‚‰æ¿‚Ì2‚Â‚Í‚Å‚«‚Ä‚¢‚È‚¢DÊ^ƒf[ƒ^‚ÌƒAƒhƒŒƒX‚Ìw’è‚ğŠÔˆá‚¦‚Ä‚¢‚é‚©‚à
+	æœ€å°ã‚µã‚¤ã‚ºã®å†™çœŸå–å¾—/é€£ç¶šå–å¾—ã«æˆåŠŸï¼
+	é«˜ç”»è³ªã®2ã¤ã¯ã§ãã¦ã„ãªã„ï¼å†™çœŸãƒ‡ãƒ¼ã‚¿ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã®æŒ‡å®šã‚’é–“é•ãˆã¦ã„ã‚‹ã‹ã‚‚
 v0_06/130310 iwahori
-	SpriteInterface‚É‘Î‰Š®—¹
-	ƒfƒoƒbƒOì‹Æ’†Cƒpƒ[ƒŠƒZƒbƒg‹@”\‚Ì“®ìŠm”F‚ÍŠ®—¹
-	Ê^ƒf[ƒ^æ“¾‚Í‚¤‚Ü‚­‚¢‚Á‚Ä‚È‚¢CŒ´ˆö‚Í‚Ü‚¾•s–¾
-	ƒpƒ[ƒŠƒZƒbƒgŒã‚É‚È‚º‚©’ÊMƒ^ƒCƒ€ƒAƒEƒg‚ÌƒGƒ‰[‚ğ‚Í‚¢‚Ä‚­‚é
+	SpriteInterfaceã«å¯¾å¿œå®Œäº†
+	ãƒ‡ãƒãƒƒã‚°ä½œæ¥­ä¸­ï¼Œãƒ‘ãƒ¯ãƒ¼ãƒªã‚»ãƒƒãƒˆæ©Ÿèƒ½ã®å‹•ä½œç¢ºèªã¯å®Œäº†
+	å†™çœŸãƒ‡ãƒ¼ã‚¿å–å¾—ã¯ã†ã¾ãã„ã£ã¦ãªã„ï¼ŒåŸå› ã¯ã¾ã ä¸æ˜
+	ãƒ‘ãƒ¯ãƒ¼ãƒªã‚»ãƒƒãƒˆå¾Œã«ãªãœã‹é€šä¿¡ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®ã‚¨ãƒ©ãƒ¼ã‚’ã¯ã„ã¦ãã‚‹
 v0_06/130211 hmIto
 	
 v0_06/130211 iwahori
-	_sprite_buf_requestLock()‚Ìwhile“à‚Å++i‚³‚ê‚Ä‚¢‚È‚©‚Á‚½‚Ì‚Å’Ç‰Á
-	sprite_setup_talk()“à‚Ì˜A‘±B‰eƒ‚[ƒh‚ÅƒJƒƒ‰ƒTƒCƒY‚ğV‚©‚ç‚Ìƒf[ƒ^‚ğ•ÏŠ·‚µ‚Ä‚¢‚È‚©‚Á‚½‚Ì‚Å•ÏX
-	_sprite_buf_full()‚Ìtrue false‚ª–¼‘O‚Æ‹t‚É‚È‚Á‚Ä‚¢‚½‚Ì‚Å‚ğ”½“]A‚»‚ê‚É”º‚¢sprite_setup_talk()‚Ì•ªŠò‚à”½“]
+	_sprite_buf_requestLock()ã®whileå†…ã§++iã•ã‚Œã¦ã„ãªã‹ã£ãŸã®ã§è¿½åŠ 
+	sprite_setup_talk()å†…ã®é€£ç¶šæ’®å½±ãƒ¢ãƒ¼ãƒ‰ã§ã‚«ãƒ¡ãƒ©ã‚µã‚¤ã‚ºã‚’Vã‹ã‚‰ã®ãƒ‡ãƒ¼ã‚¿ã‚’å¤‰æ›ã—ã¦ã„ãªã‹ã£ãŸã®ã§å¤‰æ›´
+	_sprite_buf_full()ã®true falseãŒåå‰ã¨é€†ã«ãªã£ã¦ã„ãŸã®ã§ã‚’åè»¢ã€ãã‚Œã«ä¼´ã„sprite_setup_talk()ã®åˆ†å²ã‚‚åè»¢
 v0_05/130127 iwahori
-	_sprite_is_BufAllUsed‚Ìreturn’l‚ğ’ù³
+	_sprite_is_BufAllUsedã®returnå€¤ã‚’è¨‚æ­£
 v0_04/130127 iwahori
-	V’ÊM‹K–ñ‚É‘Î‰
+	æ–°é€šä¿¡è¦ç´„ã«å¯¾å¿œ
 v0_03/130112 iwahori
-	sprite_setup_talkŠÖ”“à‚ÌGetPictureƒtƒ‰ƒO‚ğ‚ ‚°‚éğŒ‚ğ•ÏX
+	sprite_setup_talké–¢æ•°å†…ã®GetPictureãƒ•ãƒ©ã‚°ã‚’ã‚ã’ã‚‹æ¡ä»¶ã‚’å¤‰æ›´
 v0_02/130105 iwahori
-	Ê^æ“¾ƒ‚[ƒh•”•ª‚ğC³
+	å†™çœŸå–å¾—ãƒ¢ãƒ¼ãƒ‰éƒ¨åˆ†ã‚’ä¿®æ­£
 v0_01/121221 iwahori
-	‘S‘Ì“I‚É‰Á•M
+	å…¨ä½“çš„ã«åŠ ç­†
 v0_00/121216 iwahori
-	Šî–{ŠÖ”ì¬
+	åŸºæœ¬é–¢æ•°ä½œæˆ
 */
 #include<hmLib/cstring.h>
 #include<XCBase/array_queue.hpp>
@@ -113,14 +113,14 @@ namespace hmr {
 				typedef typename my_sprite::error_type sprite_error_type;
 				typedef xc::either<void, sprite_error_type > sprite_ans_type;
 				typedef typename xc::future<sprite_ans_type>::canceler sprite_canceler;
-				//SpriteŒn
+				//Spriteç³»
 			private:
 				my_sprite Sprite;
 				xc::unique_lock<my_sprite> SpriteLock;
 			public:
 				sprite_status_type  status(){ return Sprite.status(); }
 
-				//LightŒn
+				//Lightç³»
 			private:
 				powerLight PowerLight;
 				xc::lock_guard<powerLight> PowerLightLock;
@@ -135,13 +135,13 @@ namespace hmr {
 
 			private:
 				struct take_and_read_sequence : public my_sprite::picture_reader {
-					//start‚·‚é‚ÆA
+					//startã™ã‚‹ã¨ã€
 					//	take
 					//	read
 					//	read
 					//	...
 					//	operator()
-					//‚Ì‡‚ÅB‰eƒV[ƒPƒ“ƒX‚ªÀs‚³‚ê‚é
+					//ã®é †ã§æ’®å½±ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ãŒå®Ÿè¡Œã•ã‚Œã‚‹
 					
 				private:
 					struct sprite_bytes_builder{
@@ -178,7 +178,7 @@ namespace hmr {
 					}
 				public:
 					bool start(camera::imagesize::type ImageSize_){
-						//‚·‚Å‚ÉB‰e’†‚È‚ç‹p‰º
+						//ã™ã§ã«æ’®å½±ä¸­ãªã‚‰å´ä¸‹
 						if(is_start())return true;
 
 						if(Ref.IsAutoLight)Ref.PowerLight(true);
@@ -197,7 +197,7 @@ namespace hmr {
 					void cancel(){
 						if(Canceler)Canceler();
 					}
-				public://—\–ñŠÖ” for picture_reader
+				public://äºˆç´„é–¢æ•° for picture_reader
 					void take(camera::picture_info PictureInfo_){
 						if(Ref.IsAutoLight)Ref.PowerLight(false);
 						Ref.PictureInfo = PictureInfo_;
@@ -207,7 +207,7 @@ namespace hmr {
 						camera::picture_bytes PicBytes(PictureData_, Data_, DeleteFp);
 						Ref.PictureDataArray.push(xc::move(PicBytes));
 					}
-				public://—\–ñŠÖ” for future
+				public://äºˆç´„é–¢æ•° for future
 					void operator()(sprite_ans_type Ans){
 						if(Canceler)Canceler.clear();
 						Ref.CanGetResultTakeAndRead = true;
@@ -227,7 +227,7 @@ namespace hmr {
 					}
 				public:
 					bool start(){
-						//‚·‚Å‚ÉB‰e’†‚È‚ç‹p‰º
+						//ã™ã§ã«æ’®å½±ä¸­ãªã‚‰å´ä¸‹
 						if(is_start())return true;
 
 						Canceler = Ref.Sprite.async_command_reset(
@@ -239,7 +239,7 @@ namespace hmr {
 					void cancel(){
 						if(Canceler)Canceler();
 					}
-				public://—\–ñŠÖ” for future
+				public://äºˆç´„é–¢æ•° for future
 					void operator()(sprite_ans_type Ans){
 						if(Canceler)Canceler.clear();
 						Ref.CanGetResultCommandReset = true;
@@ -259,7 +259,7 @@ namespace hmr {
 					}
 				public:
 					bool start(){
-						//‚·‚Å‚ÉB‰e’†‚È‚ç‹p‰º
+						//ã™ã§ã«æ’®å½±ä¸­ãªã‚‰å´ä¸‹
 						if(is_start())return true;
 
 						Canceler = Ref.Sprite.async_power_reset(
@@ -271,7 +271,7 @@ namespace hmr {
 					void cancel(){
 						if(Canceler)Canceler();
 					}
-				public://—\–ñŠÖ” for future
+				public://äºˆç´„é–¢æ•° for future
 					void operator()(sprite_ans_type Ans){
 						if(Canceler)Canceler.clear();
 						Ref.CanGetResultPowerReset = true;
@@ -282,7 +282,7 @@ namespace hmr {
 					}
 				}Seq_power_reset;
 
-				//İ’èŠÖ”
+				//è¨­å®šé–¢æ•°
 			private:
 				bool IsMiniPacketMode;
 				bool IsAutoReset;
@@ -292,24 +292,24 @@ namespace hmr {
 				void setAutoResetMode(bool Enable){ IsAutoReset = Enable; }
 				bool isAutoResetMode()const{ return IsAutoReset; }
 
-				//ÀsŠÖ”
+				//å®Ÿè¡Œé–¢æ•°
 			private:
 				camera::imagesize::type ReservedImageSize;
 				camera::imagesize::type AutoTakeImageSize;
 				bool ReservedCommandReset;
 			public:
-				//è“®takePicture auto_takePicture‚É—Dæ‚µ‚ÄÀs‚³‚ê‚é
-				//	Œ»İB‰e’†‚È‚çA‚»‚ÌŸ‚ÌB‰e‚ªtakePicture‚Å—v‹‚µ‚½ImageSize‚Å‚ÌÊ^‚É‚È‚é
+				//æ‰‹å‹•takePicture auto_takePictureã«å„ªå…ˆã—ã¦å®Ÿè¡Œã•ã‚Œã‚‹
+				//	ç¾åœ¨æ’®å½±ä¸­ãªã‚‰ã€ãã®æ¬¡ã®æ’®å½±ãŒtakePictureã§è¦æ±‚ã—ãŸImageSizeã§ã®å†™çœŸã«ãªã‚‹
 				void takePicture(camera::imagesize::type ImageSize_){ ReservedImageSize = ImageSize_; }
-				//ˆø”‚ªimagesize::null‚È‚çAauto_takePicture–³Œø
+				//å¼•æ•°ãŒimagesize::nullãªã‚‰ã€auto_takePictureç„¡åŠ¹
 				void auto_takePicture(camera::imagesize::type ImageSize_){ AutoTakeImageSize = ImageSize_; }
-				//auto_takePicture‹@”\‚ª—LŒø‚©H
+				//auto_takePictureæ©Ÿèƒ½ãŒæœ‰åŠ¹ã‹ï¼Ÿ
 				bool is_auto_takePicture()const{ return AutoTakeImageSize != camera::imagesize::null; }
-				//ƒJƒƒ‰‚ÌƒRƒ}ƒ“ƒhƒŠƒZƒbƒg
+				//ã‚«ãƒ¡ãƒ©ã®ã‚³ãƒãƒ³ãƒ‰ãƒªã‚»ãƒƒãƒˆ
 				void command_reset(){ ReservedCommandReset = true; }
-				//ƒJƒƒ‰‚Ìƒpƒ[ƒŠƒZƒbƒg
+				//ã‚«ãƒ¡ãƒ©ã®ãƒ‘ãƒ¯ãƒ¼ãƒªã‚»ãƒƒãƒˆ
 				void power_reset(){ Seq_power_reset.start(); }
-				//‘S–½—ß‚ÌƒLƒƒƒ“ƒZƒ‹
+				//å…¨å‘½ä»¤ã®ã‚­ãƒ£ãƒ³ã‚»ãƒ«
 				void cancel(){
 					Seq_take_and_read.cancel();
 					Seq_command_reset.cancel();
@@ -319,7 +319,7 @@ namespace hmr {
 					PictureDataArray.clear();
 				}
 
-				//ÀsŒ‹‰Ê
+				//å®Ÿè¡Œçµæœ
 			private:
 				typedef xc::array_queue<camera::picture_bytes, 3> data_queue;
 				camera::picture_info PictureInfo;
@@ -384,7 +384,7 @@ namespace hmr {
 							Seq_command_reset.start();
 							ReservedCommandReset=false;
 						}
-						//ƒoƒbƒtƒ@‚ª‹ó‚ÅÊ^B‰e‚àI‚í‚Á‚Ä‚¢‚ê‚ÎAŸ‚ÌB‰e‚Ö
+						//ãƒãƒƒãƒ•ã‚¡ãŒç©ºã§å†™çœŸæ’®å½±ã‚‚çµ‚ã‚ã£ã¦ã„ã‚Œã°ã€æ¬¡ã®æ’®å½±ã¸
 						if(PictureDataArray.empty() && !Seq_take_and_read.is_start()){
 							if(ReservedImageSize != camera::imagesize::null){
 								Seq_take_and_read.start(ReservedImageSize);

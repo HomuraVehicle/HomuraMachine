@@ -3,28 +3,179 @@
 #
 /*
 ===hmrDrive===
-ƒ‚[ƒ^[Aƒ}ƒjƒ…ƒsƒ…ƒŒ[ƒ^Œn‚ğƒRƒ“ƒgƒ[ƒ‹
+ãƒ¢ãƒ¼ã‚¿ãƒ¼ã€ãƒãƒ‹ãƒ¥ãƒ”ãƒ¥ãƒ¬ãƒ¼ã‚¿ç³»ã‚’ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«
 
 === hmr::machine::mihara::drive ===
 v1_00/141121 hmIto
-	cpp‰»
+	cppåŒ–
 === hmrDrive ===
 v0_00/130112 iwahori
-	ƒtƒ@ƒCƒ‹‚ğì¬Eƒ‚[ƒ^[‚ÌƒƒbƒZ[ƒWŠÖ”‚ğtalk‚Ælisten‚É•ª‰ğ
+	ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆãƒ»ãƒ¢ãƒ¼ã‚¿ãƒ¼ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é–¢æ•°ã‚’talkã¨listenã«åˆ†è§£
 */
 #include<hmLib/cstring.h>
+#include<XCBase/future.hpp>
 #include<homuraLib_v2/type.hpp>
+#include<homuraLib_v2/machine/service/safe_cstring.hpp>
+#include"System_base.hpp"
+#include"IO_base.hpp"
+#include"Service_base.hpp"
+#include"Device.hpp"
 namespace hmr {
 	namespace machine {
 		namespace mihara {
-			namespace motor {
-				//*********************** ‹ì“®
-				void initialize();
-				bool listen(hmLib::cstring Str);
-				bool talk(hmLib::cstring* pStr);
-				void setup_listen(void);
-				void setup_talk(void);
-			}
+			template<typename motor_device_>
+			class cMotor :public motor_device_{
+				using this_type = cMotor<motor_device_>;
+			private:
+				typename motor_device_::pinMotorLA PinMotorLA;
+				typename motor_device_::pinMotorLB PinMotorLB;
+				typename motor_device_::pinMotorRA PinMotorRA;
+				typename motor_device_::pinMotorRB PinMotorRB;
+				typename motor_device_::pinMotorPower PinMotorPower;
+			private:
+				bool MotorPower;
+			private:
+				void setMotorPower(bool OnOff_){
+					MotorPower = OnOff_;
+					if(SystemClient.mode() == systems::mode::observe)PinMotorPower(MotorPower);
+				}
+				bool getMotoPower()const{ return MotorPower; }
+			private:
+				//é€šä¿¡æ–­çµ¶æ™‚ã®è‡ªå‹•åœæ­¢ç”¨watch dog count
+				uint16 wdt_count;
+				void increment_wdt_count(){ ++wdt_count; }
+				void clear_wdt_count(){ wdt_count = 0; }
+				uint16 get_wtd_count()const{ return wdt_count; }
+			private:
+				struct wdt_task :public hmr::task::client_interface{
+				private:
+					this_type& Ref;
+				public:
+					wdt_task(this_type& Ref_):Ref(Ref_){}
+					duration operator()(duration dt){
+						Ref.increment_wdt_count();
+
+						if(Ref.get_wtd_count() >= 2){
+							Ref.clear_wdt_count();
+							Ref.PinMotorLA(0);
+							Ref.PinMotorLB(0);
+							Ref.PinMotorRA(0);
+							Ref.PinMotorRB(0);
+						}
+						return dt;
+					}
+				}WdtTask;
+				task::handler WdtTaskHandler;
+			private:
+				//ãƒ¢ãƒ¼ãƒ‰é€šçŸ¥å—é ˜ã‚¯ãƒ©ã‚¹
+				struct system_client : public system_client_interface{
+				private:
+					this_type& Ref;
+					systems::mode::type CurrentMode;
+				public:
+					system_client(this_type& Ref_):Ref(Ref_){}
+					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_){
+						switch(NewMode_){
+						case systems::mode::observe:
+							Ref.PinMotorLA(0);
+							Ref.PinMotorLB(0);
+							Ref.PinMotorRA(0);
+							Ref.PinMotorRB(0);
+							Ref.PinMotorPower(Ref.MotorPower);
+							break;
+						default:
+							Ref.PinMotorLA(0);
+							Ref.PinMotorLB(0);
+							Ref.PinMotorRA(0);
+							Ref.PinMotorRB(0);
+							break;
+						}
+						CurrentMode = NewMode_;
+					}
+				public:
+					systems::mode::type mode()const{ return CurrentMode; }
+				}SystemClient;
+			private:
+				//é€šä¿¡å—é ˜ã‚¯ãƒ©ã‚¹
+				struct message_client : public message_client_interface{
+				private:
+					this_type& Ref;
+				public:
+					message_client(this_type& Ref_, com::did_t ID_)
+						: message_client_interface(ID_)
+						, Ref(Ref_){}
+					~message_client(){}
+				public:
+					void setup_talk(void){ return; }
+					bool talk(hmLib::cstring* pStr){ return true; }
+					void setup_listen(void){ return; }
+					bool listen(hmLib::cstring Str){
+						//å·¦è»Šè¼ªåˆ¶å¾¡
+						if(hmLib::cstring_getc(&Str, 1) != 0x00){
+							Ref.PinMotorLA(1);
+							Ref.PinMotorLB(1);
+						} else if(hmLib::cstring_getc(&Str, 0) == 0x64){
+							Ref.PinMotorLA(1);
+							Ref.PinMotorLB(0);
+						} else if(hmLib::cstring_getc(&Str, 0) == 0x9C){
+							Ref.PinMotorLA(0);
+							Ref.PinMotorLB(1);
+						} else{
+							Ref.PinMotorLA(0);
+							Ref.PinMotorLB(0);
+						}
+
+						//å³è»Šè¼ªåˆ¶å¾¡
+						if(hmLib::cstring_getc(&Str, 3) != 0x00){
+							Ref.PinMotorRA(1);
+							Ref.PinMotorRB(1);
+						} else if(hmLib::cstring_getc(&Str, 2) == 0x64){
+							Ref.PinMotorRA(1);
+							Ref.PinMotorRB(0);
+						} else if(hmLib::cstring_getc(&Str, 2) == 0x9C){
+							Ref.PinMotorRA(0);
+							Ref.PinMotorRB(1);
+						} else{
+							Ref.PinMotorRA(0);
+							Ref.PinMotorRB(0);
+						}
+
+						Ref.clear_wdt_count();
+
+						return false;
+					}
+
+				}MessageClient;
+			public:
+				cMotor(unsigned char ID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
+					: wdt_count(0)
+					, WdtTask(*this)
+					, SystemClient(*this)
+					, MessageClient(*this, ID_){
+
+					PinMotorLA.lock();
+					PinMotorLB.lock();
+					PinMotorRA.lock();
+					PinMotorRB.lock();
+					PinMotorPower.lock();
+					PinMotorPower(true);
+					MotorPower = true;
+
+					WdtTaskHandler = Service_.task().quick_start(WdtTask, 5);
+
+					System_.regist(SystemClient);
+					IO_.regist(MessageClient);
+				}
+				~cMotor(){
+					WdtTaskHandler.stop();
+
+					PinMotorLA.unlock();
+					PinMotorLB.unlock();
+					PinMotorRA.unlock();
+					PinMotorRB.unlock();
+				}
+				void operator()(){}
+			};
 		}
 	}
 }

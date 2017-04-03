@@ -1,16 +1,16 @@
-//Pic32X�ŗL�̕�����L���ɂ������Ȃ���΁A�ȉ��̃}�N����L���ɂ���
+//Pic32X固有の部分を有効にしたくなければ、以下のマクロを有効にする
 #define XC32_PIC32MZ
 
-//�f�o�b�O���[�h���͈ȉ��̃}�N����L��
+//デバッグモード時は以下のマクロを有効
 #if defined(_MSC_VER) || defined(__clang__ )
 #	define XC32_DEBUGMODE
 #endif
 
-/*���荞�݊֐�__ISR�}�N���CIPL���W�X�^�pdefine
+/*割り込み関数__ISRマクロ，IPLレジスタ用define
 #define XC32_I2C1_IPL 5
 #define XC32_I2C1_IPL_FOR_ISR IPL5
-�̂悤�Ɋ��荞�ݗD��x��5�ɕς������ꍇ��2��define����D���R������1�`7�œ����l�ɂ��邱��
-define���Ȃ���7�i�ŏ�ʁj�Ƀf�t�H���g�łȂ�D
+のように割り込み優先度を5に変えたい場合は2つdefineする．当然数字は1～7で同じ値にすること
+defineしないと7（最上位）にデフォルトでなる．
 */
 //I2C1
 //#define XC32_CONFIG_I2C1_IPL 1

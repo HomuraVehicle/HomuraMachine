@@ -2,259 +2,583 @@
 #define HMR_MACHINE_MIHARA_INERTIAL_INC 200
 #
 /*
-Šµ«q–@ƒ‚ƒWƒ…[ƒ‹§Œä—p
+æ…£æ€§èˆªæ³•ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«åˆ¶å¾¡ç”¨
 === hmr::machine::mihara::inertial ===
 v2_00/141122 hmito
-	cpp‰»
+	cppåŒ–
 === hmrInertial ===
 v0_03/131026 amby
-	‚±‚Ìê‡‚Í“dŒ¹ON,OFF‚·‚é‚½‚Ñ‚ÉI‚QC‚ÅƒfƒoƒCƒX‚ğ‰Šú‰»‚·‚é•K—v‚ª‚ ‚é‚Ì‚ÅA
-	‚»‚Ì‚½‚ß‚ÌŠÖ”device_initialize ‚ğ’Ç‰Á‚µ‚½B
+	ã“ã®å ´åˆã¯é›»æºON,OFFã™ã‚‹ãŸã³ã«Iï¼’Cã§ãƒ‡ãƒã‚¤ã‚¹ã‚’åˆæœŸåŒ–ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ã®ã§ã€
+	ãã®ãŸã‚ã®é–¢æ•°device_initialize ã‚’è¿½åŠ ã—ãŸã€‚
 v0_02/131019 iwahori
-	ƒ^ƒXƒNƒVƒXƒeƒ€—p‚Étask_setup_talk‚Ætask_interrupt‚ğì¬
+	ã‚¿ã‚¹ã‚¯ã‚·ã‚¹ãƒ†ãƒ ç”¨ã«task_setup_talkã¨task_interruptã‚’ä½œæˆ
 v1_00/130907 iwahori
-	kk08ˆÚs‚É”º‚¢Cg—p‚·‚éI2C‚ª•Ï‚í‚Á‚½‚½‚ßi2c1,i2c2‚ğ•ÏXDinitialize‚ÍŠ®—¹Ctalk‚Í‚Ü‚¾
+	kk08ç§»è¡Œã«ä¼´ã„ï¼Œä½¿ç”¨ã™ã‚‹I2CãŒå¤‰ã‚ã£ãŸãŸã‚i2c1,i2c2ã‚’å¤‰æ›´ï¼initializeã¯å®Œäº†ï¼Œtalkã¯ã¾ã 
 v1_00/130622 hmIto
-	‚Ù‚Ş‚ç‚Ìİ’uˆÊ’u‚É‘Î‰‚·‚é‚æ‚¤‚É²‚ğ•ÏX
+	ã»ã‚€ã‚‰ã®è¨­ç½®ä½ç½®ã«å¯¾å¿œã™ã‚‹ã‚ˆã†ã«è»¸ã‚’å¤‰æ›´
 v0_01/130105 iwahori
-	workŠÖ”‚ğsetup_lisen‚Æsetup_talk‚É•ª—£
-	Gyro‚ÌtalkŠÖ”‚ğÀ‘•
-	KK07‚Å‚ÌƒZƒ“ƒT[•ÏX‚É”º‚¢initialzeŠÖ”‚ÆƒAƒhƒŒƒX‚ğ•ÏX
+	worké–¢æ•°ã‚’setup_lisenã¨setup_talkã«åˆ†é›¢
+	Gyroã®talké–¢æ•°ã‚’å®Ÿè£…
+	KK07ã§ã®ã‚»ãƒ³ã‚µãƒ¼å¤‰æ›´ã«ä¼´ã„initialzeé–¢æ•°ã¨ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å¤‰æ›´
 v0_00/121208 hmIto
-	Šî–{ŠÖ”ì¬
+	åŸºæœ¬é–¢æ•°ä½œæˆ
 */
 #include<hmLib/cstring.h>
 #include<homuraLib_v2/type.hpp>
+#include<XCBase/future.hpp>
 #include<homuraLib_v2/machine/module/GyroL3G4200D.hpp>
 #include<homuraLib_v2/machine/module/AcceleCompassLSM303DLH.hpp>
-#include<homuraLib_v2/task.hpp>
 #include<XC32/i2c.hpp>
 #include<hmLib/coordinates.hpp>
+#include<homuraLib_v2/machine/service/safe_cstring.hpp>
+#include"System_base.hpp"
+#include"IO_base.hpp"
+#include"Service_base.hpp"
+#include"Device.hpp"
+
 namespace hmr {
 	namespace machine {
 		namespace mihara {
 			template<typename inertial_device_>
 			class cInertial :public inertial_device_{
 			private:
-				typedef module::cAcceleCompassLSM303DLH<typename inertial_device_::AcceleCompass_i2c,typename inertial_device_::AccelCompass_shaerd_i2c_identifer> cAcceleCompass;
-				//typedef module::cGyroL3G4200D<typename inertial_device_::Gyro_i2c> cGyro;
-				typedef module::cGyroL3G4200D_I2C<typename inertial_device_::Gyro_i2c,typename inertial_device_::Gyro_shared_i2c_identifer> cGyro_I2C;
-				class cGyro{
+				class sensor_manager :public system_client_interface{
 				private:
-					typedef xc::function<void(module::gyroL3G4200D::raw_data)> observer;
-					typedef xc::lock_guard<cGyro_I2C> lock_guard;
+					class sensor{
 				private:
-					cGyro_I2C I2C;
-					bool IsLock;
-					observer Observer;
+					typedef module::cAcceleCompassLSM303DLH<typename inertial_device_::AcceleCompass_i2c, typename inertial_device_::AccelCompass_shaerd_i2c_identifer> cAcceleCompass;
+					typedef module::cGyroL3G4200D<typename inertial_device_::Gyro_i2c, typename inertial_device_::Gyro_shared_i2c_identifer> cGyro;
+				private:
+					struct cPositionObserver{
+					private:
+						hmLib::coordinates3D::position Data;
+						bool IsData;
+					public:
+						cPositionObserver():IsData(false){}
+						void operator()(hmLib::coordinates3D::position Data_){
+							Data = Data_;
+							IsData = true;
+						}
+						bool can_get()const{ return IsData; }
+						hmLib::coordinates3D::position get(){
+							IsData = false;
+
+							//å‰²ã‚Šè¾¼ã¿ç¦æ­¢
+							xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
+							return Data;
+						}
+					};
+					struct cAngleObserver{
+					private:
+						hmLib::coordinates3D::angle Data;
+						uint16 Cnt;
+					public:
+						cAngleObserver():Cnt(0){}
+						void operator()(hmLib::coordinates3D::angle Data_){
+							Data &= Data_;
+							++Cnt;
+						}
+						bool can_get()const{ return Cnt>0; }
+						hmLib::coordinates3D::angle get(){
+							//å‰²ã‚Šè¾¼ã¿ç¦æ­¢
+							xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
+							hmLib::coordinates3D::angle AnsData(0, 0, 0);
+							std::swap(Data, AnsData);
+							return AnsData;
+						}
+					};
+					struct cGyroRawDataObserver{
+					public:
+						typedef std::pair<uint16, hmLib::coordinates3D::position> DataType;
+					private:
+						hmLib::coordinates3D::position RawData3D;
+						uint16 Cnt;
+					public:
+						cGyroRawDataObserver():RawData3D(0, 0, 0), Cnt(0){}
+						void operator()(module::gyroL3G4200D::raw_data raw_data_){
+							++Cnt;
+							RawData3D += hmLib::coordinates3D::position(raw_data_.x, raw_data_.y, raw_data_.z);
+						}
+						bool can_get()const{ return Cnt>0; }
+						std::pair<uint16, hmLib::coordinates3D::position> get(){
+							std::pair<uint16, hmLib::coordinates3D::position> tmp = std::make_pair(Cnt, RawData3D);
+							Cnt = 0;
+							RawData3D = hmLib::coordinates3D::position(0, 0, 0);
+							return tmp;
+						}
+					};
 				public:
-					cGyro()
-						:I2C()
-						,IsLock(false){
+					cPositionObserver AxelObserver;
+					cPositionObserver CompassObserver;
+					//cAngleObserver GyroObserver;
+					cGyroRawDataObserver GyroObserver;
+				private:
+					cAcceleCompass AcceleCompass;
+					cGyro Gyro;
+					hmr::delay_interface* pDelay;
+					typename inertial_device_::powerInertial PowerInertial;
+					xc::lock_guard<typename inertial_device_::powerInertial> PowerInertialLock;
+				private:
+					bool GyroDataMode;
+					bool AxelCompassDataMode;
+				public:
+					sensor(service_interface& Service_)
+						: AcceleCompass()
+						, Gyro()
+						, pDelay(&Service_.delay())
+						, PowerInertialLock(PowerInertial)
+						, GyroDataMode(false)
+						, AxelCompassDataMode(false){
+						PowerInertial(false);
 					}
 				public:
-					void config(const observer& Observer_){
-						if(is_lock())return;
-						Observer=Observer_;
-					}
-					bool lock(const observer& Observer){
-						config(Observer);
-						return lock();
-					}
 					bool lock(){
 						if(is_lock())return false;
 
-						lock_guard Lock(I2C);
-						if(!Lock.owns_lock())return true;
+						PowerInertial(true);
+						AcceleCompass.lock(xc32::ref(AxelObserver), xc32::ref(CompassObserver), *pDelay);
+						Gyro.lock(xc32::ref(GyroObserver), *pDelay);
 
-						I2C.module_config(false);
-
-						machine::service::exclusive_delay_ms(500);
-
-						//power ON!
-						I2C.module_config(true, module::gyroL3G4200D::sampling_rate::_100Hz, module::gyroL3G4200D::fullscale::_250dps);
-
-						//buffer İ’è
-						I2C.buffer_config(module::gyroL3G4200D::buffer_mode::stream, 31);
-
-						IsLock = true;
-						
 						return false;
 					}
-					bool is_lock()const{return IsLock;}
 					void unlock(){
-						if (!is_lock())return;
+						if(!is_lock())return;
 
-						lock_guard Lock(I2C);
-						if (!Lock.owns_lock())return;
-
-						//power OFF!
-						I2C.module_config(false);
-
-						IsLock = false;
+						AcceleCompass.unlock();
+						Gyro.unlock();
+						PowerInertial(false);
 					}
+					bool is_lock(){ return (AcceleCompass.is_lock() || Gyro.is_lock()); }
+					bool getGyroDataMode()const{ return GyroDataMode; }
+					void setGyroDataMode(bool OnOff_){ GyroDataMode = OnOff_; }
+					bool getAxelCompassDataMode()const{ return AxelCompassDataMode; }
+					void setAxelCompassDataMode(bool OnOff_){ AxelCompassDataMode = OnOff_; }
 				public:
 					void operator()(void){
-						if (!is_lock())return;
-
-						lock_guard Lock(I2C);
-						if (!Lock.owns_lock())return;
-
-						if(Observer){
-							I2C.read_raw_all(Observer);
+						if(AxelCompassDataMode)AcceleCompass();
+						if(GyroDataMode)Gyro();
+					}
+				};
+				private:
+					sensor Sensor;
+					bool SensorPower;
+					bool AxelDataMode;
+					bool CompassDataMode;
+					bool GyroDataMode;
+				private:
+					systems::mode::type CurrentMode;
+				public://override funcition of system_client_interface
+					void operator()(systems::mode::type NewMode_, systems::mode::type PreMode_)override{
+						switch(NewMode_){
+						case systems::mode::observe:
+							if(SensorPower){
+								if(!Sensor.is_lock())Sensor.lock();
+							}else Sensor.unlock();
+							break;
+						default:
+							Sensor.unlock();
+							break;
+						}
+						CurrentMode = NewMode_;
+					}
+				public:
+					systems::mode::type mode()const{ return CurrentMode; }
+					void setSensorPower(bool OnOff_){
+						SensorPower = OnOff_;
+						if(CurrentMode == systems::mode::observe){
+							if(SensorPower){
+								if(!Sensor.is_lock())Sensor.lock();
+							} else Sensor.unlock();
+						}
+					}
+					bool getSensorPower()const{ return SensorPower; }
+					void setAxelDataMode(bool OnOff_){ 
+						AxelDataMode = OnOff_;
+						Sensor.setAxelCompassDataMode((AxelDataMode || CompassDataMode));
+					}
+					bool getAxelDataMode()const{ return AxelDataMode; }
+					void setCompassDataMode(bool OnOff_){ 
+						CompassDataMode = OnOff_; 
+						Sensor.setAxelCompassDataMode((AxelDataMode || CompassDataMode));
+					}
+					bool getCompassDataMode()const{ return CompassDataMode; }
+					void setGyroDataMode(bool OnOff_){ 
+						GyroDataMode = OnOff_; 
+						Sensor.setGyroDataMode(GyroDataMode);
+					}
+					bool getGyroDataMode()const{ return GyroDataMode; }
+					bool can_get_axel_data()const{ return Sensor.AxelObserver.can_get(); }
+					bool can_get_compass_data()const{ return Sensor.CompassObserver.can_get(); }
+					bool can_get_gyro_data()const{ return Sensor.GyroObserver.can_get(); }
+					hmLib::coordinates3D::position get_axel_data(){
+						if(Sensor.AxelObserver.can_get())return Sensor.AxelObserver.get();
+						else return hmLib::coordinates3D::position();
+					}
+					hmLib::coordinates3D::position get_compass_data(){
+						if(Sensor.CompassObserver.can_get())return Sensor.CompassObserver.get();
+						else return hmLib::coordinates3D::position();
+					}
+					std::pair<uint16, hmLib::coordinates3D::position> get_gyro_data(){
+						if(Sensor.GyroObserver.can_get())return Sensor.GyroObserver.get();
+						else return std::make_pair(0, hmLib::coordinates3D::position());
+					}
+				public:
+					sensor_manager(service_interface& Service_)
+						: Sensor(Service_)
+						, SensorPower(true)
+						, AxelDataMode(false)
+						, CompassDataMode(false)
+						, GyroDataMode(false){
+						Sensor.lock();
+					}
+					~sensor_manager(){
+						Sensor.unlock();
+					}
+				public:
+					void operator()(){
+						if(CurrentMode == systems::mode::observe && SensorPower){
+							Sensor();
 						}
 					}
 				};
+				sensor_manager SensorManager;
 			private:
-				struct cPositionObserver{
+				class axel_message_client :public message_client_interface{
 				private:
-					hmLib::coordinates3D::position Data;
-					bool IsData;
+					sensor_manager& Ref;
+				private:
+					bool DataMode_i;
+					bool SendData_i;
+					hmLib::coordinates3D::position SendData;
+				private:
+					class inform_task :public hmr::task::client_interface{
+					private:
+						axel_message_client& Ref;
+					public:
+						inform_task(axel_message_client& Ref_):Ref(Ref_){}
+						duration operator()(duration dt){
+							Ref.DataMode_i = true;
+							return dt;
+						}
+					};
+					inform_task InformTask;
+					task::handler InformTaskHandler;
 				public:
-					cPositionObserver() :IsData(false){}
-					void operator()(hmLib::coordinates3D::position Data_){
-						Data = Data_;
-						IsData = true;
+					axel_message_client(sensor_manager& Ref_, com::did_t ID_, service_interface& Service_)
+						: message_client_interface(ID_)
+						, Ref(Ref_)
+						, DataMode_i(true)
+						, SendData_i(false)
+						, InformTask(*this){
+						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
-					bool can_get()const{ return IsData; }
-					hmLib::coordinates3D::position get(){
-						IsData = false;
+					~axel_message_client(){
+						InformTaskHandler.stop();
+					}
+				public://override function of messge_client_interface
+					bool listen(hmLib::cstring Str){
+						switch(hmLib::cstring_getc(&Str, 0)){
+						case 0x10:
+							Ref.setAxelDataMode(true);
+							DataMode_i = true;
+							return false;
+						case 0x11:
+							Ref.setAxelDataMode(false);
+							DataMode_i = true;
+							return false;
+						default:
+							return true;
+						}
+					}
+					bool talk(hmLib::cstring* pStr){
+						if(DataMode_i){
+							service::cstring_construct_safe(pStr, 1);
+							if(Ref.getAxelDataMode())hmLib::cstring_putc(pStr, 0, 0x10);
+							else hmLib::cstring_putc(pStr, 0, 0x11);
+							DataMode_i = false;
+							return false;
+						} else if(SendData_i){
+							service::cstring_construct_safe(pStr, 7);
+							hmLib::cstring_putc(pStr, 0x00, 0);
+							uint16 Data;
+							uint8 LowData, HighData;
 
-						//Š„‚è‚İ‹Ö~
-						xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
-						return Data;
+							//homura-yè»¸æ›¸ãè¾¼ã¿
+							Data = static_cast<xc::uint16>(SendData.x);
+							LowData = Data & 0x00FF;
+							Data >>= 8;
+							HighData = Data & 0x00FF;
+
+							hmLib::cstring_putc(pStr, 3, LowData);
+							hmLib::cstring_putc(pStr, 4, HighData);
+
+							//homura-xè»¸æ›¸ãè¾¼ã¿ï¼ˆæ­£è² åè»¢ï¼‰
+							Data = static_cast<xc::uint16>(-SendData.y);
+							LowData = Data & 0x00FF;
+							Data >>= 8;
+							HighData = Data & 0x00FF;
+
+							hmLib::cstring_putc(pStr, 1, LowData);
+							hmLib::cstring_putc(pStr, 2, HighData);
+
+							//homura-zè»¸æ›¸ãè¾¼ã¿ï¼ˆæ­£è² åè»¢ï¼‰
+							Data = static_cast<xc::uint16>(-SendData.z);
+							LowData = Data & 0x00FF;
+							Data >>= 8;
+							HighData = Data & 0x00FF;
+
+							hmLib::cstring_putc(pStr, 5, LowData);
+							hmLib::cstring_putc(pStr, 6, HighData);
+
+							SendData_i = false;
+							return false;
+						}
+						return true;
+					}
+					void setup_listen(void){ return; }
+					void setup_talk(void){
+						if(Ref.getAxelDataMode() && Ref.can_get_axel_data()){
+							SendData_i = true;
+							SendData = Ref.get_axel_data();
+						}
 					}
 				};
-				struct cAngleObserver{
+				axel_message_client AxelMessageClient;
+			private:
+				class compass_message_client :public message_client_interface{
 				private:
-					hmLib::coordinates3D::angle Data;
-					uint16 Cnt;
+					sensor_manager& Ref;
+				private:
+					bool DataMode_i;
+					bool SendData_i;
+					hmLib::coordinates3D::position SendData;
+				private:
+					class inform_task :public hmr::task::client_interface{
+					private:
+						compass_message_client& Ref;
+					public:
+						inform_task(compass_message_client& Ref_):Ref(Ref_){}
+						duration operator()(duration dt){
+							Ref.DataMode_i = true;
+							return dt;
+						}
+					};
+					inform_task InformTask;
+					task::handler InformTaskHandler;
 				public:
-					cAngleObserver():Cnt(0){}
-					void operator()(hmLib::coordinates3D::angle Data_){
-						Data &= Data_;
-						++Cnt;
+					compass_message_client(sensor_manager& Ref_, com::did_t ID_ , service_interface& Service_)
+						: message_client_interface(ID_)
+						, Ref(Ref_)
+						, DataMode_i(true)
+						, SendData_i(false)
+						, InformTask(*this){
+						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
-					bool can_get()const{ return Cnt>0; }
-					hmLib::coordinates3D::angle get(){
-						//Š„‚è‚İ‹Ö~
-						xc32::interrupt::lock_guard Lock(xc32::interrupt::Mutex);
-						hmLib::coordinates3D::angle AnsData(0, 0, 0);
-						std::swap(Data, AnsData);
-						return AnsData;
+					~compass_message_client(){
+						InformTaskHandler.stop();
+					}
+				public://override function of messge_client_interface
+					bool listen(hmLib::cstring Str){
+						switch(hmLib::cstring_getc(&Str, 0)){
+						case 0x10:
+							Ref.setCompassDataMode(true);
+							DataMode_i = true;
+							return false;
+						case 0x11:
+							Ref.setCompassDataMode(false);
+							DataMode_i = true;
+							return false;
+						default:
+							return true;
+						}
+					}
+					bool talk(hmLib::cstring* pStr){
+						if(DataMode_i){
+							service::cstring_construct_safe(pStr, 1);
+							if(Ref.getCompassDataMode())hmLib::cstring_putc(pStr, 0, 0x10);
+							else hmLib::cstring_putc(pStr, 0, 0x11);
+							DataMode_i = false;
+							return false;
+						} else if(SendData_i){
+							service::cstring_construct_safe(pStr, 7);
+							hmLib::cstring_putc(pStr, 0, 0x00);
+							uint8 LowData, HighData;
+							uint16 Data;
+
+							//homura-xè»¸æ›¸ãè¾¼ã¿ï¼ˆæ­£è² åè»¢ï¼‰
+							Data = static_cast<xc::uint16>(-SendData.y);
+							LowData = Data & 0x00FF;
+							Data >>= 8;
+							HighData = Data & 0x00FF;
+
+							hmLib::cstring_putc(pStr, 1, LowData);
+							hmLib::cstring_putc(pStr, 2, HighData);
+
+							//homura-yè»¸æ›¸ãè¾¼ã¿
+							Data = static_cast<xc::uint16>(SendData.x);
+							LowData = Data & 0x00FF;
+							Data >>= 8;
+							HighData = Data & 0x00FF;
+
+							hmLib::cstring_putc(pStr, 3, LowData);
+							hmLib::cstring_putc(pStr, 4, HighData);
+
+							//homura-zè»¸æ›¸ãè¾¼ã¿ï¼ˆæ­£è² åè»¢ï¼‰
+							Data = static_cast<xc::uint16>(-SendData.z);
+							LowData = Data & 0x00FF;
+							Data >>= 8;
+							HighData = Data & 0x00FF;
+
+							hmLib::cstring_putc(pStr, 5, LowData);
+							hmLib::cstring_putc(pStr, 6, HighData);
+
+							SendData_i = false;
+							return false;
+						}
+						return true;
+					}
+					void setup_listen(void){ return; }
+					void setup_talk(void){
+						if(Ref.getCompassDataMode() && Ref.can_get_compass_data()){
+							SendData_i = true;
+							SendData = Ref.get_compass_data();
+						}
 					}
 				};
-				struct cGyroRawDataObserver{
-				public:
-					typedef std::pair<uint16,hmLib::coordinates3D::position> DataType;
+				compass_message_client CompassMessageClient;
+			private:
+				class gyro_message_client :public message_client_interface{
 				private:
-					hmLib::coordinates3D::position RawData3D;
-					uint16 Cnt;
+					sensor_manager& Ref;
+				private:
+					bool DataMode_i;
+					bool SendData_i;
+					std::pair<uint16, hmLib::coordinates3D::position> SendData;
+				private:
+					class inform_task :public hmr::task::client_interface{
+					private:
+						gyro_message_client& Ref;
+					public:
+						inform_task(gyro_message_client& Ref_):Ref(Ref_){}
+						duration operator()(duration dt){
+							Ref.DataMode_i = true;
+							return dt;
+						}
+					};
+					inform_task InformTask;
+					task::handler InformTaskHandler;
 				public:
-					cGyroRawDataObserver():RawData3D(0,0,0),Cnt(0){}
-					void operator()(module::gyroL3G4200D::raw_data raw_data_){
-						++Cnt;
-						RawData3D+=hmLib::coordinates3D::position(raw_data_.x,raw_data_.y,raw_data_.z);
+					gyro_message_client(sensor_manager& Ref_, com::did_t ID_, service_interface& Service_)
+						: message_client_interface(ID_)
+						, Ref(Ref_)
+						, DataMode_i(true)
+						, SendData_i(false)
+						, InformTask(*this){
+						InformTaskHandler = Service_.task().quick_start(InformTask, 5);
 					}
-					bool can_get()const{return Cnt>0;}
-					std::pair<uint16,hmLib::coordinates3D::position> get(){
-						std::pair<uint16,hmLib::coordinates3D::position> tmp=std::make_pair(Cnt,RawData3D);
-						Cnt=0;
-						RawData3D=hmLib::coordinates3D::position(0,0,0);
-						return tmp;
+					~gyro_message_client(){
+						InformTaskHandler.stop();
+					}
+				public://override function of messge_client_interface
+					bool listen(hmLib::cstring Str){
+						switch(hmLib::cstring_getc(&Str, 0)){
+						case 0x10:
+							Ref.setGyroDataMode(true);
+							DataMode_i = true;
+							return false;
+						case 0x11:
+							Ref.setGyroDataMode(false);
+							DataMode_i = true;
+							return false;
+						default:
+							return true;
+						}
+					}
+					bool talk(hmLib::cstring* pStr){
+						if(DataMode_i){
+							service::cstring_construct_safe(pStr, 1);
+							if(Ref.getGyroDataMode())hmLib::cstring_putc(pStr, 0, 0x10);
+							else hmLib::cstring_putc(pStr, 0, 0x11);
+							DataMode_i = false;
+							return false;
+						} else if(SendData_i){
+							sint32 X, Y, Z;
+
+							X = 0;
+							Y = 0;
+							Z = 0;
+
+							//hmLib::coordinates3D::angle RawData = Inertial.GyroObserver.get();
+
+							//X = RawData.pitch;
+							//Y = RawData.roll;
+							//Z = RawData.yaw;
+
+							uint16 Cnt = SendData.first;
+							hmLib::coordinates3D::position RawData3D = SendData.second;
+							X = static_cast<sint32>(RawData3D.x);
+							Y = static_cast<sint32>(RawData3D.y);
+							Z = static_cast<sint32>(RawData3D.z);
+
+
+							service::cstring_construct_safe(pStr, 16);
+							hmLib::cstring_putc(pStr, 0, 0x00);
+							hmLib::cstring_putc(pStr, 1, 0x00);	//Defaultã§ã¯0ã«ã—ã¦ãŠã
+
+																//1ç§’é–“10å›åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã€ã¨ã„ã†ã“ã¨ã«ã—ã¦ãŠã
+																//	ã“ã†ã™ã‚Œã°ã€æ­£ã—ãè§’åº¦è¨ˆç®—ã—ã¦ãã‚Œã‚‹ï¼Ÿ
+																//hmLib::cstring_putc(pStr, 2,(uint8)(10&0x00FF));
+																//hmLib::cstring_putc(pStr, 3,(uint8)((10>>8)&0x00FF));
+							hmLib::cstring_putc(pStr, 2, (uint8)Cnt);
+							hmLib::cstring_putc(pStr, 3, (uint8)((Cnt >> 8) & 0x00FF));
+
+
+							hmLib::cstring_putc(pStr, 4, (uint8)(X & 0x00FF));
+							hmLib::cstring_putc(pStr, 5, (uint8)((X >> 8) & 0x00FF));
+							hmLib::cstring_putc(pStr, 6, (uint8)((X >> 16) & 0x00FF));
+							hmLib::cstring_putc(pStr, 7, (uint8)((X >> 24) & 0x00FF));
+
+							hmLib::cstring_putc(pStr, 8, (uint8)(Y & 0x00FF));
+							hmLib::cstring_putc(pStr, 9, (uint8)((Y >> 8) & 0x00FF));
+							hmLib::cstring_putc(pStr, 10, (uint8)((Y >> 16) & 0x00FF));
+							hmLib::cstring_putc(pStr, 11, (uint8)((Y >> 24) & 0x00FF));
+
+							hmLib::cstring_putc(pStr, 12, (uint8)(Z & 0x00FF));
+							hmLib::cstring_putc(pStr, 13, (uint8)((Z >> 8) & 0x00FF));
+							hmLib::cstring_putc(pStr, 14, (uint8)((Z >> 16) & 0x00FF));
+							hmLib::cstring_putc(pStr, 15, (uint8)((Z >> 24) & 0x00FF));
+
+							SendData_i = false;
+							return false;
+						}
+						return true;
+					}
+					void setup_listen(void){ return; }
+					void setup_talk(void){
+						if(Ref.getGyroDataMode() && Ref.can_get_gyro_data()){
+							SendData_i = true;
+							SendData = Ref.get_gyro_data();
+						}
 					}
 				};
+				gyro_message_client GyroMessageClient;
 			public:
-				cPositionObserver AxelObserver;
-				cPositionObserver CompassObserver;
-				//cAngleObserver GyroObserver;
-				cGyroRawDataObserver GyroObserver;
+				cInertial(unsigned char AxelID_, unsigned char CompassID_, unsigned char GyroID_, system_interface& System_, io_interface& IO_, service_interface& Service_)
+					: SensorManager(Service_)
+					, AxelMessageClient(SensorManager, AxelID_, Service_)
+					, CompassMessageClient(SensorManager, CompassID_, Service_)
+					, GyroMessageClient(SensorManager, GyroID_, Service_){
 
-				cAcceleCompass AcceleCompass;
-				cGyro Gyro;
-				typename inertial_device_::powerInertial PowerInertial;
-				xc::lock_guard<typename inertial_device_::powerInertial> PowerInertialLock;
-			public:
-				cInertial()
-					: AcceleCompass()
-					, Gyro()
-					, PowerInertialLock(PowerInertial){
-					PowerInertial(false);
+					System_.regist(SensorManager);
+					IO_.regist(AxelMessageClient);
+					IO_.regist(CompassMessageClient);
+					IO_.regist(GyroMessageClient);
 				}
 			public:
-				bool lock(){
-					if(is_lock())return false;
-
-					PowerInertial(true);
-					AcceleCompass.lock(xc32::ref(AxelObserver), xc32::ref(CompassObserver));
-					Gyro.lock(xc32::ref(GyroObserver));
-
-					return false;
-				}
-				void unlock(){
-					if(!is_lock())return;
-
-					AcceleCompass.unlock();
-					Gyro.unlock();
-					PowerInertial(false);
-				}
-				bool is_lock(){return (AcceleCompass.is_lock() || Gyro.is_lock());}
-			public:
-				void operator()(void){
-					AcceleCompass();
-					Gyro();
+				void operator()(){
+					SensorManager();
 				}
 			};
-			namespace inertial {
-				void initialize();
-				void finalize();
-				void work();
-				namespace axel {
-					void device_initialize(void);// PWR ON ‚É‚µ‚½‚Æ‚«‚É•K—v‚È‰Šú‰»ŠÖ”
-					void device_finalize(void);// PWR OFF ‚É‚·‚é‘O‚É•K—v‚È‰Šú‰»ŠÖ”
-					bool listen(hmLib::cstring Str);
-					bool talk(hmLib::cstring* pStr);
-					void setup_listen(void);
-					void setup_talk(void);
-					struct interrupt_task :public hmr::task::client_interface{
-						duration operator()(duration dt);
-					};
-					struct data_task :public hmr::task::client_interface{
-						duration operator()(duration dt);
-					};
-					struct inform_task :public hmr::task::client_interface{
-						duration operator()(duration dt);
-					};
-				}
-				namespace compass {
-					void device_initialize(void);
-					void device_finalize(void);
-					bool listen(hmLib::cstring Str);
-					bool talk(hmLib::cstring* pStr);
-					void setup_listen(void);
-					void setup_talk(void);
-					struct data_task :public hmr::task::client_interface{
-						duration operator()(duration dt);
-					};
-					struct inform_task :public hmr::task::client_interface{
-						duration operator()(duration dt);
-					};
-				}
-				namespace gyro {
-					void device_initialize(void); // gyro ‚ÍƒfƒtƒHƒ‹ƒg‚Åƒpƒ[ƒ_ƒEƒ“ƒ‚[ƒh‚È‚Ì‚ÅA‹N“®‚·‚éŠÖ”
-					void device_finalize(void);
-					bool listen(hmLib::cstring Str);
-					bool talk(hmLib::cstring* pStr);
-					void setup_listen(void);
-					void setup_talk(void);
-					struct data_task :public hmr::task::client_interface{
-						duration operator()(duration dt);
-					};
-					struct inform_task :public hmr::task::client_interface{
-						duration operator()(duration dt);
-					};
-				}
-			}
 		}
 	}
 }

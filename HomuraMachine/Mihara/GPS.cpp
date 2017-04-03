@@ -3,8 +3,6 @@
 #
 #define HMLIB_NOLIB
 #include<homuraLib_v2/machine/service/safe_cstring.hpp>
-#include<homuraLib_v2/machine/service/delay.hpp>
-#include<homuraLib_v2/machine/service/task.hpp>
 #include"GPS.hpp"
 #include"Device.hpp"
 
@@ -21,18 +19,18 @@ namespace hmr {
 					unsigned char GPSCh=0;
 					struct {
 						unsigned Data:1;
-						unsigned SendData:1;			//ƒf[ƒ^‘—Mƒ‚[ƒh
-						unsigned SendData_i:1;			//ƒf[ƒ^‘—Mƒ‚[ƒhó—
-						unsigned Swapi:1;			//(*pGPS)ŒğŠ·—v‹ó—
+						unsigned SendData:1;			//ãƒ‡ãƒ¼ã‚¿é€ä¿¡ãƒ¢ãƒ¼ãƒ‰
+						unsigned SendData_i:1;			//ãƒ‡ãƒ¼ã‚¿é€ä¿¡ãƒ¢ãƒ¼ãƒ‰å—ç†
+						unsigned Swapi:1;			//(*pGPS)äº¤æ›è¦æ±‚å—ç†
 						unsigned PowerGPS:1;
 						unsigned Poweri:1;
 					}Mode={0, 0, 1, 0};
 				}
 				bool listen(hmLib::cstring Str) {
-					//ƒf[ƒ^ƒTƒCƒYŠm”F
+					//ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºç¢ºèª
 					if(hmLib::cstring_size(&Str)==0)return true;
 
-					//1byte–Ú‚Åƒ‚[ƒh‚ğ•ª‚¯‚é
+					//1byteç›®ã§ãƒ¢ãƒ¼ãƒ‰ã‚’åˆ†ã‘ã‚‹
 					switch(hmLib::cstring_getc(&Str, 0)) {
 					case 0x10:
 						Mode.SendData=true;
@@ -43,7 +41,7 @@ namespace hmr {
 						Mode.SendData_i=true;
 						return false;
 					case 0x20:
-						//ƒf[ƒ^ƒTƒCƒYŠm”F
+						//ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚ºç¢ºèª
 						if(hmLib::cstring_size(&Str)!=2)return true;
 						if(hmLib::cstring_getc(&Str, 1)!=GPSCh) {
 							Mode.Swapi=true;
@@ -66,7 +64,7 @@ namespace hmr {
 						service::cstring_construct_safe(pStr, 1);
 						if(Mode.SendData)hmLib::cstring_putc(pStr, 0, 0x10);
 						else hmLib::cstring_putc(pStr, 0, 0x11);
-						//‘—MŒã©“®“I‚Éƒtƒ‰ƒO‚ğ—‚Æ‚·
+						//é€ä¿¡å¾Œè‡ªå‹•çš„ã«ãƒ•ãƒ©ã‚°ã‚’è½ã¨ã™
 						Mode.SendData_i=false;
 						return false;
 					} else if(Mode.Swapi) {
@@ -77,7 +75,7 @@ namespace hmr {
 						GPSCh = (*pGPS).GPSSwitcher.getChNo() - 1;
 						hmLib::cstring_putc(pStr, 1, GPSCh);
 
-						//‘—MŒã©“®“I‚Éƒtƒ‰ƒO‚ğ—‚Æ‚·
+						//é€ä¿¡å¾Œè‡ªå‹•çš„ã«ãƒ•ãƒ©ã‚°ã‚’è½ã¨ã™
 						Mode.Swapi=false;
 						return false;
 					} else if(Mode.Poweri) {
@@ -93,7 +91,7 @@ namespace hmr {
 //							(*pGPS).GPSSwitcher.power(false);
 						}
 
-						//‘—MŒã©“®“I‚Éƒtƒ‰ƒO‚ğ—‚Æ‚·
+						//é€ä¿¡å¾Œè‡ªå‹•çš„ã«ãƒ•ãƒ©ã‚°ã‚’è½ã¨ã™
 						Mode.Poweri=false;
 						return false;
 					} else if(Mode.Data) {
@@ -180,9 +178,9 @@ namespace hmr {
 				void initialize(cGPS<cDevice::gps_device>& rGPS_){
 					pGPS = &rGPS_; 
 
-					//ƒ^ƒXƒN“o˜^
-					service::task::quick_start(InformTask, 5);
-					service::task::quick_start(DataTask, 3);
+					//ã‚¿ã‚¹ã‚¯ç™»éŒ²
+					task::quick_start(InformTask, 5);
+					task::quick_start(DataTask, 3);
 				}
 			}
 		}

@@ -38,9 +38,6 @@
     <Filter Include="Common\homuraLib_v2\machine\module\Sprite">
       <UniqueIdentifier>{e1ad6cb1-0a35-4544-b47b-18ad161fd7cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\homuraLib_v2\machine\service">
-      <UniqueIdentifier>{86ecfc47-077f-4b0c-aaed-806d481ac772}</UniqueIdentifier>
-    </Filter>
     <Filter Include="HomuraMachine">
       <UniqueIdentifier>{938fde31-9f74-4d1c-82e9-36fd932f175a}</UniqueIdentifier>
     </Filter>
@@ -52,6 +49,9 @@
     </Filter>
     <Filter Include="Common\homuraLib_v2\task">
       <UniqueIdentifier>{a5203e34-e51e-4089-8803-2a3c9cc3e9fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HomuraMachine\Mihara\IO">
+      <UniqueIdentifier>{71b46411-c5f6-4386-bf0d-afa48a2abbb2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -169,51 +169,6 @@
     <ClCompile Include="..\..\homuraLib_v2\machine\device\p24EP512GU810_defines.c">
       <Filter>Common\homuraLib_v2\machine\device</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\homuraLib_v2\machine\service\functional_task.cpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClCompile>
-    <ClCompile Include="CO2.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Com.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Data.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="DeviceManage.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="DeviceManageMessage.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Drive.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="GPS.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Inertial.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Message.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Mihara.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Service.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Thermo.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Battery.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\homuraLib_v2\old\hmrVCom1.c">
       <Filter>Common\homuraLib_v2\old</Filter>
     </ClCompile>
@@ -234,6 +189,18 @@
     </ClCompile>
     <ClCompile Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_forVC.c">
       <Filter>Common\homuraLib_v2\machine\device</Filter>
+    </ClCompile>
+    <ClCompile Include="HomuraMachine.cpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\Com.cpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\Data.cpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\XC32\sfr\adc1.cpp">
+      <Filter>Common\XC32\sfr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -639,27 +606,6 @@
     <ClInclude Include="..\..\homuraLib_v2\machine\module\Sprite\command_uart.hpp">
       <Filter>Common\homuraLib_v2\machine\module\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\delay.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\exclusive_delay.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\functional_task.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\lock_code.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\safe_cstring.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\task.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\homuraLib_v2\machine\service\chrono.hpp">
-      <Filter>Common\homuraLib_v2\machine\service</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\local_allocator.hpp">
       <Filter>HomuraMachine</Filter>
     </ClInclude>
@@ -674,72 +620,6 @@
     </ClInclude>
     <ClInclude Include="..\..\homuraLib_config.hpp">
       <Filter>HomuraMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="CO2.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="Com.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="Data.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="Device.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManage.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManage_forCamera.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManage_forCO2.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManage_forCourier.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManage_forInertial.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManage_forSDcard.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManageFunc_Courier.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManageFunc_Sprite.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceManageMessage.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="Drive.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="GPS.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="Inertial.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="Message.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="Service.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="System_base.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="Thermo.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="Battery.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.hpp">
-      <Filter>HomuraMachine\Mihara</Filter>
     </ClInclude>
     <ClInclude Include="..\..\homuraLib_v2\machine\device\p32mz2048efg100_defines.h">
       <Filter>Common\homuraLib_v2\machine\device</Filter>
@@ -793,6 +673,72 @@
       <Filter>Common\homuraLib_v2\task</Filter>
     </ClInclude>
     <ClInclude Include="bitset.hpp">
+      <Filter>Common\XCBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\homuraLib_v2\delay.hpp">
+      <Filter>Common\homuraLib_v2</Filter>
+    </ClInclude>
+    <ClInclude Include="System_base.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="Thermo.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="Battery.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="CO2.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="Drive.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="GPS.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="Inertial.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="IO.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="IO_base.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="Message.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="Service.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="Service_base.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="System.hpp">
+      <Filter>HomuraMachine\Mihara</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Com.hpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Message.hpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\ComClient.hpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\MessageClient.hpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Data.hpp">
+      <Filter>HomuraMachine\Mihara\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\XCBase\chain.hpp">
       <Filter>Common\XCBase</Filter>
     </ClInclude>
   </ItemGroup>

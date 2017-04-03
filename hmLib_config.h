@@ -1,16 +1,16 @@
 #ifndef HMLIB_CONFIG_INC
 #define HMLIB_CONFIG_INC
 
-//ƒo[ƒWƒ‡ƒ“î•ñ‚ð•\Ž¦‚µ‚½‚¢ê‡‚ÍAˆÈ‰º‚ð•ÏX‚·‚éB0:”ñ•\Ž¦A1:Œx•\Ž¦A2:’ˆÓ•\Ž¦A3:‘S•\Ž¦
+//ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±ã‚’è¡¨ç¤ºã—ãŸã„å ´åˆã¯ã€ä»¥ä¸‹ã‚’å¤‰æ›´ã™ã‚‹ã€‚0:éžè¡¨ç¤ºã€1:è­¦å‘Šè¡¨ç¤ºã€2:æ³¨æ„è¡¨ç¤ºã€3:å…¨è¡¨ç¤º
 #define HMLIB_OUT 3
 
-//ƒ‰ƒCƒuƒ‰ƒŠƒtƒ@ƒCƒ‹‚ðŽg‚í‚¸‚Éƒ\[ƒXƒtƒ@ƒCƒ‹‚ðƒRƒ“ƒpƒCƒ‹‚µ‚ÄƒŠƒ“ƒN‚·‚éê‡‚ÍAˆÈ‰º‚ð—LŒø‚É‚·‚é
+//ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½¿ã‚ãšã«ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã—ã¦ãƒªãƒ³ã‚¯ã™ã‚‹å ´åˆã¯ã€ä»¥ä¸‹ã‚’æœ‰åŠ¹ã«ã™ã‚‹
 #define HMLIB_NOLIB
 //#define HMLIB_TYPE_NOPREFIX
 //#define HMLIB_NOPREFIX
 //#define HMLIB_CSTRING_NOPREFIX
 
-//byte”‚ÌŽw’è
+//byteæ•°ã®æŒ‡å®š
 #define HMLIB_TYPE_SIZE_CHAR 1
 #define HMLIB_TYPE_SIZE_SHORT 2
 #define HMLIB_TYPE_SIZE_INT 4

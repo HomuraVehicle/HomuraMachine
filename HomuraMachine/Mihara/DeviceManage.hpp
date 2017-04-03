@@ -3,28 +3,28 @@
 #
 #include<homuraLib_v2/type.hpp>
 /*
-Device§Œä—p‚Ì‹@”\‚ğ’ñ‹Ÿ‚·‚é
-	Kill‹@”\
-		©•ª©g‚Æ‚·‚×‚Ä‚Ì‚Ì“dŒ¹‚ğØ‚é
-	ƒXƒŠ[ƒv‹@”\
-		’èŠú“I‚É“dŒ¹‚ğƒIƒ“/ƒIƒt‚ğŒJ‚è•Ô‚·
-	ƒ[ƒ~ƒ“ƒO‹@”\
-		Roamingƒ‚[ƒh‚É“ü‚é‚ÆARF(RoamingTime)=>MB(RoamingTime)=>RF‚Ì‚æ‚¤‚ÉAg—p’ÊM‹@‚Ì‘JˆÚ‚ğŒJ‚è•Ô‚·B
-		RoamingTime‚Í“à•”•Ï”‚ÅŒˆ’è‚·‚éiƒRƒ}ƒ“ƒh‚Åİ’è‰Â”\j
-	ƒNƒƒbƒNƒ‚[ƒh•ÏX‹@”\
-		İ’èƒNƒƒbƒN‘¬“x‚ğ•ÏX‚·‚é
+Deviceåˆ¶å¾¡ç”¨ã®æ©Ÿèƒ½ã‚’æä¾›ã™ã‚‹
+	Killæ©Ÿèƒ½
+		è‡ªåˆ†è‡ªèº«ã¨ã™ã¹ã¦ã®ã®é›»æºã‚’åˆ‡ã‚‹
+	ã‚¹ãƒªãƒ¼ãƒ—æ©Ÿèƒ½
+		å®šæœŸçš„ã«é›»æºã‚’ã‚ªãƒ³/ã‚ªãƒ•ã‚’ç¹°ã‚Šè¿”ã™
+	ãƒ­ãƒ¼ãƒŸãƒ³ã‚°æ©Ÿèƒ½
+		Roamingãƒ¢ãƒ¼ãƒ‰ã«å…¥ã‚‹ã¨ã€RF(RoamingTime)=>MB(RoamingTime)=>RFã®ã‚ˆã†ã«ã€ä½¿ç”¨é€šä¿¡æ©Ÿã®é·ç§»ã‚’ç¹°ã‚Šè¿”ã™ã€‚
+		RoamingTimeã¯å†…éƒ¨å¤‰æ•°ã§æ±ºå®šã™ã‚‹ï¼ˆã‚³ãƒãƒ³ãƒ‰ã§è¨­å®šå¯èƒ½ï¼‰
+	ã‚¯ãƒ­ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´æ©Ÿèƒ½
+		è¨­å®šã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦ã‚’å¤‰æ›´ã™ã‚‹
 === hmr::machine::mihara::DeviceManage ===
 v2_00/141117 hmito
-	C++‰»
+	C++åŒ–
 ===hmrDeviceManage===
 v1_03/131026 amby
-	Š„‚è‚İ‹–‰ÂŠÖ”ŒR‚ğ’Ç‰ÁA‚±‚ÌƒNƒ‰ƒX‚ÅŠÇ—‚·‚é
+	å‰²ã‚Šè¾¼ã¿è¨±å¯é–¢æ•°è»ã‚’è¿½åŠ ã€ã“ã®ã‚¯ãƒ©ã‚¹ã§ç®¡ç†ã™ã‚‹
 v1_02/131019 hmIto
-	clockmode‚ğclock‚É•ÏX
-	isSleep, isRoaming‚ğ’Ç‰Á
+	clockmodeã‚’clockã«å¤‰æ›´
+	isSleep, isRoamingã‚’è¿½åŠ 
 v1_01/131013 hmIto
-	ƒCƒ“ƒ^[ƒtƒF[ƒX‚ğ‘å•‚É•ÏX•®—
-		ƒ‚[ƒh‚©‚çƒNƒƒbƒN‘¬“xw’è‚ğœŠO
+	ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’å¤§å¹…ã«å¤‰æ›´ï¼†æ•´ç†
+		ãƒ¢ãƒ¼ãƒ‰ã‹ã‚‰ã‚¯ãƒ­ãƒƒã‚¯é€Ÿåº¦æŒ‡å®šã‚’é™¤å¤–
 */
 namespace hmr {
 	namespace machine {
@@ -32,19 +32,19 @@ namespace hmr {
 			namespace devmng {
 				typedef void(*vFp_v)(void);
 
-				//=== Šî–{’è‹` ===
+				//=== åŸºæœ¬å®šç¾© ===
 				#define RF_BaudRate 9600
 				#define RFDebug_BaudRate 38400
 				#define MP_BaudRate 38400
 
-				//=== Šî–{‘€ìŠÖ” ===
-				//ƒfƒoƒCƒX‰Šú‰»ŠÖ”
+				//=== åŸºæœ¬æ“ä½œé–¢æ•° ===
+				//ãƒ‡ãƒã‚¤ã‚¹åˆæœŸåŒ–é–¢æ•°
 				void initialize(void);
-				//ƒfƒoƒCƒXI’[‰»ŠÖ”
+				//ãƒ‡ãƒã‚¤ã‚¹çµ‚ç«¯åŒ–é–¢æ•°
 				void finalize(void);
-				//ƒfƒoƒCƒX‹­§I—¹
+				//ãƒ‡ãƒã‚¤ã‚¹å¼·åˆ¶çµ‚äº†
 				void kill(void);
-				//Œ»İ‚Ì’ÊMæ‚ª‘S“ñd’ÊM‘Î‰‚©‚ğ•Ô‚·
+				//ç¾åœ¨ã®é€šä¿¡å…ˆãŒå…¨äºŒé‡é€šä¿¡å¯¾å¿œã‹ã‚’è¿”ã™
 				bool isFullDuplex(void);
 				//clear_wdt
 				void clear_wdt(void);
@@ -54,58 +54,58 @@ namespace hmr {
 					mobile_phone=0x01,
 					rf_module=0x02
 				}rf_module_mode;
-				//Œ»İ‚ÌModuleID‚ğæ“¾‚·‚é
+				//ç¾åœ¨ã®ModuleIDã‚’å–å¾—ã™ã‚‹
 				rf_module_mode rf_module_uart_getModuleID(void);
 
 
-				//=== ƒ‚[ƒh§Œä‹@”\ ===
+				//=== ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡æ©Ÿèƒ½ ===
 				typedef enum{ NormalMode, SleepMode, RoamingMode }mode;
-				//ƒfƒoƒCƒXƒ‚[ƒh‚ğ•ÏX‚·‚é
+				//ãƒ‡ãƒã‚¤ã‚¹ãƒ¢ãƒ¼ãƒ‰ã‚’å¤‰æ›´ã™ã‚‹
 				void mode_set(mode Mode_);
-				//ƒfƒoƒCƒXƒ‚[ƒh‚ğæ“¾‚·‚é
+				//ãƒ‡ãƒã‚¤ã‚¹ãƒ¢ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 				volatile mode mode_get(void);
 
-				//=== ƒNƒƒbƒN§Œä‹@”\ ===
+				//=== ã‚¯ãƒ­ãƒƒã‚¯åˆ¶å¾¡æ©Ÿèƒ½ ===
 				typedef enum{ LowClock, NormalClock, HighClock }clock;
-				//ƒNƒƒbƒN‚ğ•ÏX‚·‚é
+				//ã‚¯ãƒ­ãƒƒã‚¯ã‚’å¤‰æ›´ã™ã‚‹
 				void clock_set(clock Clock_);
-				//ƒNƒƒbƒN‚ğæ“¾‚·‚é
+				//ã‚¯ãƒ­ãƒƒã‚¯ã‚’å–å¾—ã™ã‚‹
 				volatile clock clock_get(void);
 
-				//=== ƒXƒŠ[ƒvƒ‚[ƒh§Œä ===
-				//ƒXƒŠ[ƒvƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğæ“¾‚·‚é
+				//=== ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ ===
+				//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 				void sleep_getInterval(sint16* secNonRem, sint16* secRem);
-				//ƒXƒŠ[ƒvƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğİ’è‚·‚é
+				//ã‚¹ãƒªãƒ¼ãƒ—ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹
 				void sleep_setInterval(sint16 secNonRem, sint16 secRem);
-				//“ü–°•‹N°‚ÉŒÄ‚Ño‚³‚ê‚é’Ê’mŠÖ”‚ğ“o˜^‚Å‚«‚é‚©
+				//å…¥çœ æ™‚ï¼†èµ·åºŠæ™‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã§ãã‚‹ã‹
 				bool sleep_can_registSleepInformFunction();
-				//“ü–°•‹N°‚ÉŒÄ‚Ño‚³‚ê‚é’Ê’mŠÖ”‚ğ“o˜^‚·‚é
+				//å…¥çœ æ™‚ï¼†èµ·åºŠæ™‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã™ã‚‹
 				bool sleep_registSleepInformFunction(vFp_v InformSleep, vFp_v InformWakeUp);
-				//ƒŒƒ€ƒXƒŠ[ƒv‚É“ü‚é/o‚éÛ‚Ì’Ê’mŠÖ”‚ğ“o˜^‚Å‚«‚é‚©
+				//ãƒ¬ãƒ ã‚¹ãƒªãƒ¼ãƒ—ã«å…¥ã‚‹/å‡ºã‚‹éš›ã®é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã§ãã‚‹ã‹
 				bool sleep_can_registRemInformFunction();
-				//ƒŒƒ€ƒXƒŠ[ƒv‚É“ü‚é/o‚éÛ‚Ì’Ê’mŠÖ”‚ğ“o˜^‚·‚é
+				//ãƒ¬ãƒ ã‚¹ãƒªãƒ¼ãƒ—ã«å…¥ã‚‹/å‡ºã‚‹éš›ã®é€šçŸ¥é–¢æ•°ã‚’ç™»éŒ²ã™ã‚‹
 				bool sleep_registRemInformFunction(vFp_v InformRem, vFp_v InformNonRem);
-				//ƒXƒŠ[ƒvó‘Ô‚©‚Ç‚¤‚©‚ğæ“¾‚·‚é
+				//ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹
 				volatile bool sleep_isSleep(void);
-				//ƒŒƒ€ƒXƒŠ[ƒvó‘Ô‚©‚Ç‚¤‚©‚ğæ“¾‚·‚é
+				//ãƒ¬ãƒ ã‚¹ãƒªãƒ¼ãƒ—çŠ¶æ…‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹
 				volatile bool sleep_isRem(void);
 
-				//=== ƒ[ƒ~ƒ“ƒOƒ‚[ƒh§Œä ===
-				//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğæ“¾‚·‚é
+				//=== ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰åˆ¶å¾¡ ===
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 				void roaming_getInterval(sint16* secInterval);
-				//ƒ[ƒ~ƒ“ƒOƒ‚[ƒh‚Ìƒpƒ‰ƒ[ƒ^‚ğİ’è‚·‚é
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹
 				void roaming_setInterval(sint16 secInterval);
-				//ƒ[ƒ~ƒ“ƒOó‘Ô‚©‚Ç‚¤‚©‚ğæ“¾‚·‚é
+				//ãƒ­ãƒ¼ãƒŸãƒ³ã‚°çŠ¶æ…‹ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹
 				volatile bool roaming_isRoaming(void);
 
-				//=== Š„‚è‚İŠÖ” ===
-				//ƒ^ƒXƒNAƒXƒŠ[ƒvA‚¨‚æ‚Ñƒ[ƒ~ƒ“ƒOÀs—pŠÖ”
+				//=== å‰²ã‚Šè¾¼ã¿é–¢æ•° ===
+				//ã‚¿ã‚¹ã‚¯ã€ã‚¹ãƒªãƒ¼ãƒ—ã€ãŠã‚ˆã³ãƒ­ãƒ¼ãƒŸãƒ³ã‚°å®Ÿè¡Œç”¨é–¢æ•°
 				void interrupt_function(sint16 Interval_);
-				//Š„‚è‚İ‚Ìmainƒ‹[ƒv‚Ö‚ÌˆÏ÷ˆ—ŠÖ”
+				//å‰²ã‚Šè¾¼ã¿ã®mainãƒ«ãƒ¼ãƒ—ã¸ã®å§”è­²å‡¦ç†é–¢æ•°
 				bool interrupt_yield(void);
 
-				//=== Š„‚è‚İ§Œä—pŠÖ”
-				// Š„‚è‚İ‹–‰Â•Ï‚¦‚Ä‚æ‚¢‚©‚Ç‚¤‚©‚Ìƒ`ƒFƒbƒNŠÖ”@ç’·‰ß‚¬‚½‚©‚àEE
+				//=== å‰²ã‚Šè¾¼ã¿åˆ¶å¾¡ç”¨é–¢æ•°
+				// å‰²ã‚Šè¾¼ã¿è¨±å¯å¤‰ãˆã¦ã‚ˆã„ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯é–¢æ•°ã€€å†—é•·éããŸã‹ã‚‚ãƒ»ãƒ»
 				bool interrupt_can_enable_streamVMC_fget_interrupt(void);
 				bool interrupt_can_disable_streamVMC_fget_interrupt(void);
 				bool interrupt_can_enable_streamVMC_fput_interrupt(void);
@@ -122,24 +122,24 @@ namespace hmr {
 				bool interrupt_can_enable_timerDevmng_interrupt(void);
 				bool interrupt_can_disable_timerDevmng_interrupt(void);
 
-				// main stream ‘—óMŠ„‚è‚İ‹–‰ÂŠÖ”
+				// main stream é€å—ä¿¡å‰²ã‚Šè¾¼ã¿è¨±å¯é–¢æ•°
 				bool interrupt_enable_streamVMC_fget_interrupt(void);
 				bool interrupt_disable_streamVMC_fget_interrupt(void);
 				bool interrupt_enable_streamVMC_fput_interrupt(void);
 				bool interrupt_disable_streamVMC_fput_interrupt(void);
 
-/*				// camera stream ‘—óMŠ„‚è‚İ‹–‰ÂŠÖ”
+/*				// camera stream é€å—ä¿¡å‰²ã‚Šè¾¼ã¿è¨±å¯é–¢æ•°
 				bool interrupt_enable_streamCMR_fget_interrupt(void);
 				bool interrupt_disable_streamCMR_fget_interrupt(void);
 				bool interrupt_enable_streamCMR_fput_interrupt(void);
 				bool interrupt_disable_streamCMR_fput_interrupt(void);
 				
-				// timer CMR@‘—óMŠ„‚è‚İ‹–‰ÂŠÖ”
+				// timer CMRã€€é€å—ä¿¡å‰²ã‚Šè¾¼ã¿è¨±å¯é–¢æ•°
 				bool interrupt_enable_timerCMR_interrupt(void);
 				bool interrupt_disable_timerCMR_interrupt(void);
 				*/
 
-				// timer Device Manager ‘—óMŠ„‚è‚İ‹–‰ÂŠÖ”
+				// timer Device Manager é€å—ä¿¡å‰²ã‚Šè¾¼ã¿è¨±å¯é–¢æ•°
 				bool interrupt_enable_timerDevmng_interrupt(void);
 				bool interrupt_disable_timerDevmng_interrupt(void);
 
