@@ -94,7 +94,7 @@ int main(void){
 
 	cService<typename cDevice::service_device> Service;
 	cIO<typename cDevice::io_device> IO(Service);
-	cSystem<typename cDevice::system_device> System('S',IO, Service, IO);
+	cSystem<typename cDevice::system_device> System('D',IO, Service, IO);
 	System.regist(Service.getSystemClient());
 	System.regist(IO.getSystemClient());
 	IO.regis_system_agent(System.getIOAgent());
@@ -108,7 +108,7 @@ int main(void){
 	cMotor<typename cDevice::motor_device> Motor('m', System, IO, Service);
 	cGPS<typename cDevice::gps_device> GPS('g', System, IO, Service);
 
-	while(1){
+    while(1){
 		Service();
 		System();
 

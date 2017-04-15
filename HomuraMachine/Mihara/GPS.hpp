@@ -101,6 +101,7 @@ namespace hmr {
 						inform_task(message_client& Ref_):Ref(Ref_){}
 						duration operator()(duration dt){
 							Ref.DataMode_i = true;
+                            Ref.Swap_i = true;
 							return dt;
 						}
 					};
